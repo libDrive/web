@@ -1,0 +1,15 @@
+{
+  "short_name": "libDrive",
+  "name": "libDrive",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#4197fe",
+  "background_color": "#111111"
+}
