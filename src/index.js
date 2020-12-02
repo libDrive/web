@@ -2,6 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { ThemeProvider } from "@material-ui/core/styles";
+import theme from "./theme";
 import App from "./App";
 import Browse from "./components/Browse";
 import Login from "./components/Login";
@@ -11,11 +14,14 @@ const history = createBrowserHistory();
 
 ReactDOM.render(
   <Router history={history}>
-    <BrowserRouter>
-      <Route exact path="/" component={App} />
-      <Route exact path="/browse" component={Browse} />
-      <Route exact path="/login" component={Login} />
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <BrowserRouter>
+        <Route exact path="/" component={App} />
+        <Route exact path="/browse" component={Browse} />
+        <Route exact path="/login" component={Login} />
+      </BrowserRouter>
+    </ThemeProvider>
   </Router>,
   document.getElementById("root")
 );
