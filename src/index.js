@@ -9,6 +9,8 @@ import App from "./App";
 import Browse from "./components/Browse";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
+import Profile from "./components/Profile";
+import Settings from "./components/Settings";
 import "./index.css";
 
 const history = createBrowserHistory();
@@ -22,6 +24,8 @@ ReactDOM.render(
         <Route exact path="/browse" component={Browse} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/logout" component={Logout} />
+        <Route exact path="/profile" component={Profile} />
+        <Route exact path="/settings" component={Settings} />
       </BrowserRouter>
     </ThemeProvider>
   </Router>,
