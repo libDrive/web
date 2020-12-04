@@ -14,3 +14,9 @@ code {
 * {
   margin: 0;
 }
+
+.no_decoration_link {
+  text-decoration: none;
+  color: inherit;
+  font-weight: bold;
+}
