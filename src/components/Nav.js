@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component, useState } from "react";
+import { withRouter, Link, useHistory } from "react-router-dom";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -12,7 +12,7 @@ import Menu from "@material-ui/core/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 
-export default class Nav extends Component {
+export class Nav extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -110,6 +110,16 @@ const useStyles = makeStyles((theme) => ({
 
 export function NavUI(props) {
   const classes = useStyles();
+  let history = useHistory();
+
+  const [search, setSearch] = useState("");
+  const searchChange = (evt) => {
+    setSearch(evt.target.value);
+  };
+  const searchSubmit = (evt) => {
+    evt.preventDefault();
+    history.push(`/search/${search}`);
+  };
   return (
     <div className={classes.grow}>
       <AppBar position="static" className={classes.root}>
@@ -119,7 +129,7 @@ export function NavUI(props) {
               libDrive
             </Typography>
           </Link>
-          <div className={classes.search}>
+          <form className={classes.search} onSubmit={searchSubmit}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
@@ -130,8 +140,9 @@ export function NavUI(props) {
                 input: classes.inputInput,
               }}
               inputProps={{ "aria-label": "search" }}
+              onChange={searchChange}
             />
-          </div>
+          </form>
           <div className={classes.grow} />
           <BrowseMenu props={props.props.categories} />
           <AccountMenu props={props.props.accounts} />
@@ -235,3 +246,5 @@ export function AccountMenu(props) {
     </div>
   );
 }
+
+export default withRouter(Nav);
