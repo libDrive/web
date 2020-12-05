@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import Nav from "./Nav";
 
-export default class Browse extends Component {
+export class Browse extends Component {
   render() {
     return (
       <div>
@@ -10,3 +11,5 @@ export default class Browse extends Component {
     );
   }
 }
+
+export default withRouter(Browse);
