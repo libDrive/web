@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import queryString from "query-string";
 
-import { Gallery, Nav } from "../components";
+import { Gallery, Nav, PageMenu } from "../components";
 
 export default class CategoryBrowse extends Component {
   constructor(props) {
@@ -14,8 +14,19 @@ export default class CategoryBrowse extends Component {
       isLoaded: false,
       metadata: {},
       category: this.props.match.params.category,
-      page: 1,
-      range: `${(queryString.parse(this.props.location.search).page-1)*16}:${(queryString.parse(this.props.location.search).page)*16}` || "0:16",
+      page: parseInt(queryString.parse(this.props.location.search).page) || 1,
+      pages: 1,
+      range: `${
+        queryString.parse(this.props.location.search).page === undefined
+          ? "0:16"
+          : `${
+              (parseInt(queryString.parse(this.props.location.search).page) -
+                1) *
+              16
+            }:${
+              parseInt(queryString.parse(this.props.location.search).page) * 16
+            }`
+      }`,
     };
   }
 
@@ -27,6 +38,7 @@ export default class CategoryBrowse extends Component {
       .then((data) =>
         this.setState({
           metadata: data,
+          pages: Math.ceil(data[0]["length"]/16),
           isLoaded: true,
         })
       );
@@ -37,6 +49,7 @@ export default class CategoryBrowse extends Component {
       <div className="CategoryBrowse">
         <Nav />
         <Gallery metadata={this.state.metadata} />
+        <PageMenu props={{ page: this.state.page, pages: this.state.pages }} />
       </div>
     ) : (
       <div></div>
