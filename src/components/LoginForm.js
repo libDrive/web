@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -191,4 +190,4 @@ class LoginForm extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(withRouter(LoginForm));
+export default withStyles(styles, { withTheme: true })(LoginForm);

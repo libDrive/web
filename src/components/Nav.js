@@ -1,18 +1,18 @@
 import React, { Component, useState } from "react";
-import { withRouter, Link, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
-import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 
-export class Nav extends Component {
+export default class Nav extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -246,5 +246,3 @@ export function AccountMenu(props) {
     </div>
   );
 }
-
-export default withRouter(Nav);

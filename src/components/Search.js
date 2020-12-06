@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import Nav from "./Nav";
 
-export class Search extends Component {
+import { Gallery, Nav } from "../components";
+
+export default class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,11 +11,13 @@ export class Search extends Component {
       auth: sessionStorage.getItem("auth") || localStorage.getItem("auth"),
       isLoaded: false,
       metadata: [],
+      query: this.props.match.params.q,
     };
   }
+
   componentDidMount() {
     fetch(
-      `${this.state.server}/api/v1/metadata?a=${this.state.auth}&q=${this.props.match.params.q}`
+      `${this.state.server}/api/v1/metadata?a=${this.state.auth}&q=${this.state.query}`
     )
       .then((response) => response.json())
       .then((data) =>
@@ -27,15 +29,13 @@ export class Search extends Component {
   }
 
   render() {
-    console.log(this.state.metadata);
     return this.state.isLoaded ? (
       <div className="Search">
         <Nav />
+        <Gallery metadata={this.state.metadata} />
       </div>
-      ) : (
-        <div></div>
-      );
+    ) : (
+      <div></div>
+    );
   }
 }
-
-export default withRouter(Search);

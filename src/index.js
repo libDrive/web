@@ -1,33 +1,30 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Router } from "react-router-dom";
+import { BrowserRouter, Route, Router, withRouter } from "react-router-dom";
 import { createBrowserHistory } from "history";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import { CssBaseline } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
-import theme from "./theme";
+
 import App from "./App";
-import Browse from "./components/Browse";
-import Login from "./components/Login";
-import Logout from "./components/Logout";
-import Profile from "./components/Profile";
-import Search from "./components/Search";
-import Settings from "./components/Settings";
+import theme from "./theme";
+import { Browse, CategoryBrowse, Login, Logout, Profile, Search, Settings, View } from "./components";
 import "./index.css";
 
 const history = createBrowserHistory();
-
 ReactDOM.render(
   <Router history={history}>
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
-        <Route exact path="/" component={App} />
-        <Route exact path="/browse" component={Browse} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/logout" component={Logout} />
-        <Route exact path="/profile" component={Profile} />
-        <Route exact path="/search/:q" component={Search} />
-        <Route exact path="/settings" component={Settings} />
+        <Route exact path="/" component={withRouter(App)} />
+        <Route exact path="/browse" component={withRouter(Browse)} />
+        <Route exact path="/browse/:category" component={withRouter(CategoryBrowse)} />
+        <Route exact path="/login" component={withRouter(Login)} />
+        <Route exact path="/logout" component={withRouter(Logout)} />
+        <Route exact path="/profile" component={withRouter(Profile)} />
+        <Route exact path="/search/:q" component={withRouter(Search)} />
+        <Route exact path="/settings" component={withRouter(Settings)} />
+        <Route exact path="/view/:id" component={withRouter(View)} />
       </BrowserRouter>
     </ThemeProvider>
   </Router>,
