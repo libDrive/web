@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Router, withRouter } from "react-router-dom";
+import { Router, Route, withRouter } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { CssBaseline } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
@@ -15,7 +15,6 @@ ReactDOM.render(
   <Router history={history}>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <BrowserRouter>
         <Route exact path="/" component={withRouter(App)} />
         <Route exact path="/browse" component={withRouter(Browse)} />
         <Route exact path="/browse/:category" component={withRouter(CategoryBrowse)} />
@@ -25,7 +24,6 @@ ReactDOM.render(
         <Route exact path="/search/:q" component={withRouter(Search)} />
         <Route exact path="/settings" component={withRouter(Settings)} />
         <Route exact path="/view/:id" component={withRouter(View)} />
-      </BrowserRouter>
     </ThemeProvider>
   </Router>,
   document.getElementById("root")
