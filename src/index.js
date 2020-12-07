@@ -15,15 +15,15 @@ ReactDOM.render(
   <Router history={history}>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-        <Route exact path="/" component={withRouter(App)} />
-        <Route exact path="/browse" component={withRouter(Browse)} />
-        <Route exact path="/browse/:category" component={withRouter(CategoryBrowse)} />
-        <Route exact path="/login" component={withRouter(Login)} />
-        <Route exact path="/logout" component={withRouter(Logout)} />
-        <Route exact path="/profile" component={withRouter(Profile)} />
-        <Route exact path="/search/:q" component={withRouter(Search)} />
-        <Route exact path="/settings" component={withRouter(Settings)} />
-        <Route exact path="/view/:id" component={withRouter(View)} />
+        <Route exact path={"/"} component={withRouter(App)} />
+        <Route exact path={"/browse"} component={withRouter(Browse)} />
+        <Route path={"/browse/:category"} component={withRouter(CategoryBrowse)} />
+        <Route exact path={"/login"} component={withRouter(Login)} />
+        <Route exact path={"/logout"} component={withRouter(Logout)} />
+        <Route exact path={"/profile"} component={withRouter(Profile)} />
+        <Route path={"/search/:q"} component={withRouter(Search)} />
+        <Route exact path={"/settings"} component={withRouter(Settings)} />
+        <Route path={"/view/:id"} component={withRouter(View)} />
     </ThemeProvider>
   </Router>,
   document.getElementById("root")
