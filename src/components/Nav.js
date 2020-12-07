@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
@@ -16,17 +16,18 @@ export default class Nav extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      accounts: {},
+      auth: sessionStorage.getItem("auth") || localStorage.getItem("auth"),
+      categories: {},
+      isLoaded: false,
       server:
         sessionStorage.getItem("server") || localStorage.getItem("server"),
-      auth: sessionStorage.getItem("auth") || localStorage.getItem("auth"),
-      isLoaded: false,
-      categories: {},
-      accounts: {},
     };
   }
 
   componentDidMount() {
-    fetch(`${this.state.server}/api/v1/environment?a=${this.state.auth}`)
+    let { auth, server } = this.state;
+    fetch(`${server}/api/v1/environment?a=${auth}`)
       .then((response) => response.json())
       .then((data) =>
         this.setState({
@@ -38,17 +39,18 @@ export default class Nav extends Component {
   }
 
   render() {
-    return this.state.isLoaded ? (
-      <div>
+    let { accounts, categories, isLoaded } = this.state;
+    return isLoaded ? (
+      <div className="Nav">
         <NavUI
           props={{
-            categories: this.state.categories,
-            accounts: this.state.accounts,
+            categories: categories,
+            accounts: accounts,
           }}
         />
       </div>
     ) : (
-      <div></div>
+      <div className="Nav"></div>
     );
   }
 }
@@ -119,16 +121,17 @@ export function NavUI(props) {
   const searchSubmit = (evt) => {
     evt.preventDefault();
     history.push(`/search/${search}`);
+    history.go();
   };
   return (
     <div className={classes.grow}>
       <AppBar position="static" className={classes.root}>
         <Toolbar>
-          <Link to="/" className="no_decoration_link">
+          <a href="/" className="no_decoration_link">
             <Typography className={classes.title} variant="h6" noWrap>
               libDrive
             </Typography>
-          </Link>
+          </a>
           <form className={classes.search} onSubmit={searchSubmit}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -184,13 +187,12 @@ export function BrowseMenu(props) {
       >
         {props.props.length
           ? props.props.map((category) => (
-              <Link
-                to={`/browse/${category.name}`}
-                key={`browse-menu-${category.id}`}
+              <a
+                href={`/browse/${category.name}`}
                 className="no_decoration_link"
               >
                 <MenuItem onClick={handleClose}>{category.name}</MenuItem>
-              </Link>
+              </a>
             ))
           : null}
       </Menu>
@@ -233,15 +235,15 @@ export function AccountMenu(props) {
         open={Boolean(menuAnchorEl)}
         onClose={handleClose}
       >
-        <Link to={"/profile"} className="no_decoration_link">
+        <a href={"/profile"} className="no_decoration_link">
           <MenuItem onClick={handleClose}>Profile</MenuItem>
-        </Link>
-        <Link to={"/settings"} className="no_decoration_link">
+        </a>
+        <a href={"/settings"} className="no_decoration_link">
           <MenuItem onClick={handleClose}>Settings</MenuItem>
-        </Link>
-        <Link to={"/logout"} className="no_decoration_link">
+        </a>
+        <a href={"/logout"} className="no_decoration_link">
           <MenuItem onClick={handleClose}>Logout</MenuItem>
-        </Link>
+        </a>
       </Menu>
     </div>
   );

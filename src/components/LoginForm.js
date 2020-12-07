@@ -35,13 +35,13 @@ class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
+      auth: "",
+      error: "",
+      loggedIn: "",
       password: "",
       server: "",
       tempServer: "",
-      error: "",
-      auth: "",
-      loggedIn: "",
+      username: "",
     };
 
     this.handleTempServerChange = this.handleTempServerChange.bind(this);
@@ -57,17 +57,18 @@ class LoginForm extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    if (!this.state.tempServer) {
+    let { auth, loggedIn, password, server, tempServer, username } = this.state;
+    if (!tempServer) {
       return this.setState({ error: "Server is required" });
     }
-    if (!this.state.username) {
+    if (!username) {
       return this.setState({ error: "Username is required" });
     }
-    if (!this.state.password) {
+    if (!password) {
       return this.setState({ error: "Password is required" });
     }
     fetch(
-      `${this.state.tempServer}/api/v1/auth?u=${this.state.username}&p=${this.state.password}`
+      `${tempServer}/api/v1/auth?u=${username}&p=${password}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -75,18 +76,18 @@ class LoginForm extends Component {
           this.setState({
             auth: data.auth,
             loggedIn: true,
-            server: this.state.tempServer,
+            server: tempServer,
           });
         }
       })
       .then(() => {
-        if (this.state.loggedIn === true) {
-          localStorage.setItem("loggedIn", this.state.loggedIn);
-          sessionStorage.setItem("loggedIn", this.state.loggedIn);
-          localStorage.setItem("server", this.state.server);
-          sessionStorage.setItem("server", this.state.server);
-          localStorage.setItem("auth", this.state.auth);
-          sessionStorage.setItem("auth", this.state.auth);
+        if (loggedIn === true) {
+          localStorage.setItem("loggedIn", loggedIn);
+          sessionStorage.setItem("loggedIn", loggedIn);
+          localStorage.setItem("server", server);
+          sessionStorage.setItem("server", server);
+          localStorage.setItem("auth", auth);
+          sessionStorage.setItem("auth", auth);
           this.props.history.push(`/`);
         }
       })
@@ -113,7 +114,7 @@ class LoginForm extends Component {
   }
 
   render() {
-    const { username, password, tempServer, error } = this.state;
+    let { error, password, tempServer, username } = this.state;
     const { classes } = this.props;
     return (
       <Container component="main" maxWidth="xs">
