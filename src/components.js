@@ -1,5 +1,6 @@
 import Browse_ from "./components/Browse";
 import CategoryBrowse_ from "./components/CategoryBrowse";
+import DPlayer_ from "./components/DPlayer";
 import Gallery_ from "./components/Gallery";
 import Login_ from "./components/Login";
 import LoginForm_ from "./components/LoginForm";
@@ -13,6 +14,7 @@ import View_ from "./components/View";
 
 export { Browse_ as Browse };
 export { CategoryBrowse_ as CategoryBrowse };
+export { DPlayer_ as DPlayer };
 export { Gallery_ as Gallery };
 export { Login_ as Login };
 export { LoginForm_ as LoginForm };
