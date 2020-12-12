@@ -1,10 +1,7 @@
 {
   "name": "libdrive",
-  "author": "Elias Benbourenane <eliasbenbourenane@gmail.com>",
-  "version": "0.0.1",
-  "repository": "https://github.com/libDrive/frontend",
-  "license": "MIT",
-  "private": false,
+  "version": "0.1.0",
+  "description": "Cloud media library",
   "dependencies": {
     "@agney/react-loading": "^0.1.2",
     "@material-ui/core": "^4.11.1",
@@ -13,26 +10,27 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "clsx": "^1.1.1",
-    "dplayer": "^1.26.0",
-    "omit.js": "^2.0.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "web-vitals": "^0.2.4"
   },
+  "devDependencies": {},
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/libDrive/frontend.git"
+  },
+  "author": "Elias Benbourenane <eliasbenbourenane@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/libDrive/frontend/issues"
   },
   "browserslist": {
     "production": [

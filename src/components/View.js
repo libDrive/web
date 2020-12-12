@@ -27,9 +27,10 @@ export default class View extends Component {
   }
 
   render() {
+    let { auth, id, isLoaded, metadata, server } = this.state
+
     return this.state.isLoaded ? (
       <div className="View">
-        <div></div>
       </div>
     ) : (
       <div></div>

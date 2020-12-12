@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-import { Puff } from "@agney/react-loading";
-
 import { Gallery, Nav } from "../components";
 
 export default class Search extends Component {
@@ -40,7 +38,6 @@ export default class Search extends Component {
       </div>
     ) : (
       <div className="Loading">
-        <Puff width="80" className="loading__circle" />
       </div>
     );
   }
