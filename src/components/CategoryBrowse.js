@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-import { Puff } from "@agney/react-loading";
-
 import queryString from "query-string";
 
 import { Gallery, Nav, PageMenu } from "../components";
@@ -57,7 +55,6 @@ export default class CategoryBrowse extends Component {
       </div>
     ) : (
       <div className="Loading">
-        <Puff width="80" className="loading__circle" />
       </div>
     );
   }
