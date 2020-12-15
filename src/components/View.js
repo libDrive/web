@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 
 import { Typography } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
 import Plyr from "plyr-react";
 import "plyr-react/dist/plyr.css";
@@ -62,11 +65,64 @@ export default class View extends Component {
             <Typography variant="body1" style={{ marginTop: "30px" }}>
               {metadata.overview}
             </Typography>
+            <ViewMenu props={this.state} />
           </div>
         </div>
       </div>
     ) : (
-      <div></div>
+      <div className="Loading">
+      </div>
     );
   }
+}
+
+
+export function ViewMenu(props) {
+  const [menuAnchorEl, setMenuAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setMenuAnchorEl(null);
+  };
+
+  let { auth, id, isLoaded, metadata, server } = props.props;
+
+  return (
+    <div className="ViewMenu" style={{ marginTop: "30px" }}>
+      <Button
+        aria-controls="view-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+        variant="contained"
+        color="primary"
+      >
+        External Player
+      </Button>
+      <Menu
+        id="view-menu"
+        anchorEl={menuAnchorEl}
+        keepMounted
+        anchorOrigin={{ vertical: "top", horizontal: "left" }}
+        transformOrigin={{ vertical: "top", horizontal: "left" }}
+        open={Boolean(menuAnchorEl)}
+        onClose={handleClose}
+      >
+        <a
+          href={`vlc://${server}/api/v1/download?a=${auth}&id=${id}`}
+          className="no_decoration_link"
+        >
+          <MenuItem onClick={handleClose}>VLC</MenuItem>
+        </a>
+        <a
+          href={`potplayer://${server}/api/v1/download?a=${auth}&id=${id}`}
+          className="no_decoration_link"
+        >
+          <MenuItem onClick={handleClose}>PotPlayer</MenuItem>
+        </a>
+      </Menu>
+    </div>
+  );
 }
