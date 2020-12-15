@@ -60,9 +60,8 @@ export default class View extends Component {
             <img className="info__poster" src={metadata.posterPath} />
           </div>
           <div className="info__right">
-            <Typography variant="h2">{metadata.title}</Typography>
-            <Typography variant="h6">({metadata.releaseDate})</Typography>
-            <Typography variant="body1" style={{ marginTop: "30px" }}>
+            <Typography variant="h2" className="info__title">{metadata.title}</Typography>
+            <Typography variant="body1" className="info__overview" style={{ marginTop: "30px" }}>
               {metadata.overview}
             </Typography>
             <ViewMenu props={this.state} />
