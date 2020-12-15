@@ -29,3 +29,18 @@
   border-radius: 10px;
   max-width: 100%;
 }
+
+.info__title {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}
+
+.info__overview {
+  display: -webkit-box;
+  -webkit-line-clamp: 8;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+  margin-top: 10px;
+}
