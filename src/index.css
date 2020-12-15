@@ -13,6 +13,20 @@ code {
 
 * {
   margin: 0;
+  scrollbar-color: #202324 #454a4d;
+}
+
+::-webkit-scrollbar {
+  background-color: #202324;
+  color: #aba499;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: #181a1b;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #454a4d;
 }
 
 .no_decoration_link {
