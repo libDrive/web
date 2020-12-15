@@ -1,0 +1,29 @@
+:root {
+  --plyr-color-main: #4197fe;
+}
+
+.plyr__component {
+  max-width: 90vw;
+  margin: 5vh auto;
+}
+
+.info__container {
+  display: flex;
+  max-width: 90vw;
+  margin:auto;
+}
+
+.info__left {
+  margin: 0 20px;
+}
+
+.info__right {
+  margin: 0 20px;
+  max-width: 30%;
+  float: left;
+}
+
+.info__poster {
+  border-radius: 10px;
+  max-width: 100%;
+}
