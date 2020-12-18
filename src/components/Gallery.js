@@ -26,24 +26,8 @@ export default class Gallery extends Component {
                   {category.name}
                 </a>
                 <div className="items">
-                  {category.files.length
-                    ? category.files.map((item) => (
-                        <figure className="item__figure">
-                          <a href={`/view/${item.id}`}>
-                            <img
-                              src={item.posterPath}
-                              className="item__poster"
-                              alt={item.title}
-                            />
-                          </a>
-                          <Typography className="item__title">
-                            {item.title}
-                          </Typography>
-                        </figure>
-                      ))
-                    : null}
-                  {category.folders.length
-                    ? category.folders.map((item) => (
+                  {category.children.length
+                    ? category.children.map((item) => (
                         <figure className="item__figure">
                           <a href={`/view/${item.id}`}>
                             <img
