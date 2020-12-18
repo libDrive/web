@@ -38,45 +38,210 @@ export default class View extends Component {
   }
 
   render() {
-    let { auth, id, isLoaded, metadata, server } = this.state;
+    let { isLoaded, metadata } = this.state;
 
-    return isLoaded ? (
+    return isLoaded && metadata.type == "file" ? (
       <div className="View">
         <Nav />
-        <div className="plyr__component">
-          <Plyr
-            source={{
-              type: "video",
-              sources: [
-                {
-                  src: `${server}/api/v1/download?a=${auth}&id=${id}`,
-                },
-              ],
-            }}
-          />
-        </div>
-        <div className="info__container">
-          <div className="info__left">
-            <img className="info__poster" src={metadata.posterPath} />
-          </div>
-          <div className="info__right">
-            <Typography variant="h2" className="info__title">{metadata.title}</Typography>
-            <Typography variant="body1" className="info__overview" style={{ marginTop: "30px" }}>
-              {metadata.overview}
-            </Typography>
-            <ViewMenu props={this.state} />
-          </div>
-        </div>
+        <MovieView props={this.state} />
+      </div>
+    ) : isLoaded && metadata.type == "directory" && metadata.title ? (
+      <div className="View">
+        <Nav />
+        <TVBView props={this.state} />
+      </div>
+    ) : isLoaded && metadata.type == "directory" ? (
+      <div className="View">
+        <Nav />
+        <TVSView props={this.state} />
       </div>
     ) : (
-      <div className="Loading">
-      </div>
+      <div className="Loading"></div>
     );
   }
 }
 
+export function MovieView(props) {
+  let { auth, id, metadata, server } = props.props;
 
-export function ViewMenu(props) {
+  return (
+    <div className="MovieView">
+      <div className="plyr__component">
+        <Plyr
+          source={{
+            type: "video",
+            poster:
+              `https://drive.google.com/thumbnail?sz=w1920&id=${metadata.id}` ||
+              "",
+            sources: [
+              {
+                src: `${server}/api/v1/download/${metadata.name}?a=${auth}&id=${id}`,
+              },
+            ],
+          }}
+          options={{
+            controls: [
+              "play-large",
+              "rewind",
+              "play",
+              "fast-forward",
+              "progress",
+              "current-time",
+              "duration",
+              "mute",
+              "volume",
+              "captions",
+              "settings",
+              "pip",
+              "airplay",
+              "download",
+              "fullscreen",
+            ],
+          }}
+        />
+      </div>
+      <div className="info__container">
+        <div className="info__left">
+          <img className="info__poster" src={metadata.posterPath} />
+        </div>
+        <div className="info__right">
+          <Typography variant="h2" className="info__title">
+            {metadata.title}
+          </Typography>
+          <Typography
+            variant="body1"
+            className="info__overview"
+            style={{ marginTop: "30px" }}
+          >
+            {metadata.overview}
+          </Typography>
+          <PlayerMenu props={props.props} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function TVBView(props) {
+  let { metadata } = props.props;
+
+  return (
+    <div className="TVBView">
+      <div className="info__container">
+        <div className="info__left">
+          <img className="info__poster" src={metadata.posterPath} />
+        </div>
+        <div className="info__right">
+          <Typography variant="h2" className="info__title">
+            {metadata.title}
+          </Typography>
+          <Typography
+            variant="body1"
+            className="info__overview"
+            style={{ marginTop: "30px" }}
+          >
+            {metadata.overview}
+          </Typography>
+          <div className="buttons__container">
+            <div className="button">
+              <ChildrenMenu props={props.props} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function TVSView(props) {
+  let { auth, id, metadata, server } = props.props;
+  let hash = parseInt(window.location.hash.substring(1)) || 0;
+
+  function isHash(n, hash) {
+    if (n === hash) {
+      return "pls-playing";
+    } else {
+      return "";
+    }
+  }
+
+  return (
+    <div className="TVSView">
+      <Typography
+        variant="h2"
+        style={{ textAlign: "center", marginTop: "25px" }}
+      >
+        {metadata.name}
+      </Typography>
+      <Typography
+        variant="h5"
+        style={{ textAlign: "center", marginTop: "15px" }}
+      >
+        {metadata.children[hash].name}
+      </Typography>
+      <div className="plyr__component">
+        <Plyr
+          source={{
+            type: "video",
+            poster:
+              `https://drive.google.com/thumbnail?sz=w1920&id=${metadata.children[hash].id}` ||
+              "",
+            sources: [
+              {
+                src: `${server}/api/v1/download/${metadata.children[hash].name}?a=${auth}&id=${metadata.children[hash].id}`,
+              },
+            ],
+          }}
+          options={{
+            controls: [
+              "play-large",
+              "rewind",
+              "play",
+              "fast-forward",
+              "progress",
+              "current-time",
+              "duration",
+              "mute",
+              "volume",
+              "captions",
+              "settings",
+              "pip",
+              "airplay",
+              "download",
+              "fullscreen",
+            ],
+          }}
+        />
+        <div class="plyr-playlist-wrapper">
+          <ul class="plyr-playlist">
+            {metadata.children.length
+              ? metadata.children.map((child, n) => (
+                  <li className={isHash(n, hash)}>
+                    <a href={`#${n}`}>
+                      <img class="plyr-miniposter" />
+                      {child.name}
+                    </a>
+                  </li>
+                ))
+              : null}
+          </ul>
+        </div>
+      </div>
+      <div style={{ textAlign: "center", marginBottom: "5vh" }}>
+        <PlayerMenu
+          props={{
+            auth: auth,
+            id: metadata.children[hash].id,
+            metadata: metadata.children[hash],
+            server: server,
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+export function PlayerMenu(props) {
   const [menuAnchorEl, setMenuAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -87,12 +252,12 @@ export function ViewMenu(props) {
     setMenuAnchorEl(null);
   };
 
-  let { auth, id, isLoaded, metadata, server } = props.props;
+  let { auth, id, metadata, server } = props.props;
 
   return (
-    <div className="ViewMenu" style={{ marginTop: "30px" }}>
+    <div className="PlayerMenu" style={{ marginTop: "30px" }}>
       <Button
-        aria-controls="view-menu"
+        aria-controls="player-menu"
         aria-haspopup="true"
         onClick={handleClick}
         variant="contained"
@@ -101,7 +266,7 @@ export function ViewMenu(props) {
         External Player
       </Button>
       <Menu
-        id="view-menu"
+        id="player-menu"
         anchorEl={menuAnchorEl}
         keepMounted
         anchorOrigin={{ vertical: "top", horizontal: "left" }}
@@ -110,17 +275,68 @@ export function ViewMenu(props) {
         onClose={handleClose}
       >
         <a
-          href={`vlc://${server}/api/v1/download?a=${auth}&id=${id}`}
+          href={`vlc://${server}/api/v1/download/${metadata.name}?a=${auth}&id=${id}`}
           className="no_decoration_link"
         >
           <MenuItem onClick={handleClose}>VLC</MenuItem>
         </a>
         <a
-          href={`potplayer://${server}/api/v1/download?a=${auth}&id=${id}`}
+          href={`${server}/api/v1/download/${metadata.name}?a=${auth}&id=${id}`}
           className="no_decoration_link"
         >
           <MenuItem onClick={handleClose}>PotPlayer</MenuItem>
         </a>
+        <a
+          href={`${server}/api/v1/download/${metadata.name}?a=${auth}&id=${id}`}
+          className="no_decoration_link"
+        >
+          <MenuItem onClick={handleClose}>Download</MenuItem>
+        </a>
+      </Menu>
+    </div>
+  );
+}
+
+export function ChildrenMenu(props) {
+  const [menuAnchorEl, setMenuAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setMenuAnchorEl(null);
+  };
+
+  let { metadata } = props.props;
+
+  return (
+    <div className="ChildrenMenu" style={{ marginTop: "30px" }}>
+      <Button
+        aria-controls="children-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+        variant="contained"
+        color="primary"
+      >
+        Seasons
+      </Button>
+      <Menu
+        id="children-menu"
+        anchorEl={menuAnchorEl}
+        keepMounted
+        anchorOrigin={{ vertical: "top", horizontal: "left" }}
+        transformOrigin={{ vertical: "top", horizontal: "left" }}
+        open={Boolean(menuAnchorEl)}
+        onClose={handleClose}
+      >
+        {metadata.children.length
+          ? metadata.children.map((child) => (
+              <a href={`/view/${child.id}`} className="no_decoration_link">
+                <MenuItem onClick={handleClose}>{child.name}</MenuItem>
+              </a>
+            ))
+          : null}
       </Menu>
     </div>
   );
