@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Redirect } from "react-router-dom";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Pagination from "@material-ui/lab/Pagination";
 import PaginationItem from "@material-ui/lab/PaginationItem";
@@ -18,24 +20,29 @@ const useStyles = makeStyles((theme) => ({
 export default function PageMenu(props) {
   const classes = useStyles();
   let { page, pages } = props.props;
-  return (
-    <div className={classes.root}>
-      <Pagination
-        page={page}
-        count={pages}
-        variant="outlined"
-        color="primary"
-        renderItem={(item) => (
-          <a
-            href={`${window.location.pathname}${
-              item.page === 1 ? "" : `?page=${item.page}`
-            }`}
-            className="no_decoration_link"
-          >
-            <PaginationItem {...item} />
-          </a>
-        )}
-      />
-    </div>
-  );
+
+  if (page > pages) {
+    window.location = `${window.location.pathname}?page=${pages}`
+  } else {
+    return (
+      <div className={classes.root}>
+        <Pagination
+          page={page}
+          count={pages}
+          variant="outlined"
+          color="primary"
+          renderItem={(item) => (
+            <a
+              href={`${window.location.pathname}${
+                item.page === 1 ? "" : `?page=${item.page}`
+              }`}
+              className="no_decoration_link"
+            >
+              <PaginationItem {...item} />
+            </a>
+          )}
+        />
+      </div>
+    );
+  }
 }
