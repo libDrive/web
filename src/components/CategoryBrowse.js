@@ -33,7 +33,7 @@ export default class CategoryBrowse extends Component {
   componentDidMount() {
     let { auth, category, range, server } = this.state;
     fetch(
-      `${server}/api/v1/metadata?a=${auth}&c=${category}&r=${range}&s=alphabet-des`
+      `${server}/api/v1/metadata?a=${auth}&c=${category}&r=${range}&s=alphabet-asc`
     )
       .then((response) => response.json())
       .then((data) =>
