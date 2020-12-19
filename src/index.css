@@ -6,11 +6,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
 * {
   margin: 0;
   scrollbar-color: #202324 #454a4d;

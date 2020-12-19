@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+
 import { Redirect } from "react-router-dom";
+
 import LoginForm from "./LoginForm";
 
 export default class Login extends Component {
@@ -8,7 +10,8 @@ export default class Login extends Component {
     this.state = { loggedIn: sessionStorage.getItem("loggedIn") };
   }
   render() {
-    const { loggedIn } = this.state;
+    let { loggedIn } = this.state;
+    
     if (loggedIn === "true") {
       return <Redirect to="/browse" />;
     } else {

@@ -88,7 +88,7 @@ class LoginForm extends Component {
           sessionStorage.setItem("server", server);
           localStorage.setItem("auth", auth);
           sessionStorage.setItem("auth", auth);
-          this.props.history.push(`/`);
+          this.props.history.push("/");
         }
       })
       .catch((error) => alert("Something went wrong, check your credentials."));
@@ -116,6 +116,7 @@ class LoginForm extends Component {
   render() {
     let { error, password, tempServer, username } = this.state;
     const { classes } = this.props;
+    
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />

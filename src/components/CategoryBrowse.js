@@ -32,6 +32,7 @@ export default class CategoryBrowse extends Component {
 
   componentDidMount() {
     let { auth, category, range, server } = this.state;
+
     fetch(
       `${server}/api/v1/metadata?a=${auth}&c=${category}&r=${range}&s=alphabet-asc`
     )
@@ -43,10 +44,16 @@ export default class CategoryBrowse extends Component {
           isLoaded: true,
         })
       );
+    fetch(`${server}/api/v1/auth?a=${auth}`).then((response) => {
+      if (!response.ok) {
+        window.location.href = "logout";
+      }
+    });
   }
 
   render() {
     let { isLoaded, metadata, page, pages } = this.state;
+
     return isLoaded ? (
       <div className="CategoryBrowse">
         <Nav />
@@ -54,8 +61,7 @@ export default class CategoryBrowse extends Component {
         <PageMenu props={{ page: page, pages: pages }} />
       </div>
     ) : (
-      <div className="Loading">
-      </div>
+      <div className="Loading"></div>
     );
   }
 }
