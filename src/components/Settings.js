@@ -32,7 +32,6 @@ export class Settings extends Component {
     super(props);
     this.state = {
       auth: sessionStorage.getItem("auth") || localStorage.getItem("auth"),
-      config: "",
       error: "",
       isLoaded: false,
       secret: "elias",
@@ -66,32 +65,9 @@ export class Settings extends Component {
       .then((data) =>
         this.setState({
           config: data,
+          postConfig: data,
           tempSecret: data.secret_key,
         })
-      )
-      .then(() =>
-        this.state.config.category_list.map((category, n) =>
-          eval(
-            `this.setState({
-              category${n}name: category.name,
-              category${n}type: category.type,
-              category${n}id: category.id,
-              category${n}driveid: category.driveId,
-            })`
-          )
-        )
-      )
-      .then(() =>
-        this.state.config.account_list.map((account, n) =>
-          eval(
-            `this.setState({
-              account${n}username: account.username,
-              account${n}password: account.password,
-              account${n}pic: account.pic,
-              account${n}auth: account.auth,
-            })`
-          )
-        )
       )
       .then(() => this.setState({ isLoaded: true }));
     fetch(`${server}/api/v1/auth?a=${auth}`).then((response) => {
@@ -107,32 +83,7 @@ export class Settings extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    let { config, secret, server, tempSecret } = this.state;
-    let postEnvironment = {
-      account_list: [],
-      category_list: [],
-      secret_key: tempSecret,
-    };
-
-    config.category_list.map(
-      (category, n) =>
-        (postEnvironment["category_list"][n] = {
-          name: eval(`this.state.category${n}name`),
-          type: eval(`this.state.category${n}type`),
-          id: eval(`this.state.category${n}id`),
-          driveId: eval(`this.state.category${n}driveid`),
-        })
-    );
-
-    config.account_list.map(
-      (category, n) =>
-        (postEnvironment["account_list"][n] = {
-          username: eval(`this.state.account${n}username`),
-          password: eval(`this.state.account${n}password`),
-          pic: eval(`this.state.account${n}pic`),
-          auth: eval(`this.state.account${n}auth`),
-        })
-    );
+    let { secret, server } = this.state;
 
     fetch(`${server}/api/v1/config?secret=${secret}`, {
       method: "post",
@@ -140,7 +91,7 @@ export class Settings extends Component {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(postEnvironment),
+      body: JSON.stringify(this.state.postConfig),
     }).then((response) => {
       if (response.ok) {
         alert(
@@ -151,86 +102,98 @@ export class Settings extends Component {
   }
 
   handleCategoryTypeChange(evt) {
-    var value = evt.target.value;
-    var splitValue = value.split("_");
-    var n = splitValue[1];
-    eval(
-      `this.setState({
-        category${n}type: splitValue[0],
-      })`
-    );
+    var value = evt.target.value.split("_")[0];
+    var n = evt.target.value.split("_")[1];
+
+    var configCopy = this.state.postConfig;
+    configCopy.category_list[n].type = value;
+
+    this.setState({
+      postConfig: configCopy,
+    });
   }
 
   handleCategoryNameChange(evt) {
-    var key = evt.target.id;
-    var splitKey = key.split("_");
-    var n = splitKey[1];
-    eval(
-      `this.setState({
-        category${n}name: evt.target.value,
-      })`
-    );
+    var value = evt.target.value;
+    var n = evt.target.id.split("_")[1];
+
+    var configCopy = this.state.postConfig;
+    configCopy.category_list[n].name = value;
+
+    this.setState({
+      postConfig: configCopy,
+    });
   }
 
   handleCategoryIdChange(evt) {
-    var key = evt.target.id;
-    var splitKey = key.split("_");
-    var n = splitKey[1];
-    eval(
-      `this.setState({
-        category${n}id: evt.target.value,
-      })`
-    );
+    var value = evt.target.value;
+    var n = evt.target.id.split("_")[1];
+
+    var configCopy = this.state.postConfig;
+    configCopy.category_list[n].id = value;
+
+    this.setState({
+      postConfig: configCopy,
+    });
   }
 
   handleCategoryDriveIdChange(evt) {
-    var key = evt.target.id;
-    var splitKey = key.split("_");
-    var n = splitKey[1];
-    eval(
-      `this.setState({
-        category${n}driveid: evt.target.value,
-      })`
-    );
+    var value = evt.target.value;
+    var n = evt.target.id.split("_")[1];
+
+    var configCopy = this.state.postConfig;
+    configCopy.category_list[n].driveId = value;
+
+    this.setState({
+      postConfig: configCopy,
+    });
   }
 
   handleSecretChange(evt) {
+    var value = evt.target.value;
+
+    var configCopy = this.state.postConfig;
+    configCopy.secret_key = value;
+
     this.setState({
-      tempSecret: evt.target.value,
+      postConfig: newConfig,
     });
   }
 
   handleAccountUsernameChange(evt) {
-    var key = evt.target.id;
-    var splitKey = key.split("_");
-    var n = splitKey[1];
-    eval(
-      `this.setState({
-        account${n}username: evt.target.value,
-      })`
-    );
+    var value = evt.target.value;
+    var n = evt.target.id.split("_")[1];
+
+    var configCopy = this.state.postConfig;
+    configCopy.account_list[n].username = value;
+
+    this.setState({
+      postConfig: configCopy,
+    });
   }
 
   handleAccountPasswordChange(evt) {
-    var key = evt.target.id;
-    var splitKey = key.split("_");
-    var n = splitKey[1];
-    eval(
-      `this.setState({
-        account${n}password: evt.target.value,
-      })`
-    );
+    var value = evt.target.value;
+    var n = evt.target.id.split("_")[1];
+
+    var configCopy = this.state.postConfig;
+    configCopy.account_list[n].password = value;
+
+    this.setState({
+      postConfig: configCopy,
+    });
   }
 
   handleAccountPicChange(evt) {
-    var key = evt.target.id;
-    var splitKey = key.split("_");
-    var n = splitKey[1];
-    eval(
-      `this.setState({
-        account${n}pic: evt.target.value,
-      })`
-    );
+    var value = evt.target.value;
+    var n = evt.target.id.split("_")[1];
+
+    var configCopy = this.state.postConfig;
+    configCopy.account_list[n].pic = value;
+
+    this.setState({
+      postConfig: configCopy,
+    });
   }
 
   render() {
@@ -246,7 +209,9 @@ export class Settings extends Component {
           autoComplete="off"
           onSubmit={this.handleSubmit}
         >
-          <Typography variant="h3">Categories</Typography>
+          <a className="no_decoration_link" href="#categories">
+            <Typography variant="h3">Categories</Typography>
+          </a>
           {config.category_list.length
             ? config.category_list.map((category, n) => (
                 <div style={{ margin: "30px" }}>
@@ -256,7 +221,7 @@ export class Settings extends Component {
                     select
                     label="Select Type"
                     variant="outlined"
-                    value={`${eval(`this.state.category${n}type`)}_${n}`}
+                    value={`${this.state.postConfig.category_list[n].type}_${n}`}
                     onChange={this.handleCategoryTypeChange}
                   >
                     <MenuItem key="movies" value={`movies_${n}`}>
@@ -274,7 +239,7 @@ export class Settings extends Component {
                     id={`category-name_${n}`}
                     label="Name"
                     variant="outlined"
-                    value={eval(`this.state.category${n}name`)}
+                    value={this.state.postConfig.category_list[n].name}
                     onChange={this.handleCategoryNameChange}
                   />
                   <TextField
@@ -282,7 +247,7 @@ export class Settings extends Component {
                     id={`category-id_${n}`}
                     label="Folder ID"
                     variant="outlined"
-                    value={eval(`this.state.category${n}id`)}
+                    value={this.state.postConfig.category_list[n].id}
                     onChange={this.handleCategoryIdChange}
                   />
                   <TextField
@@ -290,23 +255,27 @@ export class Settings extends Component {
                     id={`category-driveId_${n}`}
                     label="Team Drive ID"
                     variant="outlined"
-                    value={eval(`this.state.category${n}driveid`)}
+                    value={this.state.postConfig.category_list[n].driveId}
                     onChange={this.handleCategoryDriveIdChange}
                   />
                 </div>
               ))
             : null}
-          <Typography variant="h3">Secret Key</Typography>
+          <a className="no_decoration_link" href="#secret">
+            <Typography variant="h3">Secret Key</Typography>
+          </a>
           <TextField
             className="TextField"
             id="outlined-basic"
             label="Secret Key"
             type="password"
             variant="outlined"
-            value={config.secret_key}
+            value={this.state.postConfig.secret_key}
             onChange={this.handleSecretChange}
           />
-          <Typography variant="h3">Accounts</Typography>
+          <a className="no_decoration_link" href="#accounts">
+            <Typography variant="h3">Accounts</Typography>
+          </a>
           {config.account_list.length
             ? config.account_list.map((account, n) => (
                 <div style={{ margin: "30px" }}>
@@ -315,7 +284,7 @@ export class Settings extends Component {
                     id={`account-username_${n}`}
                     label="Username"
                     variant="outlined"
-                    value={eval(`this.state.account${n}username`)}
+                    value={this.state.postConfig.account_list[n].username}
                     onChange={this.handleAccountUsernameChange}
                   />
                   <TextField
@@ -324,7 +293,7 @@ export class Settings extends Component {
                     label="Password"
                     type="password"
                     variant="outlined"
-                    value={eval(`this.state.account${n}password`)}
+                    value={this.state.postConfig.account_list[n].password}
                     onChange={this.handleAccountPasswordChange}
                   />
                   <TextField
@@ -332,7 +301,7 @@ export class Settings extends Component {
                     id={`account-pic_${n}`}
                     label="Picture"
                     variant="outlined"
-                    value={eval(`this.state.account${n}pic`)}
+                    value={this.state.postConfig.account_list[n].pic}
                     onChange={this.handleAccountPicChange}
                   />
                   <div
