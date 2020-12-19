@@ -16,6 +16,7 @@ export default class Browse extends Component {
 
   componentDidMount() {
     let { auth, server } = this.state;
+
     fetch(`${server}/api/v1/metadata?a=${auth}&r=0:16&s=popularity-des`)
       .then((response) => response.json())
       .then((data) =>
@@ -24,18 +25,23 @@ export default class Browse extends Component {
           metadata: data,
         })
       );
+    fetch(`${server}/api/v1/auth?a=${auth}`).then((response) => {
+      if (!response.ok) {
+        window.location.href = "logout";
+      }
+    });
   }
 
   render() {
     let { isLoaded, metadata } = this.state;
+
     return isLoaded ? (
       <div className="Browse">
         <Nav />
         <Gallery metadata={metadata} />
       </div>
     ) : (
-      <div className="Loading">
-      </div>
+      <div className="Loading"></div>
     );
   }
 }

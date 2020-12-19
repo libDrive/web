@@ -14,6 +14,7 @@ export default class Gallery extends Component {
 
   render() {
     let { metadata } = this.state;
+    
     return (
       <div className="Gallery">
         {metadata.length
@@ -29,7 +30,7 @@ export default class Gallery extends Component {
                   {category.children.length
                     ? category.children.map((item) => (
                         <figure className="item__figure">
-                          <a href={`/view/${item.id}`}>
+                          <a href={`/view/${item.id}`} key={item.id}>
                             <img
                               src={item.posterPath}
                               className="item__poster"

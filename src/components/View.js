@@ -35,6 +35,11 @@ export default class View extends Component {
           isLoaded: true,
         })
       );
+    fetch(`${server}/api/v1/auth?a=${auth}`).then((response) => {
+      if (!response.ok) {
+        window.location.href = "logout";
+      }
+    });
   }
 
   render() {
@@ -281,7 +286,7 @@ export function PlayerMenu(props) {
           <MenuItem onClick={handleClose}>VLC</MenuItem>
         </a>
         <a
-          href={`${server}/api/v1/download/${metadata.name}?a=${auth}&id=${id}`}
+          href={`potplayer://${server}/api/v1/download/${metadata.name}?a=${auth}&id=${id}`}
           className="no_decoration_link"
         >
           <MenuItem onClick={handleClose}>PotPlayer</MenuItem>

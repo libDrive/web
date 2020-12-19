@@ -16,10 +16,9 @@ export default class Search extends Component {
   }
 
   componentDidMount() {
-    let { auth, query, server } = this.state
-    fetch(
-      `${server}/api/v1/metadata?a=${auth}&q=${query}`
-    )
+    let { auth, query, server } = this.state;
+
+    fetch(`${server}/api/v1/metadata?a=${auth}&q=${query}`)
       .then((response) => response.json())
       .then((data) =>
         this.setState({
@@ -27,18 +26,23 @@ export default class Search extends Component {
           isLoaded: true,
         })
       );
+    fetch(`${server}/api/v1/auth?a=${auth}`).then((response) => {
+      if (!response.ok) {
+        window.location.href = "logout";
+      }
+    });
   }
 
   render() {
-    let { isLoaded, metadata } = this.state
+    let { isLoaded, metadata } = this.state;
+
     return isLoaded ? (
       <div className="Search">
         <Nav />
         <Gallery metadata={metadata} />
       </div>
     ) : (
-      <div className="Loading">
-      </div>
+      <div className="Loading"></div>
     );
   }
 }

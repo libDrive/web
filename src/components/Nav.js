@@ -28,6 +28,7 @@ export default class Nav extends Component {
 
   componentDidMount() {
     let { auth, server } = this.state;
+
     fetch(`${server}/api/v1/environment?a=${auth}`)
       .then((response) => response.json())
       .then((data) =>
@@ -41,6 +42,7 @@ export default class Nav extends Component {
 
   render() {
     let { accounts, categories, isLoaded } = this.state;
+    
     return isLoaded ? (
       <div className="Nav">
         <NavUI

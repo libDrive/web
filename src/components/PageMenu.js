@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Pagination from "@material-ui/lab/Pagination";
@@ -18,11 +18,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PageMenu(props) {
-  const classes = useStyles();
   let { page, pages } = props.props;
+  let history = useHistory();
+  const classes = useStyles();
 
   if (page > pages) {
-    window.location = `${window.location.pathname}?page=${pages}`
+    history.push(`${window.location.pathname}?page=${pages}`);
+    history.go();
   } else {
     return (
       <div className={classes.root}>
