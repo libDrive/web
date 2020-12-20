@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
 
-import { Nav } from "../components";
+import { Nav, SettingsLoginForm } from "../components";
 
 const styles = (theme) => ({
   Form: {
@@ -34,7 +34,7 @@ export class Settings extends Component {
       auth: sessionStorage.getItem("auth") || localStorage.getItem("auth"),
       error: "",
       isLoaded: false,
-      secret: "elias",
+      secret: sessionStorage.getItem("secret"),
       server:
         sessionStorage.getItem("server") || localStorage.getItem("server"),
     };
@@ -69,7 +69,8 @@ export class Settings extends Component {
           tempSecret: data.secret_key,
         })
       )
-      .then(() => this.setState({ isLoaded: true }));
+      .then(() => this.setState({ isLoaded: true }))
+      .catch((error) => this.props.history.push("/settings/login"));
     fetch(`${server}/api/v1/auth?a=${auth}`).then((response) => {
       if (!response.ok) {
         window.location.href = "logout";
