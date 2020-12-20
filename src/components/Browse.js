@@ -27,7 +27,7 @@ export default class Browse extends Component {
       );
     fetch(`${server}/api/v1/auth?a=${auth}`).then((response) => {
       if (!response.ok) {
-        window.location.href = "logout";
+        window.location.href = "/logout";
       }
     });
   }

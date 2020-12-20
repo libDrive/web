@@ -7,7 +7,7 @@ import { ThemeProvider } from "@material-ui/core/styles";
 
 import App from "./App";
 import theme from "./theme";
-import { Browse, CategoryBrowse, Login, Logout, Profile, Search, Settings, View } from "./components";
+import { Browse, CategoryBrowse, Login, Logout, Profile, Search, Settings, SettingsLoginForm, View } from "./components";
 import "./index.css";
 
 const history = createBrowserHistory();
@@ -23,6 +23,7 @@ ReactDOM.render(
         <Route exact path={"/profile"} component={withRouter(Profile)} />
         <Route exact path={"/search/:q"} component={withRouter(Search)} />
         <Route exact path={"/settings"} component={withRouter(Settings)} />
+        <Route exact path={"/settings/login"} component={withRouter(SettingsLoginForm)} />
         <Route exact path={"/view/:id"} component={withRouter(View)} />
     </ThemeProvider>
   </Router>,
