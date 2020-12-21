@@ -360,18 +360,6 @@ export class Settings extends Component {
           <IconButton aria-label="add" onClick={this.handleAddCategory}>
             <AddIcon />
           </IconButton>
-          <a className="no_decoration_link" href="#secret">
-            <Typography variant="h3">Secret Key</Typography>
-          </a>
-          <TextField
-            className="TextField"
-            id="outlined-basic"
-            label="Secret Key"
-            type="password"
-            variant="outlined"
-            value={this.state.postConfig.secret_key}
-            onChange={this.handleSecretChange}
-          />
           <a className="no_decoration_link" href="#accounts">
             <Typography variant="h3">Accounts</Typography>
           </a>
@@ -432,6 +420,18 @@ export class Settings extends Component {
           <IconButton aria-label="add" onClick={this.handleAddAccount}>
             <AddIcon />
           </IconButton>
+          <a className="no_decoration_link" href="#secret">
+            <Typography variant="h3">Secret Key</Typography>
+          </a>
+          <TextField
+            className="TextField"
+            id="outlined-basic"
+            label="Secret Key"
+            type="password"
+            variant="outlined"
+            value={this.state.postConfig.secret_key}
+            onChange={this.handleSecretChange}
+          />
           <br></br>
           <Button
             type="submit"
