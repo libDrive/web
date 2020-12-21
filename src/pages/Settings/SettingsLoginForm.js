@@ -13,7 +13,7 @@ import Container from "@material-ui/core/Container";
 
 import axios from "axios";
 
-import { Nav } from "../components";
+import { Nav } from "../../components";
 
 const styles = (theme) => ({
   paper: {

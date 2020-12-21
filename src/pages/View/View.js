@@ -10,7 +10,7 @@ import "plyr-react/dist/plyr.css";
 
 import axios from "axios";
 
-import { Nav } from "../components";
+import { Nav } from "../../components";
 import "./View.css";
 
 export default class View extends Component {
