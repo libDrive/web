@@ -80,22 +80,21 @@ export class Settings extends Component {
         })
       )
       .catch((error) => {
-        if (error.response) {
-          if (error.response.status === 401 || 404) {
+        console.error(error);
+        if (auth == null || server == null) {
+          alert("You are not authenticated");
+          this.props.history.push("/logout");
+        } else if (error.response) {
+          if (error.response.status === 401) {
             alert("Your credentials are invalid. Logging you out now.");
-            this.props.history.push("/settings/login");
+            this.props.history.push("/logout");
           } else {
             alert("Something went wrong while communicating with the backend");
-            console.error(error);
           }
         } else if (error.request) {
           alert(
             `libDrive could not communicate with the backend. Is ${server} the correct address?`
           );
-          console.error(error);
-        } else {
-          alert("Something seems to be wrong with the libDrive frontend");
-          console.error(error);
         }
       });
   }
@@ -130,22 +129,21 @@ export class Settings extends Component {
         );
       })
       .catch((error) => {
-        if (error.response) {
-          if (error.response.status === 401 || 404) {
+        console.error(error);
+        if (auth == null || server == null) {
+          alert("You are not authenticated");
+          this.props.history.push("/logout");
+        } else if (error.response) {
+          if (error.response.status === 401) {
             alert("Your credentials are invalid. Logging you out now.");
-            this.props.history.push("/settings/login");
+            this.props.history.push("/logout");
           } else {
             alert("Something went wrong while communicating with the backend");
-            console.error(error);
           }
         } else if (error.request) {
           alert(
             `libDrive could not communicate with the backend. Is ${server} the correct address?`
           );
-          console.error(error);
-        } else {
-          alert("Something seems to be wrong with the libDrive frontend");
-          console.error(error);
         }
       });
   }
