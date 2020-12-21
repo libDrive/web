@@ -12,19 +12,6 @@ export default class App extends Component {
     };
   }
 
-  componentDidMount() {
-    /*
-    let { auth, server } = this.state;
-    fetch(`${server}/api/v1/auth?a=${auth}`).then((response) => {
-      if (!response.ok) {
-        window.location.href = "/logout";
-      } else if (response.ok) {
-        window.location.href = "/browse";
-      }
-    });
-    */
-  }
-
   render() {
     return <Redirect to="/browse" />;
   }
