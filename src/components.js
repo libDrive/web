@@ -1,15 +1,15 @@
-import Browse_ from "./components/Browse";
-import CategoryBrowse_ from "./components/CategoryBrowse";
+import Browse_ from "./pages/Browse/Browse";
+import CategoryBrowse_ from "./pages/Browse/CategoryBrowse";
 import Gallery_ from "./components/Gallery";
-import Login_ from "./components/Login";
+import Login_ from "./pages/Login/Login";
 import Logout_ from "./components/Logout";
 import Nav_ from "./components/Nav";
 import PageMenu_ from "./components/PageMenu";
-import Profile_ from "./components/Profile";
-import Search_ from "./components/Search";
-import Settings_ from "./components/Settings";
-import SettingsLoginForm_ from "./components/SettingsLoginForm";
-import View_ from "./components/View";
+import Profile_ from "./pages/Profile/Profile";
+import Search_ from "./pages/Search/Search";
+import Settings_ from "./pages/Settings/Settings";
+import SettingsLoginForm_ from "./pages/Settings/SettingsLoginForm";
+import View_ from "./pages/View/View";
 
 export { Browse_ as Browse };
 export { CategoryBrowse_ as CategoryBrowse };

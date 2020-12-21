@@ -1,48 +1,30 @@
 import React, { Component } from "react";
 
 import axios from "axios";
-import queryString from "query-string";
 
-import { Gallery, Nav, PageMenu } from "../components";
+import { Gallery, Nav } from "../../components";
 
-export default class CategoryBrowse extends Component {
+export default class Browse extends Component {
   constructor(props) {
     super(props);
     this.state = {
       auth: sessionStorage.getItem("auth") || localStorage.getItem("auth"),
-      category: this.props.match.params.category,
       isLoaded: false,
       metadata: {},
-      page: parseInt(queryString.parse(this.props.location.search).page) || 1,
-      pages: 1,
-      range: `${
-        queryString.parse(this.props.location.search).page === undefined
-          ? "0:16"
-          : `${
-              (parseInt(queryString.parse(this.props.location.search).page) -
-                1) *
-              16
-            }:${
-              parseInt(queryString.parse(this.props.location.search).page) * 16
-            }`
-      }`,
       server:
         sessionStorage.getItem("server") || localStorage.getItem("server"),
     };
   }
 
   componentDidMount() {
-    let { auth, category, range, server } = this.state;
+    let { auth, server } = this.state;
 
     axios
-      .get(
-        `${server}/api/v1/metadata?a=${auth}&c=${category}&r=${range}&s=alphabet-asc`
-      )
+      .get(`${server}/api/v1/metadata?a=${auth}&r=0:16&s=popularity-des`)
       .then((response) =>
         this.setState({
           isLoaded: true,
           metadata: response.data,
-          pages: Math.ceil(response.data[0]["length"] / 16),
         })
       )
       .catch((error) => {
@@ -67,13 +49,12 @@ export default class CategoryBrowse extends Component {
   }
 
   render() {
-    let { isLoaded, metadata, page, pages } = this.state;
+    let { isLoaded, metadata } = this.state;
 
     return isLoaded ? (
-      <div className="CategoryBrowse">
+      <div className="Browse">
         <Nav />
         <Gallery metadata={metadata} />
-        <PageMenu props={{ page: page, pages: pages }} />
       </div>
     ) : (
       <div className="Loading"></div>

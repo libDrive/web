@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import axios from "axios";
 
-import { Gallery, Nav } from "../components";
+import { Gallery, Nav } from "../../components";
 
 export default class Search extends Component {
   constructor(props) {
