@@ -10,18 +10,29 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.0",
+    "electron-serve": "^1.0.0",
     "plyr-react": "^3.0.7",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "electron": "^11.1.0",
+    "electron-builder": "^22.9.1",
+    "wait-on": "^5.2.0",
+    "yarn": "^1.22.10"
+  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "react-start": "react-scripts start",
+    "react-build": "react-scripts build",
+    "react-test": "react-scripts test",
+    "react-eject": "react-scripts eject",
+    "electron": "wait-on http://localhost:3000 && electron .",
+    "electron-start": "concurrently \"yarn run react-start\" \"yarn run electron\"",
+    "preelectron-build": "yarn run react-build",
+    "electron-build": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -31,6 +42,22 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/libDrive/frontend/issues"
+  },
+  "build": {
+    "appId": "com.eliasbenb.libdrive",
+    "icon": "public/favicon.ico",
+    "productName": "libDrive",
+    "copyright": "Copyright © 2020 ${author}",
+    "files": [
+      "build/**/*",
+      "public/electron.js"
+    ],
+    "extraMetadata": {
+      "main": "public/electron.js"
+    },
+    "win": {},
+    "linux": {},
+    "mac": {}
   },
   "browserslist": {
     "production": [
