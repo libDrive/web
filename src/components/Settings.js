@@ -1,13 +1,18 @@
 import React, { Component } from "react";
 
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import AddIcon from "@material-ui/icons/Add";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import MenuItem from "@material-ui/core/MenuItem";
+import RemoveIcon from "@material-ui/icons/Remove";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
 
-import { Nav, SettingsLoginForm } from "../components";
+import axios from "axios";
+
+import { Nav } from "../components";
 
 const styles = (theme) => ({
   Form: {
@@ -45,6 +50,8 @@ export class Settings extends Component {
     this.handleCategoryDriveIdChange = this.handleCategoryDriveIdChange.bind(
       this
     );
+    this.handleAddCategory = this.handleAddCategory.bind(this);
+    this.handleRemoveCategory = this.handleRemoveCategory.bind(this);
     this.handleSecretChange = this.handleSecretChange.bind(this);
     this.handleAccountUsernameChange = this.handleAccountUsernameChange.bind(
       this
@@ -53,6 +60,8 @@ export class Settings extends Component {
       this
     );
     this.handleAccountPicChange = this.handleAccountPicChange.bind(this);
+    this.handleAddAccount = this.handleAddAccount.bind(this);
+    this.handleRemoveAccount = this.handleRemoveAccount.bind(this);
     this.dismissError = this.dismissError.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -60,22 +69,35 @@ export class Settings extends Component {
   componentDidMount() {
     let { auth, secret, server } = this.state;
 
-    fetch(`${server}/api/v1/config?secret=${secret}`)
-      .then((response) => response.json())
-      .then((data) =>
+    axios
+      .get(`${server}/api/v1/config?secret=${secret}`)
+      .then((response) =>
         this.setState({
-          config: data,
-          postConfig: data,
-          tempSecret: data.secret_key,
+          config: response.data,
+          isLoaded: true,
+          postConfig: response.data,
+          tempSecret: response.data.secret_key,
         })
       )
-      .then(() => this.setState({ isLoaded: true }))
-      .catch((error) => this.props.history.push("/settings/login"));
-    fetch(`${server}/api/v1/auth?a=${auth}`).then((response) => {
-      if (!response.ok) {
-        window.location.href = "logout";
-      }
-    });
+      .catch((error) => {
+        if (error.response) {
+          if (error.response.status === 401) {
+            alert("Your credentials are invalid. Logging you out now.");
+            this.props.history.push("/settings/login");
+          } else {
+            alert("Something went wrong while communicating with the backend");
+            console.error(error);
+          }
+        } else if (error.request) {
+          alert(
+            `libDrive could not communicate with the backend. Is ${server} the correct address?`
+          );
+          console.error(error);
+        } else {
+          alert("Something seems to be wrong with the libDrive frontend");
+          console.error(error);
+        }
+      });
   }
 
   dismissError() {
@@ -100,6 +122,32 @@ export class Settings extends Component {
         );
       }
     });
+    axios
+      .post(`${server}/api/v1/config?secret=${secret}`, this.state.postConfig)
+      .then((response) => {
+        alert(
+          "The config has been updated on the backend. The backend may need to be restarted for some settings to update."
+        );
+      })
+      .catch((error) => {
+        if (error.response) {
+          if (error.response.status === 401) {
+            alert("Your credentials are invalid. Logging you out now.");
+            this.props.history.push("/settings/login");
+          } else {
+            alert("Something went wrong while communicating with the backend");
+            console.error(error);
+          }
+        } else if (error.request) {
+          alert(
+            `libDrive could not communicate with the backend. Is ${server} the correct address?`
+          );
+          console.error(error);
+        } else {
+          alert("Something seems to be wrong with the libDrive frontend");
+          console.error(error);
+        }
+      });
   }
 
   handleCategoryTypeChange(evt) {
@@ -150,6 +198,26 @@ export class Settings extends Component {
     });
   }
 
+  handleAddCategory(evt) {
+    var configCopy = this.state.postConfig;
+    configCopy.category_list.push({ type: "", name: "", id: "", driveId: "" });
+
+    this.setState({
+      postConfig: configCopy,
+    });
+  }
+
+  handleRemoveCategory(evt) {
+    var n = evt.target.id.split("_")[1];
+
+    var configCopy = this.state.postConfig;
+    configCopy.category_list.splice(n, 1);
+
+    this.setState({
+      postConfig: configCopy,
+    });
+  }
+
   handleSecretChange(evt) {
     var value = evt.target.value;
 
@@ -157,7 +225,7 @@ export class Settings extends Component {
     configCopy.secret_key = value;
 
     this.setState({
-      postConfig: newConfig,
+      postConfig: configCopy,
     });
   }
 
@@ -191,6 +259,26 @@ export class Settings extends Component {
 
     var configCopy = this.state.postConfig;
     configCopy.account_list[n].pic = value;
+
+    this.setState({
+      postConfig: configCopy,
+    });
+  }
+
+  handleAddAccount(evt) {
+    var configCopy = this.state.postConfig;
+    configCopy.account_list.push({ username: "", password: "", pic: "" });
+
+    this.setState({
+      postConfig: configCopy,
+    });
+  }
+
+  handleRemoveAccount(evt) {
+    var n = evt.target.id.split("_")[1];
+
+    var configCopy = this.state.postConfig;
+    configCopy.account_list.splice(n, 1);
 
     this.setState({
       postConfig: configCopy,
@@ -259,9 +347,19 @@ export class Settings extends Component {
                     value={this.state.postConfig.category_list[n].driveId}
                     onChange={this.handleCategoryDriveIdChange}
                   />
+                  <IconButton
+                    aria-label="remove"
+                    id={`category-remove_${n}`}
+                    onClick={this.handleRemoveCategory}
+                  >
+                    <RemoveIcon id={`category-remove_${n}`} />
+                  </IconButton>
                 </div>
               ))
             : null}
+          <IconButton aria-label="add" onClick={this.handleAddCategory}>
+            <AddIcon />
+          </IconButton>
           <a className="no_decoration_link" href="#secret">
             <Typography variant="h3">Secret Key</Typography>
           </a>
@@ -305,6 +403,13 @@ export class Settings extends Component {
                     value={this.state.postConfig.account_list[n].pic}
                     onChange={this.handleAccountPicChange}
                   />
+                  <IconButton
+                    aria-label="remove"
+                    id={`account-remove_${n}`}
+                    onClick={this.handleRemoveAccount}
+                  >
+                    <RemoveIcon id={`account-remove_${n}`} />
+                  </IconButton>
                   <div
                     style={{
                       display: "flex",
@@ -324,6 +429,10 @@ export class Settings extends Component {
                 </div>
               ))
             : null}
+          <IconButton aria-label="add" onClick={this.handleAddAccount}>
+            <AddIcon />
+          </IconButton>
+          <br></br>
           <Button
             type="submit"
             fullWidth

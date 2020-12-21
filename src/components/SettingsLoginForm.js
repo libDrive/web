@@ -11,6 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
+import axios from "axios";
+
 import { Nav } from "../components";
 
 const styles = (theme) => ({
@@ -61,14 +63,30 @@ class SettingsLoginForm extends Component {
       return this.setState({ error: "Secret is required" });
     }
 
-    fetch(`${server}/api/v1/config?secret=${secret}`)
+    axios
+      .get(`${server}/api/v1/config?secret=${secret}`)
       .then((response) => {
-        if (this.state.secret) {
-          sessionStorage.setItem("secret", secret);
-          this.props.history.push("/settings");
-        }
+        sessionStorage.setItem("secret", secret);
+        this.props.history.push("/settings");
       })
-      .catch((error) => alert("Something went wrong, check your credentials."));
+      .catch((error) => {
+        if (error.response) {
+          if (error.response.status === 401) {
+            alert("Your credentials are invalid");
+          } else {
+            alert("Something went wrong while communicating with the backend");
+            console.error(error);
+          }
+        } else if (error.request) {
+          alert(
+            `libDrive could not communicate with the backend. Is ${server} the correct address?`
+          );
+          console.error(error);
+        } else {
+          alert("Something seems to be wrong with the libDrive frontend");
+          console.error(error);
+        }
+      });
     return this.setState({ error: "" });
   }
 

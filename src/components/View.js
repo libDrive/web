@@ -8,6 +8,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Plyr from "plyr-react";
 import "plyr-react/dist/plyr.css";
 
+import axios from "axios";
+
 import { Nav } from "../components";
 import "./View.css";
 
@@ -40,6 +42,32 @@ export default class View extends Component {
         window.location.href = "logout";
       }
     });
+    axios
+      .get(`${server}/api/v1/metadata?a=${auth}&id=${id}`)
+      .then((response) => {
+        this.setState({
+          metadata: response.data,
+          isLoaded: true,
+        });
+      })
+      .catch((error) => {
+        if (error.response) {
+          if (error.response.status === 401) {
+            alert("Your credentials are invalid");
+          } else {
+            alert("Something went wrong while communicating with the backend");
+            console.error(error);
+          }
+        } else if (error.request) {
+          alert(
+            `libDrive could not communicate with the backend. Is ${server} the correct address?`
+          );
+          console.error(error);
+        } else {
+          alert("Something seems to be wrong with the libDrive frontend");
+          console.error(error);
+        }
+      });
   }
 
   render() {

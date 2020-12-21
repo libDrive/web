@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import axios from "axios";
+
 import { Gallery, Nav } from "../components";
 
 export default class Search extends Component {
@@ -18,19 +20,33 @@ export default class Search extends Component {
   componentDidMount() {
     let { auth, query, server } = this.state;
 
-    fetch(`${server}/api/v1/metadata?a=${auth}&q=${query}`)
-      .then((response) => response.json())
-      .then((data) =>
+    axios
+      .get(`${server}/api/v1/metadata?a=${auth}&q=${query}`)
+      .then((response) =>
         this.setState({
-          metadata: data,
           isLoaded: true,
+          metadata: response.data,
         })
-      );
-    fetch(`${server}/api/v1/auth?a=${auth}`).then((response) => {
-      if (!response.ok) {
-        window.location.href = "logout";
-      }
-    });
+      )
+      .catch((error) => {
+        if (error.response) {
+          if (error.response.status === 401) {
+            alert("Your credentials are invalid. Logging you out now.");
+            this.props.history.push("/logout");
+          } else {
+            alert("Something went wrong while communicating with the backend");
+            console.error(error);
+          }
+        } else if (error.request) {
+          alert(
+            `libDrive could not communicate with the backend. Is ${server} the correct address?`
+          );
+          console.error(error);
+        } else {
+          alert("Something seems to be wrong with the libDrive frontend");
+          console.error(error);
+        }
+      });
   }
 
   render() {

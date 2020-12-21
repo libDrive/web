@@ -13,6 +13,8 @@ import Typography from "@material-ui/core/Typography";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 
+import axios from "axios";
+
 export default class Nav extends Component {
   constructor(props) {
     super(props);
@@ -29,20 +31,39 @@ export default class Nav extends Component {
   componentDidMount() {
     let { auth, server } = this.state;
 
-    fetch(`${server}/api/v1/environment?a=${auth}`)
-      .then((response) => response.json())
-      .then((data) =>
+    axios
+      .get(`${server}/api/v1/environment?a=${auth}`)
+      .then((response) =>
         this.setState({
-          accounts: data.account_list,
-          categories: data.category_list,
+          accounts: response.data.account_list,
+          categories: response.data.category_list,
           isLoaded: true,
         })
-      );
+      )
+      .catch((error) => {
+        if (error.response) {
+          if (error.response.status === 401) {
+            alert("Your credentials are invalid. Logging you out now.");
+            this.props.history.push("/logout");
+          } else {
+            alert("Something went wrong while communicating with the backend");
+            console.error(error);
+          }
+        } else if (error.request) {
+          alert(
+            `libDrive could not communicate with the backend. Is ${server} the correct address?`
+          );
+          console.error(error);
+        } else {
+          alert("Something seems to be wrong with the libDrive frontend");
+          console.error(error);
+        }
+      });
   }
 
   render() {
     let { accounts, categories, isLoaded } = this.state;
-    
+
     return isLoaded ? (
       <div className="Nav">
         <NavUI
