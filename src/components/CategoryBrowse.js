@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import axios from "axios";
 import queryString from "query-string";
 
 import { Gallery, Nav, PageMenu } from "../components";
@@ -33,22 +34,36 @@ export default class CategoryBrowse extends Component {
   componentDidMount() {
     let { auth, category, range, server } = this.state;
 
-    fetch(
-      `${server}/api/v1/metadata?a=${auth}&c=${category}&r=${range}&s=alphabet-asc`
-    )
-      .then((response) => response.json())
-      .then((data) =>
+    axios
+      .get(
+        `${server}/api/v1/metadata?a=${auth}&c=${category}&r=${range}&s=alphabet-asc`
+      )
+      .then((response) =>
         this.setState({
-          metadata: data,
-          pages: Math.ceil(data[0]["length"] / 16),
           isLoaded: true,
+          metadata: response.data,
+          pages: Math.ceil(response.data[0]["length"] / 16),
         })
-      );
-    fetch(`${server}/api/v1/auth?a=${auth}`).then((response) => {
-      if (!response.ok) {
-        window.location.href = "logout";
-      }
-    });
+      )
+      .catch((error) => {
+        if (error.response) {
+          if (error.response.status === 401) {
+            alert("Your credentials are invalid. Logging you out now.");
+            this.props.history.push("/logout");
+          } else {
+            alert("Something went wrong while communicating with the backend");
+            console.error(error);
+          }
+        } else if (error.request) {
+          alert(
+            `libDrive could not communicate with the backend. Is ${server} the correct address?`
+          );
+          console.error(error);
+        } else {
+          alert("Something seems to be wrong with the libDrive frontend");
+          console.error(error);
+        }
+      });
   }
 
   render() {

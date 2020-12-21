@@ -11,6 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
+import axios from "axios";
+
 const styles = (theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -66,16 +68,14 @@ class Login extends Component {
     if (!password) {
       return this.setState({ error: "Password is required" });
     }
-    fetch(`${tempServer}/api/v1/auth?u=${username}&p=${password}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.auth) {
-          this.setState({
-            auth: data.auth,
-            server: tempServer,
-          });
-        }
-      })
+    axios
+      .get(`${tempServer}/api/v1/auth?u=${username}&p=${password}`)
+      .then((response) =>
+        this.setState({
+          auth: response.data.auth,
+          server: tempServer,
+        })
+      )
       .then(() => {
         if (auth && server) {
           localStorage.setItem("server", server);
@@ -85,7 +85,24 @@ class Login extends Component {
           this.props.history.push("/");
         }
       })
-      .catch((error) => alert("Something went wrong, check your credentials."));
+      .catch((error) => {
+        if (error.response) {
+          if (error.response.status === 401) {
+            alert("Your credentials are invalid");
+          } else {
+            alert("Something went wrong while communicating with the backend");
+            console.error(error);
+          }
+        } else if (error.request) {
+          alert(
+            `libDrive could not communicate with the backend. Is ${server} the correct address?`
+          );
+          console.error(error);
+        } else {
+          alert("Something seems to be wrong with the libDrive frontend");
+          console.error(error);
+        }
+      });
     return this.setState({ error: "" });
   }
 

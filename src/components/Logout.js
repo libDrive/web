@@ -5,6 +5,6 @@ export default class Logout extends Component {
   render() {
     localStorage.clear();
     sessionStorage.clear();
-    return <Redirect to="/" />;
+    return <Redirect to="/login" />;
   }
 }
