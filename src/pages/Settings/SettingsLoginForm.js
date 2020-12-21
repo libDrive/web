@@ -71,7 +71,7 @@ class SettingsLoginForm extends Component {
       })
       .catch((error) => {
         if (error.response) {
-          if (error.response.status === 401) {
+          if (error.response.status === 401 || 404) {
             alert("Your credentials are invalid");
           } else {
             alert("Something went wrong while communicating with the backend");
