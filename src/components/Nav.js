@@ -259,9 +259,6 @@ export function AccountMenu(props) {
         open={Boolean(menuAnchorEl)}
         onClose={handleClose}
       >
-        <a href={"/profile"} className="no_decoration_link">
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-        </a>
         <a href={"/settings"} className="no_decoration_link">
           <MenuItem onClick={handleClose}>Settings</MenuItem>
         </a>
