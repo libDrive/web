@@ -47,7 +47,7 @@ export default class CategoryBrowse extends Component {
       )
       .catch((error) => {
         if (error.response) {
-          if (error.response.status === 401) {
+          if (error.response.status === 401 || 404) {
             alert("Your credentials are invalid. Logging you out now.");
             this.props.history.push("/logout");
           } else {
