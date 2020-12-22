@@ -14,6 +14,7 @@ function createWindow() {
     width: 800,
     height: 600,
     fullscreen: true,
+    backgroundColor: "#111111",
     webPreferences: {
       nodeIntegration: true,
     },
