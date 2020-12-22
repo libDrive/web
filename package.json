@@ -2,6 +2,8 @@
   "name": "libdrive",
   "version": "0.1.0",
   "description": "Cloud media library",
+  "homepage": ".",
+  "main": "public/electron.js",
   "dependencies": {
     "@material-ui/core": "^4.11.1",
     "@material-ui/icons": "^4.9.1",
@@ -12,17 +14,19 @@
     "axios": "^0.21.0",
     "electron-serve": "^1.0.0",
     "plyr-react": "^3.0.7",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.1"
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
     "electron": "^11.1.0",
     "electron-builder": "^22.9.1",
-    "wait-on": "^5.2.0",
-    "yarn": "^1.22.10"
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.1",
+    "wait-on": "^5.2.0"
+  },
+  "resolutions": {
+    "wait-on/axios": "^0.21.1"
   },
   "scripts": {
     "react-start": "react-scripts start",
