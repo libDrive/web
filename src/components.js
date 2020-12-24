@@ -1,3 +1,4 @@
+import App_ from "./App";
 import Browse_ from "./pages/Browse/Browse";
 import CategoryBrowse_ from "./pages/Browse/CategoryBrowse";
 import Gallery_ from "./components/Gallery";
@@ -8,8 +9,11 @@ import PageMenu_ from "./components/PageMenu";
 import Search_ from "./pages/Search/Search";
 import Settings_ from "./pages/Settings/Settings";
 import SettingsLoginForm_ from "./pages/Settings/SettingsLoginForm";
+import theme_ from "./theme";
+import uuid_ from "./functions/uuid";
 import View_ from "./pages/View/View";
 
+export { App_ as App };
 export { Browse_ as Browse };
 export { CategoryBrowse_ as CategoryBrowse };
 export { Gallery_ as Gallery };
@@ -20,4 +24,6 @@ export { PageMenu_ as PageMenu };
 export { Search_ as Search };
 export { Settings_ as Settings };
 export { SettingsLoginForm_ as SettingsLoginForm };
+export { theme_ as theme };
+export { uuid_ as uuid };
 export { View_ as View };

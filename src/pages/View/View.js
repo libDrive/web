@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { Link } from "react-router-dom";
+
 import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
@@ -9,8 +11,9 @@ import Plyr from "plyr-react";
 import "plyr-react/dist/plyr.css";
 
 import axios from "axios";
+import queryString from "query-string";
 
-import { Nav } from "../../components";
+import { Nav, uuid } from "../../components";
 import "./View.css";
 
 export default class View extends Component {
@@ -26,24 +29,12 @@ export default class View extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     let { auth, id, server } = this.state;
+    let url = `${server}/api/v1/metadata?a=${auth}&id=${id}`;
 
-    fetch(`${server}/api/v1/metadata?a=${auth}&id=${id}`)
-      .then((response) => response.json())
-      .then((data) =>
-        this.setState({
-          metadata: data,
-          isLoaded: true,
-        })
-      );
-    fetch(`${server}/api/v1/auth?a=${auth}`).then((response) => {
-      if (!response.ok) {
-        window.location.href = "logout";
-      }
-    });
     axios
-      .get(`${server}/api/v1/metadata?a=${auth}&id=${id}`)
+      .get(url)
       .then((response) => {
         this.setState({
           metadata: response.data,
@@ -72,21 +63,23 @@ export default class View extends Component {
 
   render() {
     let { isLoaded, metadata } = this.state;
+    let state = this.state;
+    state["thisprops"] = this.props;
 
     return isLoaded && metadata.type == "file" ? (
       <div className="View">
         <Nav />
-        <MovieView props={this.state} />
+        <MovieView props={state} />
       </div>
     ) : isLoaded && metadata.type == "directory" && metadata.title ? (
       <div className="View">
         <Nav />
-        <TVBView props={this.state} />
+        <TVBView props={state} />
       </div>
     ) : isLoaded && metadata.type == "directory" ? (
       <div className="View">
         <Nav />
-        <TVSView props={this.state} />
+        <TVSView props={state} />
       </div>
     ) : (
       <div className="Loading"></div>
@@ -187,8 +180,9 @@ export function TVBView(props) {
 }
 
 export function TVSView(props) {
-  let { auth, id, metadata, server } = props.props;
-  let hash = parseInt(window.location.hash.substring(1)) || 0;
+  let { auth, id, metadata, server, thisprops } = props.props;
+  let hash = parseInt(queryString.parse(thisprops.location.search).q) || 0;
+  console.log(thisprops.location);
 
   function isHash(n, hash) {
     if (n === hash) {
@@ -250,10 +244,16 @@ export function TVSView(props) {
             {metadata.children.length
               ? metadata.children.map((child, n) => (
                   <li className={isHash(n, hash)}>
-                    <a href={`#${n}`}>
+                    <Link
+                      to={{
+                        pathname: thisprops.location.pathname,
+                        search: `?q=${n}`,
+                      }}
+                      key={uuid()}
+                    >
                       <img class="plyr-miniposter" />
                       {child.name}
-                    </a>
+                    </Link>
                   </li>
                 ))
               : null}
@@ -365,9 +365,13 @@ export function ChildrenMenu(props) {
       >
         {metadata.children.length
           ? metadata.children.map((child) => (
-              <a href={`/view/${child.id}`} className="no_decoration_link">
+              <Link
+                to={`/view/${child.id}`}
+                className="no_decoration_link"
+                key={uuid()}
+              >
                 <MenuItem onClick={handleClose}>{child.name}</MenuItem>
-              </a>
+              </Link>
             ))
           : null}
       </Menu>

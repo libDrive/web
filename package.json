@@ -2,7 +2,7 @@
   "name": "libdrive",
   "version": "0.1.0",
   "description": "Cloud media library",
-  "homepage": ".",
+  "homepage": "./",
   "main": "public/electron.js",
   "dependencies": {
     "@material-ui/core": "^4.11.1",

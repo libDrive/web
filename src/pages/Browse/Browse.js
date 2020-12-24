@@ -16,11 +16,12 @@ export default class Browse extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     let { auth, server } = this.state;
+    let url = `${server}/api/v1/metadata?a=${auth}&r=0:16&s=popularity-des`;
 
     axios
-      .get(`${server}/api/v1/metadata?a=${auth}&r=0:16&s=popularity-des`)
+      .get(url)
       .then((response) =>
         this.setState({
           isLoaded: true,

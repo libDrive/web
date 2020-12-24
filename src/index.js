@@ -1,30 +1,43 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Router, Route, withRouter } from "react-router-dom";
-import { createBrowserHistory } from "history";
+import { HashRouter, Route } from "react-router-dom";
+
 import { CssBaseline } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
 
-import App from "./App";
-import theme from "./theme";
-import { Browse, CategoryBrowse, Login, Logout, Search, Settings, SettingsLoginForm, View } from "./components";
+import {
+  App,
+  Browse,
+  CategoryBrowse,
+  Login,
+  Logout,
+  Search,
+  Settings,
+  SettingsLoginForm,
+  theme,
+  uuid,
+  View,
+} from "./components";
 import "./index.css";
 
-const history = createBrowserHistory();
 ReactDOM.render(
-  <Router history={history}>
+  <HashRouter>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-        <Route exact path={"/"} component={withRouter(App)} />
-        <Route exact path={"/browse"} component={withRouter(Browse)} />
-        <Route exact path={"/browse/:category"} component={withRouter(CategoryBrowse)} />
-        <Route exact path={"/login"} component={withRouter(Login)} />
-        <Route exact path={"/logout"} component={withRouter(Logout)} />
-        <Route exact path={"/search/:q"} component={withRouter(Search)} />
-        <Route exact path={"/settings"} component={withRouter(Settings)} />
-        <Route exact path={"/settings/login"} component={withRouter(SettingsLoginForm)} />
-        <Route exact path={"/view/:id"} component={withRouter(View)} />
+      <Route exact path={"/"} render={(props) => <App key={uuid()} {...props} />} />
+      <Route exact path={"/browse"} render={(props) => <Browse key={uuid()} {...props} />} />
+      <Route
+        exact
+        path={"/browse/:category"}
+        render={(props) => <CategoryBrowse key={uuid()} {...props} />}
+      />
+      <Route exact path={"/login"} render={(props) => <Login key={uuid()} {...props} />} />
+      <Route exact path={"/logout"} render={(props) => <Logout key={uuid()} {...props} />} />
+      <Route exact path={"/search/:q"} render={(props) => <Search key={uuid()} {...props} />} />
+      <Route exact path={"/settings"} render={(props) => <Settings key={uuid()} {...props} />} />
+      <Route exact path={"/settings/login"} render={(props) => <SettingsLoginForm key={uuid()} {...props} />} />
+      <Route exact path={"/view/:id"} render={(props) => <View key={uuid()} {...props} />} />
     </ThemeProvider>
-  </Router>,
+  </HashRouter>,
   document.getElementById("root")
 );

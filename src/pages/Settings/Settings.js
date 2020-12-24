@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { Link } from "react-router-dom";
+
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import AddIcon from "@material-ui/icons/Add";
 import Button from "@material-ui/core/Button";
@@ -12,7 +14,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 import axios from "axios";
 
-import { Nav } from "../../components";
+import { Nav, uuid } from "../../components";
 
 const styles = (theme) => ({
   Form: {
@@ -81,13 +83,11 @@ export class Settings extends Component {
       )
       .catch((error) => {
         console.error(error);
-        if (auth == null || server == null) {
-          alert("You are not authenticated");
-          this.props.history.push("/logout");
-        } else if (error.response) {
+        if (error.response) {
           if (error.response.status === 401) {
-            alert("Your credentials are invalid. Logging you out now.");
-            this.props.history.push("/logout");
+            alert("Your credentials are invalid.");
+            sessionStorage.removeItem("secret");
+            this.props.history.push("/settings/login");
           } else {
             alert("Something went wrong while communicating with the backend");
           }
@@ -296,9 +296,9 @@ export class Settings extends Component {
           autoComplete="off"
           onSubmit={this.handleSubmit}
         >
-          <a className="no_decoration_link" href="#categories">
+          <Link to="#categories" className="no_decoration_link">
             <Typography variant="h3">Categories</Typography>
-          </a>
+          </Link>
           {config.category_list.length
             ? config.category_list.map((category, n) => (
                 <div style={{ margin: "30px" }}>
@@ -311,13 +311,13 @@ export class Settings extends Component {
                     value={`${this.state.postConfig.category_list[n].type}_${n}`}
                     onChange={this.handleCategoryTypeChange}
                   >
-                    <MenuItem key="movies" value={`movies_${n}`}>
+                    <MenuItem key={uuid()} value={`movies_${n}`}>
                       Movies
                     </MenuItem>
-                    <MenuItem key="tv" value={`tv_${n}`}>
+                    <MenuItem key={uuid()} value={`tv_${n}`}>
                       TV Shows
                     </MenuItem>
-                    <MenuItem key="other" value={`other_${n}`}>
+                    <MenuItem key={uuid()} value={`other_${n}`}>
                       Other
                     </MenuItem>
                   </TextField>
@@ -358,9 +358,9 @@ export class Settings extends Component {
           <IconButton aria-label="add" onClick={this.handleAddCategory}>
             <AddIcon />
           </IconButton>
-          <a className="no_decoration_link" href="#accounts">
+          <Link to="#accounts" className="no_decoration_link">
             <Typography variant="h3">Accounts</Typography>
-          </a>
+          </Link>
           {config.account_list.length
             ? config.account_list.map((account, n) => (
                 <div style={{ margin: "30px" }}>
@@ -418,9 +418,9 @@ export class Settings extends Component {
           <IconButton aria-label="add" onClick={this.handleAddAccount}>
             <AddIcon />
           </IconButton>
-          <a className="no_decoration_link" href="#secret">
+          <Link to="#secret" className="no_decoration_link">
             <Typography variant="h3">Secret Key</Typography>
-          </a>
+          </Link>
           <TextField
             className="TextField"
             id="outlined-basic"

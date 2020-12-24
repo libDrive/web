@@ -1,10 +1,12 @@
 import React from "react";
 
-import { Redirect, useHistory } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Pagination from "@material-ui/lab/Pagination";
 import PaginationItem from "@material-ui/lab/PaginationItem";
+
+import { uuid } from "../components";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,13 +20,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PageMenu(props) {
-  let { page, pages } = props.props;
-  let history = useHistory();
+  let { page, pages, thisprops } = props.props;
   const classes = useStyles();
 
   if (page > pages) {
-    history.push(`${window.location.pathname}?page=${pages}`);
-    history.go();
+    return (
+      <Redirect
+        to={{
+          pathname: thisprops.location.pathname,
+          search: `?page=${pages}`,
+        }}
+      />
+    );
   } else {
     return (
       <div className={classes.root}>
@@ -34,14 +41,16 @@ export default function PageMenu(props) {
           variant="outlined"
           color="primary"
           renderItem={(item) => (
-            <a
-              href={`${window.location.pathname}${
-                item.page === 1 ? "" : `?page=${item.page}`
-              }`}
+            <Link
+              to={{
+                pathname: thisprops.location.pathname,
+                search: `?page=${item.page}`,
+              }}
+              key={uuid()}
               className="no_decoration_link"
             >
               <PaginationItem {...item} />
-            </a>
+            </Link>
           )}
         />
       </div>
