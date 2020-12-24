@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-import { withRouter } from "react-router-dom";
-
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -57,7 +55,7 @@ class SettingsLoginForm extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    let { auth, secret, server } = this.state;
+    let { secret, server } = this.state;
 
     if (!secret) {
       return this.setState({ error: "Secret is required" });
@@ -71,13 +69,9 @@ class SettingsLoginForm extends Component {
       })
       .catch((error) => {
         console.error(error);
-        if (auth == null || server == null) {
-          alert("You are not authenticated");
-          this.props.history.push("/logout");
-        } else if (error.response) {
+        if (error.response) {
           if (error.response.status === 401) {
-            alert("Your credentials are invalid. Logging you out now.");
-            this.props.history.push("/logout");
+            alert("Your credentials are invalid.");
           } else {
             alert("Something went wrong while communicating with the backend");
           }
@@ -157,6 +151,4 @@ class SettingsLoginForm extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(
-  withRouter(SettingsLoginForm)
-);
+export default withStyles(styles, { withTheme: true })(SettingsLoginForm);

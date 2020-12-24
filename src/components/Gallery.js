@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 
+import { Link } from "react-router-dom";
+
 import { Typography } from "@material-ui/core";
 
+import { uuid } from "../components";
 import "./Gallery.css";
 
 export default class Gallery extends Component {
@@ -14,30 +17,41 @@ export default class Gallery extends Component {
 
   render() {
     let { metadata } = this.state;
-    
+
     return (
       <div className="Gallery">
         {metadata.length
           ? metadata.map((category) => (
-              <div className="category">
-                <a
-                  href={`/browse/${category.name}`}
+              <div className="category" key={uuid()}>
+                <Link
+                  to={`/browse/${category.name}`}
+                  key={uuid()}
                   className="category__title no_decoration_link"
                 >
                   {category.name}
-                </a>
+                </Link>
                 <div className="items">
                   {category.children.length
                     ? category.children.map((item) => (
-                        <figure className="item__figure">
-                          <a href={`/view/${item.id}`} key={item.id}>
+                        <figure
+                          className="item__figure"
+                          key={uuid()}
+                        >
+                          <Link
+                            to={`/view/${item.id}`}
+                            key={uuid()}
+                          >
                             <img
                               src={item.posterPath}
+                              key={uuid()}
                               className="item__poster"
                               alt={item.title}
                             />
-                          </a>
-                          <Typography className="item__title">
+                          </Link>
+                          <Typography
+                            className="item__title"
+                            key={uuid()}
+                          >
                             {item.title}
                           </Typography>
                         </figure>

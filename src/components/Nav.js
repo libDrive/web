@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 
-import { useHistory } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
@@ -15,6 +15,8 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 
 import axios from "axios";
 
+import { uuid } from "../components";
+
 export default class Nav extends Component {
   constructor(props) {
     super(props);
@@ -28,11 +30,12 @@ export default class Nav extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     let { auth, server } = this.state;
+    let url = `${server}/api/v1/environment?a=${auth}`;
 
     axios
-      .get(`${server}/api/v1/environment?a=${auth}`)
+      .get(url)
       .then((response) =>
         this.setState({
           accounts: response.data.account_list,
@@ -73,7 +76,7 @@ export default class Nav extends Component {
         />
       </div>
     ) : (
-      <div className="Nav"></div>
+      <div className="Loading"></div>
     );
   }
 }
@@ -135,26 +138,26 @@ const useStyles = makeStyles((theme) => ({
 
 export function NavUI(props) {
   const classes = useStyles();
-  let history = useHistory();
 
   const [search, setSearch] = useState("");
   const searchChange = (evt) => {
     setSearch(evt.target.value);
   };
+
   const searchSubmit = (evt) => {
     evt.preventDefault();
-    history.push(`/search/${search}`);
-    history.go();
+    window.location.hash = `#/search/${search}`;
   };
+
   return (
     <div className={classes.grow}>
       <AppBar position="static" className={classes.root}>
         <Toolbar>
-          <a href="/" className="no_decoration_link">
+          <Link to="/" className="no_decoration_link">
             <Typography className={classes.title} variant="h6" noWrap>
               libDrive
             </Typography>
-          </a>
+          </Link>
           <form className={classes.search} onSubmit={searchSubmit}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -210,12 +213,13 @@ export function BrowseMenu(props) {
       >
         {props.props.length
           ? props.props.map((category) => (
-              <a
-                href={`/browse/${category.name}`}
+              <Link
+                to={`/browse/${category.name}`}
+                key={uuid()}
                 className="no_decoration_link"
               >
                 <MenuItem onClick={handleClose}>{category.name}</MenuItem>
-              </a>
+              </Link>
             ))
           : null}
       </Menu>
@@ -258,12 +262,12 @@ export function AccountMenu(props) {
         open={Boolean(menuAnchorEl)}
         onClose={handleClose}
       >
-        <a href={"/settings"} className="no_decoration_link">
+        <Link to={"/settings"} className="no_decoration_link">
           <MenuItem onClick={handleClose}>Settings</MenuItem>
-        </a>
-        <a href={"/logout"} className="no_decoration_link">
+        </Link>
+        <Link to={"/logout"} className="no_decoration_link">
           <MenuItem onClick={handleClose}>Logout</MenuItem>
-        </a>
+        </Link>
       </Menu>
     </div>
   );

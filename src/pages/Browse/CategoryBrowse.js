@@ -14,7 +14,6 @@ export default class CategoryBrowse extends Component {
       isLoaded: false,
       metadata: {},
       page: parseInt(queryString.parse(this.props.location.search).page) || 1,
-      pages: 1,
       range: `${
         queryString.parse(this.props.location.search).page === undefined
           ? "0:16"
@@ -31,13 +30,12 @@ export default class CategoryBrowse extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     let { auth, category, range, server } = this.state;
+    let url = `${server}/api/v1/metadata?a=${auth}&c=${category}&r=${range}&s=alphabet-asc`;
 
     axios
-      .get(
-        `${server}/api/v1/metadata?a=${auth}&c=${category}&r=${range}&s=alphabet-asc`
-      )
+      .get(url)
       .then((response) =>
         this.setState({
           isLoaded: true,
@@ -72,7 +70,7 @@ export default class CategoryBrowse extends Component {
       <div className="CategoryBrowse">
         <Nav />
         <Gallery metadata={metadata} />
-        <PageMenu props={{ page: page, pages: pages }} />
+        <PageMenu props={{ page: page, pages: pages, thisprops: this.props }} />
       </div>
     ) : (
       <div className="Loading"></div>

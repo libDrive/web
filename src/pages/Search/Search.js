@@ -17,11 +17,12 @@ export default class Search extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     let { auth, query, server } = this.state;
+    let url = `${server}/api/v1/metadata?a=${auth}&q=${query}`;
 
     axios
-      .get(`${server}/api/v1/metadata?a=${auth}&q=${query}`)
+      .get(url)
       .then((response) =>
         this.setState({
           isLoaded: true,
