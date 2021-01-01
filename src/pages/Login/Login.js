@@ -39,7 +39,7 @@ class Login extends Component {
       error: "",
       password: "",
       server: "",
-      tempServer: "",
+      tempServer: "http://localhost:31145",
       username: "",
     };
 
