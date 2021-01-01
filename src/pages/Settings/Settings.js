@@ -296,9 +296,7 @@ export class Settings extends Component {
           autoComplete="off"
           onSubmit={this.handleSubmit}
         >
-          <Link to="#categories" className="no_decoration_link">
-            <Typography variant="h3">Categories</Typography>
-          </Link>
+          <Typography variant="h3">Categories</Typography>
           {config.category_list.length
             ? config.category_list.map((category, n) => (
                 <div style={{ margin: "30px" }}>
@@ -358,9 +356,7 @@ export class Settings extends Component {
           <IconButton aria-label="add" onClick={this.handleAddCategory}>
             <AddIcon />
           </IconButton>
-          <Link to="#accounts" className="no_decoration_link">
-            <Typography variant="h3">Accounts</Typography>
-          </Link>
+          <Typography variant="h3">Accounts</Typography>
           {config.account_list.length
             ? config.account_list.map((account, n) => (
                 <div style={{ margin: "30px" }}>
@@ -418,9 +414,7 @@ export class Settings extends Component {
           <IconButton aria-label="add" onClick={this.handleAddAccount}>
             <AddIcon />
           </IconButton>
-          <Link to="#secret" className="no_decoration_link">
-            <Typography variant="h3">Secret Key</Typography>
-          </Link>
+          <Typography variant="h3">Secret Key</Typography>
           <TextField
             className="TextField"
             id="outlined-basic"
@@ -430,7 +424,7 @@ export class Settings extends Component {
             value={this.state.postConfig.secret_key}
             onChange={this.handleSecretChange}
           />
-          <br></br>
+          <br />
           <Button
             type="submit"
             fullWidth
