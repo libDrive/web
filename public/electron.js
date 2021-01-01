@@ -17,14 +17,13 @@ function createWindow() {
     backgroundColor: "#111111",
     webPreferences: {
       nodeIntegration: true,
+      contextIsolation: true
     },
     icon: isDev()
       ? path.join(process.cwd(), "public/assets/favicon.ico")
       : path.join(__dirname, "build/assets/favicon.ico"),
     show: false,
   });
-
-  mainWindow.maximize()
 
   if (isDev()) {
     mainWindow.loadURL("http://localhost:3000/");

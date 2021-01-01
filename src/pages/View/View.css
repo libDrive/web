@@ -1,5 +1,7 @@
 :root {
   --plyr-color-main: #4197fe;
+  --plyr-menu-background: #111;
+  --plyr-menu-color: #ffffff;
 }
 
 .plyr__component {
