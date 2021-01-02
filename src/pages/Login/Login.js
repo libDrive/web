@@ -39,7 +39,7 @@ class Login extends Component {
       error: "",
       password: "",
       server: "",
-      tempServer: "http://localhost:31145",
+      tempServer: window.location.origin,
       username: "",
     };
 
@@ -193,7 +193,6 @@ class Login extends Component {
               variant="contained"
               color="primary"
               className={classes.submit}
-              block
             >
               Sign In
             </Button>
