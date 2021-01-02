@@ -2,8 +2,10 @@ import React, { Component, useState } from "react";
 
 import { Link, Redirect } from "react-router-dom";
 import { fade, makeStyles } from "@material-ui/core/styles";
+import AccountCircle from "@material-ui/icons/AccountCircle";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
 import Menu from "@material-ui/core/Menu";
@@ -11,7 +13,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import SearchIcon from "@material-ui/icons/Search";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 
 import axios from "axios";
 
@@ -211,6 +212,10 @@ export function BrowseMenu(props) {
         open={Boolean(menuAnchorEl)}
         onClose={handleClose}
       >
+        <Link to={"/"} className="no_decoration_link">
+          <MenuItem onClick={handleClose}>Home Page</MenuItem>
+        </Link>
+        <Divider light />
         {props.props.length
           ? props.props.map((category) => (
               <Link

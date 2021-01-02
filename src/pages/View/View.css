@@ -177,3 +177,14 @@
 .button {
   margin-right: 15px;
 }
+
+@media screen and (max-width: 800px) {
+  .info__left {
+    margin: 0;
+    width: 0;
+  }
+  .info__right {
+    margin: 0;
+    max-width: 70vw;
+  }
+}
