@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-import { Link } from "react-router-dom";
-
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import AddIcon from "@material-ui/icons/Add";
 import Button from "@material-ui/core/Button";
