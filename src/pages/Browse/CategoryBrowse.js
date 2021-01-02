@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import ClipLoader from "react-spinners/ClipLoader";
+
 import axios from "axios";
 import queryString from "query-string";
 
@@ -73,7 +75,9 @@ export default class CategoryBrowse extends Component {
         <PageMenu props={{ page: page, pages: pages, thisprops: this.props }} />
       </div>
     ) : (
-      <div className="Loading"></div>
+      <div className="Loading">
+        <ClipLoader color="#4197fe" size={75} />
+      </div>
     );
   }
 }

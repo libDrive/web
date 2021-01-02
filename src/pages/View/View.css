@@ -5,6 +5,7 @@
 }
 
 .plyr__component {
+  width: 1500px;
   max-width: 90vw;
   margin: 5vh auto;
 }
@@ -135,6 +136,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 1500px;
   max-width: 90vw;
   margin: 50px auto;
 }
