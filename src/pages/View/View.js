@@ -111,20 +111,13 @@ export function MovieView(props) {
           }}
           options={{
             controls: [
-              "play-large",
-              "rewind",
               "play",
-              "fast-forward",
               "progress",
               "current-time",
               "duration",
               "mute",
               "volume",
-              "captions",
-              "settings",
               "pip",
-              "airplay",
-              "download",
               "fullscreen",
             ],
           }}
@@ -225,20 +218,13 @@ export function TVSView(props) {
           }}
           options={{
             controls: [
-              "play-large",
-              "rewind",
               "play",
-              "fast-forward",
               "progress",
               "current-time",
               "duration",
               "mute",
               "volume",
-              "captions",
-              "settings",
               "pip",
-              "airplay",
-              "download",
               "fullscreen",
             ],
           }}

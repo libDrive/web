@@ -11,10 +11,10 @@ import { uuid } from "../components";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
-      position: "absolute",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      marginTop: theme.spacing(4),
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      margin: theme.spacing(4),
     },
   },
 }));

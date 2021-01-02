@@ -23,7 +23,8 @@ figure {
 .item__figure {
   position: relative;
   transition: all 0.25s ease-in-out;
-  max-width: 175px;
+  width: 175px;
+  max-width: 35vw
 }
 
 .item__figure:hover {

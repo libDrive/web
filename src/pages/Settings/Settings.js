@@ -343,6 +343,7 @@ export class Settings extends Component {
                     value={this.state.postConfig.category_list[n].driveId}
                     onChange={this.handleCategoryDriveIdChange}
                   />
+                  <br />
                   <IconButton
                     aria-label="remove"
                     id={`category-remove_${n}`}
@@ -385,6 +386,7 @@ export class Settings extends Component {
                     value={this.state.postConfig.account_list[n].pic}
                     onChange={this.handleAccountPicChange}
                   />
+                  <br />
                   <IconButton
                     aria-label="remove"
                     id={`account-remove_${n}`}
