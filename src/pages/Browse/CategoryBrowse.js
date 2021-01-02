@@ -5,7 +5,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import axios from "axios";
 import queryString from "query-string";
 
-import { Gallery, Nav, PageMenu } from "../../components";
+import { Footer, Gallery, Nav, PageMenu } from "../../components";
 
 export default class CategoryBrowse extends Component {
   constructor(props) {
@@ -73,6 +73,7 @@ export default class CategoryBrowse extends Component {
         <Nav />
         <Gallery metadata={metadata} />
         <PageMenu props={{ page: page, pages: pages, thisprops: this.props }} />
+        <Footer />
       </div>
     ) : (
       <div className="Loading">

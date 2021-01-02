@@ -14,7 +14,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 import axios from "axios";
 
-import { Nav, uuid } from "../../components";
+import { Form, Nav, uuid } from "../../components";
 
 const styles = (theme) => ({
   Form: {
@@ -438,6 +438,7 @@ export class Settings extends Component {
             Submit
           </Button>
         </form>
+        <Footer />
       </div>
     ) : (
       <div className="Loading">
