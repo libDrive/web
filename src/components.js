@@ -1,6 +1,7 @@
 import App_ from "./App";
 import Browse_ from "./pages/Browse/Browse";
 import CategoryBrowse_ from "./pages/Browse/CategoryBrowse";
+import Footer_ from "./components/Footer";
 import Gallery_ from "./components/Gallery";
 import Login_ from "./pages/Login/Login";
 import Logout_ from "./components/Logout";
@@ -16,6 +17,7 @@ import View_ from "./pages/View/View";
 export { App_ as App };
 export { Browse_ as Browse };
 export { CategoryBrowse_ as CategoryBrowse };
+export { Footer_ as Footer };
 export { Gallery_ as Gallery };
 export { Login_ as Login };
 export { Logout_ as Logout };

@@ -15,7 +15,7 @@ import "plyr-react/dist/plyr.css";
 import axios from "axios";
 import queryString from "query-string";
 
-import { Nav, uuid } from "../../components";
+import { Footer, Nav, uuid } from "../../components";
 import "./View.css";
 
 export default class View extends Component {
@@ -365,6 +365,7 @@ export function ChildrenMenu(props) {
             ))
           : null}
       </Menu>
+      <Footer />
     </div>
   );
 }

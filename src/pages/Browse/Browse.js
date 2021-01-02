@@ -4,7 +4,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 import axios from "axios";
 
-import { Gallery, Nav } from "../../components";
+import { Footer, Gallery, Nav } from "../../components";
 
 export default class Browse extends Component {
   constructor(props) {
@@ -57,6 +57,7 @@ export default class Browse extends Component {
       <div className="Browse">
         <Nav />
         <Gallery metadata={metadata} />
+        <Footer />
       </div>
     ) : (
       <div className="Loading">
