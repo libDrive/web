@@ -12,6 +12,8 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
 
+import ClipLoader from "react-spinners/ClipLoader";
+
 import axios from "axios";
 
 import { Nav, uuid } from "../../components";
@@ -438,7 +440,9 @@ export class Settings extends Component {
         </form>
       </div>
     ) : (
-      <div className="Loading"></div>
+      <div className="Loading">
+        <ClipLoader color="#4197fe" size={75} />
+      </div>
     );
   }
 }

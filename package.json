@@ -14,7 +14,8 @@
     "axios": "^0.21.0",
     "electron-serve": "^1.0.0",
     "plyr-react": "^3.0.7",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "react-spinners": "^0.10.2"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",

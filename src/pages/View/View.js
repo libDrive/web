@@ -7,6 +7,8 @@ import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
+import ClipLoader from "react-spinners/ClipLoader";
+
 import Plyr from "plyr-react";
 import "plyr-react/dist/plyr.css";
 
@@ -82,7 +84,9 @@ export default class View extends Component {
         <TVSView props={state} />
       </div>
     ) : (
-      <div className="Loading"></div>
+      <div className="Loading">
+        <ClipLoader color="#4197fe" size={75} />
+      </div>
     );
   }
 }

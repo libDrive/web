@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import ClipLoader from "react-spinners/ClipLoader";
+
 import axios from "axios";
 
 import { Gallery, Nav } from "../../components";
@@ -58,7 +60,9 @@ export default class Search extends Component {
         <Gallery metadata={metadata} />
       </div>
     ) : (
-      <div className="Loading"></div>
+      <div className="Loading">
+        <ClipLoader color="#4197fe" size={75} />
+      </div>
     );
   }
 }
