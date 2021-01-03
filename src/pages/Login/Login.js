@@ -9,6 +9,9 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
+import Swal from "sweetalert2";
+import "@sweetalert2/theme-dark/dark.css";
+
 import axios from "axios";
 
 const styles = (theme) => ({
@@ -86,19 +89,31 @@ class Login extends Component {
       .catch((error) => {
         console.error(error);
         if (auth == null || server == null) {
-          alert("You are not authenticated");
-          this.props.history.push("/logout");
+          this.props.history.push("/login");
         } else if (error.response) {
           if (error.response.status === 401) {
-            alert("Your credentials are invalid. Logging you out now.");
-            this.props.history.push("/logout");
+            Swal.fire({
+              title: "Error!",
+              text: "Your credentials are invalid!",
+              icon: "error",
+              confirmButtonText: "OK",
+            });
           } else {
-            alert("Something went wrong while communicating with the backend");
+            Swal.fire({
+              title: "Error!",
+              text:
+                "Something went wrong while communicating with the backend!",
+              icon: "error",
+              confirmButtonText: "OK",
+            });
           }
         } else if (error.request) {
-          alert(
-            `libDrive could not communicate with the backend. Is ${server} the correct address?`
-          );
+          Swal.fire({
+            title: "Error!",
+            text: `libDrive could not communicate with the backend! Is ${tempServer} the correct address?`,
+            icon: "error",
+            confirmButtonText: "OK",
+          });
         }
       });
     return this.setState({ error: "" });

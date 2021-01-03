@@ -12,9 +12,12 @@ import { withStyles } from "@material-ui/core/styles";
 
 import ClipLoader from "react-spinners/ClipLoader";
 
+import Swal from "sweetalert2";
+import "@sweetalert2/theme-dark/dark.css";
+
 import axios from "axios";
 
-import { Form, Nav, uuid } from "../../components";
+import { Footer, Nav, uuid } from "../../components";
 
 const styles = (theme) => ({
   Form: {
@@ -68,8 +71,8 @@ export class Settings extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    let { auth, secret, server } = this.state;
+  async componentDidMount() {
+    let { secret, server } = this.state;
 
     axios
       .get(`${server}/api/v1/config?secret=${secret}`)
@@ -85,16 +88,50 @@ export class Settings extends Component {
         console.error(error);
         if (error.response) {
           if (error.response.status === 401) {
-            alert("Your credentials are invalid.");
-            sessionStorage.removeItem("secret");
-            this.props.history.push("/settings/login");
+            Swal.fire({
+              title: "Error!",
+              text: "Your credentials are invalid!",
+              icon: "error",
+              confirmButtonText: "Login",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                sessionStorage.removeItem("secret");
+                this.props.history.push("/settings/login");
+              }
+            });
           } else {
-            alert("Something went wrong while communicating with the backend");
+            Swal.fire({
+              title: "Error!",
+              text:
+                "Something went wrong while communicating with the backend!",
+              icon: "error",
+              confirmButtonText: "Logout",
+              cancelButtonText: "Retry",
+              showCancelButton: true,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.props.history.push("/logout");
+              } else if (result.isDenied) {
+                location.reload();
+              }
+            });
           }
         } else if (error.request) {
-          alert(
-            `libDrive could not communicate with the backend. Is ${server} the correct address?`
-          );
+          Swal.fire({
+            title: "Error!",
+            text: `libDrive could not communicate with the backend! Is ${server} the correct address?`,
+            icon: "error",
+            confirmButtonText: "Logout",
+            cancelButtonText: "Retry",
+            showCancelButton: true,
+          }).then((result) => {
+            console.log(result);
+            if (result.isConfirmed) {
+              this.props.history.push("/logout");
+            } else if (result.isDismissed) {
+              location.reload();
+            }
+          });
         }
       });
   }
@@ -107,43 +144,67 @@ export class Settings extends Component {
     evt.preventDefault();
     let { secret, server } = this.state;
 
-    fetch(`${server}/api/v1/config?secret=${secret}`, {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(this.state.postConfig),
-    }).then((response) => {
-      if (response.ok) {
-        alert(
-          "The config has been updated on the backend. The backend may need to be restarted for some settings to update."
-        );
-      }
-    });
     axios
       .post(`${server}/api/v1/config?secret=${secret}`, this.state.postConfig)
       .then((response) => {
-        alert(
-          "The config has been updated on the backend. The backend may need to be restarted for some settings to update."
-        );
+        Swal.fire({
+          title: "Success!",
+          text:
+            "The config has been updated on the backend! The backend might need to be restarted for some changes to take effect.",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
       })
       .catch((error) => {
         console.error(error);
         if (auth == null || server == null) {
-          alert("You are not authenticated");
-          this.props.history.push("/logout");
+          this.props.history.push("/login");
         } else if (error.response) {
           if (error.response.status === 401) {
-            alert("Your credentials are invalid. Logging you out now.");
-            this.props.history.push("/logout");
+            Swal.fire({
+              title: "Error!",
+              text: "Your credentials are invalid!",
+              icon: "error",
+              confirmButtonText: "Logout",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                sessionStorage.removeItem("secret");
+                this.props.history.push("/settings/login");
+              }
+            });
           } else {
-            alert("Something went wrong while communicating with the backend");
+            Swal.fire({
+              title: "Error!",
+              text:
+                "Something went wrong while communicating with the backend!",
+              icon: "error",
+              confirmButtonText: "Logout",
+              cancelButtonText: "Retry",
+              showCancelButton: true,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.props.history.push("/logout");
+              } else if (result.isDenied) {
+                location.reload();
+              }
+            });
           }
         } else if (error.request) {
-          alert(
-            `libDrive could not communicate with the backend. Is ${server} the correct address?`
-          );
+          Swal.fire({
+            title: "Error!",
+            text: `libDrive could not communicate with the backend! Is ${server} the correct address?`,
+            icon: "error",
+            confirmButtonText: "Logout",
+            cancelButtonText: "Retry",
+            showCancelButton: true,
+          }).then((result) => {
+            console.log(result);
+            if (result.isConfirmed) {
+              this.props.history.push("/logout");
+            } else if (result.isDismissed) {
+              location.reload();
+            }
+          });
         }
       });
   }
