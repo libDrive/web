@@ -8,5 +8,20 @@
 }
 
 .footer__text {
-  margin-left: 20px;
+  margin: 10px;
+}
+
+.footer__github {
+  display: flex;
+  margin: 10px;
+}
+
+@media screen and (max-width: 360px) {
+  .footer__github {
+    display: none;
+    margin: 0;
+  }
+  .footer__text {
+    margin: 0;
+  }
 }
