@@ -108,16 +108,19 @@ export default class View extends Component {
       <div className="View">
         <Nav />
         <MovieView props={state} />
+        <Footer />
       </div>
     ) : isLoaded && metadata.type == "directory" && metadata.title ? (
       <div className="View">
         <Nav />
         <TVBView props={state} />
+        <Footer />
       </div>
     ) : isLoaded && metadata.type == "directory" ? (
       <div className="View">
         <Nav />
         <TVSView props={state} />
+        <Footer />
       </div>
     ) : (
       <div className="Loading">
@@ -401,7 +404,6 @@ export function ChildrenMenu(props) {
             ))
           : null}
       </Menu>
-      <Footer />
     </div>
   );
 }
