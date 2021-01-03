@@ -38,66 +38,13 @@ export default class Nav extends Component {
     let { auth, server } = this.state;
     let url = `${server}/api/v1/environment?a=${auth}`;
 
-    axios
-      .get(url)
-      .then((response) =>
-        this.setState({
-          accounts: response.data.account_list,
-          categories: response.data.category_list,
-          isLoaded: true,
-        })
-      )
-      .catch((error) => {
-        console.error(error);
-        if (auth == null || server == null) {
-          this.props.history.push("/login");
-        } else if (error.response) {
-          if (error.response.status === 401) {
-            Swal.fire({
-              title: "Error!",
-              text: "Your credentials are invalid!",
-              icon: "error",
-              confirmButtonText: "Logout",
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.props.history.push("/logout");
-              }
-            });
-          } else {
-            Swal.fire({
-              title: "Error!",
-              text:
-                "Something went wrong while communicating with the backend!",
-              icon: "error",
-              confirmButtonText: "Logout",
-              cancelButtonText: "Retry",
-              showCancelButton: true,
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.props.history.push("/logout");
-              } else if (result.isDenied) {
-                location.reload();
-              }
-            });
-          }
-        } else if (error.request) {
-          Swal.fire({
-            title: "Error!",
-            text: `libDrive could not communicate with the backend! Is ${server} the correct address?`,
-            icon: "error",
-            confirmButtonText: "Logout",
-            cancelButtonText: "Retry",
-            showCancelButton: true,
-          }).then((result) => {
-            console.log(result);
-            if (result.isConfirmed) {
-              this.props.history.push("/logout");
-            } else if (result.isDismissed) {
-              location.reload();
-            }
-          });
-        }
-      });
+    axios.get(url).then((response) =>
+      this.setState({
+        accounts: response.data.account_list,
+        categories: response.data.category_list,
+        isLoaded: true,
+      })
+    );
   }
 
   render() {
@@ -113,7 +60,7 @@ export default class Nav extends Component {
         />
       </div>
     ) : (
-      <div className="Loading"></div>
+      <div className="Loading" style={{ display: "none" }}></div>
     );
   }
 }

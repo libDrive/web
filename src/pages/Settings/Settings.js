@@ -49,6 +49,10 @@ export class Settings extends Component {
         sessionStorage.getItem("server") || localStorage.getItem("server"),
     };
 
+    this.handleAccessTokenChange = this.handleAccessTokenChange.bind(this);
+    this.handleClientIDChange = this.handleClientIDChange.bind(this);
+    this.handleClientSecretChange = this.handleClientSecretChange.bind(this);
+    this.handleRefreshTokenChange = this.handleRefreshTokenChange.bind(this);
     this.handleCategoryTypeChange = this.handleCategoryTypeChange.bind(this);
     this.handleCategoryNameChange = this.handleCategoryNameChange.bind(this);
     this.handleCategoryIdChange = this.handleCategoryIdChange.bind(this);
@@ -57,7 +61,6 @@ export class Settings extends Component {
     );
     this.handleAddCategory = this.handleAddCategory.bind(this);
     this.handleRemoveCategory = this.handleRemoveCategory.bind(this);
-    this.handleSecretChange = this.handleSecretChange.bind(this);
     this.handleAccountUsernameChange = this.handleAccountUsernameChange.bind(
       this
     );
@@ -67,6 +70,8 @@ export class Settings extends Component {
     this.handleAccountPicChange = this.handleAccountPicChange.bind(this);
     this.handleAddAccount = this.handleAddAccount.bind(this);
     this.handleRemoveAccount = this.handleRemoveAccount.bind(this);
+    this.handleSecretChange = this.handleSecretChange.bind(this);
+    this.handleTMDBAPIKeyChange = this.handleTMDBAPIKeyChange.bind(this);
     this.dismissError = this.dismissError.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -157,9 +162,7 @@ export class Settings extends Component {
       })
       .catch((error) => {
         console.error(error);
-        if (auth == null || server == null) {
-          this.props.history.push("/login");
-        } else if (error.response) {
+        if (error.response) {
           if (error.response.status === 401) {
             Swal.fire({
               title: "Error!",
@@ -207,6 +210,50 @@ export class Settings extends Component {
           });
         }
       });
+  }
+
+  handleAccessTokenChange(evt) {
+    var value = evt.target.value;
+
+    var configCopy = this.state.postConfig;
+    configCopy.access_token = value;
+
+    this.setState({
+      postConfig: configCopy,
+    });
+  }
+
+  handleClientIDChange(evt) {
+    var value = evt.target.value;
+
+    var configCopy = this.state.postConfig;
+    configCopy.client_id = value;
+
+    this.setState({
+      postConfig: configCopy,
+    });
+  }
+
+  handleClientSecretChange(evt) {
+    var value = evt.target.value;
+
+    var configCopy = this.state.postConfig;
+    configCopy.client_secret = value;
+
+    this.setState({
+      postConfig: configCopy,
+    });
+  }
+
+  handleRefreshTokenChange(evt) {
+    var value = evt.target.value;
+
+    var configCopy = this.state.postConfig;
+    configCopy.refresh_token = value;
+
+    this.setState({
+      postConfig: configCopy,
+    });
   }
 
   handleCategoryTypeChange(evt) {
@@ -277,17 +324,6 @@ export class Settings extends Component {
     });
   }
 
-  handleSecretChange(evt) {
-    var value = evt.target.value;
-
-    var configCopy = this.state.postConfig;
-    configCopy.secret_key = value;
-
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
   handleAccountUsernameChange(evt) {
     var value = evt.target.value;
     var n = evt.target.id.split("_")[1];
@@ -326,7 +362,14 @@ export class Settings extends Component {
 
   handleAddAccount(evt) {
     var configCopy = this.state.postConfig;
-    configCopy.account_list.push({ username: "", password: "", pic: "" });
+
+    var text = "";
+    var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    for (var i = 0; i < 32; i++) {
+      text += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+
+    configCopy.account_list.push({ username: "", password: "", pic: "", auth: text });
 
     this.setState({
       postConfig: configCopy,
@@ -338,6 +381,28 @@ export class Settings extends Component {
 
     var configCopy = this.state.postConfig;
     configCopy.account_list.splice(n, 1);
+
+    this.setState({
+      postConfig: configCopy,
+    });
+  }
+
+  handleSecretChange(evt) {
+    var value = evt.target.value;
+
+    var configCopy = this.state.postConfig;
+    configCopy.secret_key = value;
+
+    this.setState({
+      postConfig: configCopy,
+    });
+  }
+
+  handleTMDBAPIKeyChange(evt) {
+    var value = evt.target.value;
+
+    var configCopy = this.state.postConfig;
+    configCopy.tmdb_api_key = value;
 
     this.setState({
       postConfig: configCopy,
@@ -357,6 +422,56 @@ export class Settings extends Component {
           autoComplete="off"
           onSubmit={this.handleSubmit}
         >
+          <Typography variant="h3">Google Credentials</Typography>
+          <TextField
+            className="TextField"
+            id="access_token"
+            label="Access Token"
+            type="text"
+            variant="outlined"
+            value={this.state.postConfig.access_token}
+            onChange={this.handleAccessTokenChange}
+            required
+          />
+          <TextField
+            className="TextField"
+            id="client_id"
+            label="Client ID"
+            type="text"
+            variant="outlined"
+            value={this.state.postConfig.client_id}
+            onChange={this.handleClientIDChange}
+            required
+          />
+          <TextField
+            className="TextField"
+            id="client_secret"
+            label="Client Secret"
+            type="text"
+            variant="outlined"
+            value={this.state.postConfig.client_secret}
+            onChange={this.handleClientSecretChange}
+            required
+          />
+          <TextField
+            className="TextField"
+            id="refresh_token"
+            label="Refresh Token"
+            type="text"
+            variant="outlined"
+            value={this.state.postConfig.refresh_token}
+            onChange={this.handleRefreshTokenChange}
+            required
+          />
+          <TextField
+            className="TextField"
+            id="token_expiry"
+            label="Token Expiry"
+            type="text"
+            variant="outlined"
+            value={this.state.postConfig.token_expiry}
+            disabled
+          />
           <Typography variant="h3">Categories</Typography>
           {config.category_list.length
             ? config.category_list.map((category, n) => (
@@ -387,6 +502,7 @@ export class Settings extends Component {
                     variant="outlined"
                     value={this.state.postConfig.category_list[n].name}
                     onChange={this.handleCategoryNameChange}
+                    required
                   />
                   <TextField
                     className="TextField"
@@ -395,6 +511,7 @@ export class Settings extends Component {
                     variant="outlined"
                     value={this.state.postConfig.category_list[n].id}
                     onChange={this.handleCategoryIdChange}
+                    required
                   />
                   <TextField
                     className="TextField"
@@ -403,6 +520,7 @@ export class Settings extends Component {
                     variant="outlined"
                     value={this.state.postConfig.category_list[n].driveId}
                     onChange={this.handleCategoryDriveIdChange}
+                    required
                   />
                   <br />
                   <IconButton
@@ -429,6 +547,7 @@ export class Settings extends Component {
                     variant="outlined"
                     value={this.state.postConfig.account_list[n].username}
                     onChange={this.handleAccountUsernameChange}
+                    required
                   />
                   <TextField
                     className="TextField"
@@ -438,6 +557,7 @@ export class Settings extends Component {
                     variant="outlined"
                     value={this.state.postConfig.account_list[n].password}
                     onChange={this.handleAccountPasswordChange}
+                    required
                   />
                   <TextField
                     className="TextField"
@@ -446,6 +566,14 @@ export class Settings extends Component {
                     variant="outlined"
                     value={this.state.postConfig.account_list[n].pic}
                     onChange={this.handleAccountPicChange}
+                  />
+                  <TextField
+                    className="TextField"
+                    id={`account-auth_${n}`}
+                    label="Auth"
+                    variant="outlined"
+                    value={this.state.postConfig.account_list[n].auth}
+                    disabled
                   />
                   <br />
                   <IconButton
@@ -480,12 +608,24 @@ export class Settings extends Component {
           <Typography variant="h3">Secret Key</Typography>
           <TextField
             className="TextField"
-            id="outlined-basic"
+            id="secret_key"
             label="Secret Key"
             type="password"
             variant="outlined"
             value={this.state.postConfig.secret_key}
             onChange={this.handleSecretChange}
+            required
+          />
+          <Typography variant="h3">TMDB API Key</Typography>
+          <TextField
+            className="TextField"
+            id="secret_key"
+            label="TMDB API Key"
+            type="text"
+            variant="outlined"
+            value={this.state.postConfig.tmdb_api_key}
+            onChange={this.handleTMDBAPIKeyChange}
+            required
           />
           <br />
           <Button
@@ -494,7 +634,6 @@ export class Settings extends Component {
             variant="contained"
             color="primary"
             className={classes.submit}
-            block
           >
             Submit
           </Button>
