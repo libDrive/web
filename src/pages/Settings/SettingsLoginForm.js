@@ -57,10 +57,6 @@ class SettingsLoginForm extends Component {
     evt.preventDefault();
     let { secret, server } = this.state;
 
-    if (!secret) {
-      return this.setState({ error: "Secret is required" });
-    }
-
     axios
       .get(`${server}/api/v1/config?secret=${secret}`)
       .then((response) => {
@@ -122,7 +118,6 @@ class SettingsLoginForm extends Component {
               <TextField
                 variant="outlined"
                 margin="normal"
-                required
                 fullWidth
                 id="secret"
                 label="Secret"
@@ -139,7 +134,6 @@ class SettingsLoginForm extends Component {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                block
               >
                 Sign In
               </Button>
