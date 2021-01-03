@@ -14,6 +14,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import SearchIcon from "@material-ui/icons/Search";
 
+import Swal from "sweetalert2";
+import "@sweetalert2/theme-dark/dark.css";
+
 import axios from "axios";
 
 import { uuid } from "../components";
@@ -47,19 +50,52 @@ export default class Nav extends Component {
       .catch((error) => {
         console.error(error);
         if (auth == null || server == null) {
-          alert("You are not authenticated");
-          this.props.history.push("/logout");
+          this.props.history.push("/login");
         } else if (error.response) {
           if (error.response.status === 401) {
-            alert("Your credentials are invalid. Logging you out now.");
-            this.props.history.push("/logout");
+            Swal.fire({
+              title: "Error!",
+              text: "Your credentials are invalid!",
+              icon: "error",
+              confirmButtonText: "Logout",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.props.history.push("/logout");
+              }
+            });
           } else {
-            alert("Something went wrong while communicating with the backend");
+            Swal.fire({
+              title: "Error!",
+              text:
+                "Something went wrong while communicating with the backend!",
+              icon: "error",
+              confirmButtonText: "Logout",
+              cancelButtonText: "Retry",
+              showCancelButton: true,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.props.history.push("/logout");
+              } else if (result.isDenied) {
+                location.reload();
+              }
+            });
           }
         } else if (error.request) {
-          alert(
-            `libDrive could not communicate with the backend. Is ${server} the correct address?`
-          );
+          Swal.fire({
+            title: "Error!",
+            text: `libDrive could not communicate with the backend! Is ${server} the correct address?`,
+            icon: "error",
+            confirmButtonText: "Logout",
+            cancelButtonText: "Retry",
+            showCancelButton: true,
+          }).then((result) => {
+            console.log(result);
+            if (result.isConfirmed) {
+              this.props.history.push("/logout");
+            } else if (result.isDismissed) {
+              location.reload();
+            }
+          });
         }
       });
   }
