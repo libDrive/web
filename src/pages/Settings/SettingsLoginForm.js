@@ -9,6 +9,9 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
+import Swal from "sweetalert2";
+import "@sweetalert2/theme-dark/dark.css";
+
 import axios from "axios";
 
 import { Nav } from "../../components";
@@ -67,14 +70,41 @@ class SettingsLoginForm extends Component {
         console.error(error);
         if (error.response) {
           if (error.response.status === 401) {
-            alert("Your credentials are invalid.");
+            Swal.fire({
+              title: "Error!",
+              text: "Your credentials are invalid!",
+              icon: "error",
+              confirmButtonText: "OK",
+            });
           } else {
-            alert("Something went wrong while communicating with the backend");
+            Swal.fire({
+              title: "Error!",
+              text: "Something went wrong while communicating with the backend!",
+              icon: "error",
+              confirmButtonText: "OK",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.props.history.push("/logout");
+              } else if (result.isDenied) {
+                location.reload();
+              }
+            });
           }
         } else if (error.request) {
-          alert(
-            `libDrive could not communicate with the backend. Is ${server} the correct address?`
-          );
+          Swal.fire({
+            title: "Error!",
+            text: "libDrive could not communicate with the backend. Is ${server} the correct address?",
+            icon: "error",
+            confirmButtonText: "Logout",
+            cancelButtonText: "Retry",
+            showCancelButton: true,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.props.history.push("/logout");
+            } else if (result.isDenied) {
+              location.reload();
+            }
+          });
         }
       });
     return this.setState({ error: "" });
@@ -100,7 +130,7 @@ class SettingsLoginForm extends Component {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Settings Login
             </Typography>
             <form
               className={classes.form}
