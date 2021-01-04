@@ -74,6 +74,7 @@ export class Settings extends Component {
     this.handleTMDBAPIKeyChange = this.handleTMDBAPIKeyChange.bind(this);
     this.dismissError = this.dismissError.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleRestart = this.handleRestart.bind(this);
   }
 
   async componentDidMount() {
@@ -143,6 +144,33 @@ export class Settings extends Component {
 
   dismissError() {
     this.setState({ error: "" });
+  }
+
+  handleRestart(evt) {
+    evt.preventDefault();
+    let { secret, server } = this.state;
+
+    axios
+      .get(`${server}/api/v1/restart?secret=${secret}`)
+      .then((response) => {
+        Swal.fire({
+          title: "Success!",
+          text:
+            "libDrive is being restarted, this might take some time, so the app won't load",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          title: "Success!",
+          text:
+            "libDrive is being restarted, this might take some time, so the app won't load",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+      });
   }
 
   handleSubmit(evt) {
@@ -427,6 +455,15 @@ export class Settings extends Component {
           autoComplete="off"
           onSubmit={this.handleSubmit}
         >
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={this.handleRestart}
+          >
+            Restart
+          </Button>
           <Typography variant="h3">Google Credentials</Typography>
           <TextField
             className="TextField"
@@ -635,7 +672,7 @@ export class Settings extends Component {
           <Typography variant="h3">TMDB API Key</Typography>
           <TextField
             className="TextField"
-            id="secret_key"
+            id="tmbd_api_key"
             label="TMDB API Key"
             type="text"
             variant="outlined"
