@@ -369,7 +369,12 @@ export class Settings extends Component {
       text += chars.charAt(Math.floor(Math.random() * chars.length));
     }
 
-    configCopy.account_list.push({ username: "", password: "", pic: "", auth: text });
+    configCopy.account_list.push({
+      username: "",
+      password: "",
+      pic: "",
+      auth: text,
+    });
 
     this.setState({
       postConfig: configCopy,
@@ -472,6 +477,17 @@ export class Settings extends Component {
             value={this.state.postConfig.token_expiry}
             disabled
           />
+          <br />
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            target="_blank"
+            href="https://libdrive-oauth2.netlify.app/"
+          >
+            Authenticate
+          </Button>
           <Typography variant="h3">Categories</Typography>
           {config.category_list.length
             ? config.category_list.map((category, n) => (
