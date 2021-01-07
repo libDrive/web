@@ -60,6 +60,10 @@ class SettingsLoginForm extends Component {
     evt.preventDefault();
     let { secret, server } = this.state;
 
+    if (!secret) {
+      return this.setState({ error: "Secret is required" });
+    }
+
     axios
       .get(`${server}/api/v1/config?secret=${secret}`)
       .then((response) => {
@@ -79,7 +83,8 @@ class SettingsLoginForm extends Component {
           } else {
             Swal.fire({
               title: "Error!",
-              text: "Something went wrong while communicating with the backend!",
+              text:
+                "Something went wrong while communicating with the backend!",
               icon: "error",
               confirmButtonText: "OK",
             }).then((result) => {
@@ -93,7 +98,8 @@ class SettingsLoginForm extends Component {
         } else if (error.request) {
           Swal.fire({
             title: "Error!",
-            text: "libDrive could not communicate with the backend. Is ${server} the correct address?",
+            text:
+              "libDrive could not communicate with the backend. Is ${server} the correct address?",
             icon: "error",
             confirmButtonText: "Logout",
             cancelButtonText: "Retry",
@@ -156,6 +162,7 @@ class SettingsLoginForm extends Component {
                 autoComplete="secret"
                 onChange={this.handleSecretChange}
                 value={secret}
+                required
                 autoFocus
               />
               <Button

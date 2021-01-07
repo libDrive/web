@@ -98,10 +98,6 @@ class Login extends Component {
               icon: "error",
               confirmButtonText: "OK",
             });
-          } else if (error.response.status === 302) {
-            localStorage.setItem("server", tempServer);
-            sessionStorage.setItem("server", tempServer);
-            this.props.history.push(error.response.data)
           } else {
             Swal.fire({
               title: "Error!",

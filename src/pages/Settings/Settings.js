@@ -78,7 +78,7 @@ export class Settings extends Component {
   }
 
   async componentDidMount() {
-    let { secret, server } = this.state;
+    let { auth, secret, server } = this.state;
 
     axios
       .get(`${server}/api/v1/config?secret=${secret}`)
@@ -92,7 +92,9 @@ export class Settings extends Component {
       )
       .catch((error) => {
         console.error(error);
-        if (error.response) {
+        if (auth == null || server == null) {
+          this.props.history.push("/login");
+        } else if (error.response) {
           if (error.response.status === 401) {
             Swal.fire({
               title: "Error!",
@@ -455,15 +457,6 @@ export class Settings extends Component {
           autoComplete="off"
           onSubmit={this.handleSubmit}
         >
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={this.handleRestart}
-          >
-            Restart
-          </Button>
           <Typography variant="h3">Google Credentials</Typography>
           <TextField
             className="TextField"
@@ -515,16 +508,6 @@ export class Settings extends Component {
             disabled
           />
           <br />
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            target="_blank"
-            href="https://libdrive-oauth2.netlify.app/"
-          >
-            Authenticate
-          </Button>
           <Typography variant="h3">Categories</Typography>
           {config.category_list.length
             ? config.category_list.map((category, n) => (
@@ -538,13 +521,13 @@ export class Settings extends Component {
                     value={`${this.state.postConfig.category_list[n].type}_${n}`}
                     onChange={this.handleCategoryTypeChange}
                   >
-                    <MenuItem key={uuid()} value={`movies_${n}`}>
+                    <MenuItem key={uuid()} value={`Movies_${n}`}>
                       Movies
                     </MenuItem>
-                    <MenuItem key={uuid()} value={`tv_${n}`}>
+                    <MenuItem key={uuid()} value={`TV Shows_${n}`}>
                       TV Shows
                     </MenuItem>
-                    <MenuItem key={uuid()} value={`other_${n}`}>
+                    <MenuItem key={uuid()} value={`Other_${n}`}>
                       Other
                     </MenuItem>
                   </TextField>
@@ -681,15 +664,38 @@ export class Settings extends Component {
             required
           />
           <br />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Submit
-          </Button>
+          <div style={{ margin: "30px" }}>
+            <Button
+              style={{ marginRight: "20px" }}
+              fullWidth
+              variant="contained"
+              color="secondary"
+              className={classes.submit}
+              target="_blank"
+              href="https://libdrive-oauth2.netlify.app/"
+            >
+              Create Config
+            </Button>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Submit
+            </Button>
+            <Button
+              style={{ marginLeft: "20px" }}
+              fullWidth
+              variant="contained"
+              color="secondary"
+              className={classes.submit}
+              onClick={this.handleRestart}
+            >
+              Restart
+            </Button>
+          </div>
         </form>
         <Footer />
       </div>
