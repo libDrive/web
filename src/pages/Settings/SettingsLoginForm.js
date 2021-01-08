@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2/src/sweetalert2.js'
 import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";

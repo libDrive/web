@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import ClipLoader from "react-spinners/ClipLoader";
 
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2/src/sweetalert2.js'
 import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
