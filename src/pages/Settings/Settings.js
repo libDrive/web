@@ -672,7 +672,7 @@ export class Settings extends Component {
               color="secondary"
               className={classes.submit}
               target="_blank"
-              href="https://libdrive-oauth2.netlify.app/"
+              href="https://libdrive-config.netlify.app/"
             >
               Create Config
             </Button>
