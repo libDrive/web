@@ -88,7 +88,6 @@ export default class View extends Component {
             cancelButtonText: "Retry",
             showCancelButton: true,
           }).then((result) => {
-            console.log(result);
             if (result.isConfirmed) {
               this.props.history.push("/logout");
             } else if (result.isDismissed) {
@@ -218,7 +217,6 @@ export function TVBView(props) {
 export function TVSView(props) {
   let { auth, id, metadata, server, thisprops } = props.props;
   let hash = parseInt(queryString.parse(thisprops.location.search).q) || 0;
-  console.log(thisprops.location);
 
   function isHash(n, hash) {
     if (n === hash) {
