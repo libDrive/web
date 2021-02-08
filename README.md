@@ -19,6 +19,12 @@
   </a>
 </p>
 
+<p align="center">
+  <a href="https://heroku.com/deploy?template=https://github.com/libDrive/heroku">
+    <img src="https://www.herokucdn.com/deploy/button.svg" />
+  </a>
+</p>
+
 # What is this repo?
 
 This is the frontend repositry for the [libDrive](https://github.com/libDrive) project, created by [Elias Benbourenane](https://eliasbenb.github.io).
