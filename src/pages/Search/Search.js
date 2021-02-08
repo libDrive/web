@@ -76,7 +76,6 @@ export default class Search extends Component {
             cancelButtonText: "Retry",
             showCancelButton: true,
           }).then((result) => {
-            console.log(result);
             if (result.isConfirmed) {
               this.props.history.push("/logout");
             } else if (result.isDismissed) {

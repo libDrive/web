@@ -75,7 +75,6 @@ export default class Browse extends Component {
             cancelButtonText: "Retry",
             showCancelButton: true,
           }).then((result) => {
-            console.log(result);
             if (result.isConfirmed) {
               this.props.history.push("/logout");
             } else if (result.isDismissed) {
