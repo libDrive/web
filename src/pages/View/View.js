@@ -143,7 +143,7 @@ export function MovieView(props) {
               "",
             sources: [
               {
-                src: `${server}/api/v1/download/${metadata.name}?a=${auth}&id=${id}`,
+                src: `${server}/api/v1/download?a=${auth}&id=${id}`,
               },
             ],
           }}
@@ -249,7 +249,7 @@ export function TVSView(props) {
               "",
             sources: [
               {
-                src: `${server}/api/v1/download/${metadata.children[hash].name}?a=${auth}&id=${metadata.children[hash].id}`,
+                src: `${server}/api/v1/download?a=${auth}&id=${metadata.children[hash].id}`,
               },
             ],
           }}
@@ -335,19 +335,19 @@ export function PlayerMenu(props) {
         onClose={handleClose}
       >
         <a
-          href={`vlc://${server}/api/v1/download/${metadata.name}?a=${auth}&id=${id}`}
+          href={`vlc://${server}/api/v1/download?a=${auth}&id=${id}`}
           className="no_decoration_link"
         >
           <MenuItem onClick={handleClose}>VLC</MenuItem>
         </a>
         <a
-          href={`potplayer://${server}/api/v1/download/${metadata.name}?a=${auth}&id=${id}`}
+          href={`potplayer://${server}/api/v1/download?a=${auth}&id=${id}`}
           className="no_decoration_link"
         >
           <MenuItem onClick={handleClose}>PotPlayer</MenuItem>
         </a>
         <a
-          href={`${server}/api/v1/download/${metadata.name}?a=${auth}&id=${id}`}
+          href={`${server}/api/v1/download?a=${auth}&id=${id}`}
           className="no_decoration_link"
         >
           <MenuItem onClick={handleClose}>Download</MenuItem>
