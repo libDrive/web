@@ -1,6 +1,6 @@
 {
   "name": "libdrive",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "Cloud media library",
   "homepage": "./",
   "main": "public/electron.js",
