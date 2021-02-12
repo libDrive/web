@@ -525,9 +525,6 @@ export class Settings extends Component {
                     <MenuItem key={uuid()} value={`TV Shows_${n}`}>
                       TV Shows
                     </MenuItem>
-                    <MenuItem key={uuid()} value={`Other_${n}`}>
-                      Other
-                    </MenuItem>
                   </TextField>
                   <TextField
                     className="TextField"
