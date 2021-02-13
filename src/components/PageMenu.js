@@ -8,7 +8,7 @@ import PaginationItem from "@material-ui/lab/PaginationItem";
 
 import { uuid } from "../components";
 
-const useStyles = makeStyles((theme) => ({
+const styles = makeStyles((theme) => ({
   root: {
     "& > *": {
       display: "flex",
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PageMenu(props) {
   let { page, pages, thisprops } = props.props;
-  const classes = useStyles();
+  const classes = styles();
 
   if (page > pages) {
     return (
