@@ -3,6 +3,7 @@ import React, { Component, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import Brightness6Icon from '@material-ui/icons/Brightness6';
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
@@ -65,10 +66,10 @@ export default class Nav extends Component {
   }
 }
 
-const useStyles = makeStyles((theme) => ({
+const styles = makeStyles((theme) => ({
   root: {
-    backgroundColor: "#1f1f1f",
-    color: "#ffffff",
+    backgroundColor: theme.palette.background.paper,
+    color: theme.palette.text.primary,
   },
   grow: {
     flexGrow: 1,
@@ -82,9 +83,9 @@ const useStyles = makeStyles((theme) => ({
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    backgroundColor: fade(theme.palette.common.main, 0.15),
     "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      backgroundColor: fade(theme.palette.common.main, 0.25),
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
@@ -121,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function NavUI(props) {
-  const classes = useStyles();
+  const classes = styles();
 
   const [search, setSearch] = useState("");
   const searchChange = (evt) => {
@@ -167,7 +168,7 @@ export function NavUI(props) {
 
 export function BrowseMenu(props) {
   const [menuAnchorEl, setMenuAnchorEl] = React.useState(null);
-  const classes = useStyles();
+  const classes = styles();
 
   const handleClick = (event) => {
     setMenuAnchorEl(event.currentTarget);
@@ -226,6 +227,17 @@ export function AccountMenu(props) {
     setMenuAnchorEl(null);
   };
 
+  const handleTheme = () => {
+    if (localStorage.getItem("theme") === "light" || sessionStorage.getItem("theme") === "light") {
+      localStorage.setItem("theme", "dark");
+      sessionStorage.setItem("theme", "dark");
+    } else {
+      localStorage.setItem("theme", "light");
+      sessionStorage.setItem("theme", "light");
+    }
+    window.location.reload();
+  }
+
   let pic = <AccountCircle />;
   if (props.props.pic.includes("http") || props.props.pic.includes("www")) {
     pic = <img src={props.props.pic} width="32px" alt="profile-pic"></img>;
@@ -256,6 +268,7 @@ export function AccountMenu(props) {
         <Link to={"/logout"} className="no_decoration_link">
           <MenuItem onClick={handleClose}>Logout</MenuItem>
         </Link>
+        <IconButton style={{marginLeft: "25%"}} onClick={handleTheme}><Brightness6Icon /></IconButton>
       </Menu>
     </div>
   );
