@@ -15,9 +15,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import SearchIcon from "@material-ui/icons/Search";
 
-import Swal from 'sweetalert2/src/sweetalert2.js'
-import "@sweetalert2/theme-dark/dark.css";
-
 import axios from "axios";
 
 import { uuid } from "../components";
@@ -159,6 +156,7 @@ export function NavUI(props) {
           </form>
           <div className={classes.grow} />
           <BrowseMenu props={props.props.categories} />
+          <ThemeMenu />
           <AccountMenu props={props.props.accounts} />
         </Toolbar>
       </AppBar>
@@ -227,17 +225,6 @@ export function AccountMenu(props) {
     setMenuAnchorEl(null);
   };
 
-  const handleTheme = () => {
-    if (localStorage.getItem("theme") === "light" || sessionStorage.getItem("theme") === "light") {
-      localStorage.setItem("theme", "dark");
-      sessionStorage.setItem("theme", "dark");
-    } else {
-      localStorage.setItem("theme", "light");
-      sessionStorage.setItem("theme", "light");
-    }
-    window.location.reload();
-  }
-
   let pic = <AccountCircle />;
   if (props.props.pic.includes("http") || props.props.pic.includes("www")) {
     pic = <img src={props.props.pic} width="32px" alt="profile-pic"></img>;
@@ -268,7 +255,59 @@ export function AccountMenu(props) {
         <Link to={"/logout"} className="no_decoration_link">
           <MenuItem onClick={handleClose}>Logout</MenuItem>
         </Link>
-        <IconButton style={{marginLeft: "25%"}} onClick={handleTheme}><Brightness6Icon /></IconButton>
+      </Menu>
+    </div>
+  );
+}
+
+export function ThemeMenu() {
+  const [menuAnchorEl, setMenuAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setMenuAnchorEl(null);
+  };
+
+  const handleLight = () => {
+    localStorage.setItem("theme", "light");
+    window.location.reload();
+  };
+
+  const handleDark = () => {
+    localStorage.setItem("theme", "dark");
+    window.location.reload();
+  };
+
+  const handleDracula = () => {
+    localStorage.setItem("theme", "dracula");
+    window.location.reload();
+  };
+
+  return (
+    <div>
+      <IconButton
+        aria-label="more"
+        aria-controls="theme-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        <Brightness6Icon />
+      </IconButton>
+      <Menu
+        id="theme-menu"
+        anchorEl={menuAnchorEl}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        keepMounted
+        open={Boolean(menuAnchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleLight}>Light</MenuItem>
+        <MenuItem onClick={handleDark}>Dark</MenuItem>
+        <MenuItem onClick={handleDracula}>Dracula</MenuItem>
       </Menu>
     </div>
   );

@@ -56,7 +56,38 @@ const darkTheme = createMuiTheme({
     },
     common: {
       main: "#ffffff"
-    }
+    },
+  },
+});
+
+const draculaTheme = createMuiTheme({
+  palette: {
+    type: "dark",
+    primary: {
+      main: "#6272a4",
+    },
+    secondary: {
+      main: "#44475a",
+    },
+    error: {
+      main: "#ffb86c",
+    },
+    warning: {
+      main: "#ff5555",
+    },
+    success: {
+      main: "#50fa7b",
+    },
+    background: {
+      default: "#282a36",
+      paper: "#242630",
+    },
+    text: {
+      primary: "#f8f8f2",
+    },
+    common: {
+      main: "#6272a4"
+    },
   },
 });
 
@@ -64,6 +95,10 @@ var theme;
 
 if (localStorage.getItem("theme") === "light") {
   theme = lightTheme;
+} else if (localStorage.getItem("theme") === "dark") {
+  theme = darkTheme;
+} else if (localStorage.getItem("theme") === "dracula") {
+  theme = draculaTheme;
 } else {
   theme = darkTheme;
 }
