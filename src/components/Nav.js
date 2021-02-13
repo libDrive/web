@@ -15,6 +15,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import SearchIcon from "@material-ui/icons/Search";
 
+import Swal from 'sweetalert2/src/sweetalert2.js'
+import "@sweetalert2/theme-dark/dark.css";
+
 import axios from "axios";
 
 import { uuid } from "../components";
@@ -225,6 +228,71 @@ export function AccountMenu(props) {
     setMenuAnchorEl(null);
   };
 
+  const handleRebuild = () => {
+    let auth = sessionStorage.getItem("auth") || localStorage.getItem("auth")
+    let server = sessionStorage.getItem("server") || localStorage.getItem("server")
+
+    let url = `${server}/api/v1/rebuild?a=${auth}&force=true`;
+    axios.get(url).then((response) =>
+      Swal.fire({
+        title: "Success!",
+        text:
+          "libDrive's metadata is being rebuilt...",
+        icon: "success",
+        confirmButtonText: "OK",
+      }))
+      .catch((error) => {
+        console.error(error);
+        if (auth == null || server == null) {
+          this.props.history.push("/login");
+        } else if (error.response) {
+          if (error.response.status === 401) {
+            Swal.fire({
+              title: "Error!",
+              text: "Your credentials are invalid!",
+              icon: "error",
+              confirmButtonText: "Logout",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.props.history.push("/logout");
+              }
+            });
+          } else {
+            Swal.fire({
+              title: "Error!",
+              text:
+                "Something went wrong while communicating with the backend!",
+              icon: "error",
+              confirmButtonText: "Logout",
+              cancelButtonText: "Retry",
+              showCancelButton: true,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.props.history.push("/logout");
+              } else if (result.isDenied) {
+                location.reload();
+              }
+            });
+          }
+        } else if (error.request) {
+          Swal.fire({
+            title: "Error!",
+            text: `libDrive could not communicate with the backend! Is ${server} the correct address?`,
+            icon: "error",
+            confirmButtonText: "Logout",
+            cancelButtonText: "Retry",
+            showCancelButton: true,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.props.history.push("/logout");
+            } else if (result.isDismissed) {
+              location.reload();
+            }
+          });
+        }
+      });
+  }
+
   let pic = <AccountCircle />;
   if (props.props.pic.includes("http") || props.props.pic.includes("www")) {
     pic = <img src={props.props.pic} width="32px" alt="profile-pic"></img>;
@@ -252,6 +320,7 @@ export function AccountMenu(props) {
         <Link to={"/settings"} className="no_decoration_link">
           <MenuItem onClick={handleClose}>Settings</MenuItem>
         </Link>
+        <MenuItem onClick={handleRebuild}>Rebuild</MenuItem>
         <Link to={"/logout"} className="no_decoration_link">
           <MenuItem onClick={handleClose}>Logout</MenuItem>
         </Link>
