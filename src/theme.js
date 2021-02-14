@@ -93,14 +93,16 @@ const draculaTheme = createMuiTheme({
 
 var theme;
 
-if (localStorage.getItem("theme") === "light") {
+if (localStorage.getItem("theme") === "light" || sessionStorage.getItem("theme") === "light") {
   theme = lightTheme;
-} else if (localStorage.getItem("theme") === "dark") {
+} else if (localStorage.getItem("theme") === "dark" || sessionStorage.getItem("theme") === "dark") {
   theme = darkTheme;
-} else if (localStorage.getItem("theme") === "dracula") {
+} else if (localStorage.getItem("theme") === "dracula" || sessionStorage.getItem("theme") === "dracula") {
   theme = draculaTheme;
 } else {
   theme = darkTheme;
+  localStorage.setItem("theme", "dark")
+  sessionStorage.setItem("theme", "dark")
 }
 
 export default theme;

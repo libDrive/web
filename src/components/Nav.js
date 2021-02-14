@@ -341,17 +341,23 @@ export function ThemeMenu() {
   };
 
   const handleLight = () => {
+    setMenuAnchorEl(null);
     localStorage.setItem("theme", "light");
+    sessionStorage.setItem("theme", "light");
     window.location.reload();
   };
 
   const handleDark = () => {
+    setMenuAnchorEl(null);
     localStorage.setItem("theme", "dark");
+    sessionStorage.setItem("theme", "dark");
     window.location.reload();
   };
 
   const handleDracula = () => {
+    setMenuAnchorEl(null);
     localStorage.setItem("theme", "dracula");
+    sessionStorage.setItem("theme", "dracula");
     window.location.reload();
   };
 
