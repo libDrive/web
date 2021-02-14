@@ -72,6 +72,8 @@ export class Settings extends Component {
     this.handleRemoveAccount = this.handleRemoveAccount.bind(this);
     this.handleSecretChange = this.handleSecretChange.bind(this);
     this.handleTMDBAPIKeyChange = this.handleTMDBAPIKeyChange.bind(this);
+    this.handleCloudflareChange = this.handleCloudflareChange.bind(this);
+    this.handleBuildIntervalChange = this.handleBuildIntervalChange.bind(this);
     this.dismissError = this.dismissError.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRestart = this.handleRestart.bind(this);
@@ -442,6 +444,28 @@ export class Settings extends Component {
     });
   }
 
+  handleCloudflareChange(evt) {
+    var value = evt.target.value;
+
+    var configCopy = this.state.postConfig;
+    configCopy.cloudflare = value;
+
+    this.setState({
+      postConfig: configCopy,
+    });
+  }
+
+  handleBuildIntervalChange(evt) {
+    var value = parseInt(evt.target.value);
+
+    var configCopy = this.state.postConfig;
+    configCopy.build_interval = value;
+
+    this.setState({
+      postConfig: configCopy,
+    });
+  }
+
   render() {
     let { config, isLoaded } = this.state;
     const { classes } = this.props;
@@ -636,28 +660,49 @@ export class Settings extends Component {
           <IconButton aria-label="add" onClick={this.handleAddAccount}>
             <AddIcon />
           </IconButton>
-          <Typography variant="h3">Secret Key</Typography>
-          <TextField
-            className="TextField"
-            id="secret_key"
-            label="Secret Key"
-            type="password"
-            variant="outlined"
-            value={this.state.postConfig.secret_key}
-            onChange={this.handleSecretChange}
-            required
-          />
-          <Typography variant="h3">TMDB API Key</Typography>
-          <TextField
-            className="TextField"
-            id="tmbd_api_key"
-            label="TMDB API Key"
-            type="text"
-            variant="outlined"
-            value={this.state.postConfig.tmdb_api_key}
-            onChange={this.handleTMDBAPIKeyChange}
-            required
-          />
+          <Typography variant="h3">Extras</Typography>
+          <div style={{ margin: "30px" }}>
+            <TextField
+              className="TextField"
+              id="secret_key"
+              label="Secret Key"
+              type="password"
+              variant="outlined"
+              value={this.state.postConfig.secret_key}
+              onChange={this.handleSecretChange}
+              required
+            />
+            <TextField
+              className="TextField"
+              id="tmbd_api_key"
+              label="TMDB API Key"
+              type="text"
+              variant="outlined"
+              value={this.state.postConfig.tmdb_api_key}
+              onChange={this.handleTMDBAPIKeyChange}
+              required
+            />
+            <TextField
+              className="TextField"
+              id="cloudflare"
+              label="Cloudflare"
+              type="text"
+              variant="outlined"
+              value={this.state.postConfig.cloudflare}
+              onChange={this.handleCloudflareChange}
+              required
+            />
+            <TextField
+              className="TextField"
+              id="build_interval"
+              label="Build Interval"
+              type="number"
+              variant="outlined"
+              value={this.state.postConfig.build_interval}
+              onChange={this.handleBuildIntervalChange}
+              required
+            />
+          </div>
           <br />
           <div style={{ margin: "30px" }}>
             <Button
