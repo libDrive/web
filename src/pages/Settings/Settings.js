@@ -301,7 +301,7 @@ export class Settings extends Component {
     var n = evt.target.id.split("_")[1];
 
     var configCopy = this.state.postConfig;
-    configCopy.category_list[n].name = value;
+    configCopy.category_list[n].categoryInfo.name = value;
 
     this.setState({
       postConfig: configCopy,
@@ -531,7 +531,7 @@ export class Settings extends Component {
                     id={`category-name_${n}`}
                     label="Name"
                     variant="outlined"
-                    value={this.state.postConfig.category_list[n].name}
+                    value={this.state.postConfig.category_list[n].categoryInfo.name}
                     onChange={this.handleCategoryNameChange}
                     required
                   />
