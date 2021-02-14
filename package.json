@@ -52,9 +52,9 @@
   },
   "build": {
     "appId": "com.eliasbenb.libdrive",
-    "icon": "public/favicon-512x512.png",
+    "icon": "public/images/icons/icon-512x512.png",
     "productName": "libDrive",
-    "copyright": "Copyright © 2020 Elias Benbourenane <eliasbenbourenane@gmail.com>",
+    "copyright": "Copyright © 2021 Elias Benbourenane <eliasbenbourenane@gmail.com>",
     "files": [
       "build/**/*",
       "public/electron.js"
