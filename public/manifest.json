@@ -3,7 +3,7 @@
   "short_name": "libDrive",
   "theme_color": "#4197fe",
   "background_color": "#111111",
-  "display": "minimal-ui",
+  "display": "standalone",
   "orientation": "any",
   "scope": "/",
   "start_url": "/",
