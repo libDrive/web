@@ -361,6 +361,20 @@ export function ThemeMenu() {
     window.location.reload();
   };
 
+  const handleNordDark = () => {
+    setMenuAnchorEl(null);
+    localStorage.setItem("theme", "nordDark");
+    sessionStorage.setItem("theme", "nordDark");
+    window.location.reload();
+  };
+
+  const handleNordLight = () => {
+    setMenuAnchorEl(null);
+    localStorage.setItem("theme", "nordLight");
+    sessionStorage.setItem("theme", "nordLight");
+    window.location.reload();
+  };
+
   return (
     <div>
       <IconButton
@@ -383,6 +397,8 @@ export function ThemeMenu() {
         <MenuItem onClick={handleLight}>Light</MenuItem>
         <MenuItem onClick={handleDark}>Dark</MenuItem>
         <MenuItem onClick={handleDracula}>Dracula</MenuItem>
+        <MenuItem onClick={handleNordDark}>Nord Dark</MenuItem>
+        <MenuItem onClick={handleNordLight}>Nord Light</MenuItem>
       </Menu>
     </div>
   );
