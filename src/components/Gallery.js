@@ -24,11 +24,11 @@ export default class Gallery extends Component {
           ? metadata.map((category) => (
               <div className="category" key={uuid()}>
                 <Link
-                  to={`/browse/${category.name}`}
+                  to={`/browse/${category.categoryInfo.name}`}
                   key={uuid()}
                   className="category__title no_decoration_link"
                 >
-                  {category.name}
+                  {category.categoryInfo.name}
                 </Link>
                 <div className="items">
                   {category.children.length
