@@ -7,9 +7,8 @@ import {
   Typography,
   TextField,
 } from "@material-ui/core";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import { withStyles } from "@material-ui/core/styles";
 
 import ClipLoader from "react-spinners/ClipLoader";
@@ -585,13 +584,13 @@ export class Settings extends Component {
                     id={`category-remove_${n}`}
                     onClick={this.handleRemoveCategory}
                   >
-                    <RemoveIcon id={`category-remove_${n}`} />
+                    <RemoveCircleOutlineIcon id={`category-remove_${n}`} />
                   </IconButton>
                 </div>
               ))
             : null}
           <IconButton aria-label="add" onClick={this.handleAddCategory}>
-            <AddIcon />
+            <AddCircleOutlineIcon />
           </IconButton>
           <Typography variant="h3">Accounts</Typography>
           {config.account_list.length
@@ -638,7 +637,7 @@ export class Settings extends Component {
                     id={`account-remove_${n}`}
                     onClick={this.handleRemoveAccount}
                   >
-                    <RemoveIcon id={`account-remove_${n}`} />
+                    <RemoveCircleOutlineIcon id={`account-remove_${n}`} />
                   </IconButton>
                   <div
                     style={{
@@ -648,19 +647,19 @@ export class Settings extends Component {
                       marginTop: "20px",
                     }}
                   >
-                    {(
+                    {
                       <img
                         src={config.account_list[n].pic}
                         width="64px"
                         alt="profile-pic"
                       />
-                    ) || <AccountCircle />}
+                    }
                   </div>
                 </div>
               ))
             : null}
           <IconButton aria-label="add" onClick={this.handleAddAccount}>
-            <AddIcon />
+            <AddCircleOutlineIcon />
           </IconButton>
           <Typography variant="h3">Extras</Typography>
           <div style={{ margin: "30px" }}>
