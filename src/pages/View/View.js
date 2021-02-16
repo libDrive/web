@@ -2,11 +2,8 @@ import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
 
-import { Typography } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Rating from '@material-ui/lab/Rating';
+import { Button, Divider, Menu, MenuItem, Typography } from "@material-ui/core";
+import Rating from "@material-ui/lab/Rating";
 
 import ClipLoader from "react-spinners/ClipLoader";
 
@@ -178,7 +175,12 @@ export function MovieView(props) {
             {metadata.overview}
           </Typography>
           <div className="vote__container">
-            <Rating name="Rating" value={metadata.voteAverage} max={10} readOnly />
+            <Rating
+              name="Rating"
+              value={metadata.voteAverage}
+              max={10}
+              readOnly
+            />
           </div>
           <PlayerMenu props={props.props} />
         </div>
@@ -208,7 +210,12 @@ export function TVBView(props) {
             {metadata.overview}
           </Typography>
           <div className="vote__container">
-            <Rating name="Rating" value={metadata.voteAverage} max={10} readOnly />
+            <Rating
+              name="Rating"
+              value={metadata.voteAverage}
+              max={10}
+              readOnly
+            />
           </div>
           <div className="buttons__container">
             <div className="button">
@@ -353,6 +360,17 @@ export function PlayerMenu(props) {
         >
           <MenuItem onClick={handleClose}>PotPlayer</MenuItem>
         </a>
+        <Divider />
+        <MenuItem
+          onClick={() => {
+            navigator.clipboard.writeText(
+              `${server}/api/v1/redirectdownload/${metadata.name}?a=${auth}&id=${id}`
+            );
+            setMenuAnchorEl(null);
+          }}
+        >
+          Copy
+        </MenuItem>
         <a
           href={`${server}/api/v1/redirectdownload/${metadata.name}?a=${auth}&id=${id}`}
           className="no_decoration_link"
