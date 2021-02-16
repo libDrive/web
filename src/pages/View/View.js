@@ -6,6 +6,7 @@ import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import Rating from '@material-ui/lab/Rating';
 
 import ClipLoader from "react-spinners/ClipLoader";
 
@@ -176,6 +177,9 @@ export function MovieView(props) {
           >
             {metadata.overview}
           </Typography>
+          <div className="vote__container">
+            <Rating name="Rating" value={metadata.voteAverage} max={10} readOnly />
+          </div>
           <PlayerMenu props={props.props} />
         </div>
       </div>
@@ -203,6 +207,9 @@ export function TVBView(props) {
           >
             {metadata.overview}
           </Typography>
+          <div className="vote__container">
+            <Rating name="Rating" value={metadata.voteAverage} max={10} readOnly />
+          </div>
           <div className="buttons__container">
             <div className="button">
               <ChildrenMenu props={props.props} />
