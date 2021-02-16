@@ -5,6 +5,8 @@ import { Link, Redirect } from "react-router-dom";
 import { Pagination, PaginationItem } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
 
+import queryString from "query-string";
+
 import { uuid } from "../components";
 
 const styles = makeStyles((theme) => ({
@@ -27,7 +29,7 @@ export default function PageMenu(props) {
       <Redirect
         to={{
           pathname: thisprops.location.pathname,
-          search: `?page=${pages}`,
+          search: `?page=${pages}&sort=${queryString.parse(thisprops.location.search).sort}`,
         }}
       />
     );
@@ -43,7 +45,7 @@ export default function PageMenu(props) {
             <Link
               to={{
                 pathname: thisprops.location.pathname,
-                search: `?page=${item.page}`,
+                search: `?page=${item.page}&sort=${queryString.parse(thisprops.location.search).sort}`,
               }}
               key={uuid()}
               className="no_decoration_link"
