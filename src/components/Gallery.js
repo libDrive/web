@@ -33,14 +33,8 @@ export default class Gallery extends Component {
                 <div className="items">
                   {category.children.length
                     ? category.children.map((item) => (
-                        <figure
-                          className="item__figure"
-                          key={uuid()}
-                        >
-                          <Link
-                            to={`/view/${item.id}`}
-                            key={uuid()}
-                          >
+                        <figure className="item__figure" key={uuid()}>
+                          <Link to={`/view/${item.id}`} key={uuid()}>
                             <img
                               src={item.posterPath}
                               key={uuid()}
@@ -48,10 +42,7 @@ export default class Gallery extends Component {
                               alt={item.title}
                             />
                           </Link>
-                          <Typography
-                            className="item__title"
-                            key={uuid()}
-                          >
+                          <Typography className="item__title" key={uuid()}>
                             {item.title}
                           </Typography>
                         </figure>

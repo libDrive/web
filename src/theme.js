@@ -1,6 +1,5 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
-
 const lightTheme = createMuiTheme({
   palette: {
     type: "light",
@@ -28,7 +27,7 @@ const lightTheme = createMuiTheme({
     },
     common: {
       main: "#000000",
-    }
+    },
   },
 });
 
@@ -55,7 +54,7 @@ const darkTheme = createMuiTheme({
       paper: "#1f1f1f",
     },
     common: {
-      main: "#ffffff"
+      main: "#ffffff",
     },
   },
 });
@@ -86,7 +85,7 @@ const draculaTheme = createMuiTheme({
       primary: "#f8f8f2",
     },
     common: {
-      main: "#6272a4"
+      main: "#6272a4",
     },
   },
 });
@@ -117,7 +116,7 @@ const nordDark = createMuiTheme({
       primary: "#ECEFF4",
     },
     common: {
-      main: "#81A1C1"
+      main: "#81A1C1",
     },
   },
 });
@@ -148,27 +147,42 @@ const nordLight = createMuiTheme({
       primary: "#2E3440",
     },
     common: {
-      main: "#5E81AC"
+      main: "#5E81AC",
     },
   },
 });
 
 var theme;
 
-if (localStorage.getItem("theme") === "light" || sessionStorage.getItem("theme") === "light") {
+if (
+  localStorage.getItem("theme") === "light" ||
+  sessionStorage.getItem("theme") === "light"
+) {
   theme = lightTheme;
-} else if (localStorage.getItem("theme") === "dark" || sessionStorage.getItem("theme") === "dark") {
+} else if (
+  localStorage.getItem("theme") === "dark" ||
+  sessionStorage.getItem("theme") === "dark"
+) {
   theme = darkTheme;
-} else if (localStorage.getItem("theme") === "dracula" || sessionStorage.getItem("theme") === "dracula") {
+} else if (
+  localStorage.getItem("theme") === "dracula" ||
+  sessionStorage.getItem("theme") === "dracula"
+) {
   theme = draculaTheme;
-} else if (localStorage.getItem("theme") === "nordDark" || sessionStorage.getItem("theme") === "nordDark") {
+} else if (
+  localStorage.getItem("theme") === "nordDark" ||
+  sessionStorage.getItem("theme") === "nordDark"
+) {
   theme = nordDark;
-} else if (localStorage.getItem("theme") === "nordLight" || sessionStorage.getItem("theme") === "nordLight") {
+} else if (
+  localStorage.getItem("theme") === "nordLight" ||
+  sessionStorage.getItem("theme") === "nordLight"
+) {
   theme = nordLight;
 } else {
   theme = darkTheme;
-  localStorage.setItem("theme", "dark")
-  sessionStorage.setItem("theme", "dark")
+  localStorage.setItem("theme", "dark");
+  sessionStorage.setItem("theme", "dark");
 }
 
 export default theme;
