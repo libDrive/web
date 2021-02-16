@@ -188,3 +188,7 @@
     max-width: 70vw;
   }
 }
+
+.vote__container {
+  margin-top: 20px;
+}
