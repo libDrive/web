@@ -1,21 +1,24 @@
 import React, { Component, useState } from "react";
 
 import { Link, Redirect } from "react-router-dom";
+
+import {
+  AppBar,
+  Button,
+  Divider,
+  InputBase,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from "@material-ui/core";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import Brightness6Icon from '@material-ui/icons/Brightness6';
-import AppBar from "@material-ui/core/AppBar";
-import Button from "@material-ui/core/Button";
-import Divider from "@material-ui/core/Divider";
+import Brightness6Icon from "@material-ui/icons/Brightness6";
 import IconButton from "@material-ui/core/IconButton";
-import InputBase from "@material-ui/core/InputBase";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import SearchIcon from "@material-ui/icons/Search";
 
-import Swal from 'sweetalert2/src/sweetalert2.js'
+import Swal from "sweetalert2/src/sweetalert2.js";
 import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
@@ -229,18 +232,21 @@ export function AccountMenu(props) {
   };
 
   const handleRebuild = () => {
-    let auth = sessionStorage.getItem("auth") || localStorage.getItem("auth")
-    let server = sessionStorage.getItem("server") || localStorage.getItem("server")
+    let auth = sessionStorage.getItem("auth") || localStorage.getItem("auth");
+    let server =
+      sessionStorage.getItem("server") || localStorage.getItem("server");
 
     let url = `${server}/api/v1/rebuild?a=${auth}&force=true`;
-    axios.get(url).then((response) =>
-      Swal.fire({
-        title: "Success!",
-        text:
-          "libDrive's metadata is being rebuilt...",
-        icon: "success",
-        confirmButtonText: "OK",
-      }))
+    axios
+      .get(url)
+      .then((response) =>
+        Swal.fire({
+          title: "Success!",
+          text: "libDrive's metadata is being rebuilt...",
+          icon: "success",
+          confirmButtonText: "OK",
+        })
+      )
       .catch((error) => {
         console.error(error);
         if (auth == null || server == null) {
@@ -291,7 +297,7 @@ export function AccountMenu(props) {
           });
         }
       });
-  }
+  };
 
   let pic = <AccountCircle />;
   if (props.props.pic.includes("http") || props.props.pic.includes("www")) {

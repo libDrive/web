@@ -2,9 +2,8 @@ import React from "react";
 
 import { Link, Redirect } from "react-router-dom";
 
+import { Pagination, PaginationItem } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
-import Pagination from "@material-ui/lab/Pagination";
-import PaginationItem from "@material-ui/lab/PaginationItem";
 
 import { uuid } from "../components";
 

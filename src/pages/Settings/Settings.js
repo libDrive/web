@@ -1,18 +1,20 @@
 import React, { Component } from "react";
 
+import {
+  Button,
+  IconButton,
+  MenuItem,
+  Typography,
+  TextField,
+} from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import AddIcon from "@material-ui/icons/Add";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import MenuItem from "@material-ui/core/MenuItem";
 import RemoveIcon from "@material-ui/icons/Remove";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
 
 import ClipLoader from "react-spinners/ClipLoader";
 
-import Swal from 'sweetalert2/src/sweetalert2.js'
+import Swal from "sweetalert2/src/sweetalert2.js";
 import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
