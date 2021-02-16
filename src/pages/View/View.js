@@ -26,9 +26,10 @@ export default class View extends Component {
       server:
         sessionStorage.getItem("server") || localStorage.getItem("server"),
       auth: sessionStorage.getItem("auth") || localStorage.getItem("auth"),
-      isLoaded: false,
-      metadata: {},
       id: this.props.match.params.id,
+      isLoaded: false,
+      loadedTime: new Date(),
+      metadata: {},
     };
   }
 
@@ -94,6 +95,30 @@ export default class View extends Component {
           });
         }
       });
+  }
+
+  componentWillUnmount() {
+    let { loadedTime, metadata } = this.state;
+
+    const exitTime = new Date();
+    const diffTime = Math.abs(exitTime - loadedTime);
+    let watchList =
+      JSON.parse(localStorage.getItem("watchList")) ||
+      JSON.parse(sessionStorage.getItem("watchList")) ||
+      [];
+    if (diffTime > 180000) {
+      watchList.push({
+        backdropPath: metadata.backdropPath,
+        id: metadata.id,
+        posterPath: metadata.posterPath,
+        title: metadata.title,
+      });
+      while (watchList.length > 8) {
+        watchList.shift();
+      }
+      localStorage.setItem("watchList", JSON.stringify(watchList));
+      sessionStorage.setItem("watchList", JSON.stringify(watchList));
+    }
   }
 
   render() {
