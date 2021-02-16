@@ -107,12 +107,7 @@ export default class View extends Component {
       JSON.parse(sessionStorage.getItem("watchList")) ||
       [];
     if (diffTime > 180000) {
-      watchList.push({
-        backdropPath: metadata.backdropPath,
-        id: metadata.id,
-        posterPath: metadata.posterPath,
-        title: metadata.title,
-      });
+      watchList.push(metadata);
       while (watchList.length > 8) {
         watchList.shift();
       }
