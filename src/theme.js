@@ -53,6 +53,9 @@ const darkTheme = createMuiTheme({
       default: "#111111",
       paper: "#1f1f1f",
     },
+    text: {
+      primary: "#ffffff",
+    },
     common: {
       main: "#ffffff",
     },

@@ -37,6 +37,23 @@ export default class View extends Component {
     let { auth, id, server } = this.state;
     let url = `${server}/api/v1/metadata?a=${auth}&id=${id}`;
 
+    document.documentElement.style.setProperty(
+      "--plyr-color-main",
+      theme.palette.primary.main
+    );
+    document.documentElement.style.setProperty(
+      "--plyr-video-background",
+      theme.palette.background.default
+    );
+    document.documentElement.style.setProperty(
+      "--plyr-menu-background",
+      theme.palette.background.paper
+    );
+    document.documentElement.style.setProperty(
+      "--plyr-menu-color",
+      theme.palette.text.primary
+    );
+
     axios
       .get(url)
       .then((response) => {
@@ -152,7 +169,7 @@ export function MovieView(props) {
 
   return (
     <div className="MovieView">
-      <div className="plyr__component">
+      <div className="plyr__component" style={{}}>
         <Plyr
           source={{
             type: "video",
