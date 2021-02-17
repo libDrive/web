@@ -8,7 +8,7 @@ import "@sweetalert2/theme-dark/dark.css";
 import axios from "axios";
 import queryString from "query-string";
 
-import { Footer, Gallery, Nav, PageMenu, SortMenu } from "../../components";
+import { Footer, Gallery, Nav, PageMenu, SortMenu, theme } from "../../components";
 
 export default class CategoryBrowse extends Component {
   constructor(props) {
@@ -122,7 +122,7 @@ export default class CategoryBrowse extends Component {
       </div>
     ) : (
       <div className="Loading">
-        <ClipLoader color="#4197fe" size={75} />
+        <ClipLoader color={theme.palette.primary.main} size={75} />
       </div>
     );
   }

@@ -7,7 +7,7 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { Footer, Gallery, Nav } from "../../components";
+import { Footer, Gallery, Nav, theme } from "../../components";
 
 export default class Browse extends Component {
   constructor(props) {
@@ -96,7 +96,7 @@ export default class Browse extends Component {
       </div>
     ) : (
       <div className="Loading">
-        <ClipLoader color="#4197fe" size={75} />
+        <ClipLoader color={theme.palette.primary.main} size={75} />
       </div>
     );
   }
