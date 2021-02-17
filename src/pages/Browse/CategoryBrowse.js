@@ -8,7 +8,14 @@ import "@sweetalert2/theme-dark/dark.css";
 import axios from "axios";
 import queryString from "query-string";
 
-import { Footer, Gallery, Nav, PageMenu, SortMenu, theme } from "../../components";
+import {
+  Footer,
+  Gallery,
+  Nav,
+  PageMenu,
+  SortMenu,
+  theme,
+} from "../../components";
 
 export default class CategoryBrowse extends Component {
   constructor(props) {
