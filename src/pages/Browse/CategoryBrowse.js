@@ -8,8 +8,7 @@ import "@sweetalert2/theme-dark/dark.css";
 import axios from "axios";
 import queryString from "query-string";
 
-import { Footer, Gallery, Nav, PageMenu, uuid } from "../../components";
-import "../../components/SortMenu.css";
+import { Footer, Gallery, Nav, PageMenu, SortMenu } from "../../components";
 
 export default class CategoryBrowse extends Component {
   constructor(props) {
@@ -104,13 +103,20 @@ export default class CategoryBrowse extends Component {
   }
 
   render() {
-    let { isLoaded, metadata, page, pages } = this.state;
+    let { isLoaded, metadata, page, pages, sort } = this.state;
 
     return isLoaded ? (
       <div className="CategoryBrowse">
         <Nav />
         <Gallery metadata={metadata} />
-        <PageMenu props={{ page: page, pages: pages, thisprops: this.props }} />
+        <PageMenu
+          props={{
+            page: page,
+            pages: pages,
+            sort: sort,
+            thisprops: this.props,
+          }}
+        />
         <SortMenu props={{ thisprops: this.props }} />
         <Footer />
       </div>
