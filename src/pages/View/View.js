@@ -317,11 +317,11 @@ export function TVSView(props) {
             ],
           }}
         />
-        <div class="plyr-playlist-wrapper">
-          <ul class="plyr-playlist">
+        <div className="plyr-playlist-wrapper">
+          <ul className="plyr-playlist">
             {metadata.children.length
               ? metadata.children.map((child, n) => (
-                  <li className={isHash(n, hash)}>
+                  <li className={isHash(n, hash)} key={n}>
                     <Link
                       to={{
                         pathname: thisprops.location.pathname,
@@ -329,7 +329,7 @@ export function TVSView(props) {
                       }}
                       key={uuid()}
                     >
-                      <img class="plyr-miniposter" />
+                      <img className="plyr-miniposter" />
                       {child.name}
                     </Link>
                   </li>
