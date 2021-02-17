@@ -24,7 +24,7 @@
   border-radius: 10px;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
-  background: #4197fe;
+  background: var(--plyr-color-main);
 }
 .plyr-playlist-wrapper {
   background: rgba(0, 0, 0, 0.8);
@@ -66,11 +66,11 @@
 
 .plyr-playlist-wrapper .plyr-playlist li.pls-playing,
 .plyr-playlist-wrapper .plyr-playlist li:hover {
-  color: #3498db;
+  color: var(--plyr-color-main);
   background-color: rgba(255, 255, 255, 0.09);
 }
 .plyr-playlist-wrapper .plyr-playlist li.pls-playing a {
-  color: #3498db;
+  color: var(--plyr-color-main);
 }
 
 .plyr-playlist-wrapper .plyr-playlist li a {
@@ -93,7 +93,7 @@
 .plyr-playlist li a:hover,
 .plyr-playlist li a:focus,
 .plyr-playlist li a:active {
-  color: #4197fe;
+  color: var(--plyr-color-main);
 }
 
 .plyr-miniposter {
