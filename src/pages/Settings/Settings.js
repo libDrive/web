@@ -18,7 +18,7 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { Footer, Nav, uuid } from "../../components";
+import { Footer, Nav, theme, uuid } from "../../components";
 
 const styles = (theme) => ({
   Form: {
@@ -742,7 +742,7 @@ export class Settings extends Component {
       </div>
     ) : (
       <div className="Loading">
-        <ClipLoader color="#4197fe" size={75} />
+        <ClipLoader color={theme.palette.primary.main} size={75} />
       </div>
     );
   }

@@ -16,7 +16,7 @@ import "plyr-react/dist/plyr.css";
 import axios from "axios";
 import queryString from "query-string";
 
-import { Footer, Nav, uuid } from "../../components";
+import { Footer, Nav, theme, uuid } from "../../components";
 import "./View.css";
 
 export default class View extends Component {
@@ -141,7 +141,7 @@ export default class View extends Component {
       </div>
     ) : (
       <div className="Loading">
-        <ClipLoader color="#4197fe" size={75} />
+        <ClipLoader color={theme.palette.primary.main} size={75} />
       </div>
     );
   }
