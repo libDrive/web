@@ -534,7 +534,7 @@ export class Settings extends Component {
           <Typography variant="h3">Categories</Typography>
           {config.category_list.length
             ? config.category_list.map((category, n) => (
-                <div style={{ margin: "30px" }}>
+                <div style={{ margin: "30px" }} key={n}>
                   <TextField
                     className="TextField"
                     id={`category-type_${n}`}
@@ -595,7 +595,7 @@ export class Settings extends Component {
           <Typography variant="h3">Accounts</Typography>
           {config.account_list.length
             ? config.account_list.map((account, n) => (
-                <div style={{ margin: "30px" }}>
+                <div style={{ margin: "30px" }} key={n}>
                   <TextField
                     className="TextField"
                     id={`account-username_${n}`}
