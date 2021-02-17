@@ -347,6 +347,7 @@ export function TVSView(props) {
             server: server,
           }}
         />
+        <PlaylistMenu props={props.props} />
       </div>
     </div>
   );
@@ -464,6 +465,42 @@ export function ChildrenMenu(props) {
             ))
           : null}
       </Menu>
+    </div>
+  );
+}
+
+export function PlaylistMenu(props) {
+  const handleClick = (props) => {
+    let { auth, id, metadata, server } = props.props;
+    let m3u8 = "#EXTM3U\n";
+
+    for (var i in metadata.children) {
+      m3u8 += `#EXTINF:0, ${metadata.children[i].name}\n${server}/api/v1/redirectdownload/${metadata.children[i].name}?a=${auth}&id=${metadata.children[i].id}\n`;
+    }
+
+    var element = document.createElement("a");
+    element.setAttribute(
+      "href",
+      "data:text/plain;charset=utf-8," + encodeURIComponent(m3u8)
+    );
+    element.setAttribute("download", "playlist.m3u8");
+    element.style.display = "none";
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  };
+
+  return (
+    <div className="PlaylistMenu" style={{ marginTop: "30px" }}>
+      <Button
+        onClick={() => {
+          handleClick(props);
+        }}
+        variant="contained"
+        color="primary"
+      >
+        m3u8 Playlist
+      </Button>
     </div>
   );
 }
