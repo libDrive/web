@@ -25,9 +25,8 @@ body {
 }
 
 .no_decoration_link {
-  text-decoration: none;
+  text-decoration: inherit;
   color: inherit;
-  font-weight: bold;
 }
 
 .Loading {

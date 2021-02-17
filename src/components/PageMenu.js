@@ -21,7 +21,7 @@ const styles = makeStyles((theme) => ({
 }));
 
 export default function PageMenu(props) {
-  let { page, pages, thisprops } = props.props;
+  let { page, pages, sort, thisprops } = props.props;
   const classes = styles();
 
   if (page > pages) {
@@ -29,9 +29,7 @@ export default function PageMenu(props) {
       <Redirect
         to={{
           pathname: thisprops.location.pathname,
-          search: `?page=${pages}&sort=${
-            queryString.parse(thisprops.location.search).sort
-          }`,
+          search: `?page=${pages}&sort=${sort}`,
         }}
       />
     );
@@ -43,20 +41,22 @@ export default function PageMenu(props) {
           count={pages}
           variant="outlined"
           color="primary"
-          renderItem={(item) => (
-            <Link
-              to={{
-                pathname: thisprops.location.pathname,
-                search: `?page=${item.page}&sort=${
-                  queryString.parse(thisprops.location.search).sort
-                }`,
-              }}
-              key={uuid()}
-              className="no_decoration_link"
-            >
+          renderItem={(item) =>
+            item.page ? (
+              <Link
+                to={{
+                  pathname: thisprops.location.pathname,
+                  search: `?page=${item.page}&sort=${sort}`,
+                }}
+                key={uuid()}
+                className="no_decoration_link"
+              >
+                <PaginationItem {...item} />
+              </Link>
+            ) : (
               <PaginationItem {...item} />
-            </Link>
-          )}
+            )
+          }
         />
       </div>
     );
