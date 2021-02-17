@@ -23,7 +23,7 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { uuid } from "../components";
+import { theme, uuid } from "../components";
 
 export default class Nav extends Component {
   constructor(props) {
@@ -64,7 +64,7 @@ export default class Nav extends Component {
         />
       </div>
     ) : (
-      <div className="Loading" style={{ display: "none" }}></div>
+      <div className="LoadingNav" style={{ height: "64px", backgroundColor: theme.palette.background.paper }}></div>
     );
   }
 }
