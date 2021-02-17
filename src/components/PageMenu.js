@@ -5,8 +5,6 @@ import { Link, Redirect } from "react-router-dom";
 import { Pagination, PaginationItem } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
 
-import queryString from "query-string";
-
 import { uuid } from "../components";
 
 const styles = makeStyles((theme) => ({
