@@ -7,8 +7,8 @@ import {
   Typography,
   TextField,
 } from "@material-ui/core";
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import RemoveCircleOutlineIcon from "@material-ui/icons/RemoveCircleOutline";
 import { withStyles } from "@material-ui/core/styles";
 
 import ClipLoader from "react-spinners/ClipLoader";
