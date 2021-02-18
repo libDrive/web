@@ -12,11 +12,13 @@ export default class Gallery extends Component {
     super(props);
     this.state = {
       metadata: this.props.metadata,
+      server:
+        sessionStorage.getItem("server") || localStorage.getItem("server"),
     };
   }
 
   render() {
-    let { metadata } = this.state;
+    let { metadata, server } = this.state;
 
     return (
       <div className="Gallery">
@@ -36,7 +38,10 @@ export default class Gallery extends Component {
                         <figure className="item__figure" key={uuid()}>
                           <Link to={`/view/${item.id}`} key={uuid()}>
                             <img
-                              src={item.posterPath}
+                              src={
+                                item.posterPath ||
+                                `${server}/api/v1/image/poster/${item.title}.jpeg`
+                              }
                               key={uuid()}
                               className="item__poster"
                               alt={item.title}
