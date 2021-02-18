@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog } = require("electron");
+const { app, BrowserWindow } = require("electron");
 const path = require("path");
 const serve = require("electron-serve");
 const loadURL = serve({ directory: "build" });
@@ -11,17 +11,14 @@ function isDev() {
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    fullscreen: true,
     backgroundColor: "#111111",
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: true
     },
     icon: isDev()
-      ? path.join(process.cwd(), "public/assets/favicon.ico")
-      : path.join(__dirname, "build/assets/favicon.ico"),
+      ? path.join(process.cwd(), "public/favicon.ico")
+      : path.join(__dirname, "build/favicon.ico"),
     show: false,
   });
 
@@ -36,6 +33,7 @@ function createWindow() {
   });
 
   mainWindow.once("ready-to-show", () => {
+    mainWindow.maximize();
     mainWindow.show();
   });
 }
