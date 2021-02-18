@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { Button, Menu, MenuItem } from "@material-ui/core";
 
-import { uuid } from "../components";
+import { uuid } from "../../components";
 
 import "./SortMenu.css";
 

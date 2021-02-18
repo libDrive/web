@@ -10,10 +10,10 @@ import queryString from "query-string";
 
 import {
   Footer,
-  Gallery,
   Nav,
   PageMenu,
   SortMenu,
+  Tile,
   theme,
 } from "../../components";
 
@@ -115,7 +115,7 @@ export default class CategoryBrowse extends Component {
     return isLoaded ? (
       <div className="CategoryBrowse">
         <Nav />
-        <Gallery metadata={metadata} />
+        <Tile metadata={metadata} />
         <PageMenu
           props={{
             page: page,
