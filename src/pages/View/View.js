@@ -198,7 +198,13 @@ export function MovieView(props) {
       </div>
       <div className="info__container">
         <div className="info__left">
-          <img className="info__poster" src={metadata.posterPath || `${server}/api/v1/image/poster/${metadata.title}.jpeg`} />
+          <img
+            className="info__poster"
+            src={
+              metadata.posterPath ||
+              `${server}/api/v1/image/poster/${metadata.title}.jpeg`
+            }
+          />
         </div>
         <div className="info__right">
           <Typography variant="h2" className="info__title">
@@ -233,7 +239,13 @@ export function TVBView(props) {
     <div className="TVBView">
       <div className="info__container">
         <div className="info__left">
-          <img className="info__poster" src={metadata.posterPath || `${server}/api/v1/image/poster/${metadata.title}.jpeg`} />
+          <img
+            className="info__poster"
+            src={
+              metadata.posterPath ||
+              `${server}/api/v1/image/poster/${metadata.title}.jpeg`
+            }
+          />
         </div>
         <div className="info__right">
           <Typography variant="h2" className="info__title">

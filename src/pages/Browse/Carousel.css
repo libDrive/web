@@ -13,14 +13,14 @@ figure {
 }
 
 .carousel__items {
-	display: flex;
-	overflow-y: hidden;
-	overflow-x: auto;
-	padding: 30px;
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: auto;
+  padding: 30px;
 }
 
 .carousel__items::-webkit-scrollbar {
-	display: none;
+  display: none;
 }
 
 .carousel__item__poster {
