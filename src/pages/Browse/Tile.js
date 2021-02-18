@@ -47,7 +47,10 @@ export default class Tile extends Component {
                               alt={item.title}
                             />
                           </Link>
-                          <Typography className="tile__item__title" key={uuid()}>
+                          <Typography
+                            className="tile__item__title"
+                            key={uuid()}
+                          >
                             {item.title}
                           </Typography>
                         </figure>

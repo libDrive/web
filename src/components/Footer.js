@@ -17,12 +17,13 @@ const styles = makeStyles((theme) => ({
 
 export default function Footer() {
   const classes = styles();
-  let gallery = sessionStorage.getItem("gallery") || localStorage.getItem("gallery")
+  let gallery =
+    sessionStorage.getItem("gallery") || localStorage.getItem("gallery");
 
   function onSelect(e) {
     sessionStorage.setItem("gallery", e.target.value);
     localStorage.setItem("gallery", e.target.value);
-    window.location.reload()
+    window.location.reload();
   }
 
   return (
@@ -41,7 +42,12 @@ export default function Footer() {
       >
         © 2021 Copyright: Elias Benbourenane - v1.1.4
       </a>
-      <select name="gallery" value={gallery} className="gallery__select" onChange={(e) => onSelect(e)}>
+      <select
+        name="gallery"
+        value={gallery}
+        className="gallery__select"
+        onChange={(e) => onSelect(e)}
+      >
         <optgroup label="Gallery Type">
           <option value="carousel">Carousel</option>
           <option value="tile">Tile</option>

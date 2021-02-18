@@ -89,9 +89,15 @@ export default class Browse extends Component {
     let { isLoaded, metadata } = this.state;
 
     let gallery;
-    if (sessionStorage.getItem("gallery") == "tile" || localStorage.getItem("gallery") == "tile") {
+    if (
+      sessionStorage.getItem("gallery") == "tile" ||
+      localStorage.getItem("gallery") == "tile"
+    ) {
       gallery = true;
-    } else if (sessionStorage.getItem("gallery") == "carousel" || localStorage.getItem("gallery") == "carousel") {
+    } else if (
+      sessionStorage.getItem("gallery") == "carousel" ||
+      localStorage.getItem("gallery") == "carousel"
+    ) {
       gallery = false;
     } else {
       gallery = true;
