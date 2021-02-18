@@ -32,7 +32,7 @@ export default function Footer() {
         href="https://eliasbenb.github.io"
         target="_blank"
       >
-        © 2021 Copyright: Elias Benbourenane - v1.1.3
+        © 2021 Copyright: Elias Benbourenane - v1.1.4
       </a>
     </footer>
   );
