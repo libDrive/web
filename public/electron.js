@@ -33,6 +33,7 @@ function createWindow() {
   });
 
   mainWindow.once("ready-to-show", () => {
+    mainWindow.setMenuBarVisibility(false);
     mainWindow.maximize();
     mainWindow.show();
   });
