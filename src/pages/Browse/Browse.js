@@ -7,7 +7,7 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { Footer, Gallery, Nav, theme } from "../../components";
+import { Carousel, Footer, Tile, Nav, theme } from "../../components";
 
 export default class Browse extends Component {
   constructor(props) {
@@ -88,10 +88,23 @@ export default class Browse extends Component {
   render() {
     let { isLoaded, metadata } = this.state;
 
+    let gallery;
+    if (sessionStorage.getItem("gallery") == "tile" || localStorage.getItem("gallery") == "tile") {
+      gallery = true;
+    } else if (sessionStorage.getItem("gallery") == "carousel" || localStorage.getItem("gallery") == "carousel") {
+      gallery = false;
+    } else {
+      gallery = true;
+    }
+
     return isLoaded ? (
       <div className="Browse">
         <Nav />
-        <Gallery metadata={metadata} />
+        {gallery ? (
+          <Tile metadata={metadata} />
+        ) : (
+          <Carousel metadata={metadata} />
+        )}
         <Footer />
       </div>
     ) : (

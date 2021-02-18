@@ -1,0 +1,58 @@
+figure {
+  margin: 0;
+}
+
+.carousel__category {
+  width: 90%;
+  margin: 3% auto;
+}
+
+.carousel__category__title {
+  font-weight: 500;
+  font-size: 1.8em;
+}
+
+.carousel__items {
+	display: flex;
+	overflow-y: hidden;
+	overflow-x: auto;
+	padding: 30px;
+}
+
+.carousel__items::-webkit-scrollbar {
+	display: none;
+}
+
+.carousel__item__poster {
+  border-radius: 7px;
+  width: 175px;
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+  margin-bottom: 0.5em;
+}
+
+.carousel__item__figure {
+  margin-right: 3em;
+  width: 175px;
+  transition: all 0.25s ease-in-out;
+}
+
+.carousel__item__figure:hover {
+  transform: scale(1.05);
+}
+
+@media screen and (max-width: 280px) {
+  .carousel__item__figure {
+    max-width: 80%;
+  }
+}
+
+.carousel__item__title {
+  font-size: 0.875rem;
+  font-weight: 400;
+  max-width: 95%;
+  margin: auto;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

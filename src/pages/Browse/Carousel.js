@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 
 import { Typography } from "@material-ui/core";
 
-import { uuid } from "../components";
-import "./Gallery.css";
+import { uuid } from "../../components";
+import "./Carousel.css";
 
-export default class Gallery extends Component {
+export default class Carousel extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,21 +21,21 @@ export default class Gallery extends Component {
     let { metadata, server } = this.state;
 
     return (
-      <div className="Gallery">
+      <div className="Carousel">
         {metadata.length
           ? metadata.map((category) => (
-              <div className="category" key={uuid()}>
+              <div className="carousel__category" key={uuid()}>
                 <Link
                   to={`/browse/${category.categoryInfo.name}`}
                   key={uuid()}
-                  className="category__title no_decoration_link"
+                  className="carousel__category__title no_decoration_link"
                 >
                   {category.categoryInfo.name}
                 </Link>
-                <div className="items">
+                <div className="carousel__items">
                   {category.children.length
                     ? category.children.map((item) => (
-                        <figure className="item__figure" key={uuid()}>
+                        <figure className="carousel__item__figure" key={uuid()}>
                           <Link to={`/view/${item.id}`} key={uuid()}>
                             <img
                               src={
@@ -43,11 +43,11 @@ export default class Gallery extends Component {
                                 `${server}/api/v1/image/poster/${item.title}.jpeg`
                               }
                               key={uuid()}
-                              className="item__poster"
+                              className="carousel__item__poster"
                               alt={item.title}
                             />
                           </Link>
-                          <Typography className="item__title" key={uuid()}>
+                          <Typography className="carousel__item__title" key={uuid()}>
                             {item.title}
                           </Typography>
                         </figure>

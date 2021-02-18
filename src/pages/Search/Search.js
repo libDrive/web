@@ -7,7 +7,7 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { Footer, Gallery, Nav, theme } from "../../components";
+import { Footer, Nav, Tile, theme } from "../../components";
 
 export default class Search extends Component {
   constructor(props) {
@@ -92,7 +92,7 @@ export default class Search extends Component {
     return isLoaded ? (
       <div className="Search">
         <Nav />
-        <Gallery metadata={metadata} />
+        <Tile metadata={metadata} />
         <Footer />
       </div>
     ) : (
