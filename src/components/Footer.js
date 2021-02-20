@@ -1,5 +1,12 @@
 import React from "react";
 
+import {
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import "./Footer.css";
@@ -13,18 +20,22 @@ const styles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
   },
+  formControl: {
+    margin: theme.spacing(2),
+    minWidth: 90,
+  },
 }));
 
 export default function Footer() {
   const classes = styles();
+
+  const handleSelect = (event) => {
+    sessionStorage.setItem("gallery", event.target.value);
+    localStorage.setItem("gallery", event.target.value);
+    window.location.reload();
+  };
   let gallery =
     sessionStorage.getItem("gallery") || localStorage.getItem("gallery");
-
-  function onSelect(e) {
-    sessionStorage.setItem("gallery", e.target.value);
-    localStorage.setItem("gallery", e.target.value);
-    window.location.reload();
-  }
 
   return (
     <footer className={classes.footer__container}>
@@ -42,17 +53,20 @@ export default function Footer() {
       >
         © 2021 Copyright: Elias Benbourenane - v1.1.4
       </a>
-      <select
-        name="gallery"
-        value={gallery}
-        className="gallery__select"
-        onChange={(e) => onSelect(e)}
-      >
-        <optgroup label="Gallery Type">
-          <option value="carousel">Carousel</option>
-          <option value="tile">Tile</option>
-        </optgroup>
-      </select>
+      <div className="gallery__select">
+        <FormControl className={classes.formControl}>
+          <Select
+            value={gallery}
+            onChange={handleSelect}
+            displayEmpty
+            className={classes.selectEmpty}
+            inputProps={{ "aria-label": "Without label" }}
+          >
+            <MenuItem value={"carousel"}>Carousel</MenuItem>
+            <MenuItem value={"tile"}>Tile</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
     </footer>
   );
 }
