@@ -21,3 +21,10 @@
 .gallery__select {
   margin: 20px;
 }
+
+@media screen and (max-width: 515px) {
+  .gallery__select {
+    display: none;
+    margin: 0;
+  }
+}
