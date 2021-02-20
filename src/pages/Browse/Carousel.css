@@ -27,13 +27,13 @@ figure {
   border-radius: 7px;
   width: 175px;
   box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
-  margin-bottom: 0.5em;
 }
 
 .carousel__item__figure {
-  margin-right: 3em;
+  margin-right: 0.75em;
   width: 175px;
   transition: all 0.25s ease-in-out;
+  margin-bottom: 0.5em;
 }
 
 .carousel__item__figure:hover {
