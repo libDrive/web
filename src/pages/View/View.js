@@ -114,25 +114,6 @@ export default class View extends Component {
       });
   }
 
-  componentWillUnmount() {
-    let { loadedTime, metadata } = this.state;
-
-    const exitTime = new Date();
-    const diffTime = Math.abs(exitTime - loadedTime);
-    let watchList =
-      JSON.parse(localStorage.getItem("watchList")) ||
-      JSON.parse(sessionStorage.getItem("watchList")) ||
-      [];
-    if (diffTime > 180000) {
-      watchList.push(metadata);
-      while (watchList.length > 8) {
-        watchList.shift();
-      }
-      localStorage.setItem("watchList", JSON.stringify(watchList));
-      sessionStorage.setItem("watchList", JSON.stringify(watchList));
-    }
-  }
-
   render() {
     let { isLoaded, metadata } = this.state;
     let state = this.state;
