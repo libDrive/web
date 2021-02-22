@@ -100,7 +100,7 @@ export default class Browse extends Component {
     ) {
       gallery = false;
     } else {
-      gallery = true;
+      gallery = false;
     }
 
     return isLoaded ? (

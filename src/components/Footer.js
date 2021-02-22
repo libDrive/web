@@ -35,7 +35,7 @@ export default function Footer() {
     window.location.reload();
   };
   let gallery =
-    sessionStorage.getItem("gallery") || localStorage.getItem("gallery");
+    sessionStorage.getItem("gallery") || localStorage.getItem("gallery") || "carousel";
 
   return (
     <footer className={classes.footer__container}>

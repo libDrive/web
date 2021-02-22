@@ -236,7 +236,7 @@ export function AccountMenu(props) {
     let server =
       sessionStorage.getItem("server") || localStorage.getItem("server");
 
-    let url = `${server}/api/v1/rebuild?a=${auth}&force=true`;
+    let url = `${server}/api/v1/rebuild?a=${auth}`;
     axios
       .get(url)
       .then((response) =>
