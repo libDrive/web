@@ -64,7 +64,14 @@ export default class Nav extends Component {
         />
       </div>
     ) : (
-      <div className="LoadingNav" style={{ height: "64px", backgroundColor: theme.palette.background.paper }}></div>
+      <div className="Nav">
+        <NavUI
+          props={{
+            categories: [],
+            accounts: [],
+          }}
+        />
+      </div>
     );
   }
 }
@@ -164,6 +171,48 @@ export function NavUI(props) {
           <BrowseMenu props={props.props.categories} />
           <ThemeMenu />
           <AccountMenu props={props.props.accounts} />
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
+}
+
+export function LoadingNavUI() {
+  const classes = styles();
+
+  const [search, setSearch] = useState("");
+  const searchChange = (evt) => {
+    setSearch(evt.target.value);
+  };
+
+  const searchSubmit = (evt) => {
+    evt.preventDefault();
+    window.location.hash = `#/search/${search}`;
+  };
+
+  return (
+    <div className={classes.grow}>
+      <AppBar position="static" className={classes.root}>
+        <Toolbar>
+          <Link to="/" className="no_decoration_link">
+            <Typography className={classes.title} variant="h6" noWrap>
+              libDrive
+            </Typography>
+          </Link>
+          <form className={classes.search} onSubmit={searchSubmit}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ "aria-label": "search" }}
+              onChange={searchChange}
+            />
+          </form>
         </Toolbar>
       </AppBar>
     </div>
@@ -300,7 +349,10 @@ export function AccountMenu(props) {
   };
 
   let pic = <AccountCircle />;
-  if (props.props.pic.includes("http") || props.props.pic.includes("www")) {
+  if (
+    props.props.pic &&
+    (props.props.pic.includes("http") || props.props.pic.includes("www"))
+  ) {
     pic = <img src={props.props.pic} width="32px" alt="profile-pic"></img>;
   }
 
