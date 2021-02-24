@@ -100,6 +100,8 @@ export default class Browse extends Component {
     ) {
       gallery = false;
     } else {
+      sessionStorage.setItem("gallery", "carousel");
+      localStorage.setItem("gallery", "carousel");
       gallery = false;
     }
 
