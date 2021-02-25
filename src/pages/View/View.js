@@ -183,7 +183,7 @@ export function MovieView(props) {
             className="info__poster"
             src={
               metadata.posterPath ||
-              `${server}/api/v1/image/poster/${metadata.title}.jpeg`
+              `${server}/api/v1/image/poster?text=${metadata.title}&extention=jpeg`
             }
           />
         </div>
@@ -224,7 +224,7 @@ export function TVBView(props) {
             className="info__poster"
             src={
               metadata.posterPath ||
-              `${server}/api/v1/image/poster/${metadata.title}.jpeg`
+              `${server}/api/v1/image/poster?text=${metadata.title}&extention=jpeg`
             }
           />
         </div>
