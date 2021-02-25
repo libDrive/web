@@ -40,7 +40,7 @@ export default class Carousel extends Component {
                             <img
                               src={
                                 item.posterPath ||
-                                `${server}/api/v1/image/poster/${item.title}.jpeg`
+                                `${server}/api/v1/image/poster?text=${item.title}&extention=jpeg`
                               }
                               key={uuid()}
                               className="carousel__item__poster"
