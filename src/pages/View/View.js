@@ -155,7 +155,7 @@ export function MovieView(props) {
           source={{
             type: "video",
             poster:
-              `https://drive.google.com/thumbnail?sz=w1920&id=${metadata.id}` ||
+              `${server}/api/v1/image/thumbnail?id=${metadata.id}` ||
               "",
             sources: [
               {
@@ -289,7 +289,7 @@ export function TVSView(props) {
           source={{
             type: "video",
             poster:
-              `https://drive.google.com/thumbnail?sz=w1920&id=${metadata.children[hash].id}` ||
+              `${server}/api/v1/image/thumbnail?id=${metadata.children[hash].id}` ||
               "",
             sources: [
               {
