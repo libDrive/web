@@ -154,12 +154,10 @@ export function MovieView(props) {
         <Plyr
           source={{
             type: "video",
-            poster:
-              `${server}/api/v1/image/thumbnail?id=${metadata.id}` ||
-              "",
+            poster: `${server}/api/v1/image/thumbnail?id=${metadata.id}` || "",
             sources: [
               {
-                src: `${server}/api/v1/redirectdownload/${metadata.name}?a=${auth}&id=${id}`,
+                src: `${server}/api/v1/redirectdownload/${metadata.name}?a=${auth}&id=${id}&quality=transcoded`,
               },
             ],
           }}
@@ -293,7 +291,7 @@ export function TVSView(props) {
               "",
             sources: [
               {
-                src: `${server}/api/v1/redirectdownload/${metadata.children[hash].name}?a=${auth}&id=${metadata.children[hash].id}`,
+                src: `${server}/api/v1/redirectdownload/${metadata.children[hash].name}?a=${auth}&id=${metadata.children[hash].id}&quality=transcoded`,
               },
             ],
           }}
