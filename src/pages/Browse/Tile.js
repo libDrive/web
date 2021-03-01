@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { Typography } from "@material-ui/core";
 
-import { uuid } from "../../components";
+import { guid } from "../../components";
 import "./Tile.css";
 
 export default class Tile extends Component {
@@ -24,10 +24,10 @@ export default class Tile extends Component {
       <div className="Tile">
         {metadata.length
           ? metadata.map((category) => (
-              <div className="tile__category" key={uuid()}>
+              <div className="tile__category" key={guid()}>
                 <Link
                   to={`/browse/${category.categoryInfo.name}`}
-                  key={uuid()}
+                  key={guid()}
                   className="tile__category__title no_decoration_link"
                 >
                   {category.categoryInfo.name}
@@ -35,21 +35,21 @@ export default class Tile extends Component {
                 <div className="tile__items">
                   {category.children.length
                     ? category.children.map((item) => (
-                        <figure className="tile__item__figure" key={uuid()}>
-                          <Link to={`/view/${item.id}`} key={uuid()}>
+                        <figure className="tile__item__figure" key={guid()}>
+                          <Link to={`/view/${item.id}`} key={guid()}>
                             <img
                               src={
                                 item.posterPath ||
                                 `${server}/api/v1/image/poster?text=${item.title}&extention=jpeg`
                               }
-                              key={uuid()}
+                              key={guid()}
                               className="tile__item__poster"
                               alt={item.title}
                             />
                           </Link>
                           <Typography
                             className="tile__item__title"
-                            key={uuid()}
+                            key={guid()}
                           >
                             {item.title}
                           </Typography>

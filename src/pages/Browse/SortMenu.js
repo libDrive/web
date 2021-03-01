@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { Button, Menu, MenuItem } from "@material-ui/core";
 
-import { uuid } from "../../components";
+import { guid } from "../../components";
 
 import "./SortMenu.css";
 
@@ -48,7 +48,7 @@ export default function SortMenu(props) {
                 pathname: thisprops.location.pathname,
                 search: `?sort=alphabet-asc`,
               }}
-              key={uuid()}
+              key={guid()}
               className="no_decoration_link"
             >
               Alphabet Ascending
@@ -60,7 +60,7 @@ export default function SortMenu(props) {
                 pathname: thisprops.location.pathname,
                 search: `?sort=alphabet-des`,
               }}
-              key={uuid()}
+              key={guid()}
               className="no_decoration_link"
             >
               Alphabet Descending
@@ -72,7 +72,7 @@ export default function SortMenu(props) {
                 pathname: thisprops.location.pathname,
                 search: `?sort=date-asc`,
               }}
-              key={uuid()}
+              key={guid()}
               className="no_decoration_link"
             >
               Date Ascending
@@ -84,7 +84,7 @@ export default function SortMenu(props) {
                 pathname: thisprops.location.pathname,
                 search: `?sort=date-des`,
               }}
-              key={uuid()}
+              key={guid()}
               className="no_decoration_link"
             >
               Date Descending
@@ -96,7 +96,7 @@ export default function SortMenu(props) {
                 pathname: thisprops.location.pathname,
                 search: `?sort=popularity-asc`,
               }}
-              key={uuid()}
+              key={guid()}
               className="no_decoration_link"
             >
               Popularity Ascending
@@ -108,7 +108,7 @@ export default function SortMenu(props) {
                 pathname: thisprops.location.pathname,
                 search: `?sort=popularity-des`,
               }}
-              key={uuid()}
+              key={guid()}
               className="no_decoration_link"
             >
               Popularity Descending
@@ -120,7 +120,7 @@ export default function SortMenu(props) {
                 pathname: thisprops.location.pathname,
                 search: `?sort=vote-asc`,
               }}
-              key={uuid()}
+              key={guid()}
               className="no_decoration_link"
             >
               Vote Ascending
@@ -132,7 +132,7 @@ export default function SortMenu(props) {
                 pathname: thisprops.location.pathname,
                 search: `?sort=vote-des`,
               }}
-              key={uuid()}
+              key={guid()}
               className="no_decoration_link"
             >
               Vote Descending
@@ -144,7 +144,7 @@ export default function SortMenu(props) {
                 pathname: thisprops.location.pathname,
                 search: `?sort=random`,
               }}
-              key={uuid()}
+              key={guid()}
               className="no_decoration_link"
             >
               Random
