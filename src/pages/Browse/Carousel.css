@@ -40,6 +40,15 @@ figure {
   transform: scale(1.05);
 }
 
+@media screen and (max-width: 500px) {
+  .carousel__item__poster {
+    width: 140px;
+  }
+  .carousel__item__figure {
+    width: 140px;
+  }
+}
+
 @media screen and (max-width: 280px) {
   .carousel__item__figure {
     max-width: 80%;
