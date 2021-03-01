@@ -170,6 +170,7 @@ export function MovieView(props) {
               "mute",
               "volume",
               "pip",
+              "settings",
               "fullscreen",
             ],
           }}
@@ -304,6 +305,7 @@ export function TVSView(props) {
               "mute",
               "volume",
               "pip",
+              "settings",
               "fullscreen",
             ],
           }}
