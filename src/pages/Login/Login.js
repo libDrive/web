@@ -71,6 +71,10 @@ class Login extends Component {
     if (!password) {
       return this.setState({ error: "Password is required" });
     }
+    if (!tempServer.startsWith("http")) {
+      tempServer = `https://${tempServer}`;
+    }
+
     axios
       .get(`${tempServer}/api/v1/auth?u=${username}&p=${password}`)
       .then((response) =>
