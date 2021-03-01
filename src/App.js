@@ -6,13 +6,17 @@ export default class App extends Component {
     super(props);
     this.state = {
       auth: sessionStorage.getItem("auth") || localStorage.getItem("auth"),
-      isLoaded: false,
       server:
         sessionStorage.getItem("server") || localStorage.getItem("server"),
     };
   }
 
   render() {
-    return <Redirect to="/browse" />;
+    let { auth, server } = this.state;
+    return auth && server ? (
+      <Redirect to="/browse" />
+    ) : (
+      <Redirect to="/login" />
+    );
   }
 }
