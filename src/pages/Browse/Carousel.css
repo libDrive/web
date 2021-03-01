@@ -16,7 +16,10 @@ figure {
   display: flex;
   overflow-y: hidden;
   overflow-x: auto;
-  padding: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-right: 30px;
+  padding-left: 10px;
 }
 
 .carousel__items::-webkit-scrollbar {
