@@ -83,38 +83,57 @@ export class Settings extends Component {
   async componentDidMount() {
     let { auth, secret, server } = this.state;
 
-    axios
-      .get(`${server}/api/v1/config?secret=${secret}`)
-      .then((response) =>
-        this.setState({
-          config: response.data,
-          isLoaded: true,
-          postConfig: response.data,
-          tempSecret: response.data.secret_key,
-        })
-      )
-      .catch((error) => {
-        console.error(error);
-        if (auth == null || server == null) {
-          this.props.history.push("/login");
-        } else if (error.response) {
-          if (error.response.status === 401) {
+    if (sessionStorage.getItem("secret") == null) {
+      this.props.history.push("/settings/login");
+    } else {
+      axios
+        .get(`${server}/api/v1/config?secret=${secret}`)
+        .then((response) =>
+          this.setState({
+            config: response.data,
+            isLoaded: true,
+            postConfig: response.data,
+            tempSecret: response.data.secret_key,
+          })
+        )
+        .catch((error) => {
+          console.error(error);
+          if (auth == null || server == null) {
+            this.props.history.push("/login");
+          } else if (error.response) {
+            if (error.response.status === 401) {
+              Swal.fire({
+                title: "Error!",
+                text: "Your credentials are invalid!",
+                icon: "error",
+                confirmButtonText: "Login",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  sessionStorage.removeItem("secret");
+                  this.props.history.push("/settings/login");
+                }
+              });
+            } else {
+              Swal.fire({
+                title: "Error!",
+                text:
+                  "Something went wrong while communicating with the backend!",
+                icon: "error",
+                confirmButtonText: "Logout",
+                cancelButtonText: "Retry",
+                showCancelButton: true,
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.props.history.push("/logout");
+                } else if (result.isDismissed) {
+                  location.reload();
+                }
+              });
+            }
+          } else if (error.request) {
             Swal.fire({
               title: "Error!",
-              text: "Your credentials are invalid!",
-              icon: "error",
-              confirmButtonText: "Login",
-            }).then((result) => {
-              if (result.isConfirmed) {
-                sessionStorage.removeItem("secret");
-                this.props.history.push("/settings/login");
-              }
-            });
-          } else {
-            Swal.fire({
-              title: "Error!",
-              text:
-                "Something went wrong while communicating with the backend!",
+              text: `libDrive could not communicate with the backend! Is ${server} the correct address?`,
               icon: "error",
               confirmButtonText: "Logout",
               cancelButtonText: "Retry",
@@ -122,28 +141,13 @@ export class Settings extends Component {
             }).then((result) => {
               if (result.isConfirmed) {
                 this.props.history.push("/logout");
-              } else if (result.isDenied) {
+              } else if (result.isDismissed) {
                 location.reload();
               }
             });
           }
-        } else if (error.request) {
-          Swal.fire({
-            title: "Error!",
-            text: `libDrive could not communicate with the backend! Is ${server} the correct address?`,
-            icon: "error",
-            confirmButtonText: "Logout",
-            cancelButtonText: "Retry",
-            showCancelButton: true,
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.props.history.push("/logout");
-            } else if (result.isDismissed) {
-              location.reload();
-            }
-          });
-        }
-      });
+        });
+    }
   }
 
   dismissError() {
@@ -219,7 +223,7 @@ export class Settings extends Component {
             }).then((result) => {
               if (result.isConfirmed) {
                 this.props.history.push("/logout");
-              } else if (result.isDenied) {
+              } else if (result.isDismissed) {
                 location.reload();
               }
             });
