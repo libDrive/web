@@ -92,7 +92,7 @@ class SettingsLoginForm extends Component {
             }).then((result) => {
               if (result.isConfirmed) {
                 this.props.history.push("/logout");
-              } else if (result.isDenied) {
+              } else if (result.isDismissed) {
                 location.reload();
               }
             });
@@ -109,7 +109,7 @@ class SettingsLoginForm extends Component {
           }).then((result) => {
             if (result.isConfirmed) {
               this.props.history.push("/logout");
-            } else if (result.isDenied) {
+            } else if (result.isDismissed) {
               location.reload();
             }
           });
