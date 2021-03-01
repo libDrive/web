@@ -77,20 +77,12 @@ class Login extends Component {
 
     axios
       .get(`${tempServer}/api/v1/auth?u=${username}&p=${password}`)
-      .then((response) =>
-        this.setState({
-          auth: response.data.auth,
-          server: tempServer,
-        })
-      )
-      .then(() => {
-        if (auth && server) {
-          localStorage.setItem("server", server);
-          sessionStorage.setItem("server", server);
-          localStorage.setItem("auth", auth);
-          sessionStorage.setItem("auth", auth);
-          this.props.history.push("/");
-        }
+      .then((response) => {
+        localStorage.setItem("server", tempServer);
+        sessionStorage.setItem("server", tempServer);
+        localStorage.setItem("auth", response.data.auth);
+        sessionStorage.setItem("auth", response.data.auth);
+        this.props.history.push("/");
       })
       .catch((error) => {
         console.error(error);
