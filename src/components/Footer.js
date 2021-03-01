@@ -44,6 +44,7 @@ export default function Footer() {
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Font_Awesome_5_brands_github.svg/62px-Font_Awesome_5_brands_github.svg.png"
           className="footer__github"
           height="55px"
+          alt="github-logo"
         />
       </a>
       <a
