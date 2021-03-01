@@ -23,7 +23,7 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { theme, uuid } from "../components";
+import { theme, guid } from "../components";
 
 export default class Nav extends Component {
   constructor(props) {
@@ -257,7 +257,7 @@ export function BrowseMenu(props) {
           ? props.props.map((category) => (
               <Link
                 to={`/browse/${category.name}`}
-                key={uuid()}
+                key={guid()}
                 className="no_decoration_link"
               >
                 <MenuItem onClick={handleClose}>{category.name}</MenuItem>

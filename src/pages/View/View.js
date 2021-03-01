@@ -16,7 +16,7 @@ import "plyr-react/dist/plyr.css";
 import axios from "axios";
 import queryString from "query-string";
 
-import { Footer, Nav, theme, uuid } from "../../components";
+import { Footer, Nav, theme, guid } from "../../components";
 import "./View.css";
 
 export default class View extends Component {
@@ -320,7 +320,7 @@ export function TVSView(props) {
                         pathname: thisprops.location.pathname,
                         search: `?q=${n}`,
                       }}
-                      key={uuid()}
+                      key={guid()}
                     >
                       <img className="plyr-miniposter" />
                       {child.name}
@@ -451,7 +451,7 @@ export function ChildrenMenu(props) {
               <Link
                 to={`/view/${child.id}`}
                 className="no_decoration_link"
-                key={uuid()}
+                key={guid()}
               >
                 <MenuItem onClick={handleClose}>{child.name}</MenuItem>
               </Link>

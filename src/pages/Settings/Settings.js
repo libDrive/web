@@ -18,7 +18,7 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { Footer, Nav, theme, uuid } from "../../components";
+import { Footer, Nav, theme, guid } from "../../components";
 
 const styles = (theme) => ({
   Form: {
@@ -544,10 +544,10 @@ export class Settings extends Component {
                     value={`${this.state.postConfig.category_list[n].type}_${n}`}
                     onChange={this.handleCategoryTypeChange}
                   >
-                    <MenuItem key={uuid()} value={`Movies_${n}`}>
+                    <MenuItem key={guid()} value={`Movies_${n}`}>
                       Movies
                     </MenuItem>
-                    <MenuItem key={uuid()} value={`TV Shows_${n}`}>
+                    <MenuItem key={guid()} value={`TV Shows_${n}`}>
                       TV Shows
                     </MenuItem>
                   </TextField>

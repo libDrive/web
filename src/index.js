@@ -15,7 +15,7 @@ import {
   Settings,
   SettingsLoginForm,
   theme,
-  uuid,
+  guid,
   View,
 } from "./components";
 import "./index.css";
@@ -27,47 +27,47 @@ ReactDOM.render(
       <Route
         exact
         path={"/"}
-        render={(props) => <App key={uuid()} {...props} />}
+        render={(props) => <App key={guid()} {...props} />}
       />
       <Route
         exact
         path={"/browse"}
-        render={(props) => <Browse key={uuid()} {...props} />}
+        render={(props) => <Browse key={guid()} {...props} />}
       />
       <Route
         exact
         path={"/browse/:category"}
-        render={(props) => <CategoryBrowse key={uuid()} {...props} />}
+        render={(props) => <CategoryBrowse key={guid()} {...props} />}
       />
       <Route
         exact
         path={"/login"}
-        render={(props) => <Login key={uuid()} {...props} />}
+        render={(props) => <Login key={guid()} {...props} />}
       />
       <Route
         exact
         path={"/logout"}
-        render={(props) => <Logout key={uuid()} {...props} />}
+        render={(props) => <Logout key={guid()} {...props} />}
       />
       <Route
         exact
         path={"/search/:q"}
-        render={(props) => <Search key={uuid()} {...props} />}
+        render={(props) => <Search key={guid()} {...props} />}
       />
       <Route
         exact
         path={"/settings"}
-        render={(props) => <Settings key={uuid()} {...props} />}
+        render={(props) => <Settings key={guid()} {...props} />}
       />
       <Route
         exact
         path={"/settings/login"}
-        render={(props) => <SettingsLoginForm key={uuid()} {...props} />}
+        render={(props) => <SettingsLoginForm key={guid()} {...props} />}
       />
       <Route
         exact
         path={"/view/:id"}
-        render={(props) => <View key={uuid()} {...props} />}
+        render={(props) => <View key={guid()} {...props} />}
       />
     </ThemeProvider>
   </HashRouter>,
