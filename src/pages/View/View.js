@@ -154,7 +154,7 @@ export function MovieView(props) {
         <Plyr
           source={{
             type: "video",
-            poster: `${server}/api/v1/image/thumbnail?id=${metadata.id}` || "",
+            poster: metadata.backdropPath || `${server}/api/v1/image/thumbnail?id=${metadata.id}` || "",
             sources: [
               {
                 src: `${server}/api/v1/redirectdownload/${metadata.name}?a=${auth}&id=${id}&quality=transcoded`,
@@ -258,7 +258,7 @@ export function TVBView(props) {
 }
 
 export function TVSView(props) {
-  let { auth, id, metadata, server, thisprops } = props.props;
+  let { auth, metadata, server, thisprops } = props.props;
   let hash = parseInt(queryString.parse(thisprops.location.search).q) || 0;
 
   function isHash(n, hash) {
@@ -288,7 +288,7 @@ export function TVSView(props) {
           source={{
             type: "video",
             poster:
-              `${server}/api/v1/image/thumbnail?id=${metadata.children[hash].id}` ||
+              metadata.backdropPath || `${server}/api/v1/image/thumbnail?id=${metadata.children[hash].id}` ||
               "",
             sources: [
               {
