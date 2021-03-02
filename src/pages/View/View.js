@@ -285,6 +285,7 @@ export function TVSView(props) {
       </Typography>
       <div className="plyr__component">
         <Plyr
+          preload="none"
           source={{
             type: "video",
             poster:
