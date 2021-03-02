@@ -5,10 +5,16 @@
 .footer__github {
   display: flex;
   align-items: center;
-  margin: 10px;
+  margin: 5px;
 }
 
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 275px) {
+  #footer__container {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 385px) {
   .footer__github {
     display: none;
     margin: 0;
@@ -18,7 +24,7 @@
   }
 }
 
-@media screen and (max-width: 515px) {
+@media screen and (max-width: 505px) {
   .gallery__select {
     display: none;
   }
