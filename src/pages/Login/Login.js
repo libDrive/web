@@ -44,7 +44,9 @@ class Login extends Component {
       error: "",
       password: "",
       server: "",
-      tempServer: window.location.origin,
+      tempServer: window.location.origin.startsWith("app://-")
+        ? ""
+        : window.location.origin,
       username: "",
     };
 
