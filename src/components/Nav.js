@@ -141,7 +141,7 @@ export function NavUI(props) {
 
   const searchSubmit = (evt) => {
     evt.preventDefault();
-    window.location.hash = `#/search/${search}`;
+    window.location = `/search/${search}`;
   };
 
   return (
