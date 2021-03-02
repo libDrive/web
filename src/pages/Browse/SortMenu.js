@@ -42,114 +42,96 @@ export default function SortMenu(props) {
           open={Boolean(menuAnchorEl)}
           onClose={handleClose}
         >
-          <MenuItem>
-            <Link
-              to={{
-                pathname: thisprops.location.pathname,
-                search: `?sort=alphabet-asc`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              Alphabet Ascending
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link
-              to={{
-                pathname: thisprops.location.pathname,
-                search: `?sort=alphabet-des`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              Alphabet Descending
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link
-              to={{
-                pathname: thisprops.location.pathname,
-                search: `?sort=date-asc`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              Date Ascending
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link
-              to={{
-                pathname: thisprops.location.pathname,
-                search: `?sort=date-des`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              Date Descending
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link
-              to={{
-                pathname: thisprops.location.pathname,
-                search: `?sort=popularity-asc`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              Popularity Ascending
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link
-              to={{
-                pathname: thisprops.location.pathname,
-                search: `?sort=popularity-des`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              Popularity Descending
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link
-              to={{
-                pathname: thisprops.location.pathname,
-                search: `?sort=vote-asc`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              Vote Ascending
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link
-              to={{
-                pathname: thisprops.location.pathname,
-                search: `?sort=vote-des`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              Vote Descending
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link
-              to={{
-                pathname: thisprops.location.pathname,
-                search: `?sort=random`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              Random
-            </Link>
-          </MenuItem>
+          <Link
+            to={{
+              pathname: thisprops.location.pathname,
+              search: `?sort=alphabet-asc`,
+            }}
+            key={guid()}
+            className="no_decoration_link"
+          >
+            <MenuItem>Alphabet Ascending</MenuItem>
+          </Link>
+          <Link
+            to={{
+              pathname: thisprops.location.pathname,
+              search: `?sort=alphabet-des`,
+            }}
+            key={guid()}
+            className="no_decoration_link"
+          >
+            <MenuItem>Alphabet Descending</MenuItem>
+          </Link>
+          <Link
+            to={{
+              pathname: thisprops.location.pathname,
+              search: `?sort=date-asc`,
+            }}
+            key={guid()}
+            className="no_decoration_link"
+          >
+            <MenuItem>Date Ascending</MenuItem>
+          </Link>
+          <Link
+            to={{
+              pathname: thisprops.location.pathname,
+              search: `?sort=date-des`,
+            }}
+            key={guid()}
+            className="no_decoration_link"
+          >
+            <MenuItem>Date Descending</MenuItem>
+          </Link>
+          <Link
+            to={{
+              pathname: thisprops.location.pathname,
+              search: `?sort=popularity-asc`,
+            }}
+            key={guid()}
+            className="no_decoration_link"
+          >
+            <MenuItem>Popularity Ascending</MenuItem>
+          </Link>
+          <Link
+            to={{
+              pathname: thisprops.location.pathname,
+              search: `?sort=popularity-des`,
+            }}
+            key={guid()}
+            className="no_decoration_link"
+          >
+            <MenuItem>Popularity Descending</MenuItem>
+          </Link>
+          <Link
+            to={{
+              pathname: thisprops.location.pathname,
+              search: `?sort=vote-asc`,
+            }}
+            key={guid()}
+            className="no_decoration_link"
+          >
+            <MenuItem>Vote Ascending</MenuItem>
+          </Link>
+          <Link
+            to={{
+              pathname: thisprops.location.pathname,
+              search: `?sort=vote-des`,
+            }}
+            key={guid()}
+            className="no_decoration_link"
+          >
+            <MenuItem>Vote Descending</MenuItem>
+          </Link>
+          <Link
+            to={{
+              pathname: thisprops.location.pathname,
+              search: `?sort=random`,
+            }}
+            key={guid()}
+            className="no_decoration_link"
+          >
+            <MenuItem>Random</MenuItem>
+          </Link>
         </Menu>
       </div>
     </div>
