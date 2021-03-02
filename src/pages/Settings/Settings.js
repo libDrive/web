@@ -11,6 +11,8 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@material-ui/icons/RemoveCircleOutline";
 import { withStyles } from "@material-ui/core/styles";
 
+import AccountCircle from "@material-ui/icons/AccountCircle";
+
 import ClipLoader from "react-spinners/ClipLoader";
 
 import Swal from "sweetalert2/src/sweetalert2.js";
@@ -536,135 +538,148 @@ export class Settings extends Component {
           />
           <br />
           <Typography variant="h3">Categories</Typography>
-          {config.category_list.length
-            ? config.category_list.map((category, n) => (
-                <div style={{ margin: "30px" }} key={n}>
-                  <TextField
-                    className="TextField"
-                    id={`category-type_${n}`}
-                    select
-                    label="Select Type"
-                    variant="outlined"
-                    value={`${this.state.postConfig.category_list[n].type}_${n}`}
-                    onChange={this.handleCategoryTypeChange}
-                  >
-                    <MenuItem key={guid()} value={`Movies_${n}`}>
-                      Movies
-                    </MenuItem>
-                    <MenuItem key={guid()} value={`TV Shows_${n}`}>
-                      TV Shows
-                    </MenuItem>
-                  </TextField>
-                  <TextField
-                    className="TextField"
-                    id={`category-name_${n}`}
-                    label="Name"
-                    variant="outlined"
-                    value={this.state.postConfig.category_list[n].name}
-                    onChange={this.handleCategoryNameChange}
-                    required
-                  />
-                  <TextField
-                    className="TextField"
-                    id={`category-id_${n}`}
-                    label="Folder ID"
-                    variant="outlined"
-                    value={this.state.postConfig.category_list[n].id}
-                    onChange={this.handleCategoryIdChange}
-                    required
-                  />
-                  <TextField
-                    className="TextField"
-                    id={`category-driveId_${n}`}
-                    label="Team Drive ID"
-                    variant="outlined"
-                    value={this.state.postConfig.category_list[n].driveId}
-                    onChange={this.handleCategoryDriveIdChange}
-                    required
-                  />
-                  <br />
-                  <IconButton
-                    aria-label="remove"
-                    id={`category-remove_${n}`}
-                    onClick={this.handleRemoveCategory}
-                  >
-                    <RemoveCircleOutlineIcon id={`category-remove_${n}`} />
-                  </IconButton>
-                </div>
-              ))
-            : null}
-          <IconButton aria-label="add" onClick={this.handleAddCategory}>
-            <AddCircleOutlineIcon />
-          </IconButton>
+          {config.category_list.length ? (
+            config.category_list.map((category, n) => (
+              <div style={{ margin: "30px" }} key={n}>
+                <TextField
+                  className="TextField"
+                  id={`category-type_${n}`}
+                  select
+                  label="Select Type"
+                  variant="outlined"
+                  value={`${this.state.postConfig.category_list[n].type}_${n}`}
+                  onChange={this.handleCategoryTypeChange}
+                >
+                  <MenuItem key={guid()} value={`Movies_${n}`}>
+                    Movies
+                  </MenuItem>
+                  <MenuItem key={guid()} value={`TV Shows_${n}`}>
+                    TV Shows
+                  </MenuItem>
+                </TextField>
+                <TextField
+                  className="TextField"
+                  id={`category-name_${n}`}
+                  label="Name"
+                  variant="outlined"
+                  value={this.state.postConfig.category_list[n].name}
+                  onChange={this.handleCategoryNameChange}
+                  required
+                />
+                <TextField
+                  className="TextField"
+                  id={`category-id_${n}`}
+                  label="Folder ID"
+                  variant="outlined"
+                  value={this.state.postConfig.category_list[n].id}
+                  onChange={this.handleCategoryIdChange}
+                  required
+                />
+                <TextField
+                  className="TextField"
+                  id={`category-driveId_${n}`}
+                  label="Team Drive ID"
+                  variant="outlined"
+                  value={this.state.postConfig.category_list[n].driveId}
+                  onChange={this.handleCategoryDriveIdChange}
+                  required
+                />
+                <br />
+                <IconButton
+                  aria-label="remove"
+                  id={`category-remove_${n}`}
+                  onClick={this.handleRemoveCategory}
+                >
+                  <RemoveCircleOutlineIcon id={`category-remove_${n}`} />
+                </IconButton>
+                <IconButton aria-label="add" onClick={this.handleAddCategory}>
+                  <AddCircleOutlineIcon id={`category-add_${n}`} />
+                </IconButton>
+              </div>
+            ))
+          ) : (
+            <IconButton aria-label="add" onClick={this.handleAddCategory}>
+              <AddCircleOutlineIcon />
+            </IconButton>
+          )}
           <Typography variant="h3">Accounts</Typography>
-          {config.account_list.length
-            ? config.account_list.map((account, n) => (
-                <div style={{ margin: "30px" }} key={n}>
-                  <TextField
-                    className="TextField"
-                    id={`account-username_${n}`}
-                    label="Username"
-                    variant="outlined"
-                    value={this.state.postConfig.account_list[n].username}
-                    onChange={this.handleAccountUsernameChange}
-                    required
-                  />
-                  <TextField
-                    className="TextField"
-                    id={`account-password_${n}`}
-                    label="Password"
-                    type="password"
-                    variant="outlined"
-                    value={this.state.postConfig.account_list[n].password}
-                    onChange={this.handleAccountPasswordChange}
-                    required
-                  />
-                  <TextField
-                    className="TextField"
-                    id={`account-pic_${n}`}
-                    label="Picture"
-                    variant="outlined"
-                    value={this.state.postConfig.account_list[n].pic}
-                    onChange={this.handleAccountPicChange}
-                  />
-                  <TextField
-                    className="TextField"
-                    id={`account-auth_${n}`}
-                    label="Auth"
-                    variant="outlined"
-                    value={this.state.postConfig.account_list[n].auth}
-                    disabled
-                  />
-                  <br />
-                  <IconButton
-                    aria-label="remove"
-                    id={`account-remove_${n}`}
-                    onClick={this.handleRemoveAccount}
-                  >
-                    <RemoveCircleOutlineIcon id={`account-remove_${n}`} />
-                  </IconButton>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginTop: "20px",
-                    }}
-                  >
-                    {
-                      <img
-                        src={config.account_list[n].pic}
-                        width="64px"
-                        alt="profile-pic"
-                      />
+          {config.account_list.length ? (
+            config.account_list.map((account, n) => (
+              <div style={{ margin: "30px" }} key={n}>
+                <TextField
+                  className="TextField"
+                  id={`account-username_${n}`}
+                  label="Username"
+                  variant="outlined"
+                  value={this.state.postConfig.account_list[n].username}
+                  onChange={this.handleAccountUsernameChange}
+                  required
+                />
+                <TextField
+                  className="TextField"
+                  id={`account-password_${n}`}
+                  label="Password"
+                  type="password"
+                  variant="outlined"
+                  value={this.state.postConfig.account_list[n].password}
+                  onChange={this.handleAccountPasswordChange}
+                  required
+                />
+                <TextField
+                  className="TextField"
+                  id={`account-pic_${n}`}
+                  label="Picture"
+                  variant="outlined"
+                  value={this.state.postConfig.account_list[n].pic}
+                  onChange={this.handleAccountPicChange}
+                />
+                <TextField
+                  className="TextField"
+                  id={`account-auth_${n}`}
+                  label="Auth"
+                  variant="outlined"
+                  value={this.state.postConfig.account_list[n].auth}
+                  disabled
+                />
+                <br />
+                <IconButton
+                  aria-label="remove"
+                  id={`account-remove_${n}`}
+                  onClick={this.handleRemoveAccount}
+                >
+                  <RemoveCircleOutlineIcon id={`account-remove_${n}`} />
+                </IconButton>
+                <IconButton aria-label="add" onClick={this.handleAddAccount}>
+                  <AddCircleOutlineIcon id={`account-add_${n}`} />
+                </IconButton>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {(() => {
+                    if (config.account_list[n].pic.length > 0) {
+                      return (
+                        <img
+                          src={config.account_list[n].pic}
+                          width="32px"
+                          alt="profile-pic"
+                        />
+                      );
+                    } else {
+                      return <AccountCircle style={{ fontSize: "32px" }} />;
                     }
-                  </div>
+                  })()}
                 </div>
-              ))
-            : null}
-          <IconButton aria-label="add" onClick={this.handleAddAccount}>
-            <AddCircleOutlineIcon />
-          </IconButton>
+              </div>
+            ))
+          ) : (
+            <IconButton aria-label="add" onClick={this.handleAddAccount}>
+              <AddCircleOutlineIcon />
+            </IconButton>
+          )}
           <Typography variant="h3">Extras</Typography>
           <div style={{ margin: "30px" }}>
             <TextField
