@@ -141,7 +141,7 @@ export function NavUI(props) {
 
   const searchSubmit = (evt) => {
     evt.preventDefault();
-    window.location = `/search/${search}`;
+    window.location.href = `/search/${search}`;
   };
 
   return (
@@ -187,7 +187,7 @@ export function LoadingNavUI() {
 
   const searchSubmit = (evt) => {
     evt.preventDefault();
-    window.location.hash = `#/search/${search}`;
+    window.location.href = `/search/${search}`;
   };
 
   return (
