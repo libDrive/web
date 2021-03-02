@@ -38,12 +38,12 @@ export default function Footer() {
     sessionStorage.getItem("gallery") || localStorage.getItem("gallery") || "carousel";
 
   return (
-    <footer className={classes.footer__container}>
+    <footer className={classes.footer__container} id="footer__container">
       <a href="https://github.com/libDrive/libDrive" target="_blank">
         <img
-          src="./images/github.png"
+          src="/images/github.png"
           className="footer__github"
-          height="55px"
+          height="48px"
           alt="github-logo"
         />
       </a>
