@@ -1,5 +1,8 @@
 import React, { Component } from "react";
+
 import { Redirect } from "react-router-dom";
+
+import { guid } from "./components";
 
 export default class App extends Component {
   constructor(props) {
@@ -14,9 +17,9 @@ export default class App extends Component {
   render() {
     let { auth, server } = this.state;
     return auth && server ? (
-      <Redirect to="/browse" />
+      <Redirect to="/browse" key={guid()} />
     ) : (
-      <Redirect to="/login" />
+      <Redirect to="/login" key={guid()} />
     );
   }
 }

@@ -29,6 +29,7 @@ export default function PageMenu(props) {
           pathname: thisprops.location.pathname,
           search: `?page=${pages}&sort=${sort}`,
         }}
+        key={guid()}
       />
     );
   } else {
