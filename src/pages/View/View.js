@@ -32,7 +32,7 @@ export default class View extends Component {
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     let { auth, id, server } = this.state;
     let url = `${server}/api/v1/metadata?a=${auth}&id=${id}`;
 
