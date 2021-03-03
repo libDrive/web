@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 
 import ClipLoader from "react-spinners/ClipLoader";
 
-import { theme } from "../components";
+import { guid, theme } from "../components";
 
 export default class Logout extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ export default class Logout extends Component {
     let { isLoaded } = this.state;
 
     return isLoaded ? (
-      <Redirect to="/login" />
+      <Redirect to="/login" key={guid()} />
     ) : (
       <div className="Loading">
         <ClipLoader color={theme.palette.primary.main} size={75} />
