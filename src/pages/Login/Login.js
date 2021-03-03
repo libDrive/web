@@ -57,6 +57,18 @@ class Login extends Component {
     this.dismissError = this.dismissError.bind(this);
   }
 
+  componentDidMount() {
+    axios
+      .get(`${window.location.origin}/api/v1/auth?u=&p=`)
+      .then((response) => {
+        localStorage.setItem("server", window.location.origin);
+        sessionStorage.setItem("server", window.location.origin);
+        localStorage.setItem("auth", response.data.auth);
+        sessionStorage.setItem("auth", response.data.auth);
+        this.props.history.push("/browse")
+      })
+  }
+
   dismissError() {
     this.setState({ error: "" });
   }
@@ -66,12 +78,6 @@ class Login extends Component {
     let { auth, password, server, tempServer, username } = this.state;
     if (!tempServer) {
       return this.setState({ error: "Server is required" });
-    }
-    if (!username) {
-      return this.setState({ error: "Username is required" });
-    }
-    if (!password) {
-      return this.setState({ error: "Password is required" });
     }
     if (!tempServer.startsWith("http")) {
       tempServer = `https://${tempServer}`;
