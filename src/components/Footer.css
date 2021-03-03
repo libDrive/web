@@ -8,7 +8,7 @@
   margin: 5px;
 }
 
-@media screen and (max-width: 275px) {
+@media screen and (max-width: 300px) {
   #footer__container {
     display: none;
   }
@@ -17,7 +17,6 @@
 @media screen and (max-width: 385px) {
   .footer__github {
     display: none;
-    margin: 0;
   }
   .footer__text {
     margin: 0;
