@@ -38,7 +38,7 @@ export default class Nav extends Component {
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     let { auth, server } = this.state;
     let url = `${server}/api/v1/environment?a=${auth}`;
 

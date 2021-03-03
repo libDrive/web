@@ -37,7 +37,7 @@ export default class CategoryBrowse extends Component {
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     let { auth, category, range, server, sort } = this.state;
     let url = `${server}/api/v1/metadata?a=${auth}&c=${category}&r=${range}&s=${sort}`;
 

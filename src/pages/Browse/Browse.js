@@ -21,7 +21,7 @@ export default class Browse extends Component {
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     let { auth, server } = this.state;
     let url = `${server}/api/v1/metadata?a=${auth}&r=0:16&s=popularity-des`;
 
