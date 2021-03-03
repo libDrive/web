@@ -82,7 +82,7 @@ export class Settings extends Component {
     this.handleRestart = this.handleRestart.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     let { auth, secret, server } = this.state;
 
     if (sessionStorage.getItem("secret") == null) {

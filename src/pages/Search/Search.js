@@ -22,7 +22,7 @@ export default class Search extends Component {
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     let { auth, query, server } = this.state;
     let url = `${server}/api/v1/metadata?a=${auth}&q=${query}`;
 

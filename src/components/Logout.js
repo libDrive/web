@@ -12,7 +12,7 @@ export default class Logout extends Component {
     this.state = { isLoaded: false };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     localStorage.clear();
     sessionStorage.clear();
     setTimeout(() => this.setState({ isLoaded: true }), 500);
