@@ -28,7 +28,6 @@ export default class View extends Component {
       auth: sessionStorage.getItem("auth") || localStorage.getItem("auth"),
       id: this.props.match.params.id,
       isLoaded: false,
-      loadedTime: new Date(),
       metadata: {},
     };
   }
