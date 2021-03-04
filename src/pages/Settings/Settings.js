@@ -77,6 +77,7 @@ export class Settings extends Component {
     this.handleTMDBAPIKeyChange = this.handleTMDBAPIKeyChange.bind(this);
     this.handleCloudflareChange = this.handleCloudflareChange.bind(this);
     this.handleBuildIntervalChange = this.handleBuildIntervalChange.bind(this);
+    this.handleTranscodedChange = this.handleTranscodedChange.bind(this);
     this.dismissError = this.dismissError.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRestart = this.handleRestart.bind(this);
@@ -251,10 +252,8 @@ export class Settings extends Component {
 
   handleAccessTokenChange(evt) {
     var value = evt.target.value;
-
     var configCopy = this.state.postConfig;
     configCopy.access_token = value;
-
     this.setState({
       postConfig: configCopy,
     });
@@ -262,10 +261,8 @@ export class Settings extends Component {
 
   handleClientIDChange(evt) {
     var value = evt.target.value;
-
     var configCopy = this.state.postConfig;
     configCopy.client_id = value;
-
     this.setState({
       postConfig: configCopy,
     });
@@ -273,10 +270,8 @@ export class Settings extends Component {
 
   handleClientSecretChange(evt) {
     var value = evt.target.value;
-
     var configCopy = this.state.postConfig;
     configCopy.client_secret = value;
-
     this.setState({
       postConfig: configCopy,
     });
@@ -284,10 +279,8 @@ export class Settings extends Component {
 
   handleRefreshTokenChange(evt) {
     var value = evt.target.value;
-
     var configCopy = this.state.postConfig;
     configCopy.refresh_token = value;
-
     this.setState({
       postConfig: configCopy,
     });
@@ -296,10 +289,8 @@ export class Settings extends Component {
   handleCategoryTypeChange(evt) {
     var value = evt.target.value.split("_")[0];
     var n = evt.target.value.split("_")[1];
-
     var configCopy = this.state.postConfig;
     configCopy.category_list[n].type = value;
-
     this.setState({
       postConfig: configCopy,
     });
@@ -308,10 +299,8 @@ export class Settings extends Component {
   handleCategoryNameChange(evt) {
     var value = evt.target.value;
     var n = evt.target.id.split("_")[1];
-
     var configCopy = this.state.postConfig;
     configCopy.category_list[n].name = value;
-
     this.setState({
       postConfig: configCopy,
     });
@@ -320,10 +309,8 @@ export class Settings extends Component {
   handleCategoryIdChange(evt) {
     var value = evt.target.value;
     var n = evt.target.id.split("_")[1];
-
     var configCopy = this.state.postConfig;
     configCopy.category_list[n].id = value;
-
     this.setState({
       postConfig: configCopy,
     });
@@ -332,10 +319,8 @@ export class Settings extends Component {
   handleCategoryDriveIdChange(evt) {
     var value = evt.target.value;
     var n = evt.target.id.split("_")[1];
-
     var configCopy = this.state.postConfig;
     configCopy.category_list[n].driveId = value;
-
     this.setState({
       postConfig: configCopy,
     });
@@ -344,7 +329,6 @@ export class Settings extends Component {
   handleAddCategory(evt) {
     var configCopy = this.state.postConfig;
     configCopy.category_list.push({ type: "", name: "", id: "", driveId: "" });
-
     this.setState({
       postConfig: configCopy,
     });
@@ -352,10 +336,8 @@ export class Settings extends Component {
 
   handleRemoveCategory(evt) {
     var n = evt.target.id.split("_")[1];
-
     var configCopy = this.state.postConfig;
     configCopy.category_list.splice(n, 1);
-
     this.setState({
       postConfig: configCopy,
     });
@@ -364,10 +346,8 @@ export class Settings extends Component {
   handleAccountUsernameChange(evt) {
     var value = evt.target.value;
     var n = evt.target.id.split("_")[1];
-
     var configCopy = this.state.postConfig;
     configCopy.account_list[n].username = value;
-
     this.setState({
       postConfig: configCopy,
     });
@@ -376,10 +356,8 @@ export class Settings extends Component {
   handleAccountPasswordChange(evt) {
     var value = evt.target.value;
     var n = evt.target.id.split("_")[1];
-
     var configCopy = this.state.postConfig;
     configCopy.account_list[n].password = value;
-
     this.setState({
       postConfig: configCopy,
     });
@@ -388,10 +366,8 @@ export class Settings extends Component {
   handleAccountPicChange(evt) {
     var value = evt.target.value;
     var n = evt.target.id.split("_")[1];
-
     var configCopy = this.state.postConfig;
     configCopy.account_list[n].pic = value;
-
     this.setState({
       postConfig: configCopy,
     });
@@ -399,20 +375,17 @@ export class Settings extends Component {
 
   handleAddAccount(evt) {
     var configCopy = this.state.postConfig;
-
     var text = "";
-    var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    var chars = "abcdefghijklmnopqrstuvwxyz0123456789";
     for (var i = 0; i < 32; i++) {
       text += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-
     configCopy.account_list.push({
       username: "",
       password: "",
       pic: "",
       auth: text,
     });
-
     this.setState({
       postConfig: configCopy,
     });
@@ -420,10 +393,8 @@ export class Settings extends Component {
 
   handleRemoveAccount(evt) {
     var n = evt.target.id.split("_")[1];
-
     var configCopy = this.state.postConfig;
     configCopy.account_list.splice(n, 1);
-
     this.setState({
       postConfig: configCopy,
     });
@@ -431,10 +402,8 @@ export class Settings extends Component {
 
   handleSecretChange(evt) {
     var value = evt.target.value;
-
     var configCopy = this.state.postConfig;
     configCopy.secret_key = value;
-
     this.setState({
       postConfig: configCopy,
     });
@@ -442,10 +411,8 @@ export class Settings extends Component {
 
   handleTMDBAPIKeyChange(evt) {
     var value = evt.target.value;
-
     var configCopy = this.state.postConfig;
     configCopy.tmdb_api_key = value;
-
     this.setState({
       postConfig: configCopy,
     });
@@ -453,10 +420,8 @@ export class Settings extends Component {
 
   handleCloudflareChange(evt) {
     var value = evt.target.value;
-
     var configCopy = this.state.postConfig;
     configCopy.cloudflare = value;
-
     this.setState({
       postConfig: configCopy,
     });
@@ -464,10 +429,17 @@ export class Settings extends Component {
 
   handleBuildIntervalChange(evt) {
     var value = parseInt(evt.target.value);
-
     var configCopy = this.state.postConfig;
     configCopy.build_interval = value;
+    this.setState({
+      postConfig: configCopy,
+    });
+  }
 
+  handleTranscodedChange(evt) {
+    var value = evt.target.value;
+    var configCopy = this.state.postConfig;
+    configCopy.transcoded = value;
     this.setState({
       postConfig: configCopy,
     });
@@ -722,6 +694,22 @@ export class Settings extends Component {
               onChange={this.handleBuildIntervalChange}
               required
             />
+            <TextField
+              className="TextField"
+              id="transcoded"
+              select
+              label="Transcoded"
+              variant="outlined"
+              value={this.state.postConfig.transcoded || false}
+              onChange={this.handleTranscodedChange}
+            >
+              <MenuItem key={guid()} value={true}>
+                true
+              </MenuItem>
+              <MenuItem key={guid()} value={false}>
+                false
+              </MenuItem>
+            </TextField>
           </div>
           <br />
           <div style={{ margin: "30px" }}>
