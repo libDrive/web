@@ -78,6 +78,8 @@ export class Settings extends Component {
     this.handleCloudflareChange = this.handleCloudflareChange.bind(this);
     this.handleBuildIntervalChange = this.handleBuildIntervalChange.bind(this);
     this.handleTranscodedChange = this.handleTranscodedChange.bind(this);
+    this.handleSignupChange = this.handleSignupChange.bind(this);
+    this.handleAuthChange = this.handleAuthChange.bind(this);
     this.dismissError = this.dismissError.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRestart = this.handleRestart.bind(this);
@@ -445,6 +447,24 @@ export class Settings extends Component {
     });
   }
 
+  handleSignupChange(evt) {
+    var value = evt.target.value;
+    var configCopy = this.state.postConfig;
+    configCopy.signup = value;
+    this.setState({
+      postConfig: configCopy,
+    });
+  }
+
+  handleAuthChange(evt) {
+    var value = evt.target.value;
+    var configCopy = this.state.postConfig;
+    configCopy.auth = value;
+    this.setState({
+      postConfig: configCopy,
+    });
+  }
+
   render() {
     let { config, isLoaded } = this.state;
     const { classes } = this.props;
@@ -694,6 +714,7 @@ export class Settings extends Component {
               onChange={this.handleBuildIntervalChange}
               required
             />
+            <br />
             <TextField
               className="TextField"
               id="transcoded"
@@ -702,6 +723,38 @@ export class Settings extends Component {
               variant="outlined"
               value={this.state.postConfig.transcoded || false}
               onChange={this.handleTranscodedChange}
+            >
+              <MenuItem key={guid()} value={true}>
+                true
+              </MenuItem>
+              <MenuItem key={guid()} value={false}>
+                false
+              </MenuItem>
+            </TextField>
+            <TextField
+              className="TextField"
+              id="signup"
+              select
+              label="Sign Up"
+              variant="outlined"
+              value={this.state.postConfig.signup || false}
+              onChange={this.handleSignupChange}
+            >
+              <MenuItem key={guid()} value={true}>
+                true
+              </MenuItem>
+              <MenuItem key={guid()} value={false}>
+                false
+              </MenuItem>
+            </TextField>
+            <TextField
+              className="TextField"
+              id="auth"
+              select
+              label="Authentication"
+              variant="outlined"
+              value={this.state.postConfig.auth || true}
+              onChange={this.handleAuthChange}
             >
               <MenuItem key={guid()} value={true}>
                 true
