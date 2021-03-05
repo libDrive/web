@@ -377,7 +377,7 @@ export class Settings extends Component {
     var configCopy = this.state.postConfig;
     var text = "";
     var chars = "abcdefghijklmnopqrstuvwxyz0123456789";
-    for (var i = 0; i < 32; i++) {
+    for (var i = 0; i < 50; i++) {
       text += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     configCopy.account_list.push({
