@@ -42,8 +42,10 @@ class Login extends Component {
     this.state = {
       auth: "",
       error: "",
+      page: false,
       password: "",
       server: "",
+      signup: false,
       tempServer: window.location.origin.startsWith("app://-")
         ? ""
         : window.location.origin,
@@ -53,24 +55,70 @@ class Login extends Component {
     this.handleTempServerChange = this.handleTempServerChange.bind(this);
     this.handlePassChange = this.handlePassChange.bind(this);
     this.handleUserChange = this.handleUserChange.bind(this);
+    this.handleServerSubmit = this.handleServerSubmit.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSignup = this.handleSignup.bind(this);
     this.dismissError = this.dismissError.bind(this);
   }
 
   componentDidMount() {
     axios
-      .get(`${window.location.origin}/api/v1/auth?u=&p=`)
+      .get(`${window.location.origin}/api/v1/auth?rules=signup`)
       .then((response) => {
-        localStorage.setItem("server", window.location.origin);
-        sessionStorage.setItem("server", window.location.origin);
-        localStorage.setItem("auth", response.data.auth);
-        sessionStorage.setItem("auth", response.data.auth);
-        this.props.history.push("/browse")
-      })
+        if (response.status === 200) {
+          localStorage.setItem("auth", "0");
+          localStorage.setItem("server", window.location.origin);
+          sessionStorage.setItem("auth", "0");
+          sessionStorage.setItem("server", window.location.origin);
+          this.props.history.push(response.data.success.content);
+        } else if (response.status === 202) {
+          this.setState({ signup: true });
+        }
+      });
   }
 
   dismissError() {
     this.setState({ error: "" });
+  }
+
+  handleServerSubmit(evt) {
+    evt.preventDefault();
+    let { tempServer } = this.state;
+    if (!tempServer) {
+      return this.setState({ error: "Server is required" });
+    }
+    if (!tempServer.startsWith("http")) {
+      tempServer = `https://${tempServer}`;
+    }
+    axios.get(`${tempServer}/api/v1/auth?rules=signup`).then((response) => {
+      if (response.status === 200) {
+        localStorage.setItem("auth", "0");
+        localStorage.setItem("server", tempServer);
+        sessionStorage.setItem("auth", "0");
+        sessionStorage.setItem("server", tempServer);
+        this.props.history.push(response.data.success.content);
+      } else if (response.status === 202) {
+        this.setState({ signup: true, page: true });
+      }
+    }).catch((error) => {
+      console.error(error);
+      try {
+        Swal.fire({
+          title: "Error!",
+          text: error.response.data.error.message,
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      } catch {
+        Swal.fire({
+          title: "Error!",
+          text: `You were unable to communicate with the backend. Are you sure ${tempServer} is the correct server?`,
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      }
+    }
+    );
   }
 
   handleSubmit(evt) {
@@ -94,29 +142,56 @@ class Login extends Component {
       })
       .catch((error) => {
         console.error(error);
-        if (auth == null || server == null) {
-          this.props.history.push("/login");
-        } else if (error.response) {
-          if (error.response.status === 401) {
-            Swal.fire({
-              title: "Error!",
-              text: "Your credentials are invalid!",
-              icon: "error",
-              confirmButtonText: "OK",
-            });
-          } else {
-            Swal.fire({
-              title: "Error!",
-              text:
-                "Something went wrong while communicating with the backend!",
-              icon: "error",
-              confirmButtonText: "OK",
-            });
-          }
-        } else if (error.request) {
+        try {
           Swal.fire({
             title: "Error!",
-            text: `libDrive could not communicate with the backend! Is ${tempServer} the correct address?`,
+            text: error.response.data.error.message,
+            icon: "error",
+            confirmButtonText: "OK",
+          });
+        } catch {
+          Swal.fire({
+            title: "Error!",
+            text: `Something went wrong while communicating with the backend ${tempServer}`,
+            icon: "error",
+            confirmButtonText: "OK",
+          });
+        }
+      });
+    return this.setState({ error: "" });
+  }
+
+  handleSignup() {
+    let { password, tempServer, username } = this.state;
+    if (!username) {
+      return this.setState({ error: "Username is required" });
+    }
+    if (!password) {
+      return this.setState({ error: "Password is required" });
+    }
+
+    axios
+      .get(`${tempServer}/api/v1/signup?u=${username}&p=${password}`)
+      .then((response) => {
+        console.log(response);
+        localStorage.setItem("server", tempServer);
+        sessionStorage.setItem("server", tempServer);
+        localStorage.setItem("auth", response.data.success.content.auth);
+        sessionStorage.setItem("auth", response.data.success.content.auth);
+        this.props.history.push("/");
+      })
+      .catch((error) => {
+        try {
+          Swal.fire({
+            title: "Error!",
+            text: error.response.data.error.message,
+            icon: "error",
+            confirmButtonText: "OK",
+          });
+        } catch {
+          Swal.fire({
+            title: "Error!",
+            text: `Something went wrong while communicating with the backend ${tempServer}`,
             icon: "error",
             confirmButtonText: "OK",
           });
@@ -144,10 +219,58 @@ class Login extends Component {
   }
 
   render() {
-    let { error, password, tempServer, username } = this.state;
+    let { error, password, page, tempServer, username } = this.state;
     const { classes } = this.props;
 
-    return (
+    return !page ? (
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form
+            className={classes.form}
+            onSubmit={this.handleServerSubmit}
+            noValidate
+          >
+            {error && (
+              <div style={{}}>
+                <h3 data-test="error" onClick={this.dismissError}>
+                  <button onClick={this.dismissError}>✖</button>
+                  {error}
+                </h3>
+              </div>
+            )}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="server"
+              label="Server"
+              name="server"
+              autoComplete="server"
+              onChange={this.handleTempServerChange}
+              value={tempServer}
+              autoFocus
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Next
+            </Button>
+          </form>
+        </div>
+      </Container>
+    ) : (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
@@ -182,6 +305,7 @@ class Login extends Component {
               onChange={this.handleTempServerChange}
               value={tempServer}
               autoFocus
+              disabled
             />
             <TextField
               variant="outlined"
@@ -217,6 +341,20 @@ class Login extends Component {
             >
               Sign In
             </Button>
+            {this.state.signup ? (
+              <Button
+                type="button"
+                onClick={this.handleSignup}
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Sign Up
+              </Button>
+            ) : (
+              <div></div>
+            )}
           </form>
         </div>
       </Container>
