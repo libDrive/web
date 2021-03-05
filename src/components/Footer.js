@@ -52,7 +52,7 @@ export default function Footer() {
         href="https://eliasbenb.github.io"
         target="_blank"
       >
-        © 2021 Copyright: Elias Benbourenane - v1.1.9
+        © 2021 Copyright: Elias Benbourenane - v1.2.0
       </a>
       <div className="gallery__select">
         <FormControl className={classes.formControl}>
