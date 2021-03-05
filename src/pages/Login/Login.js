@@ -90,35 +90,37 @@ class Login extends Component {
     if (!tempServer.startsWith("http")) {
       tempServer = `https://${tempServer}`;
     }
-    axios.get(`${tempServer}/api/v1/auth?rules=signup`).then((response) => {
-      if (response.status === 200) {
-        localStorage.setItem("auth", "0");
-        localStorage.setItem("server", tempServer);
-        sessionStorage.setItem("auth", "0");
-        sessionStorage.setItem("server", tempServer);
-        this.props.history.push(response.data.success.content);
-      } else if (response.status === 202) {
-        this.setState({ signup: true, page: true });
-      }
-    }).catch((error) => {
-      console.error(error);
-      try {
-        Swal.fire({
-          title: "Error!",
-          text: error.response.data.error.message,
-          icon: "error",
-          confirmButtonText: "OK",
-        });
-      } catch {
-        Swal.fire({
-          title: "Error!",
-          text: `You were unable to communicate with the backend. Are you sure ${tempServer} is the correct server?`,
-          icon: "error",
-          confirmButtonText: "OK",
-        });
-      }
-    }
-    );
+    axios
+      .get(`${tempServer}/api/v1/auth?rules=signup`)
+      .then((response) => {
+        if (response.status === 200) {
+          localStorage.setItem("auth", "0");
+          localStorage.setItem("server", tempServer);
+          sessionStorage.setItem("auth", "0");
+          sessionStorage.setItem("server", tempServer);
+          this.props.history.push(response.data.success.content);
+        } else if (response.status === 202) {
+          this.setState({ signup: true, page: true });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        try {
+          Swal.fire({
+            title: "Error!",
+            text: error.response.data.error.message,
+            icon: "error",
+            confirmButtonText: "OK",
+          });
+        } catch {
+          Swal.fire({
+            title: "Error!",
+            text: `You were unable to communicate with the backend. Are you sure ${tempServer} is the correct server?`,
+            icon: "error",
+            confirmButtonText: "OK",
+          });
+        }
+      });
   }
 
   handleSubmit(evt) {
