@@ -16,7 +16,7 @@ import "plyr-react/dist/plyr.css";
 import axios from "axios";
 import queryString from "query-string";
 
-import { Footer, Nav, theme, uuid } from "../../components";
+import { clear, Footer, Nav, theme, uuid, version } from "../../components";
 import "./View.css";
 
 export default class View extends Component {
@@ -33,6 +33,14 @@ export default class View extends Component {
   }
 
   componentDidMount() {
+    if (!localStorage.getItem("_VERSION")) {
+      localStorage.setItem("_VERSION", version);
+    }
+    if (localStorage.getItem("_VERSION") !== version) {
+      clear();
+      localStorage.setItem("_VERSION", version);
+    }
+
     let { auth, id, server } = this.state;
     let url = `${server}/api/v1/metadata?a=${auth}&id=${id}`;
 

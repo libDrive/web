@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { Redirect } from "react-router-dom";
 
-import { guid } from "./components";
+import { clear, guid, version } from "./components";
 
 export default class App extends Component {
   constructor(props) {
@@ -12,6 +12,16 @@ export default class App extends Component {
       server:
         sessionStorage.getItem("server") || localStorage.getItem("server"),
     };
+  }
+
+  componentDidMount() {
+    if (!localStorage.getItem("_VERSION")) {
+      localStorage.setItem("_VERSION", version);
+    }
+    if (localStorage.getItem("_VERSION") !== version) {
+      clear();
+      localStorage.setItem("_VERSION", version);
+    }
   }
 
   render() {

@@ -20,7 +20,7 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { Footer, Nav, theme, guid } from "../../components";
+import { clear, Footer, guid, Nav, theme, version } from "../../components";
 
 const styles = (theme) => ({
   Form: {
@@ -86,7 +86,15 @@ export class Settings extends Component {
   }
 
   componentDidMount() {
-    let { auth, secret, server } = this.state;
+    if (!localStorage.getItem("_VERSION")) {
+      localStorage.setItem("_VERSION", version);
+    }
+    if (localStorage.getItem("_VERSION") !== version) {
+      clear();
+      localStorage.setItem("_VERSION", version);
+    }
+
+    let { secret, server } = this.state;
 
     if (sessionStorage.getItem("secret") == null) {
       this.props.history.push("/settings/login");

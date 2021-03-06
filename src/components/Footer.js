@@ -9,6 +9,8 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
+import { version } from "../components";
+
 import "./Footer.css";
 
 const styles = makeStyles((theme) => ({
@@ -54,7 +56,7 @@ export default function Footer() {
         href="https://eliasbenb.github.io"
         target="_blank"
       >
-        © 2021 Copyright: Elias Benbourenane - v1.2.0
+        {`© 2021 Copyright: Elias Benbourenane - v${version}`}
       </a>
       <div className="gallery__select">
         <FormControl className={classes.formControl}>

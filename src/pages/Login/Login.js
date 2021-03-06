@@ -16,6 +16,8 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
+import { clear, version } from "../../components";
+
 const styles = (theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -62,6 +64,14 @@ class Login extends Component {
   }
 
   componentDidMount() {
+    if (!localStorage.getItem("_VERSION")) {
+      localStorage.setItem("_VERSION", version);
+    }
+    if (localStorage.getItem("_VERSION") !== version) {
+      clear();
+      localStorage.setItem("_VERSION", version);
+    }
+
     axios
       .get(`${window.location.origin}/api/v1/auth?rules=signup`)
       .then((response) => {

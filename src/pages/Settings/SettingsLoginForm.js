@@ -16,7 +16,7 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { Nav } from "../../components";
+import { clear, Nav, version } from "../../components";
 
 const styles = (theme) => ({
   paper: {
@@ -52,6 +52,16 @@ class SettingsLoginForm extends Component {
     this.handleSecretChange = this.handleSecretChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.dismissError = this.dismissError.bind(this);
+  }
+
+  componentDidMount() {
+    if (!localStorage.getItem("_VERSION")) {
+      localStorage.setItem("_VERSION", version);
+    }
+    if (localStorage.getItem("_VERSION") !== version) {
+      clear();
+      localStorage.setItem("_VERSION", version);
+    }
   }
 
   dismissError() {

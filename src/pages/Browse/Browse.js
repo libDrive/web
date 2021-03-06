@@ -7,7 +7,15 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { Carousel, Footer, Tile, Nav, theme } from "../../components";
+import {
+  Carousel,
+  clear,
+  Footer,
+  Tile,
+  Nav,
+  theme,
+  version,
+} from "../../components";
 
 export default class Browse extends Component {
   constructor(props) {
@@ -22,6 +30,14 @@ export default class Browse extends Component {
   }
 
   componentDidMount() {
+    if (!localStorage.getItem("_VERSION")) {
+      localStorage.setItem("_VERSION", version);
+    }
+    if (localStorage.getItem("_VERSION") !== version) {
+      clear();
+      localStorage.setItem("_VERSION", version);
+    }
+
     let { auth, server } = this.state;
     let url = `${server}/api/v1/metadata?a=${auth}&r=0:16&s=popularity-des`;
 
