@@ -47,7 +47,10 @@ export default class Carousel extends Component {
                               alt={item.title}
                             />
                           </Link>
-                          <Typography className="carousel__item__title" key={guid()}>
+                          <Typography
+                            className="carousel__item__title"
+                            key={guid()}
+                          >
                             {item.title}
                           </Typography>
                         </figure>
