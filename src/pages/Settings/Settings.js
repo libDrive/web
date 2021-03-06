@@ -103,9 +103,7 @@ export class Settings extends Component {
         )
         .catch((error) => {
           console.error(error);
-          if (auth == null || server == null) {
-            this.props.history.push("/login");
-          } else if (error.response) {
+          if (error.response) {
             if (error.response.status === 401) {
               Swal.fire({
                 title: "Error!",
@@ -114,15 +112,15 @@ export class Settings extends Component {
                 confirmButtonText: "Login",
               }).then((result) => {
                 if (result.isConfirmed) {
-                  sessionStorage.removeItem("secret");
-                  this.props.history.push("/settings/login");
+                  this.props.history.push("/logout");
                 }
               });
+            } else if (!server) {
+              this.props.history.push("/logout");
             } else {
               Swal.fire({
                 title: "Error!",
-                text:
-                  "Something went wrong while communicating with the backend!",
+                text: `Something went wrong while communicating with the backend! Is '${server}' the correct address?`,
                 icon: "error",
                 confirmButtonText: "Logout",
                 cancelButtonText: "Retry",
@@ -136,20 +134,24 @@ export class Settings extends Component {
               });
             }
           } else if (error.request) {
-            Swal.fire({
-              title: "Error!",
-              text: `libDrive could not communicate with the backend! Is ${server} the correct address?`,
-              icon: "error",
-              confirmButtonText: "Logout",
-              cancelButtonText: "Retry",
-              showCancelButton: true,
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.props.history.push("/logout");
-              } else if (result.isDismissed) {
-                location.reload();
-              }
-            });
+            if (!server) {
+              this.props.history.push("/logout");
+            } else {
+              Swal.fire({
+                title: "Error!",
+                text: `libDrive could not communicate with the backend! Is '${server}' the correct address?`,
+                icon: "error",
+                confirmButtonText: "Logout",
+                cancelButtonText: "Retry",
+                showCancelButton: true,
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.props.history.push("/logout");
+                } else if (result.isDismissed) {
+                  location.reload();
+                }
+              });
+            }
           }
         });
     }
