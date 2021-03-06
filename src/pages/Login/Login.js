@@ -354,18 +354,24 @@ class Login extends Component {
               Sign In
             </Button>
             {this.state.signup ? (
-              <Button
-                type="button"
-                onClick={this.handleSignup}
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Sign Up
-              </Button>
+              <div className="Signup" style={{ textAlign: "center" }}>
+                <Button
+                  type="button"
+                  onClick={this.handleSignup}
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Sign Up
+                </Button>
+                <Typography variant="body1">
+                  Be aware that the owner of this server can view your
+                  credentials!
+                </Typography>
+              </div>
             ) : (
-              <div></div>
+              <div className="Signup"></div>
             )}
           </form>
         </div>
