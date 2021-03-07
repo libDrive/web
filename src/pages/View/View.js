@@ -462,15 +462,17 @@ export function ChildrenMenu(props) {
         onClose={handleClose}
       >
         {metadata.children.length
-          ? metadata.children.map((child) => (
-              <Link
+          ? metadata.children.map((child) => {
+            if (child.type == "directory") {
+              return (<Link
                 to={`/view/${child.id}`}
                 className="no_decoration_link"
                 key={uuid()}
               >
                 <MenuItem onClick={handleClose}>{child.name}</MenuItem>
-              </Link>
-            ))
+              </Link>)
+            }
+          })
           : null}
       </Menu>
     </div>
@@ -479,7 +481,7 @@ export function ChildrenMenu(props) {
 
 export function PlaylistMenu(props) {
   const handleClick = (props) => {
-    let { auth, id, metadata, server } = props.props;
+    let { auth, metadata, server } = props.props;
     let m3u8 = "#EXTM3U\n";
 
     for (var i in metadata.children) {
