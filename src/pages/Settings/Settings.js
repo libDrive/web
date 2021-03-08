@@ -59,9 +59,6 @@ export class Settings extends Component {
     this.handleCategoryTypeChange = this.handleCategoryTypeChange.bind(this);
     this.handleCategoryNameChange = this.handleCategoryNameChange.bind(this);
     this.handleCategoryIdChange = this.handleCategoryIdChange.bind(this);
-    this.handleCategoryDriveIdChange = this.handleCategoryDriveIdChange.bind(
-      this
-    );
     this.handleAddCategory = this.handleAddCategory.bind(this);
     this.handleRemoveCategory = this.handleRemoveCategory.bind(this);
     this.handleAccountUsernameChange = this.handleAccountUsernameChange.bind(
@@ -328,19 +325,9 @@ export class Settings extends Component {
     });
   }
 
-  handleCategoryDriveIdChange(evt) {
-    var value = evt.target.value;
-    var n = evt.target.id.split("_")[1];
-    var configCopy = this.state.postConfig;
-    configCopy.category_list[n].driveId = value;
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
   handleAddCategory(evt) {
     var configCopy = this.state.postConfig;
-    configCopy.category_list.push({ type: "", name: "", id: "", driveId: "" });
+    configCopy.category_list.push({ type: "", name: "", id: "" });
     this.setState({
       postConfig: configCopy,
     });
@@ -575,15 +562,6 @@ export class Settings extends Component {
                   variant="outlined"
                   value={this.state.postConfig.category_list[n].id}
                   onChange={this.handleCategoryIdChange}
-                  required
-                />
-                <TextField
-                  className="TextField"
-                  id={`category-driveId_${n}`}
-                  label="Team Drive ID"
-                  variant="outlined"
-                  value={this.state.postConfig.category_list[n].driveId}
-                  onChange={this.handleCategoryDriveIdChange}
                   required
                 />
                 <br />
