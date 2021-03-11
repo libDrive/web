@@ -29,6 +29,7 @@ export default class View extends Component {
       id: this.props.match.params.id,
       isLoaded: false,
       metadata: {},
+      sources: [],
     };
   }
 
@@ -41,8 +42,8 @@ export default class View extends Component {
       localStorage.setItem("_VERSION", version);
     }
 
-    let { auth, id, server } = this.state;
-    let url = `${server}/api/v1/metadata?a=${auth}&id=${id}`;
+    let { auth, id, server, sources } = this.state;
+    let url = `${server}/api/v1/metadata?a=${auth}&id=${id}&transcoded=true`;
 
     document.documentElement.style.setProperty(
       "--plyr-color-main",
@@ -64,9 +65,22 @@ export default class View extends Component {
     axios
       .get(url)
       .then((response) => {
+        sources.push({
+          src: `${server}/api/v1/redirectdownload/${response.data.name}?a=${auth}&id=${id}`,
+          size: 4320
+        });
+        if (response.data.stream_list) {
+          for (let i = 0; i < response.data.stream_list.length; i++) {
+            sources.push({
+              src: `${server}/api/v1/redirectdownload/${response.data.name}?a=${auth}&id=${id}&quality=transcoded&itag=${response.data.stream_list[i].itag}`,
+              size: response.data.stream_list[i].quality,
+            });
+          }
+        }
         this.setState({
           metadata: response.data,
           isLoaded: true,
+          sources: sources,
         });
       })
       .catch((error) => {
@@ -156,7 +170,7 @@ export default class View extends Component {
 }
 
 export function MovieView(props) {
-  let { auth, id, metadata, server } = props.props;
+  let { metadata, server, sources } = props.props;
 
   return (
     <div className="MovieView">
@@ -168,11 +182,7 @@ export function MovieView(props) {
               metadata.backdropPath ||
               `${server}/api/v1/image/thumbnail?id=${metadata.id}` ||
               "",
-            sources: [
-              {
-                src: `${server}/api/v1/redirectdownload/${metadata.name}?a=${auth}&id=${id}&quality=transcoded`,
-              },
-            ],
+            sources: sources,
           }}
           options={{
             controls: [
@@ -463,16 +473,18 @@ export function ChildrenMenu(props) {
       >
         {metadata.children.length
           ? metadata.children.map((child) => {
-            if (child.type == "directory") {
-              return (<Link
-                to={`/view/${child.id}`}
-                className="no_decoration_link"
-                key={uuid()}
-              >
-                <MenuItem onClick={handleClose}>{child.name}</MenuItem>
-              </Link>)
-            }
-          })
+              if (child.type == "directory") {
+                return (
+                  <Link
+                    to={`/view/${child.id}`}
+                    className="no_decoration_link"
+                    key={uuid()}
+                  >
+                    <MenuItem onClick={handleClose}>{child.name}</MenuItem>
+                  </Link>
+                );
+              }
+            })
           : null}
       </Menu>
     </div>
