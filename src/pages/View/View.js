@@ -26,6 +26,7 @@ export default class View extends Component {
       server:
         sessionStorage.getItem("server") || localStorage.getItem("server"),
       auth: sessionStorage.getItem("auth") || localStorage.getItem("auth"),
+      q: parseInt(queryString.parse(this.props.location.search).q) || 0,
       id: this.props.match.params.id,
       isLoaded: false,
       metadata: {},
@@ -41,9 +42,6 @@ export default class View extends Component {
       clear();
       localStorage.setItem("_VERSION", version);
     }
-
-    let { auth, id, server, sources } = this.state;
-    let url = `${server}/api/v1/metadata?a=${auth}&id=${id}&transcoded=true`;
 
     document.documentElement.style.setProperty(
       "--plyr-color-main",
@@ -62,25 +60,23 @@ export default class View extends Component {
       theme.palette.text.primary
     );
 
-    axios
-      .get(url)
+    this.fetchData();
+  }
+
+  fetchData = async () => {
+    let { auth, id, name, q, server } = this.state;
+
+    await axios
+      .get(`${server}/api/v1/metadata?a=${auth}&id=${id}`)
       .then((response) => {
-        sources.push({
-          src: `${server}/api/v1/redirectdownload/${response.data.name}?a=${auth}&id=${id}`,
-          size: 4320
-        });
-        if (response.data.stream_list) {
-          for (let i = 0; i < response.data.stream_list.length; i++) {
-            sources.push({
-              src: `${server}/api/v1/redirectdownload/${response.data.name}?a=${auth}&id=${id}&quality=transcoded&itag=${response.data.stream_list[i].itag}`,
-              size: response.data.stream_list[i].quality,
-            });
-          }
+        if (response.data.mimeType == "application/vnd.google-apps.folder") {
+          id = response.data.children[q].id;
+          name = response.data.children[q].name;
+        } else {
+          name = response.data.name;
         }
         this.setState({
           metadata: response.data,
-          isLoaded: true,
-          sources: sources,
         });
       })
       .catch((error) => {
@@ -136,7 +132,71 @@ export default class View extends Component {
           }
         }
       });
-  }
+
+    await axios
+      .get(
+        `${server}/api/v1/stream_map?a=${auth}&id=${id}&name=${name}&server=${server}`
+      )
+      .then((response) => {
+        this.setState({
+          sources: response.data.success.content,
+          isLoaded: true,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        if (error.response) {
+          if (error.response.status === 401) {
+            Swal.fire({
+              title: "Error!",
+              text: "Your credentials are invalid!",
+              icon: "error",
+              confirmButtonText: "Login",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.props.history.push("/logout");
+              }
+            });
+          } else if (!server) {
+            this.props.history.push("/logout");
+          } else {
+            Swal.fire({
+              title: "Error!",
+              text: `Something went wrong while communicating with the backend! Is '${server}' the correct address?`,
+              icon: "error",
+              confirmButtonText: "Logout",
+              cancelButtonText: "Retry",
+              showCancelButton: true,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.props.history.push("/logout");
+              } else if (result.isDismissed) {
+                location.reload();
+              }
+            });
+          }
+        } else if (error.request) {
+          if (!server) {
+            this.props.history.push("/logout");
+          } else {
+            Swal.fire({
+              title: "Error!",
+              text: `libDrive could not communicate with the backend! Is '${server}' the correct address?`,
+              icon: "error",
+              confirmButtonText: "Logout",
+              cancelButtonText: "Retry",
+              showCancelButton: true,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.props.history.push("/logout");
+              } else if (result.isDismissed) {
+                location.reload();
+              }
+            });
+          }
+        }
+      });
+  };
 
   render() {
     let { isLoaded, metadata } = this.state;
@@ -281,7 +341,7 @@ export function TVBView(props) {
 }
 
 export function TVSView(props) {
-  let { auth, metadata, server, thisprops } = props.props;
+  let { auth, metadata, server, sources, thisprops } = props.props;
   let hash = parseInt(queryString.parse(thisprops.location.search).q) || 0;
 
   function isHash(n, hash) {
@@ -315,11 +375,7 @@ export function TVSView(props) {
               metadata.backdropPath ||
               `${server}/api/v1/image/thumbnail?id=${metadata.children[hash].id}` ||
               "",
-            sources: [
-              {
-                src: `${server}/api/v1/redirectdownload/${metadata.children[hash].name}?a=${auth}&id=${metadata.children[hash].id}&quality=transcoded`,
-              },
-            ],
+            sources: sources,
           }}
           options={{
             controls: [
