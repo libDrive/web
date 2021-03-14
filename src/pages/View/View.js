@@ -200,25 +200,23 @@ export default class View extends Component {
 
   render() {
     let { isLoaded, metadata } = this.state;
-    let state = this.state;
-    state["thisprops"] = this.props;
 
     return isLoaded && metadata.type == "file" ? (
       <div className="View">
         <Nav />
-        <MovieView props={state} />
+        <MovieView {...this} />
         <Footer />
       </div>
     ) : isLoaded && metadata.type == "directory" && metadata.title ? (
       <div className="View">
         <Nav />
-        <TVBView props={state} />
+        <TVBView {...this} />
         <Footer />
       </div>
     ) : isLoaded && metadata.type == "directory" ? (
       <div className="View">
         <Nav />
-        <TVSView props={state} />
+        <TVSView {...this} />
         <Footer />
       </div>
     ) : (
@@ -229,202 +227,224 @@ export default class View extends Component {
   }
 }
 
-export function MovieView(props) {
-  let { metadata, server, sources } = props.props;
+export class MovieView extends Component {
+  constructor(props) {
+    super(props);
+    this.state = props.state;
+  }
 
-  return (
-    <div className="MovieView">
-      <div className="plyr__component" style={{}}>
-        <Plyr
-          source={{
-            type: "video",
-            poster:
-              metadata.backdropPath ||
-              `${server}/api/v1/image/thumbnail?id=${metadata.id}` ||
-              "",
-            sources: sources,
-          }}
-          options={{
-            controls: [
-              "play",
-              "progress",
-              "current-time",
-              "duration",
-              "mute",
-              "volume",
-              "pip",
-              "settings",
-              "fullscreen",
-            ],
-          }}
-        />
-      </div>
-      <div className="info__container">
-        <div className="info__left">
-          <img
-            className="info__poster"
-            src={
-              metadata.posterPath ||
-              `${server}/api/v1/image/poster?text=${metadata.title}&extention=jpeg`
-            }
+  render() {
+    let { metadata, server, sources } = this.state;
+
+    return (
+      <div className="MovieView">
+        <div className="plyr__component">
+          <Plyr
+            source={{
+              type: "video",
+              poster:
+                metadata.backdropPath ||
+                `${server}/api/v1/image/thumbnail?id=${metadata.id}` ||
+                "",
+              sources: sources,
+            }}
+            options={{
+              controls: [
+                "play",
+                "progress",
+                "current-time",
+                "duration",
+                "mute",
+                "volume",
+                "pip",
+                "settings",
+                "fullscreen",
+              ],
+            }}
           />
         </div>
-        <div className="info__right">
-          <Typography variant="h2" className="info__title">
-            {metadata.title}
-          </Typography>
-          <Typography
-            variant="body1"
-            className="info__overview"
-            style={{ marginTop: "30px" }}
-          >
-            {metadata.overview}
-          </Typography>
-          <div className="vote__container">
-            <Rating
-              name="Rating"
-              value={metadata.voteAverage}
-              max={10}
-              readOnly
+        <div className="info__container">
+          <div className="info__left">
+            <img
+              className="info__poster"
+              src={
+                metadata.posterPath ||
+                `${server}/api/v1/image/poster?text=${metadata.title}&extention=jpeg`
+              }
             />
           </div>
-          <PlayerMenu props={props.props} />
+          <div className="info__right">
+            <Typography variant="h2" className="info__title">
+              {metadata.title}
+            </Typography>
+            <Typography
+              variant="body1"
+              className="info__overview"
+              style={{ marginTop: "30px" }}
+            >
+              {metadata.overview}
+            </Typography>
+            <div className="vote__container">
+              <Rating
+                name="Rating"
+                value={metadata.voteAverage}
+                max={10}
+                readOnly
+              />
+            </div>
+            <PlayerMenu props={this.state} />
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
-export function TVBView(props) {
-  let { metadata, server } = props.props;
+export class TVBView extends Component {
+  constructor(props) {
+    super(props);
+    this.state = props.state;
+  }
 
-  return (
-    <div className="TVBView">
-      <div className="info__container">
-        <div className="info__left">
-          <img
-            className="info__poster"
-            src={
-              metadata.posterPath ||
-              `${server}/api/v1/image/poster?text=${metadata.title}&extention=jpeg`
-            }
-          />
-        </div>
-        <div className="info__right">
-          <Typography variant="h2" className="info__title">
-            {metadata.title}
-          </Typography>
-          <Typography
-            variant="body1"
-            className="info__overview"
-            style={{ marginTop: "30px" }}
-          >
-            {metadata.overview}
-          </Typography>
-          <div className="vote__container">
-            <Rating
-              name="Rating"
-              value={metadata.voteAverage}
-              max={10}
-              readOnly
+  render() {
+    let { metadata, server } = this.state;
+
+    return (
+      <div className="TVBView">
+        <div className="info__container">
+          <div className="info__left">
+            <img
+              className="info__poster"
+              src={
+                metadata.posterPath ||
+                `${server}/api/v1/image/poster?text=${metadata.title}&extention=jpeg`
+              }
             />
           </div>
-          <div className="buttons__container">
-            <div className="button">
-              <ChildrenMenu props={props.props} />
+          <div className="info__right">
+            <Typography variant="h2" className="info__title">
+              {metadata.title}
+            </Typography>
+            <Typography
+              variant="body1"
+              className="info__overview"
+              style={{ marginTop: "30px" }}
+            >
+              {metadata.overview}
+            </Typography>
+            <div className="vote__container">
+              <Rating
+                name="Rating"
+                value={metadata.voteAverage}
+                max={10}
+                readOnly
+              />
+            </div>
+            <div className="buttons__container">
+              <div className="button">
+                <ChildrenMenu props={this.state} />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
-export function TVSView(props) {
-  let { auth, metadata, server, sources, thisprops } = props.props;
-  let hash = parseInt(queryString.parse(thisprops.location.search).q) || 0;
-
-  function isHash(n, hash) {
-    if (n === hash) {
-      return "pls-playing";
-    } else {
-      return "";
-    }
+export class TVSView extends Component {
+  constructor(props) {
+    super(props);
+    this.state = props.state;
   }
 
-  return (
-    <div className="TVSView">
-      <Typography
-        variant="h2"
-        style={{ textAlign: "center", marginTop: "25px" }}
-      >
-        {metadata.name}
-      </Typography>
-      <Typography
-        variant="h5"
-        style={{ textAlign: "center", marginTop: "15px" }}
-      >
-        {metadata.children[hash].name}
-      </Typography>
-      <div className="plyr__component">
-        <Plyr
-          preload="none"
-          source={{
-            type: "video",
-            poster:
-              metadata.backdropPath ||
-              `${server}/api/v1/image/thumbnail?id=${metadata.children[hash].id}` ||
-              "",
-            sources: sources,
-          }}
-          options={{
-            controls: [
-              "play",
-              "progress",
-              "current-time",
-              "duration",
-              "mute",
-              "volume",
-              "pip",
-              "settings",
-              "fullscreen",
-            ],
-          }}
-        />
-        <div className="plyr-playlist-wrapper">
-          <ul className="plyr-playlist">
-            {metadata.children.length
-              ? metadata.children.map((child, n) => (
-                  <li className={isHash(n, hash)} key={n}>
-                    <Link
-                      to={{
-                        pathname: thisprops.location.pathname,
-                        search: `?q=${n}`,
-                      }}
-                      key={uuid()}
-                    >
-                      <img className="plyr-miniposter" />
-                      {child.name}
-                    </Link>
-                  </li>
-                ))
-              : null}
-          </ul>
+  render() {
+    let { auth, metadata, server, sources } = this.state;
+    let hash =
+      parseInt(queryString.parse(this.props.props.location.search).q) || 0;
+
+    function isHash(n, hash) {
+      if (n === hash) {
+        return "pls-playing";
+      } else {
+        return "";
+      }
+    }
+
+    return (
+      <div className="TVSView">
+        <Typography
+          variant="h2"
+          style={{ textAlign: "center", marginTop: "25px" }}
+        >
+          {metadata.name}
+        </Typography>
+        <Typography
+          variant="h5"
+          style={{ textAlign: "center", marginTop: "15px" }}
+        >
+          {metadata.children[hash].name}
+        </Typography>
+        <div className="plyr__component">
+          <Plyr
+            preload="none"
+            source={{
+              type: "video",
+              poster:
+                metadata.backdropPath ||
+                `${server}/api/v1/image/thumbnail?id=${metadata.children[hash].id}` ||
+                "",
+              sources: sources,
+            }}
+            options={{
+              controls: [
+                "play",
+                "progress",
+                "current-time",
+                "duration",
+                "mute",
+                "volume",
+                "pip",
+                "settings",
+                "fullscreen",
+              ],
+            }}
+          />
+          <div className="plyr-playlist-wrapper">
+            <ul className="plyr-playlist">
+              {metadata.children.length
+                ? metadata.children.map((child, n) => (
+                    <li className={isHash(n, hash)} key={n}>
+                      <Link
+                        to={{
+                          pathname: this.props.props.location.pathname,
+                          search: `?q=${n}`,
+                        }}
+                        key={uuid()}
+                      >
+                        <img className="plyr-miniposter" />
+                        {child.name}
+                      </Link>
+                    </li>
+                  ))
+                : null}
+            </ul>
+          </div>
+        </div>
+        <div style={{ textAlign: "center", marginBottom: "5vh" }}>
+          <PlayerMenu
+            props={{
+              auth: auth,
+              id: metadata.children[hash].id,
+              metadata: metadata.children[hash],
+              server: server,
+            }}
+          />
+          <PlaylistMenu props={this.state} />
         </div>
       </div>
-      <div style={{ textAlign: "center", marginBottom: "5vh" }}>
-        <PlayerMenu
-          props={{
-            auth: auth,
-            id: metadata.children[hash].id,
-            metadata: metadata.children[hash],
-            server: server,
-          }}
-        />
-        <PlaylistMenu props={props.props} />
-      </div>
-    </div>
-  );
+    );
+  }
 }
 
 export function PlayerMenu(props) {
