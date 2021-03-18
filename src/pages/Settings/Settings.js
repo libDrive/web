@@ -197,6 +197,16 @@ export class Settings extends Component {
     evt.preventDefault();
     let { secret, server } = this.state;
 
+    if (this.state.postConfig.length !== 14) {
+      Swal.fire({
+        title: "Error!",
+        text: "1 or more fields weren't filled out.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return
+    }
+
     axios
       .post(`${server}/api/v1/config?secret=${secret}`, this.state.postConfig)
       .then((response) => {
@@ -690,7 +700,6 @@ export class Settings extends Component {
               variant="outlined"
               value={this.state.postConfig.cloudflare}
               onChange={this.handleCloudflareChange}
-              required
             />
             <TextField
               className="TextField"
@@ -709,14 +718,15 @@ export class Settings extends Component {
               select
               label="Transcoded"
               variant="outlined"
-              value={this.state.postConfig.transcoded || false}
+              value={this.state.postConfig.transcoded}
               onChange={this.handleTranscodedChange}
+              required
             >
               <MenuItem key={guid()} value={true}>
-                true
+                True
               </MenuItem>
               <MenuItem key={guid()} value={false}>
-                false
+                False
               </MenuItem>
             </TextField>
             <TextField
@@ -725,14 +735,15 @@ export class Settings extends Component {
               select
               label="Sign Up"
               variant="outlined"
-              value={this.state.postConfig.signup || false}
+              value={this.state.postConfig.signup}
               onChange={this.handleSignupChange}
+              required
             >
               <MenuItem key={guid()} value={true}>
-                true
+                True
               </MenuItem>
               <MenuItem key={guid()} value={false}>
-                false
+                False
               </MenuItem>
             </TextField>
             <TextField
@@ -741,14 +752,15 @@ export class Settings extends Component {
               select
               label="Authentication"
               variant="outlined"
-              value={this.state.postConfig.auth || true}
+              value={this.state.postConfig.auth}
               onChange={this.handleAuthChange}
+              required
             >
               <MenuItem key={guid()} value={true}>
-                true
+                True
               </MenuItem>
               <MenuItem key={guid()} value={false}>
-                false
+                False
               </MenuItem>
             </TextField>
           </div>
