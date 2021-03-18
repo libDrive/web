@@ -197,7 +197,7 @@ export class Settings extends Component {
     evt.preventDefault();
     let { secret, server } = this.state;
 
-    if (this.state.postConfig.length !== 14) {
+    if (Object.keys(this.state.postConfig).length !== 14) {
       Swal.fire({
         title: "Error!",
         text: "1 or more fields weren't filled out.",
