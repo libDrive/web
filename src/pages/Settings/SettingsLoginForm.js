@@ -43,7 +43,6 @@ class SettingsLoginForm extends Component {
     super(props);
     this.state = {
       auth: sessionStorage.getItem("auth") || localStorage.getItem("auth"),
-      error: "",
       secret: "",
       server:
         sessionStorage.getItem("server") || localStorage.getItem("server"),
@@ -51,7 +50,6 @@ class SettingsLoginForm extends Component {
 
     this.handleSecretChange = this.handleSecretChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.dismissError = this.dismissError.bind(this);
   }
 
   componentDidMount() {
@@ -64,17 +62,9 @@ class SettingsLoginForm extends Component {
     }
   }
 
-  dismissError() {
-    this.setState({ error: "" });
-  }
-
   handleSubmit(evt) {
     evt.preventDefault();
     let { secret, server } = this.state;
-
-    if (!secret) {
-      return this.setState({ error: "Secret is required" });
-    }
 
     axios
       .get(`${server}/api/v1/config?secret=${secret}`)
@@ -125,7 +115,6 @@ class SettingsLoginForm extends Component {
           });
         }
       });
-    return this.setState({ error: "" });
   }
 
   handleSecretChange(evt) {
@@ -135,7 +124,7 @@ class SettingsLoginForm extends Component {
   }
 
   render() {
-    let { error, secret } = this.state;
+    let { secret } = this.state;
     const { classes } = this.props;
 
     return (
@@ -155,14 +144,6 @@ class SettingsLoginForm extends Component {
               onSubmit={this.handleSubmit}
               noValidate
             >
-              {error && (
-                <div style={{}}>
-                  <h3 data-test="error" onClick={this.dismissError}>
-                    <button onClick={this.dismissError}>✖</button>
-                    {error}
-                  </h3>
-                </div>
-              )}
               <TextField
                 variant="outlined"
                 margin="normal"
