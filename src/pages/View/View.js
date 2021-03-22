@@ -10,13 +10,12 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Swal from "sweetalert2/src/sweetalert2.js";
 import "@sweetalert2/theme-dark/dark.css";
 
-import Plyr from "plyr-react";
-import "plyr-react/dist/plyr.css";
+import DPlayer from "react-dplayer";
 
 import axios from "axios";
 import queryString from "query-string";
 
-import { clear, Footer, Nav, theme, uuid, version } from "../../components";
+import { guid, clear, Footer, Nav, theme, version } from "../../components";
 import "./View.css";
 
 export default class View extends Component {
@@ -235,31 +234,34 @@ export class MovieView extends Component {
 
   render() {
     let { metadata, server, sources } = this.state;
+    var defaultQuality;
+    if (sources.length > 1) {
+      defaultQuality = 1
+    } else {
+      defaultQuality = 0
+    }
 
     return (
       <div className="MovieView">
         <div className="plyr__component">
-          <Plyr
-            source={{
-              type: "video",
-              poster:
-                metadata.backdropPath ||
-                `${server}/api/v1/image/thumbnail?id=${metadata.id}` ||
-                "",
-              sources: sources,
-            }}
+          <DPlayer
             options={{
-              controls: [
-                "play",
-                "progress",
-                "current-time",
-                "duration",
-                "mute",
-                "volume",
-                "pip",
-                "settings",
-                "fullscreen",
+              video: {
+                quality: sources,
+                defaultQuality: defaultQuality,
+                pic:
+                  metadata.backdropPath ||
+                  `${server}/api/v1/image/thumbnail?id=${metadata.id}`,
+              },
+              preload: "auto",
+              theme: theme.palette.primary.main,
+              contextmenu: [
+                {
+                  text: "libDrive",
+                  link: "https://github.com/libDrive/libDrive",
+                },
               ],
+              lang: "en",
             }}
           />
         </div>
@@ -386,28 +388,22 @@ export class TVSView extends Component {
           {metadata.children[hash].name}
         </Typography>
         <div className="plyr__component">
-          <Plyr
-            preload="none"
-            source={{
-              type: "video",
-              poster:
-                metadata.backdropPath ||
-                `${server}/api/v1/image/thumbnail?id=${metadata.children[hash].id}` ||
-                "",
-              sources: sources,
-            }}
+          <DPlayer
             options={{
-              controls: [
-                "play",
-                "progress",
-                "current-time",
-                "duration",
-                "mute",
-                "volume",
-                "pip",
-                "settings",
-                "fullscreen",
+              video: {
+                quality: sources,
+                defaultQuality: 0,
+                pic: `${server}/api/v1/image/thumbnail?id=${metadata.children[hash].id}`,
+              },
+              preload: "auto",
+              theme: theme.palette.primary.main,
+              contextmenu: [
+                {
+                  text: "libDrive",
+                  link: "https://github.com/libDrive/libDrive",
+                },
               ],
+              lang: "en",
             }}
           />
           <div className="plyr-playlist-wrapper">
@@ -420,7 +416,7 @@ export class TVSView extends Component {
                           pathname: this.props.props.location.pathname,
                           search: `?q=${n}`,
                         }}
-                        key={uuid()}
+                        key={guid()}
                       >
                         <img className="plyr-miniposter" />
                         {child.name}
@@ -554,7 +550,7 @@ export function ChildrenMenu(props) {
                   <Link
                     to={`/view/${child.id}`}
                     className="no_decoration_link"
-                    key={uuid()}
+                    key={guid()}
                   >
                     <MenuItem onClick={handleClose}>{child.name}</MenuItem>
                   </Link>
