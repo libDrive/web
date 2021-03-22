@@ -11,7 +11,6 @@ import {
   Carousel,
   clear,
   Footer,
-  Tile,
   Nav,
   theme,
   version,
@@ -107,31 +106,10 @@ export default class Browse extends Component {
   render() {
     let { isLoaded, metadata } = this.state;
 
-    let gallery;
-    if (
-      sessionStorage.getItem("gallery") == "tile" ||
-      localStorage.getItem("gallery") == "tile"
-    ) {
-      gallery = true;
-    } else if (
-      sessionStorage.getItem("gallery") == "carousel" ||
-      localStorage.getItem("gallery") == "carousel"
-    ) {
-      gallery = false;
-    } else {
-      sessionStorage.setItem("gallery", "carousel");
-      localStorage.setItem("gallery", "carousel");
-      gallery = false;
-    }
-
     return isLoaded ? (
       <div className="Browse">
         <Nav />
-        {gallery ? (
-          <Tile metadata={metadata} />
-        ) : (
-          <Carousel metadata={metadata} />
-        )}
+        <Carousel metadata={metadata} />
         <Footer />
       </div>
     ) : (
