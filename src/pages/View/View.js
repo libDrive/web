@@ -471,8 +471,8 @@ export function PlayerMenu(props) {
         id="player-menu"
         anchorEl={menuAnchorEl}
         keepMounted
-        anchorOrigin={{ vertical: "top", horizontal: "left" }}
-        transformOrigin={{ vertical: "top", horizontal: "left" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        transformOrigin={{ vertical: "top", horizontal: "center" }}
         open={Boolean(menuAnchorEl)}
         onClose={handleClose}
       >
@@ -538,8 +538,8 @@ export function ChildrenMenu(props) {
         id="children-menu"
         anchorEl={menuAnchorEl}
         keepMounted
-        anchorOrigin={{ vertical: "top", horizontal: "left" }}
-        transformOrigin={{ vertical: "top", horizontal: "left" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        transformOrigin={{ vertical: "top", horizontal: "center" }}
         open={Boolean(menuAnchorEl)}
         onClose={handleClose}
       >

@@ -244,8 +244,8 @@ export function BrowseMenu(props) {
         id="browse-menu"
         anchorEl={menuAnchorEl}
         keepMounted
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        transformOrigin={{ vertical: "top", horizontal: "center" }}
         open={Boolean(menuAnchorEl)}
         onClose={handleClose}
       >
@@ -369,8 +369,8 @@ export function AccountMenu(props) {
       <Menu
         id="account-menu"
         anchorEl={menuAnchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        transformOrigin={{ vertical: "top", horizontal: "center" }}
         keepMounted
         open={Boolean(menuAnchorEl)}
         onClose={handleClose}
@@ -446,8 +446,8 @@ export function ThemeMenu() {
       <Menu
         id="theme-menu"
         anchorEl={menuAnchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        transformOrigin={{ vertical: "top", horizontal: "center" }}
         keepMounted
         open={Boolean(menuAnchorEl)}
         onClose={handleClose}
