@@ -2,8 +2,6 @@
   "name": "libdrive",
   "version": "1.2.6",
   "description": "Cloud media library",
-  "homepage": "./",
-  "main": "public/electron.js",
   "dependencies": {
     "@material-ui/core": "^4.11.1",
     "@material-ui/icons": "^4.9.1",
@@ -13,7 +11,6 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.0",
-    "electron-serve": "^1.0.0",
     "react-dplayer": "^0.4.2",
     "react-router-dom": "^5.2.0",
     "react-spinners": "^0.10.2",
@@ -21,8 +18,6 @@
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
-    "electron": "^11.1.0",
-    "electron-builder": "^22.9.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
@@ -32,16 +27,10 @@
     "wait-on/axios": "^0.21.1"
   },
   "scripts": {
-    "backend": "cd ../backend && ./venv/Scripts/python.exe main.py",
-    "dev": "concurrently \"yarn run react-start\" \"yarn run backend\"",
-    "react-start": "react-scripts start",
-    "react-build": "react-scripts build",
-    "react-test": "react-scripts test",
-    "react-eject": "react-scripts eject",
-    "electron": "wait-on http://localhost:3000 && electron .",
-    "electron-start": "concurrently \"yarn run react-start\" \"yarn run electron\"",
-    "preelectron-build": "yarn run react-build",
-    "electron-build": "electron-builder"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "repository": {
     "type": "git",
@@ -51,22 +40,6 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/libDrive/frontend/issues"
-  },
-  "build": {
-    "appId": "com.eliasbenb.libdrive",
-    "icon": "public/images/icons/icon-512x512.png",
-    "productName": "libDrive",
-    "copyright": "Copyright © 2021 Elias Benbourenane <eliasbenbourenane@gmail.com>",
-    "files": [
-      "build/**/*",
-      "public/electron.js"
-    ],
-    "extraMetadata": {
-      "main": "public/electron.js"
-    },
-    "win": {},
-    "linux": {},
-    "mac": {}
   },
   "browserslist": {
     "production": [
