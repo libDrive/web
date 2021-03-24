@@ -419,17 +419,10 @@ export function ThemeMenu() {
     window.location.reload();
   };
 
-  const handleNordDark = () => {
+  const handleNord = () => {
     setMenuAnchorEl(null);
-    localStorage.setItem("theme", "nordDark");
-    sessionStorage.setItem("theme", "nordDark");
-    window.location.reload();
-  };
-
-  const handleNordLight = () => {
-    setMenuAnchorEl(null);
-    localStorage.setItem("theme", "nordLight");
-    sessionStorage.setItem("theme", "nordLight");
+    localStorage.setItem("theme", "nord");
+    sessionStorage.setItem("theme", "nord");
     window.location.reload();
   };
 
@@ -455,8 +448,7 @@ export function ThemeMenu() {
         <MenuItem onClick={handleLight}>Light</MenuItem>
         <MenuItem onClick={handleDark}>Dark</MenuItem>
         <MenuItem onClick={handleDracula}>Dracula</MenuItem>
-        <MenuItem onClick={handleNordDark}>Nord Dark</MenuItem>
-        <MenuItem onClick={handleNordLight}>Nord Light</MenuItem>
+        <MenuItem onClick={handleNord}>Nord</MenuItem>
       </Menu>
     </div>
   );

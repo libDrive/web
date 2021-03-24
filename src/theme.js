@@ -93,7 +93,7 @@ const draculaTheme = createMuiTheme({
   },
 });
 
-const nordDark = createMuiTheme({
+const nord = createMuiTheme({
   palette: {
     type: "dark",
     primary: {
@@ -124,37 +124,6 @@ const nordDark = createMuiTheme({
   },
 });
 
-const nordLight = createMuiTheme({
-  palette: {
-    type: "light",
-    primary: {
-      main: "#5E81AC",
-    },
-    secondary: {
-      main: "#88C0D0",
-    },
-    error: {
-      main: "#BF616A",
-    },
-    warning: {
-      main: "#EBCB8B",
-    },
-    success: {
-      main: "#A3BE8C",
-    },
-    background: {
-      default: "#E5E9F0",
-      paper: "#D8DEE9",
-    },
-    text: {
-      primary: "#2E3440",
-    },
-    common: {
-      main: "#5E81AC",
-    },
-  },
-});
-
 var theme;
 
 if (
@@ -173,15 +142,10 @@ if (
 ) {
   theme = draculaTheme;
 } else if (
-  localStorage.getItem("theme") === "nordDark" ||
-  sessionStorage.getItem("theme") === "nordDark"
+  localStorage.getItem("theme") === "nord" ||
+  sessionStorage.getItem("theme") === "nord"
 ) {
-  theme = nordDark;
-} else if (
-  localStorage.getItem("theme") === "nordLight" ||
-  sessionStorage.getItem("theme") === "nordLight"
-) {
-  theme = nordLight;
+  theme = nord;
 } else {
   theme = darkTheme;
   localStorage.setItem("theme", "dark");
