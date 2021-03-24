@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import {
   AppBar,
@@ -133,6 +133,7 @@ const styles = makeStyles((theme) => ({
 
 export function NavUI(props) {
   const classes = styles();
+  const history = useHistory();
 
   const [search, setSearch] = useState("");
   const searchChange = (evt) => {
@@ -141,7 +142,10 @@ export function NavUI(props) {
 
   const searchSubmit = (evt) => {
     evt.preventDefault();
-    window.location.hash = `#/search/${search}`;
+    history.push({
+      pathname:  `/search/${search}`,
+      key: guid(),
+   });
   };
 
   return (

@@ -494,6 +494,7 @@ export function PlayerMenu(props) {
         <a
           href={`${server}/api/v1/redirectdownload/${metadata.name}?a=${auth}&id=${id}`}
           className="no_decoration_link"
+          target="_blank"
         >
           <MenuItem onClick={handleClose}>Download</MenuItem>
         </a>
