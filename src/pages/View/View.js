@@ -15,7 +15,7 @@ import DPlayer from "react-dplayer";
 import axios from "axios";
 import queryString from "query-string";
 
-import { guid, clear, Footer, Nav, theme, version } from "../../components";
+import { guid, Footer, Nav, theme } from "../../components";
 import "./View.css";
 
 export default class View extends Component {
@@ -34,14 +34,6 @@ export default class View extends Component {
   }
 
   componentDidMount() {
-    if (!localStorage.getItem("_VERSION")) {
-      localStorage.setItem("_VERSION", version);
-    }
-    if (localStorage.getItem("_VERSION") !== version) {
-      clear();
-      localStorage.setItem("_VERSION", version);
-    }
-
     document.documentElement.style.setProperty(
       "--plyr-color-main",
       theme.palette.primary.main
@@ -236,9 +228,9 @@ export class MovieView extends Component {
     let { metadata, server, sources } = this.state;
     var defaultQuality;
     if (sources.length > 1) {
-      defaultQuality = 1
+      defaultQuality = 1;
     } else {
-      defaultQuality = 0
+      defaultQuality = 0;
     }
 
     return (

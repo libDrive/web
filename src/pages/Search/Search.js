@@ -7,7 +7,7 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { clear, Footer, Nav, Carousel, theme, version } from "../../components";
+import { Footer, Nav, Carousel, theme } from "../../components";
 
 export default class Search extends Component {
   constructor(props) {
@@ -23,14 +23,6 @@ export default class Search extends Component {
   }
 
   componentDidMount() {
-    if (!localStorage.getItem("_VERSION")) {
-      localStorage.setItem("_VERSION", version);
-    }
-    if (localStorage.getItem("_VERSION") !== version) {
-      clear();
-      localStorage.setItem("_VERSION", version);
-    }
-
     let { auth, query, server } = this.state;
     let url = `${server}/api/v1/metadata?a=${auth}&q=${query}`;
 

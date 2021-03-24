@@ -8,7 +8,6 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
 import Swal from "sweetalert2/src/sweetalert2.js";
@@ -16,7 +15,7 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { clear, Nav, version } from "../../components";
+import { Nav } from "../../components";
 
 const styles = (theme) => ({
   paper: {
@@ -50,16 +49,6 @@ class SettingsLoginForm extends Component {
 
     this.handleSecretChange = this.handleSecretChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentDidMount() {
-    if (!localStorage.getItem("_VERSION")) {
-      localStorage.setItem("_VERSION", version);
-    }
-    if (localStorage.getItem("_VERSION") !== version) {
-      clear();
-      localStorage.setItem("_VERSION", version);
-    }
   }
 
   handleSubmit(evt) {
