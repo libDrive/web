@@ -570,7 +570,7 @@ export function PlaylistMenu(props) {
       "href",
       "data:text/plain;charset=utf-8," + encodeURIComponent(m3u8)
     );
-    element.setAttribute("download", "playlist.m3u8");
+    element.setAttribute("download", `${metadata.name}.m3u8`);
     element.style.display = "none";
     document.body.appendChild(element);
     element.click();
