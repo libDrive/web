@@ -93,22 +93,24 @@ class Login extends Component {
     axios
       .get(`${tempServer}/api/v1/auth?rules=signup`)
       .then((response) => {
-        if (response.status === 200) {
+        let data = response.data;
+        if (data.code === 200) {
           localStorage.setItem("auth", "0");
           localStorage.setItem("server", tempServer);
           sessionStorage.setItem("auth", "0");
           sessionStorage.setItem("server", tempServer);
-          this.props.history.push(response.data.success.content);
-        } else if (response.status === 202) {
+          this.props.history.push(data.content);
+        } else if (data.code === 202) {
           this.setState({ signup: true, page: true });
         }
       })
       .catch((error) => {
         console.error(error);
         try {
+          let data = response.data;
           Swal.fire({
             title: "Error!",
-            text: error.response.data.error.message,
+            text: data.message,
             icon: "error",
             confirmButtonText: "OK",
           });
@@ -125,7 +127,7 @@ class Login extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    let { auth, password, server, tempServer, username } = this.state;
+    let { password, tempServer, username } = this.state;
     if (!tempServer) {
       return this.setState({ error: "Server is required" });
     }
@@ -136,18 +138,20 @@ class Login extends Component {
     axios
       .get(`${tempServer}/api/v1/auth?u=${username}&p=${password}`)
       .then((response) => {
+        let data = response.data;
         localStorage.setItem("server", tempServer);
         sessionStorage.setItem("server", tempServer);
-        localStorage.setItem("auth", response.data.auth);
-        sessionStorage.setItem("auth", response.data.auth);
+        localStorage.setItem("auth", data.content.auth);
+        sessionStorage.setItem("auth", data.content.auth);
         this.props.history.push("/");
       })
       .catch((error) => {
         console.error(error);
         try {
+          let data = response.data;
           Swal.fire({
             title: "Error!",
-            text: error.response.data.error.message,
+            text: data.message,
             icon: "error",
             confirmButtonText: "OK",
           });
@@ -175,18 +179,20 @@ class Login extends Component {
     axios
       .get(`${tempServer}/api/v1/signup?u=${username}&p=${password}`)
       .then((response) => {
-        console.log(response);
+        let data = response.data;
         localStorage.setItem("server", tempServer);
         sessionStorage.setItem("server", tempServer);
-        localStorage.setItem("auth", response.data.success.content.auth);
-        sessionStorage.setItem("auth", response.data.success.content.auth);
+        localStorage.setItem("auth", data.content.auth);
+        sessionStorage.setItem("auth", data.content.auth);
         this.props.history.push("/");
       })
       .catch((error) => {
+        console.log(error);
+        let data = response.data;
         try {
           Swal.fire({
             title: "Error!",
-            text: error.response.data.error.message,
+            text: data.message,
             icon: "error",
             confirmButtonText: "OK",
           });

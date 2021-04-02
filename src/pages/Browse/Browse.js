@@ -30,16 +30,17 @@ export default class Browse extends Component {
       .then((response) =>
         this.setState({
           isLoaded: true,
-          metadata: response.data,
+          metadata: response.data.content,
         })
       )
       .catch((error) => {
         console.error(error);
         if (error.response) {
-          if (error.response.status === 401) {
+          let data = error.response.data;
+          if (data.code === 401) {
             Swal.fire({
               title: "Error!",
-              text: "Your credentials are invalid!",
+              text: data.message,
               icon: "error",
               confirmButtonText: "Login",
             }).then((result) => {
@@ -52,7 +53,7 @@ export default class Browse extends Component {
           } else {
             Swal.fire({
               title: "Error!",
-              text: `Something went wrong while communicating with the backend! Is '${server}' the correct address?`,
+              text: data.message,
               icon: "error",
               confirmButtonText: "Logout",
               cancelButtonText: "Retry",

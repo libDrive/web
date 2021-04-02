@@ -92,19 +92,20 @@ export class Settings extends Component {
         .get(`${server}/api/v1/config?secret=${secret}`)
         .then((response) =>
           this.setState({
-            config: response.data,
+            config: response.data.content,
             isLoaded: true,
-            postConfig: response.data,
-            tempSecret: response.data.secret_key,
+            postConfig: response.data.content,
+            tempSecret: response.data.content.secret_key,
           })
         )
         .catch((error) => {
           console.error(error);
           if (error.response) {
-            if (error.response.status === 401) {
+            let data = error.response.data;
+            if (data.code === 401) {
               Swal.fire({
                 title: "Error!",
-                text: "Your credentials are invalid!",
+                text: data.message,
                 icon: "error",
                 confirmButtonText: "Login",
               }).then((result) => {
@@ -117,7 +118,7 @@ export class Settings extends Component {
             } else {
               Swal.fire({
                 title: "Error!",
-                text: `Something went wrong while communicating with the backend! Is '${server}' the correct address?`,
+                text: data.message,
                 icon: "error",
                 confirmButtonText: "Logout",
                 cancelButtonText: "Retry",
@@ -167,8 +168,7 @@ export class Settings extends Component {
       .then((response) => {
         Swal.fire({
           title: "Success!",
-          text:
-            "libDrive is being restarted, this might take some time, so the app won't load",
+          text: response.data.message,
           icon: "success",
           confirmButtonText: "OK",
         });
@@ -204,8 +204,7 @@ export class Settings extends Component {
       .then((response) => {
         Swal.fire({
           title: "Success!",
-          text:
-            "The config has been updated on the backend! The backend might need to be restarted for some changes to take effect.",
+          text: response.data.message,
           icon: "success",
           confirmButtonText: "OK",
         });
@@ -213,10 +212,11 @@ export class Settings extends Component {
       .catch((error) => {
         console.error(error);
         if (error.response) {
-          if (error.response.status === 401) {
+          let data = error.response.data;
+          if (data.code === 401) {
             Swal.fire({
               title: "Error!",
-              text: "Your credentials are invalid!",
+              text: data.message,
               icon: "error",
               confirmButtonText: "Logout",
             }).then((result) => {
@@ -228,8 +228,7 @@ export class Settings extends Component {
           } else {
             Swal.fire({
               title: "Error!",
-              text:
-                "Something went wrong while communicating with the backend!",
+              text: data.message,
               icon: "error",
               confirmButtonText: "Logout",
               cancelButtonText: "Retry",

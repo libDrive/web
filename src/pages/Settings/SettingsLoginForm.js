@@ -65,26 +65,22 @@ class SettingsLoginForm extends Component {
       .catch((error) => {
         console.error(error);
         if (error.response) {
-          if (error.response.status === 401) {
+          let data = error.response.data;
+          if (data.code === 401) {
             Swal.fire({
               title: "Error!",
-              text: "Your credentials are invalid!",
+              text: data.message,
               icon: "error",
               confirmButtonText: "OK",
             });
           } else {
             Swal.fire({
               title: "Error!",
-              text:
-                "Something went wrong while communicating with the backend!",
+              text: data.message,
               icon: "error",
               confirmButtonText: "OK",
             }).then((result) => {
-              if (result.isConfirmed) {
-                this.props.history.push("/logout");
-              } else if (result.isDismissed) {
-                location.reload();
-              }
+              location.reload();
             });
           }
         } else if (error.request) {

@@ -46,17 +46,18 @@ export default class CategoryBrowse extends Component {
       .then((response) =>
         this.setState({
           isLoaded: true,
-          metadata: response.data,
-          pages: Math.ceil(response.data[0]["length"] / 16),
+          metadata: response.data.content,
+          pages: Math.ceil(response.data.content[0]["length"] / 16),
         })
       )
       .catch((error) => {
         console.error(error);
         if (error.response) {
-          if (error.response.status === 401) {
+          let data = error.response.data;
+          if (data.code === 401) {
             Swal.fire({
               title: "Error!",
-              text: "Your credentials are invalid!",
+              text: data.message,
               icon: "error",
               confirmButtonText: "Login",
             }).then((result) => {
@@ -69,7 +70,7 @@ export default class CategoryBrowse extends Component {
           } else {
             Swal.fire({
               title: "Error!",
-              text: `Something went wrong while communicating with the backend! Is '${server}' the correct address?`,
+              text: data.message,
               icon: "error",
               confirmButtonText: "Logout",
               cancelButtonText: "Retry",

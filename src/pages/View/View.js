@@ -60,23 +60,25 @@ export default class View extends Component {
     await axios
       .get(`${server}/api/v1/metadata?a=${auth}&id=${id}`)
       .then((response) => {
-        if (response.data.mimeType == "application/vnd.google-apps.folder") {
-          id = response.data.children[q].id;
-          name = response.data.children[q].name;
+        let data = response.data;
+        if (data.content.mimeType == "application/vnd.google-apps.folder") {
+          id = data.content.children[q].id;
+          name = data.content.children[q].name;
         } else {
-          name = response.data.name;
+          name = data.content.name;
         }
         this.setState({
-          metadata: response.data,
+          metadata: data.content,
         });
       })
       .catch((error) => {
         console.error(error);
         if (error.response) {
-          if (error.response.status === 401) {
+          let data = error.response.data;
+          if (data.code === 401) {
             Swal.fire({
               title: "Error!",
-              text: "Your credentials are invalid!",
+              text: data.message,
               icon: "error",
               confirmButtonText: "Login",
             }).then((result) => {
@@ -89,7 +91,7 @@ export default class View extends Component {
           } else {
             Swal.fire({
               title: "Error!",
-              text: `Something went wrong while communicating with the backend! Is '${server}' the correct address?`,
+              text: data.message,
               icon: "error",
               confirmButtonText: "Logout",
               cancelButtonText: "Retry",
@@ -128,19 +130,20 @@ export default class View extends Component {
       .get(
         `${server}/api/v1/stream_map?a=${auth}&id=${id}&name=${name}&server=${server}`
       )
-      .then((response) => {
+      .then((response) =>
         this.setState({
-          sources: response.data.success.content,
+          sources: response.data.content,
           isLoaded: true,
-        });
-      })
+        })
+      )
       .catch((error) => {
         console.error(error);
         if (error.response) {
-          if (error.response.status === 401) {
+          let data = error.response.data;
+          if (data.code === 401) {
             Swal.fire({
               title: "Error!",
-              text: "Your credentials are invalid!",
+              text: data.message,
               icon: "error",
               confirmButtonText: "Login",
             }).then((result) => {

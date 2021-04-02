@@ -42,13 +42,14 @@ export default class Nav extends Component {
     let { auth, server } = this.state;
     let url = `${server}/api/v1/environment?a=${auth}`;
 
-    axios.get(url).then((response) =>
+    axios.get(url).then((response) => {
+      let data = response.data;
       this.setState({
-        accounts: response.data.account_list,
-        categories: response.data.category_list,
+        accounts: data.content.account_list,
+        categories: data.content.category_list,
         isLoaded: true,
-      })
-    );
+      });
+    });
   }
 
   render() {
@@ -143,9 +144,9 @@ export function NavUI(props) {
   const searchSubmit = (evt) => {
     evt.preventDefault();
     history.push({
-      pathname:  `/search/${search}`,
+      pathname: `/search/${search}`,
       key: guid(),
-   });
+    });
   };
 
   return (
