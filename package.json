@@ -34,12 +34,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/libDrive/frontend.git"
+    "url": "git+https://github.com/libDrive/web.git"
   },
   "author": "Elias Benbourenane <eliasbenbourenane@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/libDrive/frontend/issues"
+    "url": "https://github.com/libDrive/web/issues"
   },
   "browserslist": {
     "production": [
