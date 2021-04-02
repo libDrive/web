@@ -20,6 +20,7 @@ figure {
   padding-bottom: 30px;
   padding-right: 30px;
   padding-left: 10px;
+  scrollbar-width: none;
 }
 
 .carousel__items::-webkit-scrollbar {
