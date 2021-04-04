@@ -110,7 +110,7 @@ export default class View extends Component {
           } else {
             Swal.fire({
               title: "Error!",
-              text: `libDrive could not communicate with the backend! Is '${server}' the correct address?`,
+              text: `libDrive could not communicate with the server! Is '${server}' the correct address?`,
               icon: "error",
               confirmButtonText: "Logout",
               cancelButtonText: "Retry",
@@ -156,7 +156,7 @@ export default class View extends Component {
           } else {
             Swal.fire({
               title: "Error!",
-              text: `Something went wrong while communicating with the backend! Is '${server}' the correct address?`,
+              text: `Something went wrong while communicating with the server! Is '${server}' the correct address?`,
               icon: "error",
               confirmButtonText: "Logout",
               cancelButtonText: "Retry",
@@ -175,7 +175,7 @@ export default class View extends Component {
           } else {
             Swal.fire({
               title: "Error!",
-              text: `libDrive could not communicate with the backend! Is '${server}' the correct address?`,
+              text: `libDrive could not communicate with the server! Is '${server}' the correct address?`,
               icon: "error",
               confirmButtonText: "Logout",
               cancelButtonText: "Retry",

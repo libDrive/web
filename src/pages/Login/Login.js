@@ -117,7 +117,7 @@ class Login extends Component {
         } catch {
           Swal.fire({
             title: "Error!",
-            text: `You were unable to communicate with the backend. Are you sure ${tempServer} is the correct server?`,
+            text: `You were unable to communicate with the server. Are you sure ${tempServer} is the correct server?`,
             icon: "error",
             confirmButtonText: "OK",
           });
@@ -158,7 +158,7 @@ class Login extends Component {
         } catch {
           Swal.fire({
             title: "Error!",
-            text: `Something went wrong while communicating with the backend ${tempServer}`,
+            text: `Something went wrong while communicating with the server ${tempServer}`,
             icon: "error",
             confirmButtonText: "OK",
           });
@@ -199,7 +199,7 @@ class Login extends Component {
         } catch {
           Swal.fire({
             title: "Error!",
-            text: `Something went wrong while communicating with the backend ${tempServer}`,
+            text: `Something went wrong while communicating with the server ${tempServer}`,
             icon: "error",
             confirmButtonText: "OK",
           });

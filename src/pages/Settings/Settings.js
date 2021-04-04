@@ -137,7 +137,7 @@ export class Settings extends Component {
             } else {
               Swal.fire({
                 title: "Error!",
-                text: `libDrive could not communicate with the backend! Is '${server}' the correct address?`,
+                text: `libDrive could not communicate with the server! Is '${server}' the correct address?`,
                 icon: "error",
                 confirmButtonText: "Logout",
                 cancelButtonText: "Retry",
@@ -244,7 +244,7 @@ export class Settings extends Component {
         } else if (error.request) {
           Swal.fire({
             title: "Error!",
-            text: `libDrive could not communicate with the backend! Is ${server} the correct address?`,
+            text: `libDrive could not communicate with the server! Is ${server} the correct address?`,
             icon: "error",
             confirmButtonText: "Logout",
             cancelButtonText: "Retry",

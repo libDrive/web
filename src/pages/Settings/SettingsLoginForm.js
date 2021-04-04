@@ -87,7 +87,7 @@ class SettingsLoginForm extends Component {
           Swal.fire({
             title: "Error!",
             text:
-              "libDrive could not communicate with the backend. Is ${server} the correct address?",
+              "libDrive could not communicate with the server. Is ${server} the correct address?",
             icon: "error",
             confirmButtonText: "Logout",
             cancelButtonText: "Retry",

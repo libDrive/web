@@ -321,7 +321,7 @@ export function AccountMenu(props) {
             Swal.fire({
               title: "Error!",
               text:
-                "Something went wrong while communicating with the backend!",
+                "Something went wrong while communicating with the server!",
               icon: "error",
               confirmButtonText: "Logout",
               cancelButtonText: "Retry",
@@ -337,7 +337,7 @@ export function AccountMenu(props) {
         } else if (error.request) {
           Swal.fire({
             title: "Error!",
-            text: `libDrive could not communicate with the backend! Is ${server} the correct address?`,
+            text: `libDrive could not communicate with the server! Is ${server} the correct address?`,
             icon: "error",
             confirmButtonText: "Logout",
             cancelButtonText: "Retry",
