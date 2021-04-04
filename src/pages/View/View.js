@@ -483,6 +483,12 @@ export function PlayerMenu(props) {
         >
           <MenuItem onClick={handleClose}>PotPlayer</MenuItem>
         </a>
+        <a
+          href={`nplayer-${server}/api/v1/redirectdownload/${metadata.name}?a=${auth}&id=${id}`}
+          className="no_decoration_link"
+        >
+          <MenuItem onClick={handleClose}>nPlayer</MenuItem>
+        </a>
         <Divider />
         <MenuItem
           onClick={() => {
