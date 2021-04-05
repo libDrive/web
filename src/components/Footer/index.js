@@ -2,9 +2,9 @@ import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-import { version } from "../components";
+import { version } from "../../components";
 
-import "./Footer.css";
+import "./index.css";
 
 const styles = makeStyles((theme) => ({
   footer__container: {

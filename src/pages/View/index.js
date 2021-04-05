@@ -16,7 +16,7 @@ import axios from "axios";
 import queryString from "query-string";
 
 import { guid, Footer, Nav, theme } from "../../components";
-import "./View.css";
+import "./index.css";
 
 export default class View extends Component {
   constructor(props) {

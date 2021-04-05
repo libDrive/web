@@ -6,7 +6,7 @@ import { Button, Menu, MenuItem } from "@material-ui/core";
 
 import { guid } from "../../components";
 
-import "./SortMenu.css";
+import "./index.css";
 
 export default function SortMenu(props) {
   const [menuAnchorEl, setMenuAnchorEl] = React.useState(null);

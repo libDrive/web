@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 
 import { guid } from "../../components";
-import "./Carousel.css";
+import "./index.css";
 
-export default class Carousel extends Component {
+export default class Tile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,21 +21,21 @@ export default class Carousel extends Component {
     let { metadata, server } = this.state;
 
     return (
-      <div className="Carousel">
+      <div className="Tile">
         {metadata.length
           ? metadata.map((category) => (
-              <div className="carousel__category" key={guid()}>
+              <div className="tile__category" key={guid()}>
                 <Link
                   to={`/browse/${category.categoryInfo.name}`}
                   key={guid()}
-                  className="carousel__category__title no_decoration_link"
+                  className="tile__category__title no_decoration_link"
                 >
                   {category.categoryInfo.name}
                 </Link>
-                <div className="carousel__items">
+                <div className="tile__items">
                   {category.children.length
                     ? category.children.map((item) => (
-                        <figure className="carousel__item__figure" key={guid()}>
+                        <figure className="tile__item__figure" key={guid()}>
                           <Link to={`/view/${item.id}`} key={guid()}>
                             <img
                               src={
@@ -43,12 +43,12 @@ export default class Carousel extends Component {
                                 `${server}/api/v1/image/poster?text=${item.title}&extention=jpeg`
                               }
                               key={guid()}
-                              className="carousel__item__poster"
+                              className="tile__item__poster"
                               alt={item.title}
                             />
                           </Link>
                           <Typography
-                            className="carousel__item__title"
+                            className="tile__item__title"
                             key={guid()}
                           >
                             {item.title}
