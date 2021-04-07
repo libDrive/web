@@ -472,19 +472,25 @@ export function PlayerMenu(props) {
         onClose={handleClose}
       >
         <a
-          href={`vlc://${server}/api/v1/redirectdownload/${metadata.name}?a=${auth}&id=${id}`}
+          href={`vlc://${server}/api/v1/redirectdownload/${encodeURI(
+            metadata.name
+          )}?a=${auth}&id=${id}`}
           className="no_decoration_link"
         >
           <MenuItem onClick={handleClose}>VLC</MenuItem>
         </a>
         <a
-          href={`potplayer://${server}/api/v1/redirectdownload/${metadata.name}?a=${auth}&id=${id}`}
+          href={`potplayer://${server}/api/v1/redirectdownload/${encodeURI(
+            metadata.name
+          )}?a=${auth}&id=${id}`}
           className="no_decoration_link"
         >
           <MenuItem onClick={handleClose}>PotPlayer</MenuItem>
         </a>
         <a
-          href={`nplayer-${server}/api/v1/redirectdownload/${metadata.name}?a=${auth}&id=${id}`}
+          href={`nplayer-${server}/api/v1/redirectdownload/${encodeURI(
+            metadata.name
+          )}?a=${auth}&id=${id}`}
           className="no_decoration_link"
         >
           <MenuItem onClick={handleClose}>nPlayer</MenuItem>
@@ -493,7 +499,9 @@ export function PlayerMenu(props) {
         <MenuItem
           onClick={() => {
             navigator.clipboard.writeText(
-              `${server}/api/v1/redirectdownload/${metadata.name}?a=${auth}&id=${id}`
+              `${server}/api/v1/redirectdownload/${encodeURI(
+                metadata.name
+              )}?a=${auth}&id=${id}`
             );
             setMenuAnchorEl(null);
           }}
@@ -501,7 +509,9 @@ export function PlayerMenu(props) {
           Copy
         </MenuItem>
         <a
-          href={`${server}/api/v1/redirectdownload/${metadata.name}?a=${auth}&id=${id}`}
+          href={`${server}/api/v1/redirectdownload/${encodeURI(
+            metadata.name
+          )}?a=${auth}&id=${id}`}
           className="no_decoration_link"
           target="_blank"
         >
@@ -568,10 +578,14 @@ export function ChildrenMenu(props) {
 export function PlaylistMenu(props) {
   const handleClick = (props) => {
     let { auth, metadata, server } = props.props;
-    let m3u8 = "#EXTM3U\n";
+    let m3u8 = `#EXTM3U\n#EXTENC: UTF-8\n#PLAYLIST: ${metadata.name}\n`;
 
-    for (var i in metadata.children) {
-      m3u8 += `#EXTINF:0, ${metadata.children[i].name}\n${server}/api/v1/redirectdownload/${metadata.children[i].name}?a=${auth}&id=${metadata.children[i].id}\n`;
+    for (var i = 0; i < metadata.children.length; i++) {
+      m3u8 += `#EXTINF:0, ${
+        metadata.children[i].name
+      }\n${server}/api/v1/redirectdownload/${encodeURI(
+        metadata.children[i].name
+      )}?a=${auth}&id=${metadata.children[i].id}\n`;
     }
 
     var element = document.createElement("a");
