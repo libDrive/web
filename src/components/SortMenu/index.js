@@ -2,46 +2,39 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-import { Button, Menu, MenuItem } from "@material-ui/core";
+import { FormControl, Select, InputLabel, MenuItem } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
 
 import { guid } from "../../components";
 
 import "./index.css";
 
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
+
 export default function SortMenu(props) {
-  const [menuAnchorEl, setMenuAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setMenuAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setMenuAnchorEl(null);
-  };
+  const classes = useStyles();
 
   let { thisprops } = props.props;
 
   return (
     <div className="SortMenu">
       <div className="sort__container">
-        <Button
-          aria-controls="sort-menu"
-          aria-haspopup="true"
-          onClick={handleClick}
-          variant="outlined"
-          color="primary"
-        >
-          Sort
-        </Button>
-        <Menu
-          id="sort-menu"
-          anchorEl={menuAnchorEl}
-          keepMounted
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          transformOrigin={{ vertical: "top", horizontal: "center" }}
-          open={Boolean(menuAnchorEl)}
-          onClose={handleClose}
-        >
+        <FormControl variant="outlined" className={classes.formControl}>
+          <InputLabel id="sort-menu-label">Sort</InputLabel>
+          <Select
+            labelId="sort-menu-label"
+            id="sort-menu"
+            value=""
+            label="Sort"
+          >
           <Link
             to={{
               pathname: thisprops.location.pathname,
@@ -132,7 +125,8 @@ export default function SortMenu(props) {
           >
             <MenuItem>Random</MenuItem>
           </Link>
-        </Menu>
+          </Select>
+        </FormControl>
       </div>
     </div>
   );
