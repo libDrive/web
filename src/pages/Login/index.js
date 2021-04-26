@@ -61,22 +61,6 @@ class Login extends Component {
     this.dismissError = this.dismissError.bind(this);
   }
 
-  componentDidMount() {
-    axios
-      .get(`${window.location.origin}/api/v1/auth?rules=signup`)
-      .then((response) => {
-        if (response.status === 200) {
-          localStorage.setItem("auth", "0");
-          localStorage.setItem("server", window.location.origin);
-          sessionStorage.setItem("auth", "0");
-          sessionStorage.setItem("server", window.location.origin);
-          this.props.history.push(response.data.success.content);
-        } else if (response.status === 202) {
-          this.setState({ signup: true });
-        }
-      });
-  }
-
   dismissError() {
     this.setState({ error: "" });
   }
@@ -100,8 +84,10 @@ class Login extends Component {
           sessionStorage.setItem("auth", "0");
           sessionStorage.setItem("server", tempServer);
           this.props.history.push(data.content);
-        } else if (data.code === 202) {
+        } else if (data.content === true) {
           this.setState({ signup: true, page: true });
+        } else if (data.content === false) {
+          this.setState({ signup: false, page: true });
         }
       })
       .catch((error) => {
