@@ -39,8 +39,12 @@ export default class CategoryBrowse extends Component {
 
   componentDidMount() {
     let { auth, category, range, server, sort } = this.state;
-    let url = `${server}/api/v1/metadata?a=${auth}&c=${category}&r=${range}&s=${sort}`;
 
+    if (!auth || !server) {
+      this.props.history.push("/logout");
+    }
+
+    let url = `${server}/api/v1/metadata?a=${auth}&c=${category}&r=${range}&s=${sort}`;
     axios
       .get(url)
       .then((response) =>

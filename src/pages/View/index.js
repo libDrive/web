@@ -34,6 +34,12 @@ export default class View extends Component {
   }
 
   componentDidMount() {
+    let { auth, server } = this.state;
+
+    if (!auth || !server) {
+      this.props.history.push("/logout");
+    }
+
     document.documentElement.style.setProperty(
       "--plyr-color-main",
       theme.palette.primary.main
