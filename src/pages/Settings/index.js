@@ -279,34 +279,25 @@ export class Settings extends Component {
         >
           <div style={{ margin: "30px" }}>
             <Button
-              style={{ marginRight: "20px" }}
-              fullWidth
-              variant="contained"
-              color="secondary"
-              className={classes.submit}
-              target="_blank"
-              href="https://libdrive-config.netlify.app/"
-            >
-              Create Config
-            </Button>
-            <Button
+              style={{ margin: "10px" }}
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
             >
-              Submit
+              Submit Config
             </Button>
+            <br />
             <Button
-              style={{ marginLeft: "20px" }}
+              style={{ margin: "10px" }}
               fullWidth
               variant="contained"
-              color="secondary"
+              color="primary"
               className={classes.submit}
               onClick={this.handleRestart}
             >
-              Restart
+              Restart Server
             </Button>
           </div>
         </form>
