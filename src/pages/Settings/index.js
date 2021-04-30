@@ -47,6 +47,7 @@ export class Settings extends Component {
 
     this.dismissError = this.dismissError.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleRestart = this.handleRestart.bind(this);
   }
 
@@ -157,6 +158,8 @@ export class Settings extends Component {
     evt.preventDefault();
     let { secret, server } = this.state;
 
+    console.log(this.state.postConfig)
+
     axios
       .post(`${server}/api/v1/config?secret=${secret}`, this.state.postConfig)
       .then((response) => {
@@ -218,6 +221,17 @@ export class Settings extends Component {
       });
   }
 
+  handleChange(evt) {
+    try {
+      var value = JSON.parse(evt.json);
+    } catch (err) {
+      var value = this.state.postConfig;
+    }
+    this.setState({
+      postConfig: value,
+    });
+  }
+
   render() {
     let { config, isLoaded } = this.state;
     const { classes } = this.props;
@@ -229,6 +243,9 @@ export class Settings extends Component {
           <JSONInput
             id="config-box"
             placeholder={config}
+            waitAfterKeyPress={1000}
+            value={this.state.postConfig}
+            onChange={this.handleChange}
             locale={locale}
             height="500px"
             width="100%"
