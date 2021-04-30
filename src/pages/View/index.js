@@ -363,9 +363,16 @@ export class TVSView extends Component {
 
   render() {
     let { auth, metadata, server, sources } = this.state;
+
+    var defaultQuality;
+    if (sources.length > 1) {
+      defaultQuality = 1;
+    } else {
+      defaultQuality = 0;
+    }
+
     let hash =
       parseInt(queryString.parse(this.props.props.location.search).q) || 0;
-
     function isHash(n, hash) {
       if (n === hash) {
         return "pls-playing";
@@ -393,7 +400,7 @@ export class TVSView extends Component {
             options={{
               video: {
                 quality: sources,
-                defaultQuality: 0,
+                defaultQuality: defaultQuality,
                 pic: `${server}/api/v1/image/thumbnail?id=${metadata.children[hash].id}`,
               },
               preload: "auto",
