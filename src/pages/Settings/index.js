@@ -3,8 +3,7 @@ import React, { Component } from "react";
 import { Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
-import JSONInput from "react-json-editor-ajrm";
-import locale from "react-json-editor-ajrm/locale/en";
+import ReactJson from "react-json-view";
 
 import ClipLoader from "react-spinners/ClipLoader";
 
@@ -158,7 +157,7 @@ export class Settings extends Component {
     evt.preventDefault();
     let { secret, server } = this.state;
 
-    console.log(this.state.postConfig)
+    console.log(this.state.postConfig);
 
     axios
       .post(`${server}/api/v1/config?secret=${secret}`, this.state.postConfig)
@@ -222,14 +221,11 @@ export class Settings extends Component {
   }
 
   handleChange(evt) {
-    try {
-      var value = JSON.parse(evt.json);
-    } catch (err) {
-      var value = this.state.postConfig;
+    if (evt.existing_src !== evt.updated_src) {
+      this.setState({
+        postConfig: evt.updated_src,
+      });
     }
-    this.setState({
-      postConfig: value,
-    });
   }
 
   render() {
@@ -239,16 +235,40 @@ export class Settings extends Component {
     return isLoaded ? (
       <div className="Settings">
         <Nav />
-        <div style={{ margin: "auto", marginTop: "50px", width: "50%" }}>
-          <JSONInput
-            id="config-box"
-            placeholder={config}
-            waitAfterKeyPress={1000}
-            value={this.state.postConfig}
-            onChange={this.handleChange}
-            locale={locale}
-            height="500px"
-            width="100%"
+        <div
+          style={{
+            margin: "auto",
+            marginTop: "50px",
+            width: "80%",
+            maxWidth: "1500px",
+          }}
+        >
+          <ReactJson
+            src={config}
+            name="config"
+            onEdit={this.handleChange}
+            onAdd={this.handleChange}
+            onDelete={this.handleChange}
+            collapseStringsAfterLength={100}
+            sortKeys={true}
+            theme={{
+              base00: theme.palette.background.paper,
+              base01: theme.palette.success.main,
+              base02: theme.palette.success.main,
+              base03: theme.palette.text.primary,
+              base04: theme.palette.text.primary,
+              base05: theme.palette.text.primary,
+              base06: theme.palette.text.primary,
+              base07: theme.palette.text.primary,
+              base08: theme.palette.text.primary,
+              base09: theme.palette.secondary.main,
+              base0A: theme.palette.secondary.main,
+              base0B: theme.palette.secondary.main,
+              base0C: theme.palette.secondary.main,
+              base0D: theme.palette.secondary.main,
+              base0E: theme.palette.secondary.main,
+              base0F: theme.palette.secondary.main,
+            }}
           />
         </div>
         <form
