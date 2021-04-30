@@ -93,7 +93,7 @@ const draculaTheme = createMuiTheme({
   },
 });
 
-const nord = createMuiTheme({
+const nordTheme = createMuiTheme({
   palette: {
     type: "dark",
     primary: {
@@ -145,7 +145,7 @@ if (
   localStorage.getItem("theme") === "nord" ||
   sessionStorage.getItem("theme") === "nord"
 ) {
-  theme = nord;
+  theme = nordTheme;
 } else {
   theme = darkTheme;
   localStorage.setItem("theme", "dark");
