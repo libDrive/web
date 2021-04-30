@@ -1,17 +1,10 @@
 import React, { Component } from "react";
 
-import {
-  Button,
-  IconButton,
-  MenuItem,
-  Typography,
-  TextField,
-} from "@material-ui/core";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-import RemoveCircleOutlineIcon from "@material-ui/icons/RemoveCircleOutline";
+import { Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
-import AccountCircle from "@material-ui/icons/AccountCircle";
+import JSONInput from "react-json-editor-ajrm";
+import locale from "react-json-editor-ajrm/locale/en";
 
 import ClipLoader from "react-spinners/ClipLoader";
 
@@ -20,7 +13,7 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { Footer, guid, Nav, theme } from "../../components";
+import { Footer, Nav, theme } from "../../components";
 
 const styles = (theme) => ({
   Form: {
@@ -52,31 +45,6 @@ export class Settings extends Component {
         sessionStorage.getItem("server") || localStorage.getItem("server"),
     };
 
-    this.handleAccessTokenChange = this.handleAccessTokenChange.bind(this);
-    this.handleClientIDChange = this.handleClientIDChange.bind(this);
-    this.handleClientSecretChange = this.handleClientSecretChange.bind(this);
-    this.handleRefreshTokenChange = this.handleRefreshTokenChange.bind(this);
-    this.handleCategoryTypeChange = this.handleCategoryTypeChange.bind(this);
-    this.handleCategoryNameChange = this.handleCategoryNameChange.bind(this);
-    this.handleCategoryIdChange = this.handleCategoryIdChange.bind(this);
-    this.handleAddCategory = this.handleAddCategory.bind(this);
-    this.handleRemoveCategory = this.handleRemoveCategory.bind(this);
-    this.handleAccountUsernameChange = this.handleAccountUsernameChange.bind(
-      this
-    );
-    this.handleAccountPasswordChange = this.handleAccountPasswordChange.bind(
-      this
-    );
-    this.handleAccountPicChange = this.handleAccountPicChange.bind(this);
-    this.handleAddAccount = this.handleAddAccount.bind(this);
-    this.handleRemoveAccount = this.handleRemoveAccount.bind(this);
-    this.handleSecretChange = this.handleSecretChange.bind(this);
-    this.handleTMDBAPIKeyChange = this.handleTMDBAPIKeyChange.bind(this);
-    this.handleCloudflareChange = this.handleCloudflareChange.bind(this);
-    this.handleBuildIntervalChange = this.handleBuildIntervalChange.bind(this);
-    this.handleTranscodedChange = this.handleTranscodedChange.bind(this);
-    this.handleSignupChange = this.handleSignupChange.bind(this);
-    this.handleAuthChange = this.handleAuthChange.bind(this);
     this.dismissError = this.dismissError.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRestart = this.handleRestart.bind(this);
@@ -189,16 +157,6 @@ export class Settings extends Component {
     evt.preventDefault();
     let { secret, server } = this.state;
 
-    if (Object.keys(this.state.postConfig).length !== 14) {
-      Swal.fire({
-        title: "Error!",
-        text: "1 or more fields weren't filled out.",
-        icon: "error",
-        confirmButtonText: "OK",
-      });
-      return;
-    }
-
     axios
       .post(`${server}/api/v1/config?secret=${secret}`, this.state.postConfig)
       .then((response) => {
@@ -260,209 +218,6 @@ export class Settings extends Component {
       });
   }
 
-  handleAccessTokenChange(evt) {
-    var value = evt.target.value;
-    var configCopy = this.state.postConfig;
-    configCopy.access_token = value;
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
-  handleClientIDChange(evt) {
-    var value = evt.target.value;
-    var configCopy = this.state.postConfig;
-    configCopy.client_id = value;
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
-  handleClientSecretChange(evt) {
-    var value = evt.target.value;
-    var configCopy = this.state.postConfig;
-    configCopy.client_secret = value;
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
-  handleRefreshTokenChange(evt) {
-    var value = evt.target.value;
-    var configCopy = this.state.postConfig;
-    configCopy.refresh_token = value;
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
-  handleCategoryTypeChange(evt) {
-    var value = evt.target.value.split("_")[0];
-    var n = evt.target.value.split("_")[1];
-    var configCopy = this.state.postConfig;
-    configCopy.category_list[n].type = value;
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
-  handleCategoryNameChange(evt) {
-    var value = evt.target.value;
-    var n = evt.target.id.split("_")[1];
-    var configCopy = this.state.postConfig;
-    configCopy.category_list[n].name = value;
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
-  handleCategoryIdChange(evt) {
-    var value = evt.target.value;
-    var n = evt.target.id.split("_")[1];
-    var configCopy = this.state.postConfig;
-    configCopy.category_list[n].id = value;
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
-  handleAddCategory(evt) {
-    var configCopy = this.state.postConfig;
-    configCopy.category_list.push({ type: "", name: "", id: "" });
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
-  handleRemoveCategory(evt) {
-    var n = evt.target.id.split("_")[1];
-    var configCopy = this.state.postConfig;
-    configCopy.category_list.splice(n, 1);
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
-  handleAccountUsernameChange(evt) {
-    var value = evt.target.value;
-    var n = evt.target.id.split("_")[1];
-    var configCopy = this.state.postConfig;
-    configCopy.account_list[n].username = value;
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
-  handleAccountPasswordChange(evt) {
-    var value = evt.target.value;
-    var n = evt.target.id.split("_")[1];
-    var configCopy = this.state.postConfig;
-    configCopy.account_list[n].password = value;
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
-  handleAccountPicChange(evt) {
-    var value = evt.target.value;
-    var n = evt.target.id.split("_")[1];
-    var configCopy = this.state.postConfig;
-    configCopy.account_list[n].pic = value;
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
-  handleAddAccount(evt) {
-    var configCopy = this.state.postConfig;
-    var text = "";
-    var chars = "abcdefghijklmnopqrstuvwxyz0123456789";
-    for (var i = 0; i < 50; i++) {
-      text += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    configCopy.account_list.push({
-      username: "",
-      password: "",
-      pic: "",
-      auth: text,
-    });
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
-  handleRemoveAccount(evt) {
-    var n = evt.target.id.split("_")[1];
-    var configCopy = this.state.postConfig;
-    configCopy.account_list.splice(n, 1);
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
-  handleSecretChange(evt) {
-    var value = evt.target.value;
-    var configCopy = this.state.postConfig;
-    configCopy.secret_key = value;
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
-  handleTMDBAPIKeyChange(evt) {
-    var value = evt.target.value;
-    var configCopy = this.state.postConfig;
-    configCopy.tmdb_api_key = value;
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
-  handleCloudflareChange(evt) {
-    var value = evt.target.value;
-    var configCopy = this.state.postConfig;
-    configCopy.cloudflare = value;
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
-  handleBuildIntervalChange(evt) {
-    var value = parseInt(evt.target.value);
-    var configCopy = this.state.postConfig;
-    configCopy.build_interval = value;
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
-  handleTranscodedChange(evt) {
-    var value = evt.target.value;
-    var configCopy = this.state.postConfig;
-    configCopy.transcoded = value;
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
-  handleSignupChange(evt) {
-    var value = evt.target.value;
-    var configCopy = this.state.postConfig;
-    configCopy.signup = value;
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
-  handleAuthChange(evt) {
-    var value = evt.target.value;
-    var configCopy = this.state.postConfig;
-    configCopy.auth = value;
-    this.setState({
-      postConfig: configCopy,
-    });
-  }
-
   render() {
     let { config, isLoaded } = this.state;
     const { classes } = this.props;
@@ -470,292 +225,21 @@ export class Settings extends Component {
     return isLoaded ? (
       <div className="Settings">
         <Nav />
+        <div style={{ margin: "auto", marginTop: "50px", width: "50%" }}>
+          <JSONInput
+            id="config-box"
+            placeholder={config}
+            locale={locale}
+            height="500px"
+            width="100%"
+          />
+        </div>
         <form
           className={classes.Form}
           noValidate
           autoComplete="off"
           onSubmit={this.handleSubmit}
         >
-          <Typography variant="h3">Google Credentials</Typography>
-          <TextField
-            className="TextField"
-            id="access_token"
-            label="Access Token"
-            type="text"
-            variant="outlined"
-            value={this.state.postConfig.access_token}
-            onChange={this.handleAccessTokenChange}
-            required
-          />
-          <TextField
-            className="TextField"
-            id="client_id"
-            label="Client ID"
-            type="text"
-            variant="outlined"
-            value={this.state.postConfig.client_id}
-            onChange={this.handleClientIDChange}
-            required
-          />
-          <TextField
-            className="TextField"
-            id="client_secret"
-            label="Client Secret"
-            type="text"
-            variant="outlined"
-            value={this.state.postConfig.client_secret}
-            onChange={this.handleClientSecretChange}
-            required
-          />
-          <TextField
-            className="TextField"
-            id="refresh_token"
-            label="Refresh Token"
-            type="text"
-            variant="outlined"
-            value={this.state.postConfig.refresh_token}
-            onChange={this.handleRefreshTokenChange}
-            required
-          />
-          <TextField
-            className="TextField"
-            id="token_expiry"
-            label="Token Expiry"
-            type="text"
-            variant="outlined"
-            value={this.state.postConfig.token_expiry}
-            disabled
-          />
-          <br />
-          <Typography variant="h3">Categories</Typography>
-          {config.category_list.length ? (
-            config.category_list.map((category, n) => (
-              <div style={{ margin: "30px" }} key={n}>
-                <TextField
-                  className="TextField"
-                  id={`category-type_${n}`}
-                  select
-                  label="Select Type"
-                  variant="outlined"
-                  value={`${this.state.postConfig.category_list[n].type}_${n}`}
-                  onChange={this.handleCategoryTypeChange}
-                >
-                  <MenuItem key={guid()} value={`Movies_${n}`}>
-                    Movies
-                  </MenuItem>
-                  <MenuItem key={guid()} value={`TV Shows_${n}`}>
-                    TV Shows
-                  </MenuItem>
-                </TextField>
-                <TextField
-                  className="TextField"
-                  id={`category-name_${n}`}
-                  label="Name"
-                  variant="outlined"
-                  value={this.state.postConfig.category_list[n].name}
-                  onChange={this.handleCategoryNameChange}
-                  required
-                />
-                <TextField
-                  className="TextField"
-                  id={`category-id_${n}`}
-                  label="Folder ID"
-                  variant="outlined"
-                  value={this.state.postConfig.category_list[n].id}
-                  onChange={this.handleCategoryIdChange}
-                  required
-                />
-                <br />
-                <IconButton
-                  aria-label="remove"
-                  id={`category-remove_${n}`}
-                  onClick={this.handleRemoveCategory}
-                >
-                  <RemoveCircleOutlineIcon id={`category-remove_${n}`} />
-                </IconButton>
-                <IconButton aria-label="add" onClick={this.handleAddCategory}>
-                  <AddCircleOutlineIcon id={`category-add_${n}`} />
-                </IconButton>
-              </div>
-            ))
-          ) : (
-            <IconButton aria-label="add" onClick={this.handleAddCategory}>
-              <AddCircleOutlineIcon />
-            </IconButton>
-          )}
-          <Typography variant="h3">Accounts</Typography>
-          {config.account_list.length ? (
-            config.account_list.map((account, n) => (
-              <div style={{ margin: "30px" }} key={n}>
-                <TextField
-                  className="TextField"
-                  id={`account-username_${n}`}
-                  label="Username"
-                  variant="outlined"
-                  value={this.state.postConfig.account_list[n].username}
-                  onChange={this.handleAccountUsernameChange}
-                  required
-                />
-                <TextField
-                  className="TextField"
-                  id={`account-password_${n}`}
-                  label="Password"
-                  type="password"
-                  variant="outlined"
-                  value={this.state.postConfig.account_list[n].password}
-                  onChange={this.handleAccountPasswordChange}
-                  required
-                />
-                <TextField
-                  className="TextField"
-                  id={`account-pic_${n}`}
-                  label="Picture"
-                  variant="outlined"
-                  value={this.state.postConfig.account_list[n].pic}
-                  onChange={this.handleAccountPicChange}
-                />
-                <TextField
-                  className="TextField"
-                  id={`account-auth_${n}`}
-                  label="Auth"
-                  variant="outlined"
-                  value={this.state.postConfig.account_list[n].auth}
-                  disabled
-                />
-                <br />
-                <IconButton
-                  aria-label="remove"
-                  id={`account-remove_${n}`}
-                  onClick={this.handleRemoveAccount}
-                >
-                  <RemoveCircleOutlineIcon id={`account-remove_${n}`} />
-                </IconButton>
-                <IconButton aria-label="add" onClick={this.handleAddAccount}>
-                  <AddCircleOutlineIcon id={`account-add_${n}`} />
-                </IconButton>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  {(() => {
-                    if (config.account_list[n].pic.length > 0) {
-                      return (
-                        <img
-                          src={config.account_list[n].pic}
-                          width="32px"
-                          alt="profile-pic"
-                        />
-                      );
-                    } else {
-                      return <AccountCircle style={{ fontSize: "32px" }} />;
-                    }
-                  })()}
-                </div>
-              </div>
-            ))
-          ) : (
-            <IconButton aria-label="add" onClick={this.handleAddAccount}>
-              <AddCircleOutlineIcon />
-            </IconButton>
-          )}
-          <Typography variant="h3">Extras</Typography>
-          <div style={{ margin: "30px" }}>
-            <TextField
-              className="TextField"
-              id="secret_key"
-              label="Secret Key"
-              type="password"
-              variant="outlined"
-              value={this.state.postConfig.secret_key}
-              onChange={this.handleSecretChange}
-              required
-            />
-            <TextField
-              className="TextField"
-              id="tmbd_api_key"
-              label="TMDB API Key"
-              type="text"
-              variant="outlined"
-              value={this.state.postConfig.tmdb_api_key}
-              onChange={this.handleTMDBAPIKeyChange}
-              required
-            />
-            <TextField
-              className="TextField"
-              id="cloudflare"
-              label="Cloudflare"
-              type="text"
-              variant="outlined"
-              value={this.state.postConfig.cloudflare}
-              onChange={this.handleCloudflareChange}
-            />
-            <TextField
-              className="TextField"
-              id="build_interval"
-              label="Build Interval"
-              type="number"
-              variant="outlined"
-              value={this.state.postConfig.build_interval}
-              onChange={this.handleBuildIntervalChange}
-              required
-            />
-            <br />
-            <TextField
-              className="TextField"
-              id="transcoded"
-              select
-              label="Transcoded"
-              variant="outlined"
-              value={this.state.postConfig.transcoded}
-              onChange={this.handleTranscodedChange}
-              required
-            >
-              <MenuItem key={guid()} value={true}>
-                True
-              </MenuItem>
-              <MenuItem key={guid()} value={false}>
-                False
-              </MenuItem>
-            </TextField>
-            <TextField
-              className="TextField"
-              id="signup"
-              select
-              label="Sign Up"
-              variant="outlined"
-              value={this.state.postConfig.signup}
-              onChange={this.handleSignupChange}
-              required
-            >
-              <MenuItem key={guid()} value={true}>
-                True
-              </MenuItem>
-              <MenuItem key={guid()} value={false}>
-                False
-              </MenuItem>
-            </TextField>
-            <TextField
-              className="TextField"
-              id="auth"
-              select
-              label="Authentication"
-              variant="outlined"
-              value={this.state.postConfig.auth}
-              onChange={this.handleAuthChange}
-              required
-            >
-              <MenuItem key={guid()} value={true}>
-                True
-              </MenuItem>
-              <MenuItem key={guid()} value={false}>
-                False
-              </MenuItem>
-            </TextField>
-          </div>
-          <br />
           <div style={{ margin: "30px" }}>
             <Button
               style={{ marginRight: "20px" }}

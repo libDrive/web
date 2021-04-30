@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.1.1",
     "axios": "^0.21.1",
     "react-dplayer": "^0.4.2",
+    "react-json-editor-ajrm": "^2.5.13",
     "react-router-dom": "^5.2.0",
     "react-spinners": "^0.10.6",
     "sweetalert2": "^10.15.7"
@@ -39,16 +40,16 @@
   "author": "Elias Benbourenane <eliasbenbourenane@gmail.com> (https://eliasbenb.cf)",
   "funding": [
     {
-      "type" : "ko-fi",
-      "url" : "https://ko-fi.com/eliasbenb"
+      "type": "ko-fi",
+      "url": "https://ko-fi.com/eliasbenb"
     },
     {
-      "type" : "paypal",
-      "url" : "http://paypal.me/eliasbenb"
+      "type": "paypal",
+      "url": "http://paypal.me/eliasbenb"
     },
     {
-      "type" : "bitcoin",
-      "url" : "https://bit.co.in/eliasbenb"
+      "type": "bitcoin",
+      "url": "https://bit.co.in/eliasbenb"
     }
   ],
   "license": "MIT",
