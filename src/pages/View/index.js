@@ -231,6 +231,14 @@ export class MovieView extends Component {
   constructor(props) {
     super(props);
     this.state = props.state;
+    this.prettyDate = this.prettyDate.bind(this);
+  }
+
+  prettyDate() {
+    let old_date = this.state.metadata.releaseDate;
+    let date_comp = old_date.split("-");
+    let date = new Date(date_comp[0], date_comp[1], date_comp[2]);
+    return date.toDateString();
   }
 
   render() {
@@ -295,6 +303,11 @@ export class MovieView extends Component {
                 readOnly
               />
             </div>
+            <div className="release">
+              <Typography variant="body2">
+                {this.prettyDate()}
+              </Typography>
+            </div>
             <PlayerMenu props={this.state} />
           </div>
         </div>
@@ -307,6 +320,14 @@ export class TVBView extends Component {
   constructor(props) {
     super(props);
     this.state = props.state;
+    this.prettyDate = this.prettyDate.bind(this);
+  }
+
+  prettyDate() {
+    let old_date = this.state.metadata.releaseDate;
+    let date_comp = old_date.split("-");
+    let date = new Date(date_comp[0], date_comp[1], date_comp[2]);
+    return date.toDateString();
   }
 
   render() {
@@ -342,6 +363,11 @@ export class TVBView extends Component {
                 max={10}
                 readOnly
               />
+            </div>
+            <div className="release">
+              <Typography variant="body2">
+                {this.prettyDate()}
+              </Typography>
             </div>
             <div className="buttons__container">
               <div className="button">
