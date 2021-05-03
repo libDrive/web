@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Button } from "@material-ui/core";
+import { Button, Switch } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 import ReactJson from "react-json-view";
@@ -48,6 +48,7 @@ export class Settings extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleRestart = this.handleRestart.bind(this);
+    this.handleKillSwitch = this.handleKillSwitch.bind(this);
   }
 
   componentDidMount() {
@@ -157,8 +158,6 @@ export class Settings extends Component {
     evt.preventDefault();
     let { secret, server } = this.state;
 
-    console.log(this.state.postConfig);
-
     axios
       .post(`${server}/api/v1/config?secret=${secret}`, this.state.postConfig)
       .then((response) => {
@@ -226,6 +225,14 @@ export class Settings extends Component {
         postConfig: evt.updated_src,
       });
     }
+  }
+
+  handleKillSwitch(evt) {
+    console.log(evt);
+    let config = this.state.postConfig;
+    config.kill_switch = evt.target.checked;
+    this.setState({ postConfig: config });
+    this.handleSubmit(evt);
   }
 
   render() {
@@ -299,6 +306,17 @@ export class Settings extends Component {
             >
               Restart Server
             </Button>
+            <br />
+            <p style={{fontSize: "16px", marginTop: "10px", marginBotoom: "5px"}}>
+              Kill Switch
+            </p>
+            <Switch
+              checked={this.state.postConfig.kill_switch}
+              onChange={this.handleKillSwitch}
+              color="primary"
+              name="checkedB"
+              inputProps={{ "aria-label": "primary checkbox" }}
+            />
           </div>
         </form>
         <Footer />
