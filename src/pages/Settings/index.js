@@ -253,8 +253,8 @@ export class Settings extends Component {
             sortKeys={true}
             theme={{
               base00: theme.palette.background.paper,
-              base01: theme.palette.success.main,
-              base02: theme.palette.success.main,
+              base01: theme.palette.background.default,
+              base02: theme.palette.error.main,
               base03: theme.palette.text.primary,
               base04: theme.palette.text.primary,
               base05: theme.palette.text.primary,
