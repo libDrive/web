@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 
-import ClipLoader from "react-spinners/ClipLoader";
+import { CircularProgress } from "@material-ui/core";
 
 import Swal from "sweetalert2/src/sweetalert2.js";
 import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { Carousel, Footer, Nav, theme } from "../../components";
+import { Carousel, Footer, Nav } from "../../components";
 
 export default class Browse extends Component {
   constructor(props) {
@@ -103,7 +103,7 @@ export default class Browse extends Component {
       </div>
     ) : (
       <div className="Loading">
-        <ClipLoader color={theme.palette.primary.main} size={75} />
+        <CircularProgress />
       </div>
     );
   }

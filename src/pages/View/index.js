@@ -2,10 +2,8 @@ import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
 
-import { Button, Divider, Menu, MenuItem, Typography } from "@material-ui/core";
+import { Button, CircularProgress, Divider, Menu, MenuItem, Typography } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
-
-import ClipLoader from "react-spinners/ClipLoader";
 
 import Swal from "sweetalert2/src/sweetalert2.js";
 import "@sweetalert2/theme-dark/dark.css";
@@ -221,7 +219,7 @@ export default class View extends Component {
       </div>
     ) : (
       <div className="Loading">
-        <ClipLoader color={theme.palette.primary.main} size={75} />
+        <CircularProgress />
       </div>
     );
   }

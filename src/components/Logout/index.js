@@ -2,9 +2,9 @@ import React, { Component } from "react";
 
 import { Redirect } from "react-router-dom";
 
-import ClipLoader from "react-spinners/ClipLoader";
+import { CircularProgress } from "@material-ui/core";
 
-import { guid, theme } from "../../components";
+import { guid } from "../../components";
 
 export default class Logout extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ export default class Logout extends Component {
       <Redirect to="/login" key={guid()} />
     ) : (
       <div className="Loading">
-        <ClipLoader color={theme.palette.primary.main} size={75} />
+        <CircularProgress />
       </div>
     );
   }

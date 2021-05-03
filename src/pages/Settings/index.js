@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 
-import { Button, Switch } from "@material-ui/core";
+import { Button, CircularProgress, Switch } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 import ReactJson from "react-json-view";
-
-import ClipLoader from "react-spinners/ClipLoader";
 
 import Swal from "sweetalert2/src/sweetalert2.js";
 import "@sweetalert2/theme-dark/dark.css";
@@ -323,7 +321,7 @@ export class Settings extends Component {
       </div>
     ) : (
       <div className="Loading">
-        <ClipLoader color={theme.palette.primary.main} size={75} />
+        <CircularProgress />
       </div>
     );
   }
