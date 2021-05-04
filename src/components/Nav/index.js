@@ -23,7 +23,7 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { theme, guid } from "../../components";
+import { guid } from "../../components";
 
 export default class Nav extends Component {
   constructor(props) {
@@ -320,8 +320,7 @@ export function AccountMenu(props) {
           } else {
             Swal.fire({
               title: "Error!",
-              text:
-                "Something went wrong while communicating with the server!",
+              text: "Something went wrong while communicating with the server!",
               icon: "error",
               confirmButtonText: "Logout",
               cancelButtonText: "Retry",
