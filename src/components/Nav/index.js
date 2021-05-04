@@ -7,13 +7,18 @@ import {
   Button,
   Divider,
   InputBase,
+  List,
+  ListItem,
+  ListItemText,
   Menu,
   MenuItem,
+  MenuList,
   Toolbar,
   Typography,
 } from "@material-ui/core";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import NotificationsIcon from "@material-ui/icons/Notifications";
 import Brightness6Icon from "@material-ui/icons/Brightness6";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
@@ -31,29 +36,45 @@ export default class Nav extends Component {
     this.state = {
       accounts: {},
       auth: sessionStorage.getItem("auth") || localStorage.getItem("auth"),
-      categories: {},
+      categories: [],
       isLoaded: false,
+      news: [],
       server:
         sessionStorage.getItem("server") || localStorage.getItem("server"),
     };
   }
 
   componentDidMount() {
-    let { auth, server } = this.state;
-    let url = `${server}/api/v1/environment?a=${auth}`;
-
-    axios.get(url).then((response) => {
-      let data = response.data;
-      this.setState({
-        accounts: data.content.account_list,
-        categories: data.content.category_list,
-        isLoaded: true,
-      });
-    });
+    this.fetchData();
   }
 
+  fetchData = async () => {
+    let { auth, server } = this.state;
+
+    await axios
+      .get(`${server}/api/v1/environment?a=${auth}`)
+      .then((response) => {
+        let data = response.data;
+        this.setState({
+          accounts: data.content.account_list,
+          categories: data.content.category_list,
+          isLoaded: true,
+        });
+      });
+
+    await axios
+      .get("https://api.github.com/repos/libDrive/libDrive/releases")
+      .then((response) => {
+        let data = response.data;
+        console.log(data);
+        this.setState({
+          news: data,
+        });
+      });
+  };
+
   render() {
-    let { accounts, categories, isLoaded } = this.state;
+    let { accounts, categories, isLoaded, news } = this.state;
 
     return isLoaded ? (
       <div className="Nav">
@@ -61,6 +82,7 @@ export default class Nav extends Component {
           props={{
             categories: categories,
             accounts: accounts,
+            news: news,
           }}
         />
       </div>
@@ -70,6 +92,7 @@ export default class Nav extends Component {
           props={{
             categories: [],
             accounts: [],
+            news: [],
           }}
         />
       </div>
@@ -175,6 +198,7 @@ export function NavUI(props) {
           <div className={classes.grow} />
           <BrowseMenu props={props.props.categories} />
           <ThemeMenu />
+          <News props={props.props.news} />
           <AccountMenu props={props.props.accounts} />
         </Toolbar>
       </AppBar>
@@ -386,6 +410,61 @@ export function AccountMenu(props) {
         <Link to={"/logout"} className="no_decoration_link">
           <MenuItem onClick={handleClose}>Logout</MenuItem>
         </Link>
+      </Menu>
+    </div>
+  );
+}
+
+export function News(props) {
+  const [menuAnchorEl, setMenuAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setMenuAnchorEl(null);
+  };
+
+  return (
+    <div>
+      <IconButton
+        aria-label="more"
+        aria-controls="news-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        <NotificationsIcon />
+      </IconButton>
+      <Menu
+        id="news-menu"
+        anchorEl={menuAnchorEl}
+        keepMounted
+        open={Boolean(menuAnchorEl)}
+        onClose={handleClose}
+      >
+        <List style={{maxWidth: "500px"}}>
+          {props.props.length
+            ? props.props.slice(0, 3).map((item) => (
+                <ListItem alignItems="flex-start">
+                  <ListItemText
+                    primary={<strong>libDrive {item.tag_name} released!</strong>}
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          component="span"
+                          variant="body2"
+                          color="textPrimary"
+                        >
+                          ibDrive {item.tag_name} was released on {new Date(item.published_at).toDateString()}, click <Link to="{item.html_url}" className="no_decoration_link"><u>here</u></Link> to find out more
+                        </Typography>
+                      </React.Fragment>
+                    }
+                  />
+                </ListItem>
+              ))
+            : null}
+        </List>
       </Menu>
     </div>
   );
