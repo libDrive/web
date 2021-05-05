@@ -50,11 +50,11 @@ const darkTheme = createMuiTheme({
       main: "#4caf50",
     },
     background: {
-      default: "#111111",
-      paper: "#1f1f1f",
+      default: "#131516",
+      paper: "#171819",
     },
     text: {
-      primary: "#ffffff",
+      primary: "#e8e6e3",
     },
     common: {
       main: "#ffffff",
