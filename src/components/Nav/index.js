@@ -456,7 +456,7 @@ export function News(props) {
                           variant="body2"
                           color="textPrimary"
                         >
-                          ibDrive {item.tag_name} was released on {new Date(item.published_at).toDateString()}, click <Link to="{item.html_url}" className="no_decoration_link"><u>here</u></Link> to find out more
+                          libDrive {item.tag_name} was released on {new Date(item.published_at).toDateString()}, click <Link to="{item.html_url}" className="no_decoration_link"><u>here</u></Link> to find out more
                         </Typography>
                       </React.Fragment>
                     }
