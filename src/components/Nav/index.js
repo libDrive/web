@@ -66,7 +66,6 @@ export default class Nav extends Component {
       .get("https://api.github.com/repos/libDrive/libDrive/releases")
       .then((response) => {
         let data = response.data;
-        console.log(data);
         this.setState({
           news: data,
         });
