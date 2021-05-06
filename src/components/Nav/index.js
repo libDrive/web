@@ -443,12 +443,14 @@ export function News(props) {
         open={Boolean(menuAnchorEl)}
         onClose={handleClose}
       >
-        <List style={{maxWidth: "500px"}}>
+        <List style={{ maxWidth: "500px" }}>
           {props.props.length
             ? props.props.slice(0, 3).map((item) => (
                 <ListItem alignItems="flex-start">
                   <ListItemText
-                    primary={<strong>libDrive {item.tag_name} released!</strong>}
+                    primary={
+                      <strong>libDrive {item.tag_name} released!</strong>
+                    }
                     secondary={
                       <React.Fragment>
                         <Typography
@@ -456,7 +458,15 @@ export function News(props) {
                           variant="body2"
                           color="textPrimary"
                         >
-                          libDrive {item.tag_name} was released on {new Date(item.published_at).toDateString()}, click <Link to="{item.html_url}" className="no_decoration_link"><u>here</u></Link> to find out more
+                          libDrive {item.tag_name} was released on{" "}
+                          {new Date(item.published_at).toDateString()}, click{" "}
+                          <Link
+                            to={item.html_url}
+                            className="no_decoration_link"
+                          >
+                            <u>here</u>
+                          </Link>{" "}
+                          to find out more
                         </Typography>
                       </React.Fragment>
                     }
