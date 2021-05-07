@@ -61,7 +61,7 @@ export class Settings extends Component {
           this.setState({
             config: response.data.content,
             isLoaded: true,
-            postConfig: response.data.content,
+            config: response.data.content,
             tempSecret: response.data.content.secret_key,
           })
         )
@@ -157,7 +157,7 @@ export class Settings extends Component {
     let { secret, server } = this.state;
 
     axios
-      .post(`${server}/api/v1/config?secret=${secret}`, this.state.postConfig)
+      .post(`${server}/api/v1/config?secret=${secret}`, this.state.config)
       .then((response) => {
         Swal.fire({
           title: "Success!",
@@ -220,16 +220,15 @@ export class Settings extends Component {
   handleChange(evt) {
     if (evt.existing_src !== evt.updated_src) {
       this.setState({
-        postConfig: evt.updated_src,
+        config: evt.updated_src,
       });
     }
   }
 
   handleKillSwitch(evt) {
-    console.log(evt);
-    let config = this.state.postConfig;
+    let { config } = this.state;
     config.kill_switch = evt.target.checked;
-    this.setState({ postConfig: config });
+    this.setState({ config: config });
     this.handleSubmit(evt);
   }
 
@@ -309,7 +308,7 @@ export class Settings extends Component {
               Kill Switch
             </p>
             <Switch
-              checked={this.state.postConfig.kill_switch}
+              checked={this.state.config.kill_switch}
               onChange={this.handleKillSwitch}
               color="primary"
               name="checkedB"
