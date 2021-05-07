@@ -445,7 +445,7 @@ export function News(props) {
         <List style={{ maxWidth: "500px" }}>
           {props.props.length
             ? props.props.slice(0, 3).map((item) => (
-                <ListItem alignItems="flex-start">
+                <ListItem key={guid()} alignItems="flex-start">
                   <ListItemText
                     primary={
                       <strong>libDrive {item.tag_name} released!</strong>
@@ -459,12 +459,13 @@ export function News(props) {
                         >
                           libDrive {item.tag_name} was released on{" "}
                           {new Date(item.published_at).toDateString()}, click{" "}
-                          <Link
-                            to={item.html_url}
+                          <a
+                            href={item.html_url}
+                            target="_blank"
                             className="no_decoration_link"
                           >
                             <u>here</u>
-                          </Link>{" "}
+                          </a>{" "}
                           to find out more
                         </Typography>
                       </React.Fragment>
