@@ -12,7 +12,6 @@ import {
   ListItemText,
   Menu,
   MenuItem,
-  MenuList,
   Toolbar,
   Typography,
 } from "@material-ui/core";
