@@ -132,7 +132,7 @@ const styles = makeStyles((theme) => ({
     padding: theme.spacing(0, 2),
     height: "100%",
     position: "absolute",
-    pointerEvents: "none",
+    zIndex: 10,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -181,9 +181,9 @@ export function NavUI(props) {
             </Typography>
           </Link>
           <form className={classes.search} onSubmit={searchSubmit}>
-            <div className={classes.searchIcon}>
+            <IconButton onClick={searchSubmit} className={classes.searchIcon}>
               <SearchIcon />
-            </div>
+            </IconButton>
             <InputBase
               placeholder="Search…"
               classes={{
