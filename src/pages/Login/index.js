@@ -241,7 +241,7 @@ class Login extends Component {
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography variant="h5">
             Sign in
           </Typography>
           <form
@@ -289,7 +289,7 @@ class Login extends Component {
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography variant="h5">
             Sign in
           </Typography>
           <form

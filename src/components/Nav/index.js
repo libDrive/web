@@ -451,11 +451,7 @@ export function News(props) {
                     }
                     secondary={
                       <React.Fragment>
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          color="textPrimary"
-                        >
+                        <Typography variant="body2" color="textPrimary">
                           libDrive {item.tag_name} was released on{" "}
                           {new Date(item.published_at).toDateString()}, click{" "}
                           <a

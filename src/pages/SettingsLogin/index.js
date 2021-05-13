@@ -86,8 +86,7 @@ class SettingsLoginForm extends Component {
         } else if (error.request) {
           Swal.fire({
             title: "Error!",
-            text:
-              "libDrive could not communicate with the server. Is ${server} the correct address?",
+            text: "libDrive could not communicate with the server. Is ${server} the correct address?",
             icon: "error",
             confirmButtonText: "Logout",
             cancelButtonText: "Retry",
@@ -122,9 +121,7 @@ class SettingsLoginForm extends Component {
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
-              Settings Login
-            </Typography>
+            <Typography variant="h5">Settings Login</Typography>
             <form
               className={classes.form}
               onSubmit={this.handleSubmit}
