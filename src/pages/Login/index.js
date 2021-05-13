@@ -61,6 +61,24 @@ class Login extends Component {
     this.dismissError = this.dismissError.bind(this);
   }
 
+  componentDidMount() {
+    let { tempServer } = this.state;
+    axios.get(`${tempServer}/api/v1/auth?rules=signup`).then((response) => {
+      let data = response.data;
+      if (data.code === 200) {
+        localStorage.setItem("auth", "0");
+        localStorage.setItem("server", tempServer);
+        sessionStorage.setItem("auth", "0");
+        sessionStorage.setItem("server", tempServer);
+        this.props.history.push(data.content);
+      } else if (data.content === true) {
+        this.setState({ signup: true, page: true });
+      } else if (data.content === false) {
+        this.setState({ signup: false, page: true });
+      }
+    });
+  }
+
   dismissError() {
     this.setState({ error: "" });
   }
