@@ -16,7 +16,7 @@ export default class NewsMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      menuAnchor: null,
+      menuAnchor: false,
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -30,7 +30,7 @@ export default class NewsMenu extends Component {
 
   handleClose(evt) {
     this.setState({
-      menuAnchor: null,
+      menuAnchor: false,
     });
   }
 

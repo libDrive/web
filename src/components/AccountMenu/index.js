@@ -14,7 +14,7 @@ export default class BrowseMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      menuAnchor: null,
+      menuAnchor: false,
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -29,7 +29,7 @@ export default class BrowseMenu extends Component {
 
   handleClose(evt) {
     this.setState({
-      menuAnchor: null,
+      menuAnchor: false,
     });
   }
 
@@ -128,7 +128,7 @@ export default class BrowseMenu extends Component {
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
           transformOrigin={{ vertical: "top", horizontal: "center" }}
           keepMounted
-          open={this.state.menuAnchor}
+          open={Boolean(this.state.menuAnchor)}
           onClose={this.handleClose}
         >
           <Link to={"/settings"} className="no_decoration_link">

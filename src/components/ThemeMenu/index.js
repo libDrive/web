@@ -7,7 +7,7 @@ export default class ThemeMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      menuAnchor: null,
+      menuAnchor: false,
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -22,13 +22,13 @@ export default class ThemeMenu extends Component {
 
   handleClose(evt) {
     this.setState({
-      menuAnchor: null,
+      menuAnchor: false,
     });
   }
 
   handleTheme(name) {
     this.setState({
-      menuAnchor: null,
+      menuAnchor: false,
     });
     localStorage.setItem("theme", name);
     sessionStorage.setItem("theme", name);
