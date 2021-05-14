@@ -44,11 +44,8 @@ class Login extends Component {
       error: "",
       page: false,
       password: "",
-      server: "",
       signup: false,
-      tempServer: window.location.origin.startsWith("app://-")
-        ? ""
-        : window.location.origin,
+      server: window.location.origin,
       username: "",
     };
 
@@ -62,14 +59,14 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    let { tempServer } = this.state;
-    axios.get(`${tempServer}/api/v1/auth?rules=signup`).then((response) => {
+    let { server } = this.state;
+    axios.get(`${server}/api/v1/auth?rules=signup`).then((response) => {
       let data = response.data;
       if (data.code === 200) {
         localStorage.setItem("auth", "0");
-        localStorage.setItem("server", tempServer);
+        localStorage.setItem("server", server);
         sessionStorage.setItem("auth", "0");
-        sessionStorage.setItem("server", tempServer);
+        sessionStorage.setItem("server", server);
         this.props.history.push(data.content);
       } else if (data.content === true) {
         this.setState({ signup: true, page: true });
@@ -85,27 +82,27 @@ class Login extends Component {
 
   handleServerSubmit(evt) {
     evt.preventDefault();
-    let { tempServer } = this.state;
-    if (!tempServer) {
+    let { server } = this.state;
+    if (!server) {
       return this.setState({ error: "Server is required" });
     }
-    if (!tempServer.startsWith("http")) {
-      tempServer = `https://${tempServer}`;
+    if (!server.startsWith("http")) {
+      server = `https://${server}`;
     }
     axios
-      .get(`${tempServer}/api/v1/auth?rules=signup`)
+      .get(`${server}/api/v1/auth?rules=signup`)
       .then((response) => {
         let data = response.data;
         if (data.code === 200) {
           localStorage.setItem("auth", "0");
-          localStorage.setItem("server", tempServer);
+          localStorage.setItem("server", server);
           sessionStorage.setItem("auth", "0");
-          sessionStorage.setItem("server", tempServer);
+          sessionStorage.setItem("server", server);
           this.props.history.push(data.content);
         } else if (data.content === true) {
-          this.setState({ signup: true, page: true });
+          this.setState({ server: server, signup: true, page: true });
         } else if (data.content === false) {
-          this.setState({ signup: false, page: true });
+          this.setState({ server: server, signup: false, page: true });
         }
       })
       .catch((error) => {
@@ -121,7 +118,7 @@ class Login extends Component {
         } catch {
           Swal.fire({
             title: "Error!",
-            text: `You were unable to communicate with the server. Are you sure ${tempServer} is the correct server?`,
+            text: `You were unable to communicate with the server. Are you sure ${server} is the correct server?`,
             icon: "error",
             confirmButtonText: "OK",
           });
@@ -131,20 +128,14 @@ class Login extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    let { password, tempServer, username } = this.state;
-    if (!tempServer) {
-      return this.setState({ error: "Server is required" });
-    }
-    if (!tempServer.startsWith("http")) {
-      tempServer = `https://${tempServer}`;
-    }
+    let { password, server, username } = this.state;
 
     axios
-      .get(`${tempServer}/api/v1/auth?u=${username}&p=${password}`)
+      .get(`${server}/api/v1/auth?u=${username}&p=${password}`)
       .then((response) => {
         let data = response.data;
-        localStorage.setItem("server", tempServer);
-        sessionStorage.setItem("server", tempServer);
+        localStorage.setItem("server", server);
+        sessionStorage.setItem("server", server);
         localStorage.setItem("auth", data.content.auth);
         sessionStorage.setItem("auth", data.content.auth);
         this.props.history.push("/");
@@ -162,7 +153,7 @@ class Login extends Component {
         } catch {
           Swal.fire({
             title: "Error!",
-            text: `Something went wrong while communicating with the server ${tempServer}`,
+            text: `Something went wrong while communicating with the server ${server}`,
             icon: "error",
             confirmButtonText: "OK",
           });
@@ -172,7 +163,7 @@ class Login extends Component {
   }
 
   handleSignup() {
-    let { password, tempServer, username } = this.state;
+    let { password, server, username } = this.state;
     if (!username) {
       return this.setState({ error: "Username is required" });
     }
@@ -181,18 +172,18 @@ class Login extends Component {
     }
 
     axios
-      .get(`${tempServer}/api/v1/signup?u=${username}&p=${password}`)
+      .get(`${server}/api/v1/signup?u=${username}&p=${password}`)
       .then((response) => {
         let data = response.data;
-        localStorage.setItem("server", tempServer);
-        sessionStorage.setItem("server", tempServer);
+        localStorage.setItem("server", server);
+        sessionStorage.setItem("server", server);
         localStorage.setItem("auth", data.content.auth);
         sessionStorage.setItem("auth", data.content.auth);
         this.props.history.push("/");
       })
       .catch((error) => {
-        console.log(error);
-        let data = response.data;
+        console.error(error);
+        let data = error.response;
         try {
           Swal.fire({
             title: "Error!",
@@ -203,7 +194,7 @@ class Login extends Component {
         } catch {
           Swal.fire({
             title: "Error!",
-            text: `Something went wrong while communicating with the server ${tempServer}`,
+            text: `Something went wrong while communicating with the server ${server}`,
             icon: "error",
             confirmButtonText: "OK",
           });
@@ -214,7 +205,7 @@ class Login extends Component {
 
   handleTempServerChange(evt) {
     this.setState({
-      tempServer: evt.target.value,
+      server: evt.target.value,
     });
   }
 
@@ -231,7 +222,7 @@ class Login extends Component {
   }
 
   render() {
-    let { error, password, page, tempServer, username } = this.state;
+    let { error, password, page, server, username } = this.state;
     const { classes } = this.props;
 
     return !page ? (
@@ -241,9 +232,7 @@ class Login extends Component {
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography variant="h5">
-            Sign in
-          </Typography>
+          <Typography variant="h5">Sign in</Typography>
           <form
             className={classes.form}
             onSubmit={this.handleServerSubmit}
@@ -267,7 +256,7 @@ class Login extends Component {
               name="server"
               autoComplete="server"
               onChange={this.handleTempServerChange}
-              value={tempServer}
+              value={server}
               autoFocus
             />
             <Button
@@ -289,9 +278,7 @@ class Login extends Component {
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography variant="h5">
-            Sign in
-          </Typography>
+          <Typography variant="h5">Sign in</Typography>
           <form
             className={classes.form}
             onSubmit={this.handleSubmit}
@@ -315,7 +302,7 @@ class Login extends Component {
               name="server"
               autoComplete="server"
               onChange={this.handleTempServerChange}
-              value={tempServer}
+              value={server}
               autoFocus
               disabled
             />
