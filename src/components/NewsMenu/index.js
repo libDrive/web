@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import {
-  Badge,
   IconButton,
   List,
   ListItem,
@@ -11,25 +10,16 @@ import {
 } from "@material-ui/core";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 
-import { guid, version } from "../../components";
+import { guid } from "../../components";
 
 export default class NewsMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      invisibility: true,
       menuAnchor: false,
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.compareVersions = this.compareVersions.bind(this);
-  }
-
-  componentDidMount() {
-    let { news } = this.props;
-    if (news.length) {
-      this.setState({invisibility: this.compareVersions(version.replace("v", ""), news[0].tag_name.replace("v", ""))})
-    }
   }
 
   handleClick(evt) {
@@ -44,26 +34,6 @@ export default class NewsMenu extends Component {
     });
   }
 
-  compareVersions(a, b) {
-    var i, cmp, len;
-    a = (a + "").split(".");
-    b = (b + "").split(".");
-    len = Math.max(a.length, b.length);
-    for (i = 0; i < len; i++) {
-      if (a[i] === undefined) {
-        a[i] = "0";
-      }
-      if (b[i] === undefined) {
-        b[i] = "0";
-      }
-      cmp = parseInt(a[i], 10) - parseInt(b[i], 10);
-      if (cmp !== 0) {
-        return cmp < 0 ? false : true;
-      }
-    }
-    return true;
-  }
-
   render() {
     let { news } = this.props;
 
@@ -75,9 +45,7 @@ export default class NewsMenu extends Component {
           aria-haspopup="true"
           onClick={this.handleClick}
         >
-          <Badge color="secondary" variant="dot" invisible={this.state.invisibility}>
-            <NotificationsIcon />
-          </Badge>
+          <NotificationsIcon />
         </IconButton>
         <Menu
           id="news-menu"
