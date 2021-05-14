@@ -4,30 +4,23 @@ import { Link, useHistory } from "react-router-dom";
 
 import {
   AppBar,
-  Button,
-  Divider,
+  IconButton,
   InputBase,
-  List,
-  ListItem,
-  ListItemText,
-  Menu,
-  MenuItem,
   Toolbar,
   Typography,
 } from "@material-ui/core";
 import { fade, makeStyles } from "@material-ui/core/styles";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import Brightness6Icon from "@material-ui/icons/Brightness6";
-import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
-
-import Swal from "sweetalert2/src/sweetalert2.js";
-import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { guid } from "../../components";
+import {
+  AccountMenu,
+  BrowseMenu,
+  NewsMenu,
+  ThemeMenu,
+  guid,
+} from "../../components";
 
 export default class Nav extends Component {
   constructor(props) {
@@ -76,23 +69,11 @@ export default class Nav extends Component {
 
     return isLoaded ? (
       <div className="Nav">
-        <NavUI
-          props={{
-            categories: categories,
-            accounts: accounts,
-            news: news,
-          }}
-        />
+        <NavUI categories={categories} accounts={accounts} news={news} />
       </div>
     ) : (
       <div className="Nav">
-        <NavUI
-          props={{
-            categories: [],
-            accounts: [],
-            news: [],
-          }}
-        />
+        <NavUI categories={[]} accounts={[]} news={[]} />
       </div>
     );
   }
@@ -148,9 +129,6 @@ const styles = makeStyles((theme) => ({
       width: "20ch",
     },
   },
-  browse: {
-    marginRight: "15px",
-  },
 }));
 
 export function NavUI(props) {
@@ -194,10 +172,10 @@ export function NavUI(props) {
             />
           </form>
           <div className={classes.grow} />
-          <BrowseMenu props={props.props.categories} />
+          <BrowseMenu categories={props.categories} />
           <ThemeMenu />
-          <News props={props.props.news} />
-          <AccountMenu props={props.props.accounts} />
+          <NewsMenu news={props.news} />
+          <AccountMenu accounts={props.accounts} />
         </Toolbar>
       </AppBar>
     </div>
@@ -242,302 +220,6 @@ export function LoadingNavUI() {
           </form>
         </Toolbar>
       </AppBar>
-    </div>
-  );
-}
-
-export function BrowseMenu(props) {
-  const [menuAnchorEl, setMenuAnchorEl] = React.useState(null);
-  const classes = styles();
-
-  const handleClick = (event) => {
-    setMenuAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setMenuAnchorEl(null);
-  };
-
-  return (
-    <div className={classes.browse}>
-      <Button
-        aria-controls="browse-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        Browse
-      </Button>
-      <Menu
-        id="browse-menu"
-        anchorEl={menuAnchorEl}
-        keepMounted
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        transformOrigin={{ vertical: "top", horizontal: "center" }}
-        open={Boolean(menuAnchorEl)}
-        onClose={handleClose}
-      >
-        <Link to={"/"} className="no_decoration_link">
-          <MenuItem onClick={handleClose}>Home Page</MenuItem>
-        </Link>
-        <Divider light />
-        {props.props.length
-          ? props.props.map((category) => (
-              <Link
-                to={`/browse/${category.name}`}
-                key={guid()}
-                className="no_decoration_link"
-              >
-                <MenuItem onClick={handleClose}>{category.name}</MenuItem>
-              </Link>
-            ))
-          : null}
-      </Menu>
-    </div>
-  );
-}
-
-export function AccountMenu(props) {
-  const [menuAnchorEl, setMenuAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setMenuAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setMenuAnchorEl(null);
-  };
-
-  const handleRebuild = () => {
-    let auth = sessionStorage.getItem("auth") || localStorage.getItem("auth");
-    let server =
-      sessionStorage.getItem("server") || localStorage.getItem("server");
-
-    let url = `${server}/api/v1/rebuild?a=${auth}`;
-    axios
-      .get(url)
-      .then((response) =>
-        Swal.fire({
-          title: "Success!",
-          text: "libDrive's metadata is being rebuilt...",
-          icon: "success",
-          confirmButtonText: "OK",
-        })
-      )
-      .catch((error) => {
-        console.error(error);
-        if (auth == null || server == null) {
-          this.props.history.push("/login");
-        } else if (error.response) {
-          if (error.response.status === 401) {
-            Swal.fire({
-              title: "Error!",
-              text: "Your credentials are invalid!",
-              icon: "error",
-              confirmButtonText: "Logout",
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.props.history.push("/logout");
-              }
-            });
-          } else {
-            Swal.fire({
-              title: "Error!",
-              text: "Something went wrong while communicating with the server!",
-              icon: "error",
-              confirmButtonText: "Logout",
-              cancelButtonText: "Retry",
-              showCancelButton: true,
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.props.history.push("/logout");
-              } else if (result.isDismissed) {
-                location.reload();
-              }
-            });
-          }
-        } else if (error.request) {
-          Swal.fire({
-            title: "Error!",
-            text: `libDrive could not communicate with the server! Is ${server} the correct address?`,
-            icon: "error",
-            confirmButtonText: "Logout",
-            cancelButtonText: "Retry",
-            showCancelButton: true,
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.props.history.push("/logout");
-            } else if (result.isDismissed) {
-              location.reload();
-            }
-          });
-        }
-      });
-  };
-
-  let pic = <AccountCircle />;
-  if (
-    props.props.pic &&
-    (props.props.pic.includes("http") || props.props.pic.includes("www"))
-  ) {
-    pic = <img src={props.props.pic} width="32px" alt="profile-pic"></img>;
-  }
-
-  return (
-    <div>
-      <IconButton
-        aria-label="more"
-        aria-controls="account-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        {pic}
-      </IconButton>
-      <Menu
-        id="account-menu"
-        anchorEl={menuAnchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        transformOrigin={{ vertical: "top", horizontal: "center" }}
-        keepMounted
-        open={Boolean(menuAnchorEl)}
-        onClose={handleClose}
-      >
-        <Link to={"/settings"} className="no_decoration_link">
-          <MenuItem onClick={handleClose}>Settings</MenuItem>
-        </Link>
-        <MenuItem onClick={handleRebuild}>Rebuild</MenuItem>
-        <Link to={"/logout"} className="no_decoration_link">
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
-        </Link>
-      </Menu>
-    </div>
-  );
-}
-
-export function News(props) {
-  const [menuAnchorEl, setMenuAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setMenuAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setMenuAnchorEl(null);
-  };
-
-  return (
-    <div>
-      <IconButton
-        aria-label="more"
-        aria-controls="news-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        <NotificationsIcon />
-      </IconButton>
-      <Menu
-        id="news-menu"
-        anchorEl={menuAnchorEl}
-        keepMounted
-        open={Boolean(menuAnchorEl)}
-        onClose={handleClose}
-      >
-        <List style={{ maxWidth: "500px" }}>
-          {props.props.length
-            ? props.props.slice(0, 3).map((item) => (
-                <ListItem key={guid()} alignItems="flex-start">
-                  <ListItemText
-                    primary={
-                      <strong>libDrive {item.tag_name} released!</strong>
-                    }
-                    secondary={
-                      <React.Fragment>
-                        <Typography variant="body2" color="textPrimary">
-                          libDrive {item.tag_name} was released on{" "}
-                          {new Date(item.published_at).toDateString()}, click{" "}
-                          <a
-                            href={item.html_url}
-                            target="_blank"
-                            className="no_decoration_link"
-                          >
-                            <u>here</u>
-                          </a>{" "}
-                          to find out more
-                        </Typography>
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
-              ))
-            : null}
-        </List>
-      </Menu>
-    </div>
-  );
-}
-
-export function ThemeMenu() {
-  const [menuAnchorEl, setMenuAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setMenuAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setMenuAnchorEl(null);
-  };
-
-  const handleLight = () => {
-    setMenuAnchorEl(null);
-    localStorage.setItem("theme", "light");
-    sessionStorage.setItem("theme", "light");
-    window.location.reload();
-  };
-
-  const handleDark = () => {
-    setMenuAnchorEl(null);
-    localStorage.setItem("theme", "dark");
-    sessionStorage.setItem("theme", "dark");
-    window.location.reload();
-  };
-
-  const handleDracula = () => {
-    setMenuAnchorEl(null);
-    localStorage.setItem("theme", "dracula");
-    sessionStorage.setItem("theme", "dracula");
-    window.location.reload();
-  };
-
-  const handleNord = () => {
-    setMenuAnchorEl(null);
-    localStorage.setItem("theme", "nord");
-    sessionStorage.setItem("theme", "nord");
-    window.location.reload();
-  };
-
-  return (
-    <div>
-      <IconButton
-        aria-label="more"
-        aria-controls="theme-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        <Brightness6Icon />
-      </IconButton>
-      <Menu
-        id="theme-menu"
-        anchorEl={menuAnchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        transformOrigin={{ vertical: "top", horizontal: "center" }}
-        keepMounted
-        open={Boolean(menuAnchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={handleLight}>Light</MenuItem>
-        <MenuItem onClick={handleDark}>Dark</MenuItem>
-        <MenuItem onClick={handleDracula}>Dracula</MenuItem>
-        <MenuItem onClick={handleNord}>Nord</MenuItem>
-      </Menu>
     </div>
   );
 }
