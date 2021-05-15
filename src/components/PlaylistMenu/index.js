@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import { Button } from "@material-ui/core";
+import PlaylistPlayRoundedIcon from "@material-ui/icons/PlaylistPlayRounded";
 
 export default class PlaylistMenu extends Component {
   constructor(props) {
@@ -35,8 +36,13 @@ export default class PlaylistMenu extends Component {
 
   render() {
     return (
-      <div className="PlaylistMenu" style={{ marginTop: "30px" }}>
-        <Button onClick={this.handleClick} variant="contained" color="primary">
+      <div className="PlaylistMenu" style={{ marginTop: "20px" }}>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={this.handleClick}
+          startIcon={<PlaylistPlayRoundedIcon />}
+        >
           m3u8 Playlist
         </Button>
       </div>
