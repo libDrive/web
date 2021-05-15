@@ -80,7 +80,7 @@ export class TVBView extends Component {
               </div>
             </div>
             <div className="info__genres">
-              {metadata.genres.length
+              {metadata.genres && metadata.genres.length
                 ? metadata.genres.map((genre) => (
                     <Chip
                       avatar={<Avatar>{genre.name.charAt(0)}</Avatar>}
