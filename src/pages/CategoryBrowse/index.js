@@ -117,7 +117,7 @@ export default class CategoryBrowse extends Component {
       <div className="CategoryBrowse">
         <Nav />
         <Tile metadata={metadata} />
-        <PageMenu state={{ pages: pages, sort: sort }} props={this.props} />
+        <PageMenu state={{ page: page, pages: pages, sort: sort }} props={this.props} />
         <SortMenu props={this.props} />
         <Footer />
       </div>
