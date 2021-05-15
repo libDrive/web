@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { Button, Divider, Menu, MenuItem } from "@material-ui/core";
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 
 import { theme } from "../../components";
 
@@ -32,17 +32,17 @@ export default class PlayerMenu extends Component {
     let { auth, id, metadata, server } = this.state;
 
     return (
-      <div className="PlayerMenu" style={{ marginTop: "20px" }}>
-      <Button
-        variant="outlined"
-        color="primary"
-        aria-controls="player-menu"
-        aria-haspopup="true"
-        onClick={this.handleClick}
-        startIcon={<PlayCircleOutlineIcon />}
-      >
-        External Player
-      </Button>
+      <div className="PlayerMenu" style={{ margin: "5px" }}>
+        <Button
+          variant="outlined"
+          color="primary"
+          aria-controls="player-menu"
+          aria-haspopup="true"
+          onClick={this.handleClick}
+          startIcon={<PlayCircleOutlineIcon />}
+        >
+          External Player
+        </Button>
         <Menu
           id="player-menu"
           anchorEl={this.state.menuAnchor}

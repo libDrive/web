@@ -164,7 +164,7 @@ export class TVSView extends Component {
             </ul>
           </div>
         </div>
-        <div style={{ textAlign: "center", marginBottom: "5vh" }}>
+        <div style={{ textAlign: "center", marginBottom: "50px" }}>
           <Typography
             variant="h3"
             style={{
@@ -179,7 +179,7 @@ export class TVSView extends Component {
             {metadata.name}
           </Typography>
           <Typography
-            variant="h5"
+            variant="h6"
             style={{
               textAlign: "center",
               marginTop: "15px",
@@ -190,8 +190,18 @@ export class TVSView extends Component {
           >
             {metadata.children[q].name}
           </Typography>
-          <PlayerMenu state={this.state} />
-          <PlaylistMenu state={this.state} />
+          <div
+            style={{
+              display: "flex",
+              alignContent: "center",
+              justifyContent: "center",
+              flexWrap: "wrap",
+              marginTop: "35px",
+            }}
+          >
+            <PlayerMenu state={this.state} />
+            <PlaylistMenu state={this.state} />
+          </div>
         </div>
       </div>
     );

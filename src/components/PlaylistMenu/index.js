@@ -36,7 +36,7 @@ export default class PlaylistMenu extends Component {
 
   render() {
     return (
-      <div className="PlaylistMenu" style={{ marginTop: "20px" }}>
+      <div className="PlaylistMenu" style={{ margin: "5px" }}>
         <Button
           variant="outlined"
           color="primary"
