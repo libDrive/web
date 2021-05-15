@@ -243,7 +243,7 @@ export class Settings extends Component {
           style={{
             margin: "auto",
             marginTop: "50px",
-            width: "80%",
+            width: "80vw",
             maxWidth: "1500px",
           }}
         >
@@ -253,7 +253,7 @@ export class Settings extends Component {
             onEdit={this.handleChange}
             onAdd={this.handleChange}
             onDelete={this.handleChange}
-            collapseStringsAfterLength={100}
+            collapseStringsAfterLength={Math.floor((window.innerWidth * 0.125) / 2)-3}
             sortKeys={true}
             theme={{
               base00: theme.palette.background.paper,
