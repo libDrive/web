@@ -97,7 +97,7 @@ export default class MovieView extends Component {
             </div>
             <PlayerMenu state={this.state} />
             <div className="info__genres">
-              {true ? (
+              {metadata.adult ? (
                 <Chip
                   color="secondary"
                   avatar={<Avatar>E</Avatar>}
