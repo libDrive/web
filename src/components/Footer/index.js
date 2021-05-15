@@ -24,9 +24,9 @@ export default function Footer() {
     <footer className={classes.footer__container} id="footer__container">
       <a href="https://github.com/libDrive/libDrive" target="_blank">
         <img
-          src="/images/github.png"
+          src="/images/github.gif"
           className="footer__github"
-          height="48px"
+          height="64px"
           alt="github-logo"
         />
       </a>
