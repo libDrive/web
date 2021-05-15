@@ -1,12 +1,12 @@
-import React from "react";
+import React, { Component } from "react";
 
-import { makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 
 import { version } from "../../components";
 
 import "./index.css";
 
-const styles = makeStyles((theme) => ({
+const styles = (theme) => ({
   footer__container: {
     backgroundColor: theme.palette.background.paper,
     width: "100%",
@@ -15,28 +15,32 @@ const styles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
   },
-}));
+});
 
-export default function Footer() {
-  const classes = styles();
+class Footer extends Component {
+  render() {
+    const { classes } = this.props;
 
-  return (
-    <footer className={classes.footer__container} id="footer__container">
-      <a href="https://github.com/libDrive/libDrive" target="_blank">
-        <img
-          src="/images/github.gif"
-          className="footer__github"
-          height="64px"
-          alt="github-logo"
-        />
-      </a>
-      <a
-        className="no_decoration_link footer__text"
-        href="https://eliasbenb.github.io"
-        target="_blank"
-      >
-        {`© 2021 Copyright: Elias Benbourenane - v${version}`}
-      </a>
-    </footer>
-  );
+    return (
+      <footer className={classes.footer__container} id="footer__container">
+        <a href="https://github.com/libDrive/libDrive" target="_blank">
+          <img
+            src="/images/github.gif"
+            className="footer__github"
+            height="64px"
+            alt="github-logo"
+          />
+        </a>
+        <a
+          className="no_decoration_link footer__text"
+          href="https://eliasbenb.github.io"
+          target="_blank"
+        >
+          {`© 2021 Copyright: Elias Benbourenane - v${version}`}
+        </a>
+      </footer>
+    );
+  }
 }
+
+export default withStyles(styles, { withTheme: true })(Footer);

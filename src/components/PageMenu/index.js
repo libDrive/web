@@ -1,63 +1,72 @@
-import React from "react";
+import React, { Component } from "react";
 
 import { Link, Redirect } from "react-router-dom";
 
 import { Pagination, PaginationItem } from "@material-ui/lab";
-import { makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 
 import { guid } from "../../components";
 
-const styles = makeStyles((theme) => ({
+const styles = (theme) => ({
   root: {
     "& > *": {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      margin: theme.spacing(4),
+      margin: "20px",
     },
   },
-}));
+});
 
-export default function PageMenu(props) {
-  let { page, pages, sort, thisprops } = props.props;
-  const classes = styles();
+class PageMenu extends Component {
+  constructor(props) {
+    super(props);
+    this.state = props.state;
+  }
 
-  if (page > pages) {
-    return (
-      <Redirect
-        to={{
-          pathname: thisprops.location.pathname,
-          search: `?page=${pages}&sort=${sort}`,
-        }}
-        key={guid()}
-      />
-    );
-  } else {
-    return (
-      <div className={classes.root}>
-        <Pagination
-          page={page}
-          count={pages}
-          variant="outlined"
-          color="primary"
-          renderItem={(item) =>
-            item.page ? (
-              <Link
-                to={{
-                  pathname: thisprops.location.pathname,
-                  search: `?page=${item.page}&sort=${sort}`,
-                }}
-                key={guid()}
-                className="no_decoration_link"
-              >
-                <PaginationItem {...item} />
-              </Link>
-            ) : (
-              <PaginationItem {...item} />
-            )
-          }
+  render() {
+    let { page, pages, sort } = this.state;
+    const { classes } = this.props;
+
+    if (page > pages) {
+      return (
+        <Redirect
+          to={{
+            pathname: this.props.props.location.pathname,
+            search: `?page=${pages}&sort=${sort}`,
+          }}
+          key={guid()}
         />
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className={classes.root}>
+          <Pagination
+            page={page}
+            count={pages}
+            variant="outlined"
+            color="primary"
+            renderItem={(item) =>
+              item.page ? (
+                <Link
+                  to={{
+                    pathname: this.props.props.location.pathname,
+                    search: `?page=${item.page}&sort=${sort}`,
+                  }}
+                  key={guid()}
+                  className="no_decoration_link"
+                >
+                  <PaginationItem {...item} />
+                </Link>
+              ) : (
+                <PaginationItem {...item} />
+              )
+            }
+          />
+        </div>
+      );
+    }
   }
 }
+
+export default withStyles(styles, { withTheme: true })(PageMenu);
