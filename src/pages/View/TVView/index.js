@@ -124,18 +124,6 @@ export class TVSView extends Component {
 
     return (
       <div className="TVSView">
-        <Typography
-          variant="h2"
-          style={{ textAlign: "center", marginTop: "25px" }}
-        >
-          {metadata.name}
-        </Typography>
-        <Typography
-          variant="h5"
-          style={{ textAlign: "center", marginTop: "15px" }}
-        >
-          {metadata.children[q].name}
-        </Typography>
         <div className="plyr__component">
           <DPlayer
             options={{
@@ -177,6 +165,31 @@ export class TVSView extends Component {
           </div>
         </div>
         <div style={{ textAlign: "center", marginBottom: "5vh" }}>
+          <Typography
+            variant="h3"
+            style={{
+              textAlign: "center",
+              marginTop: "25px",
+              fontStyle: "bold",
+              height: "1.2em",
+              lineHeight: "1.2em",
+              overflow: "hidden",
+            }}
+          >
+            {metadata.name}
+          </Typography>
+          <Typography
+            variant="h5"
+            style={{
+              textAlign: "center",
+              marginTop: "15px",
+              height: "1.2em",
+              lineHeight: "1.2em",
+              overflow: "hidden",
+            }}
+          >
+            {metadata.children[q].name}
+          </Typography>
           <PlayerMenu state={this.state} />
           <PlaylistMenu state={this.state} />
         </div>
