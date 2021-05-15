@@ -144,8 +144,7 @@ export class Settings extends Component {
         console.error(error);
         Swal.fire({
           title: "Success!",
-          text:
-            "libDrive is being restarted, this might take some time, so the app won't load",
+          text: "libDrive is being restarted, this might take some time, so the app won't load",
           icon: "success",
           confirmButtonText: "OK",
         });
@@ -253,7 +252,9 @@ export class Settings extends Component {
             onEdit={this.handleChange}
             onAdd={this.handleChange}
             onDelete={this.handleChange}
-            collapseStringsAfterLength={Math.floor((window.innerWidth * 0.125) / 2)-3}
+            collapseStringsAfterLength={
+              Math.floor((window.innerWidth * 0.125) / 2) - 3
+            }
             sortKeys={true}
             theme={{
               base00: theme.palette.background.paper,
@@ -304,7 +305,13 @@ export class Settings extends Component {
               Restart Server
             </Button>
             <br />
-            <p style={{fontSize: "16px", marginTop: "10px", marginBotoom: "5px"}}>
+            <p
+              style={{
+                fontSize: "16px",
+                marginTop: "10px",
+                marginBotoom: "5px",
+              }}
+            >
               Kill Switch
             </p>
             <Switch
