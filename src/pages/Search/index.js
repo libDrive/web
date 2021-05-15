@@ -7,7 +7,7 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { Footer, Nav, Carousel, theme } from "../../components";
+import { Footer, Nav, Carousel } from "../../components";
 
 export default class Search extends Component {
   constructor(props) {
