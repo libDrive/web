@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import { Button, Menu, MenuItem } from "@material-ui/core";
+import TvIcon from "@material-ui/icons/Tv";
 
 import { guid } from "../../components";
 
@@ -32,13 +33,14 @@ export default class ChildrenMenu extends Component {
   render() {
     let { metadata, menuAnchor } = this.state;
     return (
-      <div className="ChildrenMenu" style={{ marginTop: "30px" }}>
+      <div className="ChildrenMenu" style={{ marginTop: "20px" }}>
         <Button
+          variant="outlined"
+          color="primary"
           aria-controls="children-menu"
           aria-haspopup="true"
           onClick={this.handleClick}
-          variant="contained"
-          color="primary"
+          startIcon={<TvIcon />}
         >
           Seasons
         </Button>

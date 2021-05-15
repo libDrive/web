@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Typography } from "@material-ui/core";
+import { Avatar, Chip, Typography } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
 
 import DPlayer from "react-dplayer";
@@ -66,7 +66,11 @@ export default class MovieView extends Component {
             />
           </div>
           <div className="info__right">
-            <Typography variant="h2" className="info__title">
+            <Typography
+              variant="h3"
+              style={{ fontWeight: "bold" }}
+              className="info__title"
+            >
               {metadata.title}
             </Typography>
             <Typography
@@ -84,10 +88,26 @@ export default class MovieView extends Component {
                 readOnly
               />
             </div>
-            <div className="release">
-              <Typography variant="body2">{this.prettyDate()}</Typography>
+            <div className="info__release">
+              <Typography variant="body2">
+                {metadata.language
+                  ? `${this.prettyDate()} (${metadata.language.toUpperCase()})`
+                  : this.prettyDate()}
+              </Typography>
             </div>
             <PlayerMenu state={this.state} />
+            <div className="info__genres">
+              {metadata.genres.length
+                ? metadata.genres.map((genre) => (
+                    <Chip
+                      avatar={<Avatar>{genre.name.charAt(0)}</Avatar>}
+                      style={{ marginRight: "8px", marginBottom: "8px" }}
+                      label={genre.name}
+                      variant="outlined"
+                    />
+                  ))
+                : null}
+            </div>
           </div>
         </div>
       </div>

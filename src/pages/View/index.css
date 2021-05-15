@@ -195,7 +195,14 @@
   margin-top: 20px;
 }
 
-.release {
+.info__release {
   margin-top: 5px;
   margin-left: 4px;
+}
+
+.info__genres {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 15px;
 }
