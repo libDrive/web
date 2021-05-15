@@ -97,6 +97,15 @@ export default class MovieView extends Component {
             </div>
             <PlayerMenu state={this.state} />
             <div className="info__genres">
+              {true ? (
+                <Chip
+                  color="secondary"
+                  avatar={<Avatar>E</Avatar>}
+                  style={{ marginRight: "8px", marginBottom: "8px" }}
+                  label={"Adult (18+)"}
+                  variant="outlined"
+                />
+              ) : null}
               {metadata.genres && metadata.genres.length
                 ? metadata.genres.map((genre) => (
                     <Chip

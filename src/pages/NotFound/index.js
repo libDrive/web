@@ -10,7 +10,7 @@ export default class NotFound extends Component {
       <div className="NotFound">
         <Nav />
         <div className="nf">
-          <div class="fof">
+          <div className="fof">
             <h1>Error 404</h1>
           </div>
         </div>
