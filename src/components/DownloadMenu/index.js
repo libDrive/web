@@ -36,11 +36,7 @@ export default class DownloadMenu extends Component {
           color="primary"
           aria-controls="download-menu"
           aria-haspopup="true"
-          onClick={
-            sources.length > 1
-              ? this.handleClick
-              : window.open(sources[0].url, "_blank")
-          }
+          onClick={this.handleClick}
           startIcon={<CloudDownloadOutlinedIcon />}
         >
           Download
@@ -54,7 +50,7 @@ export default class DownloadMenu extends Component {
           open={Boolean(menuAnchor)}
           onClose={this.handleClose}
         >
-          {sources.length > 1
+          {sources.length
             ? sources.map((source) => (
                 <a
                   href={source.url}
