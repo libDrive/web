@@ -5,7 +5,7 @@ import { Rating } from "@material-ui/lab";
 
 import DPlayer from "react-dplayer";
 
-import { PlayerMenu, theme } from "../../../components";
+import { DownloadMenu, PlayerMenu, theme } from "../../../components";
 
 export default class MovieView extends Component {
   constructor(props) {
@@ -95,7 +95,16 @@ export default class MovieView extends Component {
                   : this.prettyDate()}
               </Typography>
             </div>
-            <PlayerMenu state={this.state} />
+            <div
+              style={{
+                display: "flex",
+                alignContent: "center",
+                flexWrap: "wrap",
+              }}
+            >
+              <PlayerMenu state={this.state} />
+              <DownloadMenu state={this.state} />
+            </div>
             <div className="info__genres">
               {metadata.adult ? (
                 <Chip

@@ -30,7 +30,10 @@ export default class PlayerMenu extends Component {
     let { auth, id, metadata, server } = this.state;
 
     return (
-      <div className="PlayerMenu" style={{ marginTop: "20px" }}>
+      <div
+        className="PlayerMenu"
+        style={{ marginTop: "20px", marginRight: "10px" }}
+      >
         <Button
           variant="outlined"
           color="primary"
@@ -87,15 +90,6 @@ export default class PlayerMenu extends Component {
           >
             Copy
           </MenuItem>
-          <a
-            href={`${server}/api/v1/redirectdownload/${encodeURI(
-              metadata.name
-            )}?a=${auth}&id=${id}`}
-            className="no_decoration_link"
-            target="_blank"
-          >
-            <MenuItem onClick={this.handleClose}>Download</MenuItem>
-          </a>
         </Menu>
       </div>
     );

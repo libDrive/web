@@ -9,6 +9,7 @@ import DPlayer from "react-dplayer";
 
 import {
   ChildrenMenu,
+  DownloadMenu,
   guid,
   PlayerMenu,
   PlaylistMenu,
@@ -207,6 +208,7 @@ export class TVSView extends Component {
                 server: server,
               }}
             />
+            <DownloadMenu state={this.state} />
             <PlaylistMenu state={this.state} />
           </div>
         </div>
