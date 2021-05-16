@@ -87,7 +87,10 @@ class NavUI extends Component {
 
   searchSubmit(evt) {
     evt.preventDefault();
-    this.props.history.push({ pathname: `/search/${this.state.search}`, key: guid() });
+    this.props.history.push({
+      pathname: `/search/${this.state.search}`,
+      key: guid(),
+    });
   }
 
   render() {
