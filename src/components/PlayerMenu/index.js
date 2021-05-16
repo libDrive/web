@@ -30,7 +30,7 @@ export default class PlayerMenu extends Component {
     let { auth, id, metadata, server } = this.state;
 
     return (
-      <div className="PlayerMenu" style={{ margin: "5px" }}>
+      <div className="PlayerMenu"  style={{ marginTop: "20px" }}>
         <Button
           variant="outlined"
           color="primary"

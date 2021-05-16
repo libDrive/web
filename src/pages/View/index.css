@@ -147,6 +147,7 @@
 
 .info__poster {
   border-radius: 10px;
+  width: 350px;
   max-width: 100%;
 }
 
@@ -177,17 +178,30 @@
     margin: 0;
     display: none;
   }
+  .info__left {
+    display: none;
+    width: 0;
+    margin: 0;
+  }
 }
 
 @media screen and (max-width: 800px) {
+  .info__container {
+    flex-direction: column;
+  }
   .info__left {
-    margin: 0;
-    width: 0;
-    display: none;
+    width: 90vw;
+    max-width: 90vw;
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+  .info__poster {
+    width: 90vw;
+    max-width: 90vw;
   }
   .info__right {
-    margin: 0;
-    max-width: 80vw;
+    max-width: 90vw;
+    margin-left: 0;
   }
 }
 
