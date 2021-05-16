@@ -58,7 +58,7 @@ class SortMenu extends Component {
               labelId="sort-menu-label"
               id="sort-menu"
               value=""
-              label={sort || "Sort"}
+              label={this.formatSort(sort)}
             >
               <Link
                 to={{
