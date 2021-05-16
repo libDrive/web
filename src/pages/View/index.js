@@ -198,19 +198,19 @@ export default class View extends Component {
 
     return isLoaded && metadata.type == "file" ? (
       <div className="View">
-        <Nav />
+        <Nav {...this.props} />
         <MovieView state={this.state} />
         <Footer />
       </div>
     ) : isLoaded && metadata.type == "directory" && metadata.title ? (
       <div className="View">
-        <Nav />
+        <Nav {...this.props} />
         <TVBView state={this.state} />
         <Footer />
       </div>
     ) : isLoaded && metadata.type == "directory" ? (
       <div className="View">
-        <Nav />
+        <Nav {...this.props} />
         <TVSView state={this.state} />
         <Footer />
       </div>

@@ -237,7 +237,7 @@ export class Settings extends Component {
 
     return isLoaded ? (
       <div className="Settings">
-        <Nav />
+        <Nav {...this.props} />
         <div
           style={{
             margin: "auto",

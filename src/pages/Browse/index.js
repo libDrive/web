@@ -97,7 +97,7 @@ export default class Browse extends Component {
 
     return isLoaded ? (
       <div className="Browse">
-        <Nav />
+        <Nav {...this.props} />
         <Carousel metadata={metadata} />
         <Footer />
       </div>

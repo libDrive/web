@@ -8,7 +8,7 @@ export default class NotFound extends Component {
   render() {
     return (
       <div className="NotFound">
-        <Nav />
+        <Nav {...this.props} />
         <div className="nf">
           <div className="fof">
             <h1>Error 404</h1>

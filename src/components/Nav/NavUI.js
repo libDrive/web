@@ -82,12 +82,12 @@ class NavUI extends Component {
   }
 
   searchChange(evt) {
-    this.setState({ search: evt.tager.value });
+    this.setState({ search: evt.target.value });
   }
 
   searchSubmit(evt) {
     evt.preventDefault();
-    this.props.push({ pathname: `/search/${search}`, key: guid() });
+    this.props.history.push({ pathname: `/search/${this.state.search}`, key: guid() });
   }
 
   render() {

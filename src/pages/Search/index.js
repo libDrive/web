@@ -99,7 +99,7 @@ export default class Search extends Component {
 
     return isLoaded ? (
       <div className="Search">
-        <Nav />
+        <Nav {...this.props} />
         <Carousel metadata={metadata} />
         <Footer />
       </div>

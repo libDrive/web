@@ -114,7 +114,7 @@ class SettingsLoginForm extends Component {
 
     return (
       <div className="SettingsLoginForm">
-        <Nav />
+        <Nav {...this.props} />
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <div className={classes.paper}>

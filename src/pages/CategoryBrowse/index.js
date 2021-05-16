@@ -115,7 +115,7 @@ export default class CategoryBrowse extends Component {
 
     return isLoaded ? (
       <div className="CategoryBrowse">
-        <Nav />
+        <Nav {...this.props} />
         <Tile metadata={metadata} />
         <PageMenu state={{ page: page, pages: pages, sort: sort }} props={this.props} />
         <SortMenu props={this.props} />
