@@ -12,7 +12,7 @@ import "./index.css";
 const styles = (theme) => ({
   formControl: {
     margin: "10px",
-    minWidth: 120,
+    minWidth: 210,
   },
   selectEmpty: {
     marginTop: "20px",
@@ -22,21 +22,43 @@ const styles = (theme) => ({
 class SortMenu extends Component {
   constructor(props) {
     super(props);
+    this.state = props.state;
+    this.formatSort = this.formatSort.bind(this);
+  }
+
+  formatSort(str) {
+    if (!str) {
+      return "Sort";
+    }
+    let str_split = str.split("-");
+    for (var i = 0; i < str_split.length; i++) {
+      if (str_split[i] == "asc") {
+        str_split[i] = "ascending";
+      } else if (str_split[i] == "des") {
+        str_split[i] = "descending";
+      }
+      str_split[i] =
+        str_split[i].charAt(0).toUpperCase() + str_split[i].substring(1);
+    }
+    return str_split.join(" ");
   }
 
   render() {
+    let { sort } = this.state;
     const { classes } = this.props;
 
     return (
       <div className="SortMenu">
         <div className="sort__container">
           <FormControl variant="outlined" className={classes.formControl}>
-            <InputLabel id="sort-menu-label">Sort</InputLabel>
+            <InputLabel id="sort-menu-label">
+              {this.formatSort(sort)}
+            </InputLabel>
             <Select
               labelId="sort-menu-label"
               id="sort-menu"
               value=""
-              label="Sort"
+              label={sort || "Sort"}
             >
               <Link
                 to={{
