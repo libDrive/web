@@ -51,14 +51,23 @@ export default class Nav extends Component {
 
     return isLoaded && news.length ? (
       <div className="Nav">
-        <NavUI state={{ accounts: accounts, categories: categories, news: news }} {...this.props} />
+        <NavUI
+          state={{ accounts: accounts, categories: categories, news: news }}
+          {...this.props}
+        />
       </div>
     ) : isLoaded ? (
       <div className="Nav">
-        <NavUI state={{ accounts: accounts, categories: categories, news: [] }} {...this.props} />
+        <NavUI
+          state={{ accounts: accounts, categories: categories, news: [] }}
+          {...this.props}
+        />
       </div>
     ) : (
-      <NavUI state={{ accounts: [], categories: [], news: [] }} {...this.props} />
-    )
+      <NavUI
+        state={{ accounts: [], categories: [], news: [] }}
+        {...this.props}
+      />
+    );
   }
 }
