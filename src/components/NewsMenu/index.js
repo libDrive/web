@@ -38,7 +38,7 @@ export default class NewsMenu extends Component {
     let { news } = this.props;
 
     return (
-      <div>
+      <div className="NewsMenu">
         <IconButton
           aria-label="more"
           aria-controls="news-menu"

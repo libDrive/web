@@ -8,7 +8,7 @@
   margin: 5px;
 }
 
-@media screen and (max-width: 300px) {
+@media screen and (max-width: 320px) {
   #footer__container {
     display: none;
   }

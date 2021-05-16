@@ -37,7 +37,7 @@ export default class ThemeMenu extends Component {
 
   render() {
     return (
-      <div>
+      <div className="ThemeMenu">
         <IconButton
           aria-label="more"
           aria-controls="theme-menu"

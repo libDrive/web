@@ -45,6 +45,13 @@ class PageMenu extends Component {
             page={page}
             count={pages}
             variant="outlined"
+            size={
+              window.innerWidth >= 600
+                ? "large"
+                : window.innerWidth >= 390
+                ? "medium"
+                : "small"
+            }
             color="primary"
             renderItem={(item) =>
               item.page ? (
