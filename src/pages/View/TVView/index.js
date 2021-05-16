@@ -199,7 +199,14 @@ export class TVSView extends Component {
               marginTop: "35px",
             }}
           >
-            <PlayerMenu state={this.state} />
+            <PlayerMenu
+              state={{
+                auth: this.state.auth,
+                id: metadata.children[q].id,
+                metadata: metadata.children[q],
+                server: server,
+              }}
+            />
             <PlaylistMenu state={this.state} />
           </div>
         </div>

@@ -3,8 +3,6 @@ import React, { Component } from "react";
 import { Button, Divider, Menu, MenuItem } from "@material-ui/core";
 import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 
-import { theme } from "../../components";
-
 export default class PlayerMenu extends Component {
   constructor(props) {
     super(props);
