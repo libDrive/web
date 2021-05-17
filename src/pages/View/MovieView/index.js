@@ -64,6 +64,13 @@ export default class MovieView extends Component {
                 `${server}/api/v1/image/poster?text=${metadata.title}&extention=jpeg`
               }
             />
+            <img
+              className="info__backdrop"
+              src={
+                metadata.backdropPath ||
+                `${server}/api/v1/image/backdrop?text=${metadata.title}&extention=jpeg`
+              }
+            />
           </div>
           <div className="info__right">
             <Typography

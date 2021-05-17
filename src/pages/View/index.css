@@ -151,6 +151,12 @@
   max-width: 100%;
 }
 
+.info__backdrop {
+  border-radius: 10px;
+  width: 0;
+  display: none;
+}
+
 .info__title {
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -196,8 +202,14 @@
     margin-bottom: 15px;
   }
   .info__poster {
+    display: none;
+    width: 0;
+  }
+  .info__backdrop {
+    display: inherit;
     width: 90vw;
     max-width: 90vw;
+    margin-bottom: 15px;
   }
   .info__right {
     max-width: 90vw;
