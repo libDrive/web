@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 
-import { Button, CircularProgress, Switch } from "@material-ui/core";
+import { Button, CircularProgress, Switch, TextField } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-
-import ReactJson from "react-json-view";
 
 import Swal from "sweetalert2/src/sweetalert2.js";
 import "@sweetalert2/theme-dark/dark.css";
@@ -217,11 +215,9 @@ export class Settings extends Component {
   }
 
   handleChange(evt) {
-    if (evt.existing_src !== evt.updated_src) {
-      this.setState({
-        config: evt.updated_src,
-      });
-    }
+    this.setState({
+      config: JSON.parse(evt.target.value),
+    });
   }
 
   handleKillSwitch(evt) {
@@ -246,34 +242,19 @@ export class Settings extends Component {
             maxWidth: "1500px",
           }}
         >
-          <ReactJson
-            src={config}
-            name="config"
-            onEdit={this.handleChange}
-            onAdd={this.handleChange}
-            onDelete={this.handleChange}
-            collapseStringsAfterLength={
-              Math.floor((window.innerWidth * 0.125) / 2) - 3
-            }
-            sortKeys={true}
-            theme={{
-              base00: theme.palette.background.paper,
-              base01: theme.palette.background.default,
-              base02: theme.palette.error.main,
-              base03: theme.palette.text.primary,
-              base04: theme.palette.text.primary,
-              base05: theme.palette.text.primary,
-              base06: theme.palette.text.primary,
-              base07: theme.palette.text.primary,
-              base08: theme.palette.text.primary,
-              base09: theme.palette.secondary.main,
-              base0A: theme.palette.secondary.main,
-              base0B: theme.palette.secondary.main,
-              base0C: theme.palette.secondary.main,
-              base0D: theme.palette.secondary.main,
-              base0E: theme.palette.secondary.main,
-              base0F: theme.palette.secondary.main,
+          <TextField
+            style={{
+              width: "100%",
+              backgroundColor: theme.palette.background.paper,
             }}
+            variant="outlined"
+            label="Config"
+            value={JSON.stringify(config, null, 4)}
+            id="config-box"
+            onChange={this.handleChange}
+            multiline
+            rows={15}
+            rowsMax={30}
           />
         </div>
         <form
