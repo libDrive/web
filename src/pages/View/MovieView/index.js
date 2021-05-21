@@ -1,17 +1,27 @@
 import React, { Component } from "react";
 
-import { Avatar, Chip, Typography } from "@material-ui/core";
+import { Avatar, Button, Chip, Typography } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
+import SubtitlesOutlinedIcon from "@material-ui/icons/SubtitlesOutlined";
 
 import DPlayer from "react-dplayer";
 
-import { DownloadMenu, PlayerMenu, theme } from "../../../components";
+import { DownloadMenu, guid, PlayerMenu, theme } from "../../../components";
 
 export default class MovieView extends Component {
   constructor(props) {
     super(props);
     this.state = props.state;
+    this.onFileChange = this.onFileChange.bind(this);
     this.prettyDate = this.prettyDate.bind(this);
+  }
+
+  onFileChange(evt) {
+    if (evt.target.files.length) {
+      this.setState({ file: URL.createObjectURL(evt.target.files[0]) });
+    } else {
+      this.setState({ file: null });
+    }
   }
 
   prettyDate() {
@@ -22,7 +32,7 @@ export default class MovieView extends Component {
   }
 
   render() {
-    let { metadata, server, sources } = this.state;
+    let { file, metadata, server, sources } = this.state;
 
     var defaultQuality;
     if (sources.length > 1) {
@@ -35,6 +45,7 @@ export default class MovieView extends Component {
       <div className="MovieView">
         <div className="plyr__component">
           <DPlayer
+            key={guid()}
             options={{
               video: {
                 quality: sources,
@@ -42,6 +53,10 @@ export default class MovieView extends Component {
                 pic:
                   metadata.backdropPath ||
                   `${server}/api/v1/image/thumbnail?id=${metadata.id}`,
+              },
+              subtitle: {
+                url: file,
+                type: "webvtt",
               },
               preload: "auto",
               theme: theme.palette.primary.main,
@@ -111,6 +126,19 @@ export default class MovieView extends Component {
             >
               <PlayerMenu state={this.state} />
               <DownloadMenu state={this.state} />
+              <div style={{ marginTop: "20px" }}>
+                <input
+                  id="file-input"
+                  hidden
+                  onChange={this.onFileChange}
+                  type="file"
+                />
+                <label htmlFor="file-input">
+                  <Button color="primary" variant="outlined" component="span">
+                    <SubtitlesOutlinedIcon />
+                  </Button>
+                </label>
+              </div>
             </div>
             <div className="info__genres">
               {metadata.adult ? (
