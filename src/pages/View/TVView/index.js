@@ -2,8 +2,9 @@ import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
 
-import { Avatar, Chip, Typography } from "@material-ui/core";
+import { Avatar, Button, Chip, Typography } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
+import SubtitlesOutlinedIcon from "@material-ui/icons/SubtitlesOutlined";
 
 import DPlayer from "react-dplayer";
 
@@ -110,10 +111,19 @@ export class TVSView extends Component {
   constructor(props) {
     super(props);
     this.state = props.state;
+    this.onFileChange = this.onFileChange.bind(this);
+  }
+
+  onFileChange(evt) {
+    if (evt.target.files.length) {
+      this.setState({ file: URL.createObjectURL(evt.target.files[0]) });
+    } else {
+      this.setState({ file: null });
+    }
   }
 
   render() {
-    let { metadata, q, server, sources } = this.state;
+    let { file, metadata, q, server, sources } = this.state;
 
     var defaultQuality;
     if (sources.length > 1) {
@@ -134,11 +144,16 @@ export class TVSView extends Component {
       <div className="TVSView">
         <div className="plyr__component">
           <DPlayer
+            key={guid()}
             options={{
               video: {
                 quality: sources,
                 defaultQuality: defaultQuality,
                 pic: `${server}/api/v1/image/thumbnail?id=${metadata.children[q].id}`,
+              },
+              subtitle: {
+                url: file,
+                type: "webvtt",
               },
               preload: "auto",
               theme: theme.palette.primary.main,
@@ -217,6 +232,19 @@ export class TVSView extends Component {
             />
             <DownloadMenu state={this.state} />
             <PlaylistMenu state={this.state} />
+            <div style={{ marginTop: "20px" }}>
+              <input
+                id="file-input"
+                hidden
+                onChange={this.onFileChange}
+                type="file"
+              />
+              <label htmlFor="file-input">
+                <Button color="primary" variant="outlined" component="span">
+                  <SubtitlesOutlinedIcon />
+                </Button>
+              </label>
+            </div>
           </div>
         </div>
       </div>
