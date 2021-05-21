@@ -5,6 +5,7 @@ import { Rating } from "@material-ui/lab";
 import SubtitlesOutlinedIcon from "@material-ui/icons/SubtitlesOutlined";
 
 import DPlayer from "react-dplayer";
+import VTTConverter from "srt-webvtt";
 
 import { DownloadMenu, guid, PlayerMenu, theme } from "../../../components";
 
@@ -16,9 +17,15 @@ export default class MovieView extends Component {
     this.prettyDate = this.prettyDate.bind(this);
   }
 
-  onFileChange(evt) {
+  async onFileChange(evt) {
     if (evt.target.files.length) {
-      this.setState({ file: URL.createObjectURL(evt.target.files[0]) });
+      if (evt.target.files[0].name.endsWith(".srt")) {
+        const vtt = new VTTConverter(evt.target.files[0]);
+        let res = await vtt.getURL();
+        this.setState({ file: res });
+      } else {
+        this.setState({ file: URL.createObjectURL(evt.target.files[0]) });
+      }
     } else {
       this.setState({ file: null });
     }
@@ -56,7 +63,6 @@ export default class MovieView extends Component {
               },
               subtitle: {
                 url: file,
-                type: "webvtt",
               },
               preload: "auto",
               theme: theme.palette.primary.main,
