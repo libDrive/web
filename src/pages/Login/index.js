@@ -16,6 +16,8 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
+import { theme } from "../../components"
+
 const styles = (theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -114,6 +116,7 @@ class Login extends Component {
             text: data.message,
             icon: "error",
             confirmButtonText: "OK",
+            confirmButtonColor: theme.palette.success.main,
           });
         } catch {
           Swal.fire({
@@ -121,6 +124,7 @@ class Login extends Component {
             text: `You were unable to communicate with the server. Are you sure ${server} is the correct server?`,
             icon: "error",
             confirmButtonText: "OK",
+            confirmButtonColor: theme.palette.success.main,
           });
         }
       });
@@ -149,6 +153,7 @@ class Login extends Component {
             text: data.message,
             icon: "error",
             confirmButtonText: "OK",
+            confirmButtonColor: theme.palette.success.main,
           });
         } catch {
           Swal.fire({
@@ -156,6 +161,7 @@ class Login extends Component {
             text: `Something went wrong while communicating with the server ${server}`,
             icon: "error",
             confirmButtonText: "OK",
+            confirmButtonColor: theme.palette.success.main,
           });
         }
       });
@@ -190,6 +196,7 @@ class Login extends Component {
             text: data.message,
             icon: "error",
             confirmButtonText: "OK",
+            confirmButtonColor: theme.palette.success.main,
           });
         } catch {
           Swal.fire({
@@ -197,6 +204,7 @@ class Login extends Component {
             text: `Something went wrong while communicating with the server ${server}`,
             icon: "error",
             confirmButtonText: "OK",
+            confirmButtonColor: theme.palette.success.main,
           });
         }
       });

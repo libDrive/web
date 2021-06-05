@@ -7,7 +7,7 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { Carousel, Footer, Nav } from "../../components";
+import { Carousel, Footer, Nav, theme } from "../../components";
 
 export default class Browse extends Component {
   constructor(props) {
@@ -46,6 +46,7 @@ export default class Browse extends Component {
               text: data.message,
               icon: "error",
               confirmButtonText: "Login",
+              confirmButtonColor: theme.palette.success.main,
             }).then((result) => {
               if (result.isConfirmed) {
                 this.props.history.push("/logout");
@@ -59,7 +60,9 @@ export default class Browse extends Component {
               text: data.message,
               icon: "error",
               confirmButtonText: "Logout",
+              confirmButtonColor: theme.palette.success.main,
               cancelButtonText: "Retry",
+              cancelButtonColor: theme.palette.error.main,
               showCancelButton: true,
             }).then((result) => {
               if (result.isConfirmed) {
@@ -78,7 +81,9 @@ export default class Browse extends Component {
               text: `libDrive could not communicate with the server! Is '${server}' the correct address?`,
               icon: "error",
               confirmButtonText: "Logout",
+              confirmButtonColor: theme.palette.success.main,
               cancelButtonText: "Retry",
+              cancelButtonColor: theme.palette.error.main,
               showCancelButton: true,
             }).then((result) => {
               if (result.isConfirmed) {

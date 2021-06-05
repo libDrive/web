@@ -73,6 +73,7 @@ export class Settings extends Component {
                 text: data.message,
                 icon: "error",
                 confirmButtonText: "Login",
+                confirmButtonColor: theme.palette.success.main,
               }).then((result) => {
                 if (result.isConfirmed) {
                   this.props.history.push("/logout");
@@ -86,7 +87,9 @@ export class Settings extends Component {
                 text: data.message,
                 icon: "error",
                 confirmButtonText: "Logout",
+                confirmButtonColor: theme.palette.success.main,
                 cancelButtonText: "Retry",
+                cancelButtonColor: theme.palette.error.main,
                 showCancelButton: true,
               }).then((result) => {
                 if (result.isConfirmed) {
@@ -105,7 +108,9 @@ export class Settings extends Component {
                 text: `libDrive could not communicate with the server! Is '${server}' the correct address?`,
                 icon: "error",
                 confirmButtonText: "Logout",
+                confirmButtonColor: theme.palette.success.main,
                 cancelButtonText: "Retry",
+                cancelButtonColor: theme.palette.error.main,
                 showCancelButton: true,
               }).then((result) => {
                 if (result.isConfirmed) {
@@ -136,6 +141,7 @@ export class Settings extends Component {
           text: response.data.message,
           icon: "success",
           confirmButtonText: "OK",
+          confirmButtonColor: theme.palette.success.main,
         });
       })
       .catch((error) => {
@@ -145,6 +151,7 @@ export class Settings extends Component {
           text: "libDrive is being restarted, this might take some time, so the app won't load",
           icon: "success",
           confirmButtonText: "OK",
+          confirmButtonColor: theme.palette.success.main,
         });
       });
   }
@@ -161,6 +168,7 @@ export class Settings extends Component {
           text: response.data.message,
           icon: "success",
           confirmButtonText: "OK",
+          confirmButtonColor: theme.palette.success.main,
         });
       })
       .catch((error) => {
@@ -173,6 +181,7 @@ export class Settings extends Component {
               text: data.message,
               icon: "error",
               confirmButtonText: "Logout",
+              confirmButtonColor: theme.palette.success.main,
             }).then((result) => {
               if (result.isConfirmed) {
                 sessionStorage.removeItem("secret");
@@ -185,7 +194,9 @@ export class Settings extends Component {
               text: data.message,
               icon: "error",
               confirmButtonText: "Logout",
+              confirmButtonColor: theme.palette.success.main,
               cancelButtonText: "Retry",
+              cancelButtonColor: theme.palette.error.main,
               showCancelButton: true,
             }).then((result) => {
               if (result.isConfirmed) {
@@ -201,7 +212,9 @@ export class Settings extends Component {
             text: `libDrive could not communicate with the server! Is ${server} the correct address?`,
             icon: "error",
             confirmButtonText: "Logout",
+            confirmButtonColor: theme.palette.success.main,
             cancelButtonText: "Retry",
+            cancelButtonColor: theme.palette.error.main,
             showCancelButton: true,
           }).then((result) => {
             if (result.isConfirmed) {

@@ -16,7 +16,7 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { Nav } from "../../components";
+import { Nav, theme } from "../../components";
 
 const styles = (theme) => ({
   paper: {
@@ -72,6 +72,7 @@ class SettingsLoginForm extends Component {
               text: data.message,
               icon: "error",
               confirmButtonText: "OK",
+              confirmButtonColor: theme.palette.success.main,
             });
           } else {
             Swal.fire({
@@ -79,6 +80,7 @@ class SettingsLoginForm extends Component {
               text: data.message,
               icon: "error",
               confirmButtonText: "OK",
+              confirmButtonColor: theme.palette.success.main,
             }).then((result) => {
               location.reload();
             });
@@ -89,7 +91,9 @@ class SettingsLoginForm extends Component {
             text: "libDrive could not communicate with the server. Is ${server} the correct address?",
             icon: "error",
             confirmButtonText: "Logout",
+            confirmButtonColor: theme.palette.success.main,
             cancelButtonText: "Retry",
+            cancelButtonColor: theme.palette.error.main,
             showCancelButton: true,
           }).then((result) => {
             if (result.isConfirmed) {

@@ -10,6 +10,8 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
+import { theme } from "../../components";
+
 export default class BrowseMenu extends Component {
   constructor(props) {
     super(props);
@@ -47,6 +49,7 @@ export default class BrowseMenu extends Component {
           text: "libDrive's metadata is being rebuilt...",
           icon: "success",
           confirmButtonText: "OK",
+          confirmButtonColor: theme.palette.success.main,
         })
       )
       .catch((error) => {
@@ -60,6 +63,7 @@ export default class BrowseMenu extends Component {
               text: "Your credentials are invalid!",
               icon: "error",
               confirmButtonText: "Logout",
+              confirmButtonColor: theme.palette.success.main,
             }).then((result) => {
               if (result.isConfirmed) {
                 this.props.history.push("/logout");
@@ -71,7 +75,9 @@ export default class BrowseMenu extends Component {
               text: "Something went wrong while communicating with the server!",
               icon: "error",
               confirmButtonText: "Logout",
+              confirmButtonColor: theme.palette.success.main,
               cancelButtonText: "Retry",
+              cancelButtonColor: theme.palette.error.main,
               showCancelButton: true,
             }).then((result) => {
               if (result.isConfirmed) {
@@ -87,7 +93,9 @@ export default class BrowseMenu extends Component {
             text: `libDrive could not communicate with the server! Is ${server} the correct address?`,
             icon: "error",
             confirmButtonText: "Logout",
+            confirmButtonColor: theme.palette.success.main,
             cancelButtonText: "Retry",
+            cancelButtonColor: theme.palette.error.main,
             showCancelButton: true,
           }).then((result) => {
             if (result.isConfirmed) {
