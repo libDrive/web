@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Button, Menu, MenuItem } from "@material-ui/core";
+import { Button, Divider, Menu, MenuItem } from "@material-ui/core";
 import CloudDownloadOutlinedIcon from "@material-ui/icons/CloudDownloadOutlined";
 
 export default class DownloadMenu extends Component {
@@ -12,6 +12,7 @@ export default class DownloadMenu extends Component {
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleSeason = this.handleSeason.bind(this);
   }
 
   handleClick(evt) {
@@ -23,6 +24,19 @@ export default class DownloadMenu extends Component {
   handleClose(evt) {
     this.setState({
       menuAnchor: false,
+    });
+  }
+
+  handleSeason(evt) {
+    evt.preventDefault();
+    let { auth, metadata, server } = this.state;
+    for (let n = 0; n < metadata.children.length; n++) {
+      window.open(
+        `${server}/api/v1/redirectdownload/${metadata.children[n].name}?a=${auth}&id=${metadata.children[n].id}`
+      );
+    }
+    this.setState({
+      menuAnchor: evt.currentTarget,
     });
   }
 
@@ -64,6 +78,13 @@ export default class DownloadMenu extends Component {
                 </a>
               ))
             : null}
+
+          {this.props.tv ? (
+            <div>
+              <Divider />
+              <MenuItem onClick={this.handleSeason}>Entire season</MenuItem>
+            </div>
+          ) : null}
         </Menu>
       </div>
     );

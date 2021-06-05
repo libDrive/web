@@ -238,7 +238,7 @@ export class TVSView extends Component {
                 server: server,
               }}
             />
-            <DownloadMenu state={this.state} />
+            <DownloadMenu state={this.state} tv={true} />
             <PlaylistMenu state={this.state} />
             <div style={{ marginTop: "20px" }}>
               <input

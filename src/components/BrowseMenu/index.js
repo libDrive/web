@@ -52,7 +52,7 @@ export default class BrowseMenu extends Component {
           <Link to={"/"} className="no_decoration_link">
             <MenuItem onClick={this.handleClose}>Home Page</MenuItem>
           </Link>
-          <Divider light />
+          <Divider />
           {categories.length
             ? categories.map((category) => (
                 <Link
