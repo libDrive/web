@@ -39,7 +39,11 @@ export default class MovieView extends Component {
   }
 
   render() {
-    let { file, metadata, server, sources } = this.state;
+    let { file, metadata, server, sources, subtitle } = this.state;
+
+    if (file) {
+      subtitle = {url: file}
+    }
 
     var defaultQuality;
     if (sources.length > 1) {
@@ -61,9 +65,7 @@ export default class MovieView extends Component {
                   metadata.backdropPath ||
                   `${server}/api/v1/image/thumbnail?id=${metadata.id}`,
               },
-              subtitle: {
-                url: file,
-              },
+              subtitle: subtitle,
               preload: "auto",
               theme: theme.palette.primary.main,
               contextmenu: [

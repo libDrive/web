@@ -130,7 +130,11 @@ export class TVSView extends Component {
   }
 
   render() {
-    let { file, metadata, q, server, sources } = this.state;
+    let { file, metadata, q, server, sources, subtitle } = this.state;
+
+    if (file) {
+      subtitle = {url: file}
+    }
 
     var defaultQuality;
     if (sources.length > 1) {
@@ -158,10 +162,7 @@ export class TVSView extends Component {
                 defaultQuality: defaultQuality,
                 pic: `${server}/api/v1/image/thumbnail?id=${metadata.children[q].id}`,
               },
-              subtitle: {
-                url: file,
-                type: "webvtt",
-              },
+              subtitle: subtitle,
               preload: "auto",
               theme: theme.palette.primary.main,
               contextmenu: [

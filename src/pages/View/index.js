@@ -25,6 +25,7 @@ export default class View extends Component {
       isLoaded: false,
       metadata: {},
       sources: [],
+      subtitle: {url: ""},
     };
   }
 
@@ -131,11 +132,13 @@ export default class View extends Component {
       .get(
         `${server}/api/v1/stream_map?a=${auth}&id=${id}&name=${name}&server=${server}`
       )
-      .then((response) =>
+      .then((response) => {
         this.setState({
-          sources: response.data.content,
+          sources: response.data.content.sources,
+          subtitle: response.data.content.subtitle,
           isLoaded: true,
         })
+      }
       )
       .catch((error) => {
         console.error(error);
