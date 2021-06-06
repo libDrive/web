@@ -70,12 +70,24 @@ export default class PlayerMenu extends Component {
             <MenuItem onClick={this.handleClose}>PotPlayer</MenuItem>
           </a>
           <a
-            href={`nplayer-${server}/api/v1/redirectdownload/${encodeURI(
+            href={`intent:${server}/api/v1/redirectdownload/${encodeURI(
               metadata.name
-            )}?a=${auth}&id=${id}`}
+            )}?a=${auth}&id=${id}#Intent;package=com.mxtech.videoplayer.ad;S.title=${
+              metadata.name
+            };end`}
             className="no_decoration_link"
           >
-            <MenuItem onClick={this.handleClose}>nPlayer</MenuItem>
+            <MenuItem onClick={this.handleClose}>Mx Player (Free)</MenuItem>
+          </a>
+          <a
+            href={`intent:${server}/api/v1/redirectdownload/${encodeURI(
+              metadata.name
+            )}?a=${auth}&id=${id}#Intent;package=com.mxtech.videoplayer.pro;S.title=${
+              metadata.name
+            };end`}
+            className="no_decoration_link"
+          >
+            <MenuItem onClick={this.handleClose}>Mx Player (Pro)</MenuItem>
           </a>
           <Divider />
           <MenuItem

@@ -25,7 +25,7 @@ export default class View extends Component {
       isLoaded: false,
       metadata: {},
       sources: [],
-      subtitle: {url: ""},
+      subtitle: { url: "" },
     };
   }
 
@@ -142,9 +142,8 @@ export default class View extends Component {
           sources: response.data.content.sources,
           subtitle: response.data.content.subtitle,
           isLoaded: true,
-        })
-      }
-      )
+        });
+      })
       .catch((error) => {
         console.error(error);
         if (error.response) {

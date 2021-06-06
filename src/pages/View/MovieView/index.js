@@ -42,7 +42,7 @@ export default class MovieView extends Component {
     let { file, metadata, server, sources, subtitle } = this.state;
 
     if (file) {
-      subtitle = {url: file}
+      subtitle = { url: file };
     }
 
     var defaultQuality;

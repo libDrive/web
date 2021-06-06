@@ -133,7 +133,7 @@ export class TVSView extends Component {
     let { file, metadata, q, server, sources, subtitle } = this.state;
 
     if (file) {
-      subtitle = {url: file}
+      subtitle = { url: file };
     }
 
     var defaultQuality;
