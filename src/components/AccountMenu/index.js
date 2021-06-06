@@ -5,12 +5,7 @@ import { Link } from "react-router-dom";
 import { IconButton, Menu, MenuItem } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 
-import Swal from "sweetalert2/src/sweetalert2.js";
 import "@sweetalert2/theme-dark/dark.css";
-
-import axios from "axios";
-
-import { theme } from "../../components";
 
 export default class BrowseMenu extends Component {
   constructor(props) {
@@ -20,7 +15,6 @@ export default class BrowseMenu extends Component {
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.handleRebuild = this.handleRebuild.bind(this);
   }
 
   handleClick(evt) {
@@ -33,79 +27,6 @@ export default class BrowseMenu extends Component {
     this.setState({
       menuAnchor: false,
     });
-  }
-
-  handleRebuild(evt) {
-    let auth = sessionStorage.getItem("auth") || localStorage.getItem("auth");
-    let server =
-      sessionStorage.getItem("server") || localStorage.getItem("server");
-
-    let url = `${server}/api/v1/rebuild?a=${auth}`;
-    axios
-      .get(url)
-      .then((response) =>
-        Swal.fire({
-          title: "Success!",
-          text: "libDrive's metadata is being rebuilt...",
-          icon: "success",
-          confirmButtonText: "OK",
-          confirmButtonColor: theme.palette.success.main,
-        })
-      )
-      .catch((error) => {
-        console.error(error);
-        if (auth == null || server == null) {
-          this.props.history.push("/login");
-        } else if (error.response) {
-          if (error.response.status === 401) {
-            Swal.fire({
-              title: "Error!",
-              text: "Your credentials are invalid!",
-              icon: "error",
-              confirmButtonText: "Logout",
-              confirmButtonColor: theme.palette.success.main,
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.props.history.push("/logout");
-              }
-            });
-          } else {
-            Swal.fire({
-              title: "Error!",
-              text: "Something went wrong while communicating with the server!",
-              icon: "error",
-              confirmButtonText: "Logout",
-              confirmButtonColor: theme.palette.success.main,
-              cancelButtonText: "Retry",
-              cancelButtonColor: theme.palette.error.main,
-              showCancelButton: true,
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.props.history.push("/logout");
-              } else if (result.isDismissed) {
-                location.reload();
-              }
-            });
-          }
-        } else if (error.request) {
-          Swal.fire({
-            title: "Error!",
-            text: `libDrive could not communicate with the server! Is ${server} the correct address?`,
-            icon: "error",
-            confirmButtonText: "Logout",
-            confirmButtonColor: theme.palette.success.main,
-            cancelButtonText: "Retry",
-            cancelButtonColor: theme.palette.error.main,
-            showCancelButton: true,
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.props.history.push("/logout");
-            } else if (result.isDismissed) {
-              location.reload();
-            }
-          });
-        }
-      });
   }
 
   render() {
@@ -142,7 +63,6 @@ export default class BrowseMenu extends Component {
           <Link to={"/settings"} className="no_decoration_link">
             <MenuItem onClick={this.handleClose}>Settings</MenuItem>
           </Link>
-          <MenuItem onClick={this.handleRebuild}>Rebuild</MenuItem>
           <Link to={"/logout"} className="no_decoration_link">
             <MenuItem onClick={this.handleClose}>Logout</MenuItem>
           </Link>

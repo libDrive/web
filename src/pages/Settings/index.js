@@ -45,6 +45,7 @@ export class Settings extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleRestart = this.handleRestart.bind(this);
     this.handleKillSwitch = this.handleKillSwitch.bind(this);
+    this.handleRebuild = this.handleRebuild.bind(this);
   }
 
   componentDidMount() {
@@ -240,6 +241,77 @@ export class Settings extends Component {
     this.handleSubmit(evt);
   }
 
+  handleRebuild(evt) {
+    let { secret, server } = this.state;
+
+    let url = `${server}/api/v1/rebuild?secret=${secret}`;
+    axios
+      .get(url)
+      .then((response) =>
+        Swal.fire({
+          title: "Success!",
+          text: "libDrive's metadata is being rebuilt...",
+          icon: "success",
+          confirmButtonText: "OK",
+          confirmButtonColor: theme.palette.success.main,
+        })
+      )
+      .catch((error) => {
+        console.error(error);
+        if (auth == null || server == null) {
+          this.props.history.push("/login");
+        } else if (error.response) {
+          if (error.response.status === 401) {
+            Swal.fire({
+              title: "Error!",
+              text: "Your credentials are invalid!",
+              icon: "error",
+              confirmButtonText: "Logout",
+              confirmButtonColor: theme.palette.success.main,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.props.history.push("/logout");
+              }
+            });
+          } else {
+            Swal.fire({
+              title: "Error!",
+              text: "Something went wrong while communicating with the server!",
+              icon: "error",
+              confirmButtonText: "Logout",
+              confirmButtonColor: theme.palette.success.main,
+              cancelButtonText: "Retry",
+              cancelButtonColor: theme.palette.error.main,
+              showCancelButton: true,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.props.history.push("/logout");
+              } else if (result.isDismissed) {
+                location.reload();
+              }
+            });
+          }
+        } else if (error.request) {
+          Swal.fire({
+            title: "Error!",
+            text: `libDrive could not communicate with the server! Is ${server} the correct address?`,
+            icon: "error",
+            confirmButtonText: "Logout",
+            confirmButtonColor: theme.palette.success.main,
+            cancelButtonText: "Retry",
+            cancelButtonColor: theme.palette.error.main,
+            showCancelButton: true,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.props.history.push("/logout");
+            } else if (result.isDismissed) {
+              location.reload();
+            }
+          });
+        }
+      });
+  }
+
   render() {
     let { config, isLoaded } = this.state;
     const { classes } = this.props;
@@ -278,7 +350,7 @@ export class Settings extends Component {
         >
           <div style={{ margin: "30px" }}>
             <Button
-              style={{ margin: "10px" }}
+              style={{ margin: "10px", width: "175px" }}
               type="submit"
               fullWidth
               variant="contained"
@@ -287,9 +359,8 @@ export class Settings extends Component {
             >
               Submit Config
             </Button>
-            <br />
             <Button
-              style={{ margin: "10px" }}
+              style={{ margin: "10px", width: "175px" }}
               fullWidth
               variant="contained"
               color="primary"
@@ -297,6 +368,16 @@ export class Settings extends Component {
               onClick={this.handleRestart}
             >
               Restart Server
+            </Button>
+            <Button
+              style={{ margin: "10px", width: "175px" }}
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={this.handleRebuild}
+            >
+              Rebuild Metadata
             </Button>
             <br />
             <p

@@ -82,7 +82,7 @@ export default class DownloadMenu extends Component {
           {this.props.tv ? (
             <div>
               <Divider />
-              <MenuItem onClick={this.handleSeason}>Entire season</MenuItem>
+              <MenuItem onClick={this.handleSeason}>Entire Season</MenuItem>
             </div>
           ) : null}
         </Menu>
