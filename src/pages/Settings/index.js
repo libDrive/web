@@ -60,7 +60,7 @@ export class Settings extends Component {
           this.setState({
             config: response.data.content,
             isLoaded: true,
-            config: response.data.content,
+            config: JSON.stringify(response.data.content, null, 4),
             tempSecret: response.data.content.secret_key,
           })
         )
@@ -162,7 +162,7 @@ export class Settings extends Component {
     let { secret, server } = this.state;
 
     axios
-      .post(`${server}/api/v1/config?secret=${secret}`, this.state.config)
+      .post(`${server}/api/v1/config?secret=${secret}`, JSON.parse(this.state.config))
       .then((response) => {
         Swal.fire({
           title: "Success!",
@@ -230,7 +230,7 @@ export class Settings extends Component {
 
   handleChange(evt) {
     this.setState({
-      config: JSON.parse(evt.target.value),
+      config: evt.target.value,
     });
   }
 
@@ -334,7 +334,7 @@ export class Settings extends Component {
             }}
             variant="outlined"
             label="Config"
-            value={JSON.stringify(config, null, 4)}
+            value={config}
             id="config-box"
             onChange={this.handleChange}
             multiline
