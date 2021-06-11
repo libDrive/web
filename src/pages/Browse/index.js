@@ -13,17 +13,20 @@ export default class Browse extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      auth: sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
+      auth:
+        sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
       isLoaded: false,
       metadata: {},
       server:
-        sessionStorage.getItem("server") || localStorage.getItem("server") || window.location.origin,
+        sessionStorage.getItem("server") ||
+        localStorage.getItem("server") ||
+        window.location.origin,
     };
   }
 
   componentDidMount() {
     let { auth, server } = this.state;
-    
+
     if (!auth || !server) {
       this.props.history.push("/logout");
     }

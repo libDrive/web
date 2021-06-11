@@ -7,7 +7,13 @@ import SubtitlesOutlinedIcon from "@material-ui/icons/SubtitlesOutlined";
 import DPlayer from "react-dplayer";
 import VTTConverter from "srt-webvtt";
 
-import { DownloadMenu, guid, PlayerMenu, seo, theme } from "../../../components";
+import {
+  DownloadMenu,
+  guid,
+  PlayerMenu,
+  seo,
+  theme,
+} from "../../../components";
 
 export default class MovieView extends Component {
   constructor(props) {

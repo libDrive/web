@@ -8,13 +8,22 @@ import "@sweetalert2/theme-dark/dark.css";
 import axios from "axios";
 import queryString from "query-string";
 
-import { Footer, Nav, PageMenu, SortMenu, seo, theme, Tile } from "../../components";
+import {
+  Footer,
+  Nav,
+  PageMenu,
+  SortMenu,
+  seo,
+  theme,
+  Tile,
+} from "../../components";
 
 export default class CategoryBrowse extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      auth: sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
+      auth:
+        sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
       category: this.props.match.params.category,
       isLoaded: false,
       metadata: {},
@@ -31,7 +40,9 @@ export default class CategoryBrowse extends Component {
             }`
       }`,
       server:
-        sessionStorage.getItem("server") || localStorage.getItem("server") || window.location.origin,
+        sessionStorage.getItem("server") ||
+        localStorage.getItem("server") ||
+        window.location.origin,
       sort:
         queryString.parse(this.props.location.search).sort || "alphabet-asc",
     };

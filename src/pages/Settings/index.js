@@ -32,12 +32,15 @@ export class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      auth: sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
+      auth:
+        sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
       error: "",
       isLoaded: false,
       secret: sessionStorage.getItem("secret"),
       server:
-        sessionStorage.getItem("server") || localStorage.getItem("server") || window.location.origin,
+        sessionStorage.getItem("server") ||
+        localStorage.getItem("server") ||
+        window.location.origin,
     };
 
     this.dismissError = this.dismissError.bind(this);
@@ -162,7 +165,10 @@ export class Settings extends Component {
     let { secret, server } = this.state;
 
     axios
-      .post(`${server}/api/v1/config?secret=${secret}`, JSON.parse(this.state.config))
+      .post(
+        `${server}/api/v1/config?secret=${secret}`,
+        JSON.parse(this.state.config)
+      )
       .then((response) => {
         Swal.fire({
           title: "Success!",

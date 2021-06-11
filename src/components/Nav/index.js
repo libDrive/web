@@ -9,12 +9,15 @@ export default class Nav extends Component {
     super(props);
     this.state = {
       accounts: {},
-      auth: sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
+      auth:
+        sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
       categories: [],
       isLoaded: false,
       news: [],
       server:
-        sessionStorage.getItem("server") || localStorage.getItem("server") || window.location.origin,
+        sessionStorage.getItem("server") ||
+        localStorage.getItem("server") ||
+        window.location.origin,
     };
   }
 

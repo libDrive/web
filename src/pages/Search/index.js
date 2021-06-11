@@ -13,12 +13,15 @@ export default class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      auth: sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
+      auth:
+        sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
       isLoaded: false,
       metadata: [],
       query: this.props.match.params.q,
       server:
-        sessionStorage.getItem("server") || localStorage.getItem("server") || window.location.origin,
+        sessionStorage.getItem("server") ||
+        localStorage.getItem("server") ||
+        window.location.origin,
     };
   }
 

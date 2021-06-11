@@ -18,8 +18,11 @@ export default class View extends Component {
     super(props);
     this.state = {
       server:
-        sessionStorage.getItem("server") || localStorage.getItem("server") || window.location.origin,
-      auth: sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
+        sessionStorage.getItem("server") ||
+        localStorage.getItem("server") ||
+        window.location.origin,
+      auth:
+        sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
       q: parseInt(queryString.parse(this.props.location.search).q) || 0,
       id: this.props.match.params.id,
       isLoaded: false,
@@ -214,7 +217,7 @@ export default class View extends Component {
 
     if (isLoaded) {
       seo({
-        title: metadata.title ? (`libDrive - ${metadata.title}`) : ("libDrive"),
+        title: metadata.title ? `libDrive - ${metadata.title}` : "libDrive",
         description: `Watch ${metadata.title || metadata.name} on libDrive!`,
         image: metadata.backdropPath,
       });

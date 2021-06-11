@@ -26,7 +26,7 @@ export default class App extends Component {
 
   render() {
     let { auth, server } = this.state;
-    
+
     return auth && server ? (
       <Redirect to="/browse" key={guid()} />
     ) : (
