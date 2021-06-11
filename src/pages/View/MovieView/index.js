@@ -23,6 +23,17 @@ export default class MovieView extends Component {
     this.prettyDate = this.prettyDate.bind(this);
   }
 
+  componentDidMount() {
+    let { metadata } = this.state;
+
+    seo({
+      title: `libDrive - ${metadata.title || metadata.name}`,
+      description: `Watch ${metadata.title || metadata.name} on libDrive! — ${metadata.overview}`,
+      image: metadata.backdropPath,
+      type: "video.movie",
+    });
+  }
+
   async onFileChange(evt) {
     if (evt.target.files.length) {
       if (evt.target.files[0].name.endsWith(".srt")) {
@@ -46,12 +57,6 @@ export default class MovieView extends Component {
 
   render() {
     let { file, metadata, server, sources, subtitle } = this.state;
-
-    seo({
-      title: `libDrive - ${metadata.title || metadata.name}`,
-      description: `Watch ${metadata.title || metadata.name} on libDrive!`,
-      image: metadata.backdropPath,
-    });
 
     if (file) {
       subtitle = { url: file };

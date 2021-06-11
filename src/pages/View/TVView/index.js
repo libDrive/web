@@ -26,6 +26,17 @@ export class TVBView extends Component {
     this.prettyDate = this.prettyDate.bind(this);
   }
 
+  componentDidMount() {
+    let { metadata } = this.state;
+
+    seo({
+      title: `libDrive - ${metadata.title || metadata.name}`,
+      description: `Watch ${metadata.title || metadata.name} on libDrive! — ${metadata.overview}`,
+      image: metadata.backdropPath,
+      type: "video.movie",
+    });
+  }
+
   prettyDate() {
     let old_date = this.state.metadata.releaseDate;
     let date_comp = old_date.split("-");
@@ -35,12 +46,6 @@ export class TVBView extends Component {
 
   render() {
     let { metadata, server } = this.state;
-
-    seo({
-      title: `libDrive - ${metadata.title || metadata.name}`,
-      description: `Watch ${metadata.title || metadata.name} on libDrive!`,
-      image: metadata.backdropPath,
-    });
 
     return (
       <div className="TVBView">
@@ -122,6 +127,16 @@ export class TVSView extends Component {
     this.onFileChange = this.onFileChange.bind(this);
   }
 
+  componentDidMount() {
+    let { metadata } = this.state;
+
+    seo({
+      title: `libDrive - ${metadata.name} - ${metadata.children[q].name}`,
+      description: `Watch ${metadata.name} - ${metadata.children[q].name} on libDrive!`,
+      type: "video.episode",
+    });
+  }
+
   async onFileChange(evt) {
     if (evt.target.files.length) {
       if (evt.target.files[0].name.endsWith(".srt")) {
@@ -138,11 +153,6 @@ export class TVSView extends Component {
 
   render() {
     let { file, metadata, q, server, sources, subtitle } = this.state;
-
-    seo({
-      title: `libDrive - ${metadata.name} - ${metadata.children[q].name}`,
-      description: `Watch ${metadata.name} - ${metadata.children[q].name} on libDrive!`,
-    });
 
     if (file) {
       subtitle = { url: file };

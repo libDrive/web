@@ -7,7 +7,7 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { Carousel, Footer, Nav, theme } from "../../components";
+import { Carousel, Footer, Nav, seo, theme } from "../../components";
 
 export default class Search extends Component {
   constructor(props) {
@@ -31,6 +31,11 @@ export default class Search extends Component {
     if (!auth || !server) {
       this.props.history.push("/logout");
     }
+    
+    seo({
+      title: `libDrive - ${query}`,
+      description: `Find ${query} on libDrive!`,
+    });
 
     let url = `${server}/api/v1/metadata?a=${auth}&q=${query}`;
     axios
