@@ -32,12 +32,12 @@ export class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      auth: sessionStorage.getItem("auth") || localStorage.getItem("auth"),
+      auth: sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
       error: "",
       isLoaded: false,
       secret: sessionStorage.getItem("secret"),
       server:
-        sessionStorage.getItem("server") || localStorage.getItem("server"),
+        sessionStorage.getItem("server") || localStorage.getItem("server") || window.location.origin,
     };
 
     this.dismissError = this.dismissError.bind(this);

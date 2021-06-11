@@ -18,8 +18,8 @@ export default class View extends Component {
     super(props);
     this.state = {
       server:
-        sessionStorage.getItem("server") || localStorage.getItem("server"),
-      auth: sessionStorage.getItem("auth") || localStorage.getItem("auth"),
+        sessionStorage.getItem("server") || localStorage.getItem("server") || window.location.origin,
+      auth: sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
       q: parseInt(queryString.parse(this.props.location.search).q) || 0,
       id: this.props.match.params.id,
       isLoaded: false,

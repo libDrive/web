@@ -7,17 +7,17 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { Carousel, Footer, Nav, seo, theme } from "../../components";
+import { Carousel, Footer, Nav, theme } from "../../components";
 
 export default class Browse extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      auth: sessionStorage.getItem("auth") || localStorage.getItem("auth"),
+      auth: sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
       isLoaded: false,
       metadata: {},
       server:
-        sessionStorage.getItem("server") || localStorage.getItem("server"),
+        sessionStorage.getItem("server") || localStorage.getItem("server") || window.location.origin,
     };
   }
 

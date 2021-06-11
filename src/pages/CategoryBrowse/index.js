@@ -14,7 +14,7 @@ export default class CategoryBrowse extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      auth: sessionStorage.getItem("auth") || localStorage.getItem("auth"),
+      auth: sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
       category: this.props.match.params.category,
       isLoaded: false,
       metadata: {},
@@ -31,7 +31,7 @@ export default class CategoryBrowse extends Component {
             }`
       }`,
       server:
-        sessionStorage.getItem("server") || localStorage.getItem("server"),
+        sessionStorage.getItem("server") || localStorage.getItem("server") || window.location.origin,
       sort:
         queryString.parse(this.props.location.search).sort || "alphabet-asc",
     };

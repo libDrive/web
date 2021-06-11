@@ -42,10 +42,10 @@ class SettingsLoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      auth: sessionStorage.getItem("auth") || localStorage.getItem("auth"),
+      auth: sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
       secret: "",
       server:
-        sessionStorage.getItem("server") || localStorage.getItem("server"),
+        sessionStorage.getItem("server") || localStorage.getItem("server") || window.location.origin,
     };
 
     this.handleSecretChange = this.handleSecretChange.bind(this);

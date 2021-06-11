@@ -13,7 +13,7 @@ export default class Tile extends Component {
     this.state = {
       metadata: this.props.metadata,
       server:
-        sessionStorage.getItem("server") || localStorage.getItem("server"),
+        sessionStorage.getItem("server") || localStorage.getItem("server") || window.location.origin,
     };
   }
 
