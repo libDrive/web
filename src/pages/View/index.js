@@ -8,7 +8,7 @@ import "@sweetalert2/theme-dark/dark.css";
 import axios from "axios";
 import queryString from "query-string";
 
-import { Footer, Nav, theme } from "../../components";
+import { Footer, Nav, seo, theme } from "../../components";
 import MovieView from "./MovieView";
 import { TVBView, TVSView } from "./TVView";
 import "./index.css";
@@ -205,8 +205,20 @@ export default class View extends Component {
       });
   };
 
+  componentWillUnmount() {
+    seo();
+  }
+
   render() {
     let { isLoaded, metadata } = this.state;
+
+    if (isLoaded) {
+      seo({
+        title: metadata.title ? (`libDrive - ${metadata.title}`) : ("libDrive"),
+        description: `Watch ${metadata.title || metadata.name} on libDrive!`,
+        image: metadata.backdropPath,
+      });
+    }
 
     return isLoaded && metadata.type == "file" ? (
       <div className="View">

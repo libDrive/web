@@ -7,7 +7,7 @@ import SubtitlesOutlinedIcon from "@material-ui/icons/SubtitlesOutlined";
 import DPlayer from "react-dplayer";
 import VTTConverter from "srt-webvtt";
 
-import { DownloadMenu, guid, PlayerMenu, theme } from "../../../components";
+import { DownloadMenu, guid, PlayerMenu, seo, theme } from "../../../components";
 
 export default class MovieView extends Component {
   constructor(props) {
@@ -40,6 +40,12 @@ export default class MovieView extends Component {
 
   render() {
     let { file, metadata, server, sources, subtitle } = this.state;
+
+    seo({
+      title: `libDrive - ${metadata.title || metadata.name}`,
+      description: `Watch ${metadata.title || metadata.name} on libDrive!`,
+      image: metadata.backdropPath,
+    });
 
     if (file) {
       subtitle = { url: file };

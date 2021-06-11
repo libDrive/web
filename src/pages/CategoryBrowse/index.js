@@ -8,7 +8,7 @@ import "@sweetalert2/theme-dark/dark.css";
 import axios from "axios";
 import queryString from "query-string";
 
-import { Footer, Nav, PageMenu, SortMenu, theme, Tile } from "../../components";
+import { Footer, Nav, PageMenu, SortMenu, seo, theme, Tile } from "../../components";
 
 export default class CategoryBrowse extends Component {
   constructor(props) {
@@ -115,8 +115,19 @@ export default class CategoryBrowse extends Component {
       });
   }
 
+  componentWillUnmount() {
+    seo();
+  }
+
   render() {
     let { isLoaded, metadata, page, pages, sort } = this.state;
+
+    if (isLoaded) {
+      seo({
+        title: `libDrive - ${metadata[0].categoryInfo.name}`,
+        description: `Browse ${metadata[0].categoryInfo.name} on libDrive!`,
+      });
+    }
 
     return isLoaded ? (
       <div className="CategoryBrowse">

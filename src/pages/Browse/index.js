@@ -7,7 +7,7 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { Carousel, Footer, Nav, theme } from "../../components";
+import { Carousel, Footer, Nav, seo, theme } from "../../components";
 
 export default class Browse extends Component {
   constructor(props) {
@@ -23,6 +23,7 @@ export default class Browse extends Component {
 
   componentDidMount() {
     let { auth, server } = this.state;
+    
     if (!auth || !server) {
       this.props.history.push("/logout");
     }

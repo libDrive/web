@@ -15,6 +15,7 @@ import {
   guid,
   PlayerMenu,
   PlaylistMenu,
+  seo,
   theme,
 } from "../../../components";
 
@@ -34,6 +35,12 @@ export class TVBView extends Component {
 
   render() {
     let { metadata, server } = this.state;
+
+    seo({
+      title: `libDrive - ${metadata.title || metadata.name}`,
+      description: `Watch ${metadata.title || metadata.name} on libDrive!`,
+      image: metadata.backdropPath,
+    });
 
     return (
       <div className="TVBView">
@@ -131,6 +138,11 @@ export class TVSView extends Component {
 
   render() {
     let { file, metadata, q, server, sources, subtitle } = this.state;
+
+    seo({
+      title: `libDrive - ${metadata.name} - ${metadata.children[q].name}`,
+      description: `Watch ${metadata.name} - ${metadata.children[q].name} on libDrive!`,
+    });
 
     if (file) {
       subtitle = { url: file };
