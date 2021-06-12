@@ -10,6 +10,8 @@ import {
 } from "@material-ui/core";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 
+import axios from "axios";
+
 import { guid } from "../../components";
 
 export default class NewsMenu extends Component {
@@ -17,15 +19,22 @@ export default class NewsMenu extends Component {
     super(props);
     this.state = {
       menuAnchor: false,
+      news: [],
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
   handleClick(evt) {
-    this.setState({
-      menuAnchor: evt.currentTarget,
-    });
+    axios
+      .get("https://api.github.com/repos/libDrive/libDrive/releases")
+      .then((response) => {
+        let data = response.data;
+        this.setState({
+          news: data,
+          menuAnchor: true,
+        });
+      });
   }
 
   handleClose(evt) {
@@ -35,7 +44,7 @@ export default class NewsMenu extends Component {
   }
 
   render() {
-    let { news } = this.props;
+    let { news } = this.state;
 
     return (
       <div className="NewsMenu">

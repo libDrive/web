@@ -12,7 +12,7 @@ export default function seo(data = {}) {
   document
     .querySelector('meta[name="description"]')
     .setAttribute("content", data.description);
-    document
+  document
     .querySelector('meta[property="og:description"]')
     .setAttribute("content", data.description);
   document

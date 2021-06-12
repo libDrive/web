@@ -31,7 +31,7 @@ export default class Search extends Component {
     if (!auth || !server) {
       this.props.history.push("/logout");
     }
-    
+
     seo({
       title: `libDrive - ${query}`,
       description: `Find ${query} on libDrive!`,
@@ -105,6 +105,10 @@ export default class Search extends Component {
           }
         }
       });
+  }
+
+  componentWillUnmount() {
+    seo();
   }
 
   render() {

@@ -96,7 +96,7 @@ class NavUI extends Component {
   }
 
   render() {
-    let { accounts, categories, news } = this.state;
+    let { accounts, categories } = this.state;
     const { classes } = this.props;
 
     return (
@@ -128,7 +128,7 @@ class NavUI extends Component {
             <div className={classes.grow} />
             <BrowseMenu categories={categories} />
             <ThemeMenu />
-            <NewsMenu news={news} />
+            <NewsMenu />
             <AccountMenu accounts={accounts} />
           </Toolbar>
         </AppBar>
