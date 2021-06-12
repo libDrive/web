@@ -4,8 +4,6 @@ import { withStyles } from "@material-ui/core/styles";
 
 import { version } from "../../components";
 
-import "./index.css";
-
 const styles = (theme) => ({
   footer__container: {
     backgroundColor: theme.palette.background.paper,
