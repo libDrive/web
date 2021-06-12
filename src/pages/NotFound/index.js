@@ -11,7 +11,7 @@ export default class NotFound extends Component {
         <Nav {...this.props} />
         <div className="nf">
           <div className="fof">
-            <h1>Error 404</h1>
+            <h1>Error 404: Not Found</h1>
           </div>
         </div>
       </div>
