@@ -4,6 +4,7 @@ import {
   Avatar,
   Button,
   Container,
+  CircularProgress,
   CssBaseline,
   TextField,
   Typography,
@@ -44,6 +45,7 @@ class SettingsLoginForm extends Component {
     this.state = {
       auth:
         sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
+      isLoaded: false,
       secret: "",
       server:
         sessionStorage.getItem("server") ||
@@ -53,6 +55,12 @@ class SettingsLoginForm extends Component {
 
     this.handleSecretChange = this.handleSecretChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    let navProps = { ...this.props };
+    navProps.classes = {};
+    this.setState({ isLoaded: true, navProps: navProps });
   }
 
   handleSubmit(evt) {
@@ -116,12 +124,12 @@ class SettingsLoginForm extends Component {
   }
 
   render() {
-    let { secret } = this.state;
+    let { isLoaded, navProps, secret } = this.state;
     const { classes } = this.props;
 
-    return (
+    return isLoaded ? (
       <div className="SettingsLoginForm">
-        <Nav {...this.props} />
+        <Nav {...navProps} />
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <div className={classes.paper}>
@@ -160,6 +168,10 @@ class SettingsLoginForm extends Component {
             </form>
           </div>
         </Container>
+      </div>
+    ) : (
+      <div className="Loading">
+        <CircularProgress />
       </div>
     );
   }

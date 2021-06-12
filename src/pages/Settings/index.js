@@ -54,6 +54,9 @@ export class Settings extends Component {
   componentDidMount() {
     let { secret, server } = this.state;
 
+    let navProps = { ...this.props };
+    navProps.classes = {};
+    
     if (sessionStorage.getItem("secret") == null) {
       this.props.history.push("/settings/login");
     } else {
@@ -61,9 +64,9 @@ export class Settings extends Component {
         .get(`${server}/api/v1/config?secret=${secret}`)
         .then((response) =>
           this.setState({
-            config: response.data.content,
-            isLoaded: true,
             config: JSON.stringify(response.data.content, null, 4),
+            isLoaded: true,
+            navProps: navProps,
             tempSecret: response.data.content.secret_key,
           })
         )
@@ -319,12 +322,12 @@ export class Settings extends Component {
   }
 
   render() {
-    let { config, isLoaded } = this.state;
+    let { config, isLoaded, navProps } = this.state;
     const { classes } = this.props;
 
     return isLoaded ? (
       <div className="Settings">
-        <Nav {...this.props} />
+        <Nav {...navProps} />
         <div
           style={{
             margin: "auto",

@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import { Button, Divider, Menu, MenuItem } from "@material-ui/core";
 import CloudDownloadOutlinedIcon from "@material-ui/icons/CloudDownloadOutlined";
 
+import { guid } from "../../components";
+
 export default class DownloadMenu extends Component {
   constructor(props) {
     super(props);
@@ -69,6 +71,7 @@ export default class DownloadMenu extends Component {
                 <a
                   href={source.url}
                   className="no_decoration_link"
+                  key={guid()}
                   target="_blank"
                 >
                   <MenuItem onClick={this.handleClose}>{source.name}</MenuItem>

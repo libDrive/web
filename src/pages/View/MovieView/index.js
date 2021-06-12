@@ -170,6 +170,7 @@ export default class MovieView extends Component {
                       avatar={<Avatar>{genre.name.charAt(0)}</Avatar>}
                       className="info__genre"
                       label={genre.name}
+                      key={guid()}
                       variant="outlined"
                     />
                   ))
