@@ -138,7 +138,7 @@ export default class View extends Component {
 
     await axios
       .get(
-        `${server}/api/v1/stream_map?a=${auth}&id=${id}&name=${name}&server=${server}`
+        `${server}/api/v1/streammap?a=${auth}&id=${id}&name=${name}&server=${server}`
       )
       .then((response) => {
         this.setState({
