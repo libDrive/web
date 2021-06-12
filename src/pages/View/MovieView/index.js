@@ -28,7 +28,9 @@ export default class MovieView extends Component {
 
     seo({
       title: `libDrive - ${metadata.title || metadata.name}`,
-      description: `Watch ${metadata.title || metadata.name} on libDrive! — ${metadata.overview}`,
+      description: `Watch ${metadata.title || metadata.name} on libDrive! — ${
+        metadata.overview
+      }`,
       image: metadata.backdropPath,
       type: "video.movie",
     });
@@ -135,16 +137,10 @@ export default class MovieView extends Component {
                   : this.prettyDate()}
               </Typography>
             </div>
-            <div
-              style={{
-                display: "flex",
-                alignContent: "center",
-                flexWrap: "wrap",
-              }}
-            >
+            <div className="info__buttons">
               <PlayerMenu state={this.state} />
               <DownloadMenu state={this.state} />
-              <div style={{ marginTop: "20px" }}>
+              <div className="info__button">
                 <input
                   id="file-input"
                   hidden
@@ -163,7 +159,7 @@ export default class MovieView extends Component {
                 <Chip
                   color="secondary"
                   avatar={<Avatar>E</Avatar>}
-                  style={{ marginRight: "8px", marginBottom: "8px" }}
+                  className="info__genre"
                   label={"Adult (18+)"}
                   variant="outlined"
                 />
@@ -172,7 +168,7 @@ export default class MovieView extends Component {
                 ? metadata.genres.map((genre) => (
                     <Chip
                       avatar={<Avatar>{genre.name.charAt(0)}</Avatar>}
-                      style={{ marginRight: "8px", marginBottom: "8px" }}
+                      className="info__genre"
                       label={genre.name}
                       variant="outlined"
                     />

@@ -33,7 +33,7 @@ export default class ChildrenMenu extends Component {
   render() {
     let { metadata, menuAnchor } = this.state;
     return (
-      <div className="ChildrenMenu" style={{ marginTop: "20px" }}>
+      <div className="info__button">
         <Button
           variant="outlined"
           color="primary"

@@ -44,10 +44,7 @@ export default class DownloadMenu extends Component {
     let { menuAnchor, sources } = this.state;
 
     return (
-      <div
-        className="DownloadMenu"
-        style={{ marginTop: "20px", marginRight: "10px" }}
-      >
+      <div className="info__button">
         <Button
           variant="outlined"
           color="primary"

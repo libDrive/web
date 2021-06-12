@@ -30,10 +30,7 @@ export default class PlayerMenu extends Component {
     let { auth, id, metadata, server } = this.state;
 
     return (
-      <div
-        className="PlayerMenu"
-        style={{ marginTop: "20px", marginRight: "10px" }}
-      >
+      <div className="info__button">
         <Button
           variant="outlined"
           color="primary"
@@ -100,7 +97,7 @@ export default class PlayerMenu extends Component {
               this.handleClose();
             }}
           >
-            Copy
+            Copy URL
           </MenuItem>
         </Menu>
       </div>

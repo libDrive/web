@@ -31,7 +31,9 @@ export class TVBView extends Component {
 
     seo({
       title: `libDrive - ${metadata.title || metadata.name}`,
-      description: `Watch ${metadata.title || metadata.name} on libDrive! — ${metadata.overview}`,
+      description: `Watch ${metadata.title || metadata.name} on libDrive! — ${
+        metadata.overview
+      }`,
       image: metadata.backdropPath,
       type: "video.movie",
     });
@@ -96,17 +98,15 @@ export class TVBView extends Component {
                   : this.prettyDate()}
               </Typography>
             </div>
-            <div className="buttons__container">
-              <div className="button">
-                <ChildrenMenu state={this.state} />
-              </div>
+            <div className="info__buttons">
+              <ChildrenMenu state={this.state} />
             </div>
             <div className="info__genres">
               {metadata.genres && metadata.genres.length
                 ? metadata.genres.map((genre) => (
                     <Chip
                       avatar={<Avatar>{genre.name.charAt(0)}</Avatar>}
-                      style={{ marginRight: "8px", marginBottom: "8px" }}
+                      className="info__genre"
                       label={genre.name}
                       variant="outlined"
                     />
@@ -128,7 +128,7 @@ export class TVSView extends Component {
   }
 
   componentDidMount() {
-    let { metadata } = this.state;
+    let { metadata, q } = this.state;
 
     seo({
       title: `libDrive - ${metadata.name} - ${metadata.children[q].name}`,
@@ -249,7 +249,7 @@ export class TVSView extends Component {
               alignContent: "center",
               justifyContent: "center",
               flexWrap: "wrap",
-              marginTop: "35px",
+              marginTop: "30px",
             }}
           >
             <PlayerMenu
@@ -262,7 +262,7 @@ export class TVSView extends Component {
             />
             <DownloadMenu state={this.state} tv={true} />
             <PlaylistMenu state={this.state} />
-            <div style={{ marginTop: "20px" }}>
+            <div className="info__button">
               <input
                 id="file-input"
                 hidden
