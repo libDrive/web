@@ -105,7 +105,7 @@ export class TVBView extends Component {
               {metadata.genres && metadata.genres.length
                 ? metadata.genres.map((genre) => (
                     <Link
-                      to={`/genres/${genre.name}`}
+                      to={`/genres?genre=${genre.name}`}
                       className="no_decoration_link"
                       key={guid()}
                     >

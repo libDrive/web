@@ -25,7 +25,7 @@ class PageMenu extends Component {
   }
 
   render() {
-    let { page, pages, sort } = this.state;
+    let { genre, page, pages, sort } = this.state;
     const { classes } = this.props;
 
     if (page > pages) {
@@ -33,7 +33,7 @@ class PageMenu extends Component {
         <Redirect
           to={{
             pathname: this.props.props.location.pathname,
-            search: `?page=${pages}&sort=${sort}`,
+            search: `?page=${pages}&genre=${genre}&sort=${sort}`,
           }}
           key={guid()}
         />
@@ -58,7 +58,7 @@ class PageMenu extends Component {
                 <Link
                   to={{
                     pathname: this.props.props.location.pathname,
-                    search: `?page=${item.page}&sort=${sort}`,
+                    search: `?page=${item.page}&genre=${genre}&sort=${sort}`,
                   }}
                   key={guid()}
                   className="no_decoration_link"

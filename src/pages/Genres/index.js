@@ -24,7 +24,6 @@ export default class CategoryBrowse extends Component {
     this.state = {
       auth:
         sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
-      category: this.props.match.params.category,
       genre: queryString.parse(this.props.location.search).genre || "",
       isLoaded: false,
       metadata: {},
@@ -49,13 +48,13 @@ export default class CategoryBrowse extends Component {
   }
 
   componentDidMount() {
-    let { auth, category, genre, range, server, sort } = this.state;
+    let { auth, genre, range, server, sort } = this.state;
 
     if (!auth || !server) {
       this.props.history.push("/logout");
     }
 
-    let url = `${server}/api/v1/metadata?a=${auth}&c=${category}&g=${encodeURIComponent(
+    let url = `${server}/api/v1/metadata?a=${auth}&g=${encodeURIComponent(
       genre
     )}&r=${range}&s=${sort}`;
     axios

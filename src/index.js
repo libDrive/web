@@ -44,6 +44,11 @@ ReactDOM.render(
         />
         <Route
           exact
+          path={"/genres"}
+          render={(props) => <Genres key={guid()} {...props} />}
+        />
+        <Route
+          exact
           path={"/login"}
           render={(props) => <Login key={guid()} {...props} />}
         />
