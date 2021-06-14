@@ -136,8 +136,8 @@ export default class CategoryBrowse extends Component {
 
     if (isLoaded) {
       seo({
-        title: `libDrive - ${metadata[0].categoryInfo.name}`,
-        description: `Browse ${metadata[0].categoryInfo.name} on libDrive!`,
+        title: `libDrive${genre ? (` - ${genre}`) : ("")}`,
+        description: `Browse ${genre ? (`the ${genre} genre`) : ("genres")} on libDrive!`,
       });
     }
 
