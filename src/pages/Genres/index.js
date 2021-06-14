@@ -55,7 +55,7 @@ export default class Genres extends Component {
       this.props.history.push("/logout");
     }
 
-    let url = `${server}/api/v1/metadata?a=${auth}&g=${genre}&r=${range}&s=${sort}`;
+    let url = `${server}/api/v1/metadata?a=${auth}&g=${encodeURIComponent(genre)}&r=${range}&s=${sort}`;
     axios
       .get(url)
       .then((response) =>
