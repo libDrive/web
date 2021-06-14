@@ -9,7 +9,6 @@ import CategoryBrowse_ from "./pages/CategoryBrowse";
 import ChildrenMenu_ from "./components/ChildrenMenu";
 import clear_ from "./functions/clear";
 import Footer_ from "./components/Footer";
-import Genres_ from "./pages/Genres";
 import guid_ from "./functions/guid";
 import Login_ from "./pages/Login";
 import Logout_ from "./components/Logout";
@@ -41,7 +40,6 @@ export { ChildrenMenu_ as ChildrenMenu };
 export { DownloadMenu_ as DownloadMenu };
 export { clear_ as clear };
 export { Bottom_ as Footer };
-export { Genres_ as Genres }
 export { guid_ as guid };
 export { Login_ as Login };
 export { Logout_ as Logout };

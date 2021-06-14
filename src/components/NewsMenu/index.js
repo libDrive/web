@@ -74,15 +74,15 @@ export default class NewsMenu extends Component {
                       secondary={
                         <React.Fragment>
                           <Typography variant="body2" color="textPrimary">
-                            libDrive {item.tag_name} was released on{" "}
-                            {new Date(item.published_at).toDateString()}, click{" "}
+                            libDrive {item.tag_name} was released on
+                            {new Date(item.published_at).toDateString()}, click
                             <a
                               href={item.html_url}
                               target="_blank"
                               className="no_decoration_link"
                             >
                               <u>here</u>
-                            </a>{" "}
+                            </a>
                             to find out more
                           </Typography>
                         </React.Fragment>

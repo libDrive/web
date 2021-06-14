@@ -25,6 +25,7 @@ export default class CategoryBrowse extends Component {
       auth:
         sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
       category: this.props.match.params.category,
+      genre: queryString.parse(this.props.location.search).genre || "",
       isLoaded: false,
       metadata: {},
       page: parseInt(queryString.parse(this.props.location.search).page) || 1,
@@ -43,28 +44,30 @@ export default class CategoryBrowse extends Component {
         sessionStorage.getItem("server") ||
         localStorage.getItem("server") ||
         window.location.origin,
-      sort:
-        queryString.parse(this.props.location.search).sort || "alphabet-asc",
+      sort: queryString.parse(this.props.location.search).sort || "",
     };
   }
 
   componentDidMount() {
-    let { auth, category, range, server, sort } = this.state;
+    let { auth, category, genre, range, server, sort } = this.state;
 
     if (!auth || !server) {
       this.props.history.push("/logout");
     }
 
-    let url = `${server}/api/v1/metadata?a=${auth}&c=${category}&r=${range}&s=${sort}`;
+    let url = `${server}/api/v1/metadata?a=${auth}&c=${category}&g=${encodeURIComponent(
+      genre
+    )}&r=${range}&s=${sort}`;
     axios
       .get(url)
-      .then((response) =>
+      .then((response) => {
+        console.log(response.data.content[0]["length"]);
         this.setState({
           isLoaded: true,
           metadata: response.data.content,
           pages: Math.ceil(response.data.content[0]["length"] / 16),
-        })
-      )
+        });
+      })
       .catch((error) => {
         console.error(error);
         if (error.response) {
@@ -131,7 +134,7 @@ export default class CategoryBrowse extends Component {
   }
 
   render() {
-    let { isLoaded, metadata, page, pages, sort } = this.state;
+    let { genre, isLoaded, metadata, page, pages, sort } = this.state;
 
     if (isLoaded) {
       seo({
@@ -148,7 +151,7 @@ export default class CategoryBrowse extends Component {
           state={{ page: page, pages: pages, sort: sort }}
           props={this.props}
         />
-        <SortMenu state={{ sort: sort }} props={this.props} />
+        <SortMenu state={{ genre: genre, sort: sort }} props={this.props} />
         <Footer />
       </div>
     ) : (
