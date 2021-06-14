@@ -9,6 +9,7 @@ import {
   App,
   Browse,
   CategoryBrowse,
+  Genres,
   Login,
   Logout,
   NotFound,
@@ -40,6 +41,16 @@ ReactDOM.render(
           exact
           path={"/browse/:category"}
           render={(props) => <CategoryBrowse key={guid()} {...props} />}
+        />
+        <Route
+          exact
+          path={"/genres/:genre"}
+          render={(props) => <Genres key={guid()} {...props} />}
+        />
+        <Route
+          exact
+          path={"/genres/:genre/category"}
+          render={(props) => <Genres key={guid()} {...props} />}
         />
         <Route
           exact

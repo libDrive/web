@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { Link } from "react-router-dom";
+
 import { Avatar, Button, Chip, Typography } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
 import SubtitlesOutlinedIcon from "@material-ui/icons/SubtitlesOutlined";
@@ -166,6 +168,7 @@ export default class MovieView extends Component {
               ) : null}
               {metadata.genres && metadata.genres.length
                 ? metadata.genres.map((genre) => (
+                  <Link to={`/genres/${genre.name}`} className="no_decoration_link">
                     <Chip
                       avatar={<Avatar>{genre.name.charAt(0)}</Avatar>}
                       className="info__genre"
@@ -173,6 +176,7 @@ export default class MovieView extends Component {
                       key={guid()}
                       variant="outlined"
                     />
+                  </Link>
                   ))
                 : null}
             </div>
