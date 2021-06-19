@@ -64,7 +64,7 @@ export default class CategoryBrowse extends Component {
         this.setState({
           isLoaded: true,
           metadata: response.data.content,
-          pages: Math.ceil(response.data.content[0]["length"] / 16),
+          pages: Math.ceil(response.data.content[0]["length"] / 16) || 1,
         });
       })
       .catch((error) => {

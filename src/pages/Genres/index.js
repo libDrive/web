@@ -30,13 +30,13 @@ export default class CategoryBrowse extends Component {
       page: parseInt(queryString.parse(this.props.location.search).page) || 1,
       range: `${
         queryString.parse(this.props.location.search).page === undefined
-          ? "0:16"
+          ? "0:8"
           : `${
               (parseInt(queryString.parse(this.props.location.search).page) -
                 1) *
-              16
+              8
             }:${
-              parseInt(queryString.parse(this.props.location.search).page) * 16
+              parseInt(queryString.parse(this.props.location.search).page) * 8
             }`
       }`,
       server:
@@ -63,7 +63,7 @@ export default class CategoryBrowse extends Component {
         this.setState({
           isLoaded: true,
           metadata: response.data.content,
-          pages: Math.ceil(response.data.content[0]["length"] / 16),
+          pages: Math.ceil(response.data.content[0]["length"] / 8) || 1,
         });
       })
       .catch((error) => {
@@ -136,8 +136,10 @@ export default class CategoryBrowse extends Component {
 
     if (isLoaded) {
       seo({
-        title: `libDrive${genre ? (` - ${genre}`) : ("")}`,
-        description: `Browse ${genre ? (`the ${genre} genre`) : ("genres")} on libDrive!`,
+        title: `libDrive${genre ? ` - ${genre}` : ""}`,
+        description: `Browse ${
+          genre ? `the ${genre} genre` : "genres"
+        } on libDrive!`,
       });
     }
 
