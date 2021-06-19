@@ -123,7 +123,7 @@ class NavUI extends Component {
                 }}
                 inputProps={{ "aria-label": "search" }}
                 onChange={this.searchChange}
-                value={search || query}
+                value={search == null ? query : search}
               />
             </form>
             <div className={classes.grow} />
