@@ -112,11 +112,11 @@ export default class Search extends Component {
   }
 
   render() {
-    let { isLoaded, metadata } = this.state;
+    let { isLoaded, metadata, query } = this.state;
 
     return isLoaded ? (
       <div className="Search">
-        <Nav {...this.props} />
+        <Nav {...this.props} query={query} />
         <Carousel metadata={metadata} />
         <Footer />
       </div>

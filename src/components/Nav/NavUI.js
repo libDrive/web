@@ -76,7 +76,7 @@ const styles = (theme) => ({
 class NavUI extends Component {
   constructor(props) {
     super(props);
-    this.state = { search: "", ...props.state };
+    this.state = { ...props.state };
     this.searchChange = this.searchChange.bind(this);
     this.searchSubmit = this.searchSubmit.bind(this);
   }
@@ -96,7 +96,7 @@ class NavUI extends Component {
   }
 
   render() {
-    let { accounts, categories } = this.state;
+    let { accounts, categories, query, search } = this.state;
     const { classes } = this.props;
 
     return (
@@ -123,6 +123,7 @@ class NavUI extends Component {
                 }}
                 inputProps={{ "aria-label": "search" }}
                 onChange={this.searchChange}
+                value={search || query}
               />
             </form>
             <div className={classes.grow} />
