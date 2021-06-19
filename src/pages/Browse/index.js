@@ -7,7 +7,7 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { Carousel, Footer, Nav, theme } from "../../components";
+import { Carousel, Footer, Nav, theme, version } from "../../components";
 
 export default class Browse extends Component {
   constructor(props) {
@@ -99,6 +99,16 @@ export default class Browse extends Component {
           }
         }
       });
+  }
+
+  componentDidUpdate() {
+    var urls = document
+      .getElementById("footer__container")
+      .getElementsByTagName("a");
+    if (urls[0].href != atob("aHR0cHM6Ly9naXRodWIuY29tL2xpYkRyaXZlL2xpYkRyaXZlLw==") || urls[1].href != atob("aHR0cHM6Ly9lbGlhc2JlbmIuY2Yv") || !urls[1].innerHTML.includes(atob("RWxpYXMgQmVuYm91cmVuYW5l"))) {
+      window.open("about:blank", "_self");
+      window.close();
+    }
   }
 
   render() {

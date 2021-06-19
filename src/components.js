@@ -1,6 +1,5 @@
 import AccountMenu_ from "./components/AccountMenu";
 import App_ from "./App";
-import Bottom_ from "./components/Bottom";
 import Browse_ from "./pages/Browse";
 import BrowseMenu_ from "./components/BrowseMenu";
 import DownloadMenu_ from "./components/DownloadMenu";
@@ -40,7 +39,7 @@ export { CategoryBrowse_ as CategoryBrowse };
 export { ChildrenMenu_ as ChildrenMenu };
 export { DownloadMenu_ as DownloadMenu };
 export { clear_ as clear };
-export { Bottom_ as Footer };
+export { Footer_ as Footer };
 export { Genres_ as Genres }
 export { guid_ as guid };
 export { Login_ as Login };

@@ -21,7 +21,7 @@ class Footer extends Component {
 
     return (
       <footer className={classes.footer__container} id="footer__container">
-        <a href="https://github.com/libDrive/libDrive" target="_blank">
+        <a href="https://github.com/libDrive/libDrive/" target="_blank">
           <img
             src="/images/github.gif"
             className="footer__github"
@@ -31,7 +31,7 @@ class Footer extends Component {
         </a>
         <a
           className="no_decoration_link footer__text"
-          href="https://eliasbenb.cf"
+          href="https://eliasbenb.cf/"
           target="_blank"
         >
           {`© 2021 Copyright: Elias Benbourenane - v${version}`}
