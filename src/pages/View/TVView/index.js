@@ -137,8 +137,8 @@ export class TVSView extends Component {
     let { metadata, q } = this.state;
 
     seo({
-      title: `libDrive - ${metadata.name} - ${metadata.children[q].name}`,
-      description: `Watch ${metadata.name} - ${metadata.children[q].name} on libDrive!`,
+      title: `libDrive - ${metadata.children[q].name}`,
+      description: `Watch ${metadata.children[q].name} on libDrive!`,
       type: "video.episode",
     });
   }
