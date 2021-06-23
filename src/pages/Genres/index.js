@@ -44,6 +44,11 @@ export default class CategoryBrowse extends Component {
         localStorage.getItem("server") ||
         window.location.origin,
       sort: queryString.parse(this.props.location.search).sort || "",
+      ui_config: JSON.parse(
+        window.localStorage.getItem("ui_config") ||
+          window.sessionStorage.getItem("ui_config") ||
+          "{}"
+      ),
     };
   }
 
@@ -132,14 +137,15 @@ export default class CategoryBrowse extends Component {
   }
 
   render() {
-    let { genre, isLoaded, metadata, page, pages, sort } = this.state;
+    let { genre, isLoaded, metadata, page, pages, sort, ui_config } =
+      this.state;
 
     if (isLoaded) {
       seo({
-        title: `libDrive${genre ? ` - ${genre}` : ""}`,
-        description: `Browse ${
-          genre ? `the ${genre} genre` : "genres"
-        } on libDrive!`,
+        title: `${ui_config.title || "libDrive"}${genre ? ` - ${genre}` : ""}`,
+        description: `Browse ${genre ? `the ${genre} genre` : "genres"} on ${
+          ui_config.title || "libDrive"
+        }!`,
       });
     }
 

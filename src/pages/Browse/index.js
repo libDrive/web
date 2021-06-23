@@ -21,17 +21,24 @@ export default class Browse extends Component {
         sessionStorage.getItem("server") ||
         localStorage.getItem("server") ||
         window.location.origin,
+      ui_config: JSON.parse(
+        window.localStorage.getItem("ui_config") ||
+          window.sessionStorage.getItem("ui_config") ||
+          "{}"
+      ),
     };
   }
 
   componentDidMount() {
-    let { auth, server } = this.state;
+    let { auth, server, ui_config } = this.state;
 
     if (!auth || !server) {
       this.props.history.push("/logout");
     }
 
-    let url = `${server}/api/v1/metadata?a=${auth}&r=0:16&s=popularity-des`;
+    let url = `${server}/api/v1/metadata?a=${auth}&r=0:${
+      ui_config.range || "16"
+    }&s=popularity-des`;
     axios
       .get(url)
       .then((response) =>
@@ -99,21 +106,6 @@ export default class Browse extends Component {
           }
         }
       });
-  }
-
-  componentDidUpdate() {
-    var urls = document
-      .getElementById("footer__container")
-      .getElementsByTagName("a");
-    if (
-      urls[0].href !=
-        atob("aHR0cHM6Ly9naXRodWIuY29tL2xpYkRyaXZlL2xpYkRyaXZlLw==") ||
-      urls[1].href != atob("aHR0cHM6Ly9lbGlhc2JlbmIuY2Yv") ||
-      !urls[1].innerHTML.includes(atob("RWxpYXMgQmVuYm91cmVuYW5l"))
-    ) {
-      window.open("about:blank", "_self");
-      window.close();
-    }
   }
 
   render() {

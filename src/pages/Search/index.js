@@ -22,19 +22,24 @@ export default class Search extends Component {
         sessionStorage.getItem("server") ||
         localStorage.getItem("server") ||
         window.location.origin,
+      ui_config: JSON.parse(
+        window.localStorage.getItem("ui_config") ||
+          window.sessionStorage.getItem("ui_config") ||
+          "{}"
+      ),
     };
   }
 
   componentDidMount() {
-    let { auth, query, server } = this.state;
+    let { auth, query, server, ui_config } = this.state;
 
     if (!auth || !server) {
       this.props.history.push("/logout");
     }
 
     seo({
-      title: `libDrive - ${query}`,
-      description: `Find ${query} on libDrive!`,
+      title: `${ui_config.title || "libDrive"} - ${query}`,
+      description: `Find ${query} on ${ui_config.title || "libDrive"}!`,
     });
 
     let url = `${server}/api/v1/metadata?a=${auth}&q=${query}`;

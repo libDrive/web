@@ -27,13 +27,15 @@ export class TVBView extends Component {
   }
 
   componentDidMount() {
-    let { metadata } = this.state;
+    let { metadata, ui_config } = this.state;
 
     seo({
-      title: `libDrive - ${metadata.title || metadata.name}`,
-      description: `Watch ${metadata.title || metadata.name} on libDrive! — ${
-        metadata.overview
+      title: `${ui_config.title || "libDrive"} - ${
+        metadata.title || metadata.name
       }`,
+      description: `Watch ${metadata.title || metadata.name} on ${
+        ui_config.title || "libDrive"
+      }! — ${metadata.overview}`,
       image: metadata.backdropPath,
       type: "video.movie",
     });
@@ -134,11 +136,13 @@ export class TVSView extends Component {
   }
 
   componentDidMount() {
-    let { metadata, q } = this.state;
+    let { metadata, q, ui_config } = this.state;
 
     seo({
-      title: `libDrive - ${metadata.children[q].name}`,
-      description: `Watch ${metadata.children[q].name} on libDrive!`,
+      title: `${ui_config.title || "libDrive"} - ${metadata.children[q].name}`,
+      description: `Watch ${metadata.children[q].name} on ${
+        ui_config.title || "libDrive"
+      }!`,
       type: "video.episode",
     });
   }

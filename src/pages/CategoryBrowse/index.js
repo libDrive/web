@@ -31,13 +31,32 @@ export default class CategoryBrowse extends Component {
       page: parseInt(queryString.parse(this.props.location.search).page) || 1,
       range: `${
         queryString.parse(this.props.location.search).page === undefined
-          ? "0:16"
+          ? `0:${
+              JSON.parse(
+                window.localStorage.getItem("ui_config") ||
+                  window.sessionStorage.getItem("ui_config") ||
+                  "{}"
+              ).range || "16"
+            }`
           : `${
               (parseInt(queryString.parse(this.props.location.search).page) -
                 1) *
-              16
+              parseInt(
+                JSON.parse(
+                  window.localStorage.getItem("ui_config") ||
+                    window.sessionStorage.getItem("ui_config") ||
+                    "{}"
+                ).range || "16"
+              )
             }:${
-              parseInt(queryString.parse(this.props.location.search).page) * 16
+              parseInt(queryString.parse(this.props.location.search).page) *
+              parseInt(
+                JSON.parse(
+                  window.localStorage.getItem("ui_config") ||
+                    window.sessionStorage.getItem("ui_config") ||
+                    "{}"
+                ).range || "16"
+              )
             }`
       }`,
       server:
@@ -45,11 +64,16 @@ export default class CategoryBrowse extends Component {
         localStorage.getItem("server") ||
         window.location.origin,
       sort: queryString.parse(this.props.location.search).sort || "",
+      ui_config: JSON.parse(
+        window.localStorage.getItem("ui_config") ||
+          window.sessionStorage.getItem("ui_config") ||
+          "{}"
+      ),
     };
   }
 
   componentDidMount() {
-    let { auth, category, genre, range, server, sort } = this.state;
+    let { auth, category, genre, range, server, sort, ui_config } = this.state;
 
     if (!auth || !server) {
       this.props.history.push("/logout");
@@ -64,7 +88,11 @@ export default class CategoryBrowse extends Component {
         this.setState({
           isLoaded: true,
           metadata: response.data.content,
-          pages: Math.ceil(response.data.content[0]["length"] / 16) || 1,
+          pages:
+            Math.ceil(
+              response.data.content[0]["length"] /
+                parseInt(ui_config.range || "16")
+            ) || 1,
         });
       })
       .catch((error) => {
@@ -133,12 +161,17 @@ export default class CategoryBrowse extends Component {
   }
 
   render() {
-    let { genre, isLoaded, metadata, page, pages, sort } = this.state;
+    let { genre, isLoaded, metadata, page, pages, sort, ui_config } =
+      this.state;
 
     if (isLoaded) {
       seo({
-        title: `libDrive - ${metadata[0].categoryInfo.name}`,
-        description: `Browse ${metadata[0].categoryInfo.name} on libDrive!`,
+        title: `${ui_config.title || "libDrive"} - ${
+          metadata[0].categoryInfo.name
+        }`,
+        description: `Browse ${metadata[0].categoryInfo.name} on ${
+          ui_config.title || "libDrive"
+        }!`,
       });
     }
 

@@ -26,13 +26,15 @@ export default class MovieView extends Component {
   }
 
   componentDidMount() {
-    let { metadata } = this.state;
+    let { metadata, ui_config } = this.state;
 
     seo({
-      title: `libDrive - ${metadata.title || metadata.name}`,
-      description: `Watch ${metadata.title || metadata.name} on libDrive! — ${
-        metadata.overview
+      title: `${ui_config.title || "libDrive"} - ${
+        metadata.title || metadata.name
       }`,
+      description: `Watch ${metadata.title || metadata.name} on ${
+        ui_config.title || "libDrive"
+      }! — ${metadata.overview}`,
       image: metadata.backdropPath,
       type: "video.movie",
     });

@@ -29,6 +29,11 @@ export default class View extends Component {
       metadata: {},
       sources: [],
       subtitle: { url: "" },
+      ui_config: JSON.parse(
+        window.localStorage.getItem("ui_config") ||
+          window.sessionStorage.getItem("ui_config") ||
+          "{}"
+      ),
     };
   }
 
@@ -213,12 +218,16 @@ export default class View extends Component {
   }
 
   render() {
-    let { isLoaded, metadata } = this.state;
+    let { isLoaded, metadata, ui_config } = this.state;
 
     if (isLoaded) {
       seo({
-        title: metadata.title ? `libDrive - ${metadata.title}` : "libDrive",
-        description: `Watch ${metadata.title || metadata.name} on libDrive!`,
+        title: metadata.title
+          ? `${ui_config.title || "libDrive"} - ${metadata.title}`
+          : ui_config.title || "libDrive",
+        description: `Watch ${metadata.title || metadata.name} on ${
+          ui_config.title || "libDrive"
+        }!`,
         image: metadata.backdropPath,
       });
     }

@@ -17,6 +17,7 @@ export default class Nav extends Component {
         sessionStorage.getItem("server") ||
         localStorage.getItem("server") ||
         window.location.origin,
+      ui_config: {},
     };
   }
 
@@ -29,29 +30,45 @@ export default class Nav extends Component {
         accounts: data.content.account_list,
         categories: data.content.category_list,
         isLoaded: true,
+        ui_config: data.content.ui_config,
       });
     });
   }
 
   render() {
-    let { accounts, categories, isLoaded } = this.state;
+    let { accounts, categories, isLoaded, ui_config } = this.state;
 
+    if (typeof ui_config == "object") {
+      window.localStorage.setItem("ui_config", JSON.stringify(ui_config));
+      window.sessionStorage.setItem("ui_config", JSON.stringify(ui_config));
+    }
     return isLoaded ? (
       <div className="Nav">
         <NavUI
-          state={{ accounts: accounts, categories: categories, query: this.props.query }}
+          state={{
+            accounts: accounts,
+            categories: categories,
+            query: this.props.query,
+          }}
           {...this.props}
         />
       </div>
     ) : isLoaded ? (
       <div className="Nav">
         <NavUI
-          state={{ accounts: accounts, categories: categories, query: this.props.query }}
+          state={{
+            accounts: accounts,
+            categories: categories,
+            query: this.props.query,
+          }}
           {...this.props}
         />
       </div>
     ) : (
-      <NavUI state={{ accounts: [], categories: [], query: this.props.query }} {...this.props} />
+      <NavUI
+        state={{ accounts: [], categories: [], query: this.props.query }}
+        {...this.props}
+      />
     );
   }
 }

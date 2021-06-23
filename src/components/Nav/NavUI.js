@@ -76,7 +76,14 @@ const styles = (theme) => ({
 class NavUI extends Component {
   constructor(props) {
     super(props);
-    this.state = { ...props.state };
+    this.state = {
+      ...props.state,
+      ui_config: JSON.parse(
+        window.localStorage.getItem("ui_config") ||
+          window.sessionStorage.getItem("ui_config") ||
+          "{}"
+      ),
+    };
     this.searchChange = this.searchChange.bind(this);
     this.searchSubmit = this.searchSubmit.bind(this);
   }
@@ -96,7 +103,7 @@ class NavUI extends Component {
   }
 
   render() {
-    let { accounts, categories, query, search } = this.state;
+    let { accounts, categories, query, search, ui_config } = this.state;
     const { classes } = this.props;
 
     return (
@@ -105,7 +112,7 @@ class NavUI extends Component {
           <Toolbar>
             <Link to="/" className="no_decoration_link">
               <Typography className={classes.title} variant="h6" noWrap>
-                libDrive
+                {ui_config.title || "libDrive"}
               </Typography>
             </Link>
             <form className={classes.search} onSubmit={this.searchSubmit}>
