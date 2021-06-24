@@ -42,6 +42,44 @@ class SortMenu extends Component {
   render() {
     let { genre, sort } = this.state;
     const { classes } = this.props;
+    const genres = [
+      "Action",
+      "Action & Adventure",
+      "Adventure",
+      "Animation",
+      "Comedy",
+      "Crime",
+      "Documentary",
+      "Drama",
+      "Ecchi",
+      "Family",
+      "Fantasy",
+      "Hentai",
+      "History",
+      "Horror",
+      "Kids",
+      "Mahou Shoujo",
+      "Mecha",
+      "Music",
+      "Mystery",
+      "News",
+      "Psychological",
+      "Reality",
+      "Romance",
+      "Sci-Fi",
+      "Sci-Fi & Fantasy",
+      "Science Fiction",
+      "Slice of Life",
+      "Soap",
+      "Sports",
+      "Supernatural",
+      "TV Movie",
+      "Talk",
+      "Thriller",
+      "War",
+      "War & Politics",
+      "Western",
+    ];
 
     return (
       <div className="SortMenu">
@@ -155,197 +193,18 @@ class SortMenu extends Component {
             value=""
             label={genre || "Genre"}
           >
-            <Link
-              to={{
-                pathname: this.props.props.location.pathname,
-                search: `?sort=${sort}&genre=Action`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              <MenuItem>Action</MenuItem>
-            </Link>
-            <Link
-              to={{
-                pathname: this.props.props.location.pathname,
-                search: `?sort=${sort}&genre=Adventure`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              <MenuItem>Adventure</MenuItem>
-            </Link>
-            <Link
-              to={{
-                pathname: this.props.props.location.pathname,
-                search: `?sort=${sort}&genre=Animation`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              <MenuItem>Animation</MenuItem>
-            </Link>
-            <Link
-              to={{
-                pathname: this.props.props.location.pathname,
-                search: `?sort=${sort}&genre=Comedy`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              <MenuItem>Comedy</MenuItem>
-            </Link>
-            <Link
-              to={{
-                pathname: this.props.props.location.pathname,
-                search: `?sort=${sort}&genre=Crime`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              <MenuItem>Crime</MenuItem>
-            </Link>
-            <Link
-              to={{
-                pathname: this.props.props.location.pathname,
-                search: `?sort=${sort}&genre=Documentary`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              <MenuItem>Documentary</MenuItem>
-            </Link>
-            <Link
-              to={{
-                pathname: this.props.props.location.pathname,
-                search: `?sort=${sort}&genre=Drama`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              <MenuItem>Drama</MenuItem>
-            </Link>
-            <Link
-              to={{
-                pathname: this.props.props.location.pathname,
-                search: `?sort=${sort}&genre=Family`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              <MenuItem>Family</MenuItem>
-            </Link>
-            <Link
-              to={{
-                pathname: this.props.props.location.pathname,
-                search: `?sort=${sort}&genre=Fantasy`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              <MenuItem>Fantasy</MenuItem>
-            </Link>
-            <Link
-              to={{
-                pathname: this.props.props.location.pathname,
-                search: `?sort=${sort}&genre=History`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              <MenuItem>History</MenuItem>
-            </Link>
-            <Link
-              to={{
-                pathname: this.props.props.location.pathname,
-                search: `?sort=${sort}&genre=Horror`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              <MenuItem>Horror</MenuItem>
-            </Link>
-            <Link
-              to={{
-                pathname: this.props.props.location.pathname,
-                search: `?sort=${sort}&genre=Music`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              <MenuItem>Music</MenuItem>
-            </Link>
-            <Link
-              to={{
-                pathname: this.props.props.location.pathname,
-                search: `?sort=${sort}&genre=Mystery`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              <MenuItem>Mystery</MenuItem>
-            </Link>
-            <Link
-              to={{
-                pathname: this.props.props.location.pathname,
-                search: `?sort=${sort}&genre=Romance`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              <MenuItem>Romance</MenuItem>
-            </Link>
-
-            <Link
-              to={{
-                pathname: this.props.props.location.pathname,
-                search: `?sort=${sort}&genre=Science Fiction`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              <MenuItem>Science Fiction</MenuItem>
-            </Link>
-            <Link
-              to={{
-                pathname: this.props.props.location.pathname,
-                search: `?sort=${sort}&genre=TV Movie`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              <MenuItem>TV Movie</MenuItem>
-            </Link>
-            <Link
-              to={{
-                pathname: this.props.props.location.pathname,
-                search: `?sort=${sort}&genre=Thriller`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              <MenuItem>Thriller</MenuItem>
-            </Link>
-            <Link
-              to={{
-                pathname: this.props.props.location.pathname,
-                search: `?sort=${sort}&genre=War`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              <MenuItem>War</MenuItem>
-            </Link>
-            <Link
-              to={{
-                pathname: this.props.props.location.pathname,
-                search: `?sort=${sort}&genre=Western`,
-              }}
-              key={guid()}
-              className="no_decoration_link"
-            >
-              <MenuItem>Western</MenuItem>
-            </Link>
+            {genres.map((genre) => (
+              <Link
+                to={{
+                  pathname: this.props.props.location.pathname,
+                  search: `?sort=${sort}&genre=${genre}`,
+                }}
+                key={guid()}
+                className="no_decoration_link"
+              >
+                <MenuItem>{genre}</MenuItem>
+              </Link>
+            ))}
           </Select>
         </FormControl>
       </div>
