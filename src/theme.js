@@ -124,6 +124,16 @@ const nordTheme = createMuiTheme({
   },
 });
 
+const ui_config = JSON.parse(
+  window.localStorage.getItem("ui_config") ||
+    window.sessionStorage.getItem("ui_config") ||
+    "{}"
+);
+let customTheme;
+if (ui_config.theme) {
+  customTheme = createMuiTheme(ui_config.theme);
+}
+
 var theme;
 
 if (
@@ -146,6 +156,11 @@ if (
   sessionStorage.getItem("theme") === "nord"
 ) {
   theme = nordTheme;
+} else if (
+  localStorage.getItem("theme") === "custom" ||
+  sessionStorage.getItem("theme") === "custom"
+) {
+  theme = customTheme;
 } else {
   theme = darkTheme;
   localStorage.setItem("theme", "dark");

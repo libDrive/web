@@ -8,6 +8,7 @@ export default class ThemeMenu extends Component {
     super(props);
     this.state = {
       menuAnchor: false,
+      ui_config: props.ui_config,
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -36,6 +37,8 @@ export default class ThemeMenu extends Component {
   }
 
   render() {
+    let { ui_config } = this.state;
+
     return (
       <div className="ThemeMenu">
         <IconButton
@@ -61,6 +64,11 @@ export default class ThemeMenu extends Component {
             Dracula
           </MenuItem>
           <MenuItem onClick={() => this.handleTheme("nord")}>Nord</MenuItem>
+          {ui_config.theme ? (
+            <MenuItem onClick={() => this.handleTheme("custom")}>
+              Custom
+            </MenuItem>
+          ) : null}
         </Menu>
       </div>
     );

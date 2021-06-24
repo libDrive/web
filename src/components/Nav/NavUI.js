@@ -135,7 +135,7 @@ class NavUI extends Component {
             </form>
             <div className={classes.grow} />
             <BrowseMenu categories={categories} />
-            <ThemeMenu />
+            <ThemeMenu ui_config={ui_config} />
             <NewsMenu />
             <AccountMenu accounts={accounts} />
           </Toolbar>
