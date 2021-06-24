@@ -107,14 +107,14 @@ export class TVBView extends Component {
               {metadata.genres && metadata.genres.length
                 ? metadata.genres.map((genre) => (
                     <Link
-                      to={`/genres?genre=${genre.name}`}
+                      to={`/genres?genre=${genre}`}
                       className="no_decoration_link"
                       key={guid()}
                     >
                       <Chip
-                        avatar={<Avatar>{genre.name.charAt(0)}</Avatar>}
+                        avatar={<Avatar>{genre.charAt(0)}</Avatar>}
                         className="info__genre"
-                        label={genre.name}
+                        label={genre}
                         variant="outlined"
                       />
                     </Link>
