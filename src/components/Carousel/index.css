@@ -30,6 +30,7 @@ figure {
 .carousel__item__poster {
   border-radius: 7px;
   width: 175px;
+  height: 262.5px;
   box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
 }
 
@@ -47,6 +48,7 @@ figure {
 @media screen and (max-width: 500px) {
   .carousel__item__poster {
     width: 140px;
+    height: 210px;
   }
   .carousel__item__figure {
     width: 140px;
