@@ -9,7 +9,7 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import { fade } from "@material-ui/core/styles";
+import { alpha } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -38,9 +38,9 @@ const styles = (theme) => ({
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.main, 0.15),
+    backgroundColor: alpha(theme.palette.common.main, 0.15),
     "&:hover": {
-      backgroundColor: fade(theme.palette.common.main, 0.25),
+      backgroundColor: alpha(theme.palette.common.main, 0.25),
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,

@@ -169,7 +169,7 @@ export class TVSView extends Component {
     }
 
     var defaultQuality;
-    if (metadata.name.endsWith(".mp4")) {
+    if (metadata.children[q].name.endsWith(".mp4")) {
       defaultQuality = 0;
     } else {
       if (sources.length > 1) {
