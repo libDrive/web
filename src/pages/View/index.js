@@ -25,7 +25,8 @@ export default class View extends Component {
         sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
       q: parseInt(queryString.parse(this.props.location.search).q) || 0,
       id: this.props.match.params.id,
-      isLoaded: false,
+      isLoaded1: false,
+      isLoaded2: false,
       metadata: {},
       sources: [],
       subtitle: { url: "" },
@@ -79,6 +80,7 @@ export default class View extends Component {
         }
         this.setState({
           metadata: data.content,
+          isLoaded1: true,
         });
       })
       .catch((error) => {
@@ -149,7 +151,7 @@ export default class View extends Component {
         this.setState({
           sources: response.data.content.sources,
           subtitle: response.data.content.subtitle,
-          isLoaded: true,
+          isLoaded2: true,
         });
       })
       .catch((error) => {
@@ -218,9 +220,9 @@ export default class View extends Component {
   }
 
   render() {
-    let { isLoaded, metadata, ui_config } = this.state;
+    let { isLoaded1, isLoaded2, metadata, ui_config } = this.state;
 
-    if (isLoaded) {
+    if (isLoaded1 && isLoaded2) {
       seo({
         title: metadata.title
           ? `${ui_config.title || "libDrive"} - ${metadata.title}`
@@ -232,19 +234,19 @@ export default class View extends Component {
       });
     }
 
-    return isLoaded && metadata.type == "file" ? (
+    return isLoaded1 && isLoaded2 && metadata.type == "file" ? (
       <div className="View">
         <Nav {...this.props} />
         <MovieView state={this.state} />
         <Footer />
       </div>
-    ) : isLoaded && metadata.type == "directory" && metadata.title ? (
+    ) : isLoaded1 && isLoaded2 && metadata.type == "directory" && metadata.title ? (
       <div className="View">
         <Nav {...this.props} />
         <TVBView state={this.state} />
         <Footer />
       </div>
-    ) : isLoaded && metadata.type == "directory" ? (
+    ) : isLoaded1 && isLoaded2 && metadata.type == "directory" ? (
       <div className="View">
         <Nav {...this.props} />
         <TVSView state={this.state} />
