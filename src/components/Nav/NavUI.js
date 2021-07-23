@@ -66,10 +66,8 @@ const styles = (theme) => ({
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "10em",
-    },
+    width: "15vw",
+    maxWidth: "300px",
   },
 });
 
@@ -106,11 +104,11 @@ class NavUI extends Component {
   }
 
   onMouseOver(evt) {
-    evt.target.style.width = "20em";
+    evt.target.style.width = "20vw";
   }
 
   onMouseOut(evt) {
-    evt.target.style.width = "10em";
+    evt.target.style.width = "15vw";
   }
 
   render() {
