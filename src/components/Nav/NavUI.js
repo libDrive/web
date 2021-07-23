@@ -67,7 +67,7 @@ const styles = (theme) => ({
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
     width: "15vw",
-    maxWidth: "300px",
+    maxWidth: "500px",
   },
 });
 
