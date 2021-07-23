@@ -56,7 +56,7 @@ export class Settings extends Component {
 
     let navProps = { ...this.props };
     navProps.classes = {};
-    
+
     if (sessionStorage.getItem("secret") == null) {
       this.props.history.push("/settings/login");
     } else {
@@ -347,8 +347,8 @@ export class Settings extends Component {
             id="config-box"
             onChange={this.handleChange}
             multiline
-            rows={15}
-            rowsMax={30}
+            minRows={15}
+            maxRows={30}
           />
         </div>
         <form

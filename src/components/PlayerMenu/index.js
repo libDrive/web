@@ -27,7 +27,31 @@ export default class PlayerMenu extends Component {
   }
 
   render() {
-    let { auth, id, metadata, server } = this.state;
+    let { auth, id, isAndroid, isIOS, metadata, server } = this.state;
+
+    let mobileUrl;
+    const streamURL = new URL(
+      `${server}/api/v1/redirectdownload/${encodeURI(
+        metadata.name
+      )}?a=${auth}&id=${id}`
+    );
+    if (isAndroid) {
+      const scheme = streamURL.protocol.slice(0, -1);
+      streamURL.hash = `Intent;action=android.intent.action.VIEW;scheme=${scheme};type=${
+        metadata.mimeType
+      };S.title=${encodeURI(metadata.name)};end`;
+      streamURL.protocol = "intent";
+      mobileUrl = streamURL.toString();
+    } else if (isIOS) {
+      streamURL.host = "x-callback-url";
+      streamURL.port = "";
+      streamURL.pathname = "stream";
+      streamURL.search = `url=${server}/api/v1/redirectdownload/${encodeURI(
+        metadata.name
+      )}?a=${auth}&id=${id}`;
+      streamURL.protocol = "vlc-x-callback";
+      mobileUrl = streamURL.toString();
+    }
 
     return (
       <div className="info__button">
@@ -50,6 +74,16 @@ export default class PlayerMenu extends Component {
           open={Boolean(this.state.menuAnchor)}
           onClose={this.handleClose}
         >
+          {isAndroid || isIOS ? (
+            <div>
+              <a href={mobileUrl} className="no_decoration_link">
+                <MenuItem onClick={this.handleClose}>
+                  {isAndroid ? "Android" : isIOS ? "IOS selector" : null}
+                </MenuItem>
+              </a>
+              <Divider />
+            </div>
+          ) : null}
           <a
             href={`vlc://${server}/api/v1/redirectdownload/${encodeURI(
               metadata.name

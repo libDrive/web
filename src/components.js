@@ -40,7 +40,7 @@ export { ChildrenMenu_ as ChildrenMenu };
 export { DownloadMenu_ as DownloadMenu };
 export { clear_ as clear };
 export { Footer_ as Footer };
-export { Genres_ as Genres }
+export { Genres_ as Genres };
 export { guid_ as guid };
 export { Login_ as Login };
 export { Logout_ as Logout };

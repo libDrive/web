@@ -69,10 +69,14 @@ export default class MovieView extends Component {
     }
 
     var defaultQuality;
-    if (sources.length > 1) {
-      defaultQuality = 1;
-    } else {
+    if (metadata.name.endsWith(".mp4")) {
       defaultQuality = 0;
+    } else {
+      if (sources.length > 1) {
+        defaultQuality = 1;
+      } else {
+        defaultQuality = 0;
+      }
     }
 
     return (

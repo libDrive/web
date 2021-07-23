@@ -147,6 +147,14 @@ export class TVSView extends Component {
     });
   }
 
+  componentWillUnmount() {
+    let { id, q, watching } = this.state;
+
+    watching[id] = q;
+
+    localStorage.setItem("watching", JSON.stringify(watching));
+  }
+
   async onFileChange(evt) {
     if (evt.target.files.length) {
       if (evt.target.files[0].name.endsWith(".srt")) {
@@ -169,10 +177,14 @@ export class TVSView extends Component {
     }
 
     var defaultQuality;
-    if (sources.length > 1) {
-      defaultQuality = 1;
-    } else {
+    if (metadata.children[q].name.endsWith(".mp4")) {
       defaultQuality = 0;
+    } else {
+      if (sources.length > 1) {
+        defaultQuality = 1;
+      } else {
+        defaultQuality = 0;
+      }
     }
 
     function isHash(n, hash) {
@@ -262,14 +274,7 @@ export class TVSView extends Component {
               marginTop: "30px",
             }}
           >
-            <PlayerMenu
-              state={{
-                auth: this.state.auth,
-                id: metadata.children[q].id,
-                metadata: metadata.children[q],
-                server: server,
-              }}
-            />
+            <PlayerMenu state={this.state} />
             <DownloadMenu state={this.state} tv={true} />
             <PlaylistMenu state={this.state} />
             <div className="info__button">

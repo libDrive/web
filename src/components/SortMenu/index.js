@@ -2,7 +2,13 @@ import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
 
-import { FormControl, Select, InputLabel, MenuItem } from "@material-ui/core";
+import {
+  Divider,
+  FormControl,
+  Select,
+  InputLabel,
+  MenuItem,
+} from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 import { guid } from "../../components";
@@ -193,6 +199,17 @@ class SortMenu extends Component {
             value=""
             label={genre || "Genre"}
           >
+            <Link
+              to={{
+                pathname: this.props.props.location.pathname,
+                search: `?sort=&genre=${genre}`,
+              }}
+              key={guid()}
+              className="no_decoration_link"
+            >
+              <MenuItem>All</MenuItem>
+            </Link>
+            <Divider />
             {genres.map((genre) => (
               <Link
                 to={{

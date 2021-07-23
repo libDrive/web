@@ -23,8 +23,20 @@ export default class View extends Component {
         window.location.origin,
       auth:
         sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
-      q: parseInt(queryString.parse(this.props.location.search).q) || 0,
+      q:
+        parseInt(queryString.parse(this.props.location.search).q) ||
+        JSON.parse(localStorage.getItem("watching") || "{}")[
+          this.props.match.params.id
+        ] ||
+        0,
       id: this.props.match.params.id,
+      isAndroid: /(android)/i.test(
+        navigator.userAgent || navigator.vendor || window.opera
+      ),
+      isIOS:
+        /iPad|iPhone|iPod/.test(
+          navigator.userAgent || navigator.vendor || window.opera
+        ) && !window.MSStream,
       isLoaded: false,
       metadata: {},
       sources: [],
@@ -34,11 +46,12 @@ export default class View extends Component {
           window.sessionStorage.getItem("ui_config") ||
           "{}"
       ),
+      watching: JSON.parse(localStorage.getItem("watching") || "{}"),
     };
   }
 
-  componentDidMount() {
-    let { auth, server } = this.state;
+  async componentDidMount() {
+    let { auth, id, q, server } = this.state;
 
     if (!auth || !server) {
       this.props.history.push("/logout");
@@ -61,97 +74,85 @@ export default class View extends Component {
       theme.palette.text.primary
     );
 
-    this.fetchData();
-  }
-
-  fetchData = async () => {
-    let { auth, id, name, q, server } = this.state;
-
-    await axios
-      .get(`${server}/api/v1/metadata?a=${auth}&id=${id}`)
-      .then((response) => {
-        let data = response.data;
-        if (data.content.mimeType == "application/vnd.google-apps.folder") {
-          id = data.content.children[q].id;
-          name = data.content.children[q].name;
+    const [response1] = await Promise.all([
+      axios.get(`${server}/api/v1/metadata?a=${auth}&id=${id}`),
+      axios.get(
+        `${server}/api/v1/streammap?a=${auth}&id=${id}&name=test&server=${server}`
+      ),
+    ]).catch((error) => {
+      console.error(error);
+      if (error.response) {
+        let data = error.response.data;
+        if (data.code === 401) {
+          Swal.fire({
+            title: "Error!",
+            text: data.message,
+            icon: "error",
+            confirmButtonText: "Login",
+            confirmButtonColor: theme.palette.success.main,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.props.history.push("/logout");
+            }
+          });
+        } else if (!server) {
+          this.props.history.push("/logout");
         } else {
-          name = data.content.name;
+          Swal.fire({
+            title: "Error!",
+            text: `Something went wrong while communicating with the server! Is '${server}' the correct address?`,
+            icon: "error",
+            confirmButtonText: "Logout",
+            confirmButtonColor: theme.palette.success.main,
+            cancelButtonText: "Retry",
+            cancelButtonColor: theme.palette.error.main,
+            showCancelButton: true,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.props.history.push("/logout");
+            } else if (result.isDismissed) {
+              location.reload();
+            }
+          });
         }
-        this.setState({
-          metadata: data.content,
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-        if (error.response) {
-          let data = error.response.data;
-          if (data.code === 401) {
-            Swal.fire({
-              title: "Error!",
-              text: data.message,
-              icon: "error",
-              confirmButtonText: "Login",
-              confirmButtonColor: theme.palette.success.main,
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.props.history.push("/logout");
-              }
-            });
-          } else if (!server) {
-            this.props.history.push("/logout");
-          } else {
-            Swal.fire({
-              title: "Error!",
-              text: data.message,
-              icon: "error",
-              confirmButtonText: "Logout",
-              confirmButtonColor: theme.palette.success.main,
-              cancelButtonText: "Retry",
-              cancelButtonColor: theme.palette.error.main,
-              showCancelButton: true,
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.props.history.push("/logout");
-              } else if (result.isDismissed) {
-                location.reload();
-              }
-            });
-          }
-        } else if (error.request) {
-          if (!server) {
-            this.props.history.push("/logout");
-          } else {
-            Swal.fire({
-              title: "Error!",
-              text: `libDrive could not communicate with the server! Is '${server}' the correct address?`,
-              icon: "error",
-              confirmButtonText: "Logout",
-              confirmButtonColor: theme.palette.success.main,
-              cancelButtonText: "Retry",
-              cancelButtonColor: theme.palette.error.main,
-              showCancelButton: true,
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.props.history.push("/logout");
-              } else if (result.isDismissed) {
-                location.reload();
-              }
-            });
-          }
+      } else if (error.request) {
+        if (!server) {
+          this.props.history.push("/logout");
+        } else {
+          Swal.fire({
+            title: "Error!",
+            text: `libDrive could not communicate with the server! Is '${server}' the correct address?`,
+            icon: "error",
+            confirmButtonText: "Logout",
+            confirmButtonColor: theme.palette.success.main,
+            cancelButtonText: "Retry",
+            cancelButtonColor: theme.palette.error.main,
+            showCancelButton: true,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.props.history.push("/logout");
+            } else if (result.isDismissed) {
+              location.reload();
+            }
+          });
         }
-      });
+      }
+    });
 
-    await axios
+    let name;
+    if (
+      response1.data.content.mimeType == "application/vnd.google-apps.folder"
+    ) {
+      id = response1.data.content.children[q].id;
+      name = response1.data.content.children[q].name;
+    } else {
+      name = response1.data.content.name;
+    }
+
+    const response2 = await axios
       .get(
         `${server}/api/v1/streammap?a=${auth}&id=${id}&name=${name}&server=${server}`
       )
-      .then((response) => {
-        this.setState({
-          sources: response.data.content.sources,
-          subtitle: response.data.content.subtitle,
-          isLoaded: true,
-        });
-      })
       .catch((error) => {
         console.error(error);
         if (error.response) {
@@ -211,7 +212,14 @@ export default class View extends Component {
           }
         }
       });
-  };
+    this.setState({
+      isLoaded: true,
+      metadata: response1.data.content,
+      name: name,
+      sources: response2.data.content.sources,
+      subtitle: response2.data.content.subtitle,
+    });
+  }
 
   componentWillUnmount() {
     seo();
