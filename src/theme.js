@@ -1,6 +1,6 @@
-import { createTheme  } from "@material-ui/core/styles";
+import { createTheme } from "@material-ui/core/styles";
 
-const lightTheme = createTheme ({
+const lightTheme = createTheme({
   palette: {
     type: "light",
     primary: {
@@ -31,7 +31,7 @@ const lightTheme = createTheme ({
   },
 });
 
-const darkTheme = createTheme ({
+const darkTheme = createTheme({
   palette: {
     type: "dark",
     primary: {
@@ -62,7 +62,7 @@ const darkTheme = createTheme ({
   },
 });
 
-const draculaTheme = createTheme ({
+const draculaTheme = createTheme({
   palette: {
     type: "dark",
     primary: {
@@ -93,7 +93,7 @@ const draculaTheme = createTheme ({
   },
 });
 
-const nordTheme = createTheme ({
+const nordTheme = createTheme({
   palette: {
     type: "dark",
     primary: {
@@ -131,7 +131,7 @@ const ui_config = JSON.parse(
 );
 let customTheme;
 if (ui_config.theme) {
-  customTheme = createTheme (ui_config.theme);
+  customTheme = createTheme(ui_config.theme);
 }
 
 var theme;

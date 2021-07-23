@@ -266,9 +266,7 @@ export class TVSView extends Component {
               marginTop: "30px",
             }}
           >
-            <PlayerMenu
-              state={this.state}
-            />
+            <PlayerMenu state={this.state} />
             <DownloadMenu state={this.state} tv={true} />
             <PlaylistMenu state={this.state} />
             <div className="info__button">

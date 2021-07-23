@@ -25,8 +25,13 @@ export default class View extends Component {
         sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
       q: parseInt(queryString.parse(this.props.location.search).q) || 0,
       id: this.props.match.params.id,
-      isAndroid: /(android)/i.test(navigator.userAgent || navigator.vendor || window.opera),
-      isIOS: /iPad|iPhone|iPod/.test(navigator.userAgent || navigator.vendor || window.opera) && ! window.MSStream,
+      isAndroid: /(android)/i.test(
+        navigator.userAgent || navigator.vendor || window.opera
+      ),
+      isIOS:
+        /iPad|iPhone|iPod/.test(
+          navigator.userAgent || navigator.vendor || window.opera
+        ) && !window.MSStream,
       isLoaded: false,
       metadata: {},
       sources: [],

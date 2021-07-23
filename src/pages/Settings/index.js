@@ -56,7 +56,7 @@ export class Settings extends Component {
 
     let navProps = { ...this.props };
     navProps.classes = {};
-    
+
     if (sessionStorage.getItem("secret") == null) {
       this.props.history.push("/settings/login");
     } else {
