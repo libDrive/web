@@ -147,6 +147,14 @@ export class TVSView extends Component {
     });
   }
 
+  componentWillUnmount() {
+    let { id, q, watching } = this.state;
+
+    watching[id] = q;
+
+    localStorage.setItem("watching", JSON.stringify(watching));
+  }
+
   async onFileChange(evt) {
     if (evt.target.files.length) {
       if (evt.target.files[0].name.endsWith(".srt")) {

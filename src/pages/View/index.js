@@ -23,7 +23,12 @@ export default class View extends Component {
         window.location.origin,
       auth:
         sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
-      q: parseInt(queryString.parse(this.props.location.search).q) || 0,
+      q:
+        parseInt(queryString.parse(this.props.location.search).q) ||
+        JSON.parse(localStorage.getItem("watching") || "{}")[
+          this.props.match.params.id
+        ] ||
+        0,
       id: this.props.match.params.id,
       isAndroid: /(android)/i.test(
         navigator.userAgent || navigator.vendor || window.opera
@@ -41,6 +46,7 @@ export default class View extends Component {
           window.sessionStorage.getItem("ui_config") ||
           "{}"
       ),
+      watching: JSON.parse(localStorage.getItem("watching") || "{}"),
     };
   }
 

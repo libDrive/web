@@ -47,7 +47,8 @@
 .plyr-playlist-wrapper ul {
   padding: 0;
   margin: 0;
-  max-height: 20em;
+  max-height: 40vh;
+  height: 30em;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
@@ -59,7 +60,7 @@
 .plyr-playlist-wrapper .plyr-playlist li {
   list-style: none;
   background-color: rgba(255, 255, 255, 0.03);
-  padding: 0px;
+  padding: 5px;
   margin-bottom: 3px;
   font-size: 90%;
 }
