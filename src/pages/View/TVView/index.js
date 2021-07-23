@@ -267,12 +267,7 @@ export class TVSView extends Component {
             }}
           >
             <PlayerMenu
-              state={{
-                auth: this.state.auth,
-                id: metadata.children[q].id,
-                metadata: metadata.children[q],
-                server: server,
-              }}
+              state={this.state}
             />
             <DownloadMenu state={this.state} tv={true} />
             <PlaylistMenu state={this.state} />

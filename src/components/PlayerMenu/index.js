@@ -42,7 +42,7 @@ export default class PlayerMenu extends Component {
       };S.title=${encodeURI(metadata.name)};end`;
       streamURL.protocol = "intent";
       mobileUrl = streamURL.toString();
-    } else if (isAppleDevice) {
+    } else if (isIOS) {
       streamURL.host = "x-callback-url";
       streamURL.port = "";
       streamURL.pathname = "stream";

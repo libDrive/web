@@ -68,7 +68,7 @@ const styles = (theme) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: "20ch",
+      width: "10em",
     },
   },
 });
@@ -78,6 +78,7 @@ class NavUI extends Component {
     super(props);
     this.state = {
       ...props.state,
+      search: "",
       ui_config: JSON.parse(
         window.localStorage.getItem("ui_config") ||
           window.sessionStorage.getItem("ui_config") ||
@@ -86,6 +87,8 @@ class NavUI extends Component {
     };
     this.searchChange = this.searchChange.bind(this);
     this.searchSubmit = this.searchSubmit.bind(this);
+    this.onMouseOver = this.onMouseOver.bind(this);
+    this.onMouseOut = this.onMouseOut.bind(this);
   }
 
   searchChange(evt) {
@@ -100,6 +103,14 @@ class NavUI extends Component {
         key: guid(),
       });
     }
+  }
+
+  onMouseOver(evt) {
+    evt.target.style.width = "20em";
+  }
+
+  onMouseOut(evt) {
+    evt.target.style.width = "10em";
   }
 
   render() {
@@ -130,6 +141,8 @@ class NavUI extends Component {
                 }}
                 inputProps={{ "aria-label": "search" }}
                 onChange={this.searchChange}
+                onMouseOver={this.onMouseOver}
+                onMouseOut={this.onMouseOut}
                 value={search == null ? query : search}
               />
             </form>

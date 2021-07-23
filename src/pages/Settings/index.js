@@ -347,8 +347,8 @@ export class Settings extends Component {
             id="config-box"
             onChange={this.handleChange}
             multiline
-            rows={15}
-            rowsMax={30}
+            minRows={15}
+            maxRows={30}
           />
         </div>
         <form
