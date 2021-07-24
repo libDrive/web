@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
 
-import { IconButton, Typography } from "@material-ui/core";
+import { Divider, IconButton, Typography } from "@material-ui/core";
 import StarIcon from "@material-ui/icons/Star";
 
 import Swal from "sweetalert2/src/sweetalert2.js";
@@ -104,16 +104,26 @@ export default class Carousel extends Component {
                               {item.title}
                             </Typography>
                             {category.type == "Starred" ? (
-                              <IconButton
-                                onClick={() => this.handleStar(item, category)}
+                              <div
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "center",
+                                }}
                               >
-                                <StarIcon />
-                              </IconButton>
+                                <IconButton
+                                  onClick={() =>
+                                    this.handleStar(item, category)
+                                  }
+                                >
+                                  <StarIcon />
+                                </IconButton>
+                              </div>
                             ) : null}
                           </figure>
                         ))
                       : null}
                   </div>
+                  {category.type == "Starred" ? (<div><Divider /></div>) : (null)}
                 </div>
               ) : null
             )
