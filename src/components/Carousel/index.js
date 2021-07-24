@@ -123,7 +123,11 @@ export default class Carousel extends Component {
                         ))
                       : null}
                   </div>
-                  {category.type == "Starred" ? (<div><Divider /></div>) : (null)}
+                  {category.type == "Starred" ? (
+                    <div>
+                      <Divider />
+                    </div>
+                  ) : null}
                 </div>
               ) : null
             )
