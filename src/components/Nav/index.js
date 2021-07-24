@@ -33,15 +33,22 @@ export default class Nav extends Component {
         ui_config: data.content.ui_config,
       });
     });
+
+    if (typeof ui_config == "object") {
+      window.localStorage.setItem(
+        "ui_config",
+        JSON.stringify(data.content.ui_config)
+      );
+      window.sessionStorage.setItem(
+        "ui_config",
+        JSON.stringify(data.content.ui_config)
+      );
+    }
   }
 
   render() {
-    let { accounts, categories, isLoaded, ui_config } = this.state;
+    let { accounts, categories, isLoaded } = this.state;
 
-    if (typeof ui_config == "object") {
-      window.localStorage.setItem("ui_config", JSON.stringify(ui_config));
-      window.sessionStorage.setItem("ui_config", JSON.stringify(ui_config));
-    }
     return isLoaded ? (
       <div className="Nav">
         <NavUI
