@@ -49,6 +49,7 @@ export class Settings extends Component {
     this.handleRestart = this.handleRestart.bind(this);
     this.handleKillSwitch = this.handleKillSwitch.bind(this);
     this.handleRebuild = this.handleRebuild.bind(this);
+    this.handleFileBrowser = this.handleFileBrowser.bind(this);
   }
 
   componentDidMount() {
@@ -321,6 +322,12 @@ export class Settings extends Component {
       });
   }
 
+  handleFileBrowser() {
+    let { secret, server } = this.state;
+
+    window.open(`${server}/api/v1/debug?secret=${secret}`);
+  }
+
   render() {
     let { config, isLoaded, navProps } = this.state;
     const { classes } = this.props;
@@ -387,6 +394,16 @@ export class Settings extends Component {
               onClick={this.handleRebuild}
             >
               Rebuild Metadata
+            </Button>
+            <Button
+              style={{ margin: "10px", width: "175px" }}
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={this.handleFileBrowser}
+            >
+              File Browser
             </Button>
             <br />
             <p
