@@ -32,18 +32,17 @@ export default class Nav extends Component {
         isLoaded: true,
         ui_config: data.content.ui_config,
       });
+      if (typeof data.content.ui_config == "object") {
+        window.localStorage.setItem(
+          "ui_config",
+          JSON.stringify(data.content.ui_config)
+        );
+        window.sessionStorage.setItem(
+          "ui_config",
+          JSON.stringify(data.content.ui_config)
+        );
+      }
     });
-
-    if (typeof ui_config == "object") {
-      window.localStorage.setItem(
-        "ui_config",
-        JSON.stringify(data.content.ui_config)
-      );
-      window.sessionStorage.setItem(
-        "ui_config",
-        JSON.stringify(data.content.ui_config)
-      );
-    }
   }
 
   render() {
