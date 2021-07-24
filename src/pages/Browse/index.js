@@ -21,6 +21,7 @@ export default class Browse extends Component {
         sessionStorage.getItem("server") ||
         localStorage.getItem("server") ||
         window.location.origin,
+      starred_list: JSON.parse(localStorage.getItem("starred_list") || "[]"),
       ui_config: JSON.parse(
         window.localStorage.getItem("ui_config") ||
           window.sessionStorage.getItem("ui_config") ||
@@ -30,7 +31,7 @@ export default class Browse extends Component {
   }
 
   componentDidMount() {
-    let { auth, server, ui_config } = this.state;
+    let { auth, server, starred_list, ui_config } = this.state;
 
     if (!auth || !server) {
       this.props.history.push("/logout");
@@ -41,12 +42,20 @@ export default class Browse extends Component {
     }&s=popularity-des`;
     axios
       .get(url)
-      .then((response) =>
+      .then((response) => {
+        let metadata = response.data.content;
+        metadata.unshift({
+          categoryInfo: { id: "starred", name: "Starred", type: "Starred" },
+          children: starred_list,
+          length: starred_list.length,
+          name: "Starred",
+          type: "Starred",
+        });
         this.setState({
           isLoaded: true,
-          metadata: response.data.content,
-        })
-      )
+          metadata: metadata,
+        });
+      })
       .catch((error) => {
         console.error(error);
         if (error.response) {

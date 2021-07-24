@@ -150,6 +150,7 @@
 }
 
 .info__release {
+  display: flex;
   margin-top: 5px;
   margin-left: 4px;
 }

@@ -2,8 +2,16 @@ import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
 
-import { Avatar, Button, Chip, Typography } from "@material-ui/core";
+import {
+  Avatar,
+  Button,
+  Chip,
+  IconButton,
+  Typography,
+} from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
+import StarIcon from "@material-ui/icons/Star";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
 import SubtitlesOutlinedIcon from "@material-ui/icons/SubtitlesOutlined";
 
 import DPlayer from "react-dplayer";
@@ -23,6 +31,7 @@ export default class MovieView extends Component {
     this.state = props.state;
     this.onFileChange = this.onFileChange.bind(this);
     this.prettyDate = this.prettyDate.bind(this);
+    this.handleStar = this.handleStar.bind(this);
   }
 
   componentDidMount() {
@@ -61,8 +70,23 @@ export default class MovieView extends Component {
     return date.toDateString();
   }
 
+  handleStar() {
+    let { metadata, id, starred, starred_list } = this.state;
+
+    if (!starred) {
+      starred_list.unshift(metadata);
+      localStorage.setItem("starred_list", JSON.stringify(starred_list));
+    } else {
+      let index = starred_list.findIndex((i) => i.id == id);
+      starred_list.splice(index, 1);
+      localStorage.setItem("starred_list", JSON.stringify(starred_list));
+    }
+
+    this.setState({ starred: !starred, starred_list: starred_list });
+  }
+
   render() {
-    let { file, metadata, server, sources, subtitle } = this.state;
+    let { file, metadata, server, sources, starred, subtitle } = this.state;
 
     if (file) {
       subtitle = { url: file };
@@ -139,11 +163,17 @@ export default class MovieView extends Component {
               />
             </div>
             <div className="info__release">
-              <Typography variant="body2">
+              <Typography style={{ marginTop: "15px" }} variant="body2">
                 {metadata.language
                   ? `${this.prettyDate()} (${metadata.language.toUpperCase()})`
                   : this.prettyDate()}
               </Typography>
+              <IconButton
+                style={{ marginLeft: "5px" }}
+                onClick={this.handleStar}
+              >
+                {starred ? <StarIcon /> : <StarBorderIcon />}
+              </IconButton>
             </div>
             <div className="info__buttons">
               <PlayerMenu state={this.state} />

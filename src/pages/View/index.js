@@ -17,18 +17,8 @@ export default class View extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      server:
-        sessionStorage.getItem("server") ||
-        localStorage.getItem("server") ||
-        window.location.origin,
       auth:
         sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
-      q:
-        parseInt(queryString.parse(this.props.location.search).q) ||
-        JSON.parse(localStorage.getItem("watching") || "{}")[
-          this.props.match.params.id
-        ] ||
-        0,
       id: this.props.match.params.id,
       isAndroid: /(android)/i.test(
         navigator.userAgent || navigator.vendor || window.opera
@@ -39,7 +29,22 @@ export default class View extends Component {
         ) && !window.MSStream,
       isLoaded: false,
       metadata: {},
+      q:
+        parseInt(queryString.parse(this.props.location.search).q) ||
+        JSON.parse(localStorage.getItem("watching") || "{}")[
+          this.props.match.params.id
+        ] ||
+        0,
+      server:
+        sessionStorage.getItem("server") ||
+        localStorage.getItem("server") ||
+        window.location.origin,
       sources: [],
+      starred_list: JSON.parse(localStorage.getItem("starred_list") || "[]"),
+      starred:
+        JSON.parse(localStorage.getItem("starred_list") || "[]").some(
+          (i) => i.id == this.props.match.params.id
+        ) || false,
       subtitle: { url: "" },
       ui_config: JSON.parse(
         window.localStorage.getItem("ui_config") ||
