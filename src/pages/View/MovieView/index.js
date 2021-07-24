@@ -86,21 +86,18 @@ export default class MovieView extends Component {
   }
 
   render() {
-    let { file, metadata, server, sources, starred, subtitle } = this.state;
+    let {
+      default_quality,
+      file,
+      metadata,
+      server,
+      sources,
+      starred,
+      subtitle,
+    } = this.state;
 
     if (file) {
       subtitle = { url: file };
-    }
-
-    var defaultQuality;
-    if (metadata.name.endsWith(".mp4")) {
-      defaultQuality = 0;
-    } else {
-      if (sources.length > 1) {
-        defaultQuality = 1;
-      } else {
-        defaultQuality = 0;
-      }
     }
 
     return (
@@ -111,7 +108,7 @@ export default class MovieView extends Component {
             options={{
               video: {
                 quality: sources,
-                defaultQuality: defaultQuality,
+                defaultQuality: default_quality,
                 pic:
                   metadata.backdropPath ||
                   `${server}/api/v1/image/thumbnail?id=${metadata.id}`,

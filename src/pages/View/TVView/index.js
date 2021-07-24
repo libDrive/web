@@ -200,21 +200,11 @@ export class TVSView extends Component {
   }
 
   render() {
-    let { file, metadata, q, server, sources, subtitle } = this.state;
+    let { default_quality, file, metadata, q, server, sources, subtitle } =
+      this.state;
 
     if (file) {
       subtitle = { url: file };
-    }
-
-    var defaultQuality;
-    if (metadata.children[q].name.endsWith(".mp4")) {
-      defaultQuality = 0;
-    } else {
-      if (sources.length > 1) {
-        defaultQuality = 1;
-      } else {
-        defaultQuality = 0;
-      }
     }
 
     function isHash(n, hash) {

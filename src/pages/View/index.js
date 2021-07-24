@@ -218,6 +218,7 @@ export default class View extends Component {
         }
       });
     this.setState({
+      default_quality: response2.data.content.default_quality,
       isLoaded: true,
       metadata: response1.data.content,
       name: name,
