@@ -21,14 +21,16 @@ export default class Carousel extends Component {
         sessionStorage.getItem("server") ||
         localStorage.getItem("server") ||
         window.location.origin,
-      starred_list: JSON.parse(localStorage.getItem("starred_list") || "[]"),
     };
     this.handleStar = this.handleStar.bind(this);
     this.handleStarRest = this.handleStarRest.bind(this);
+    this.handleStarImport = this.handleStarImport.bind(this);
+    this.handleStarExport = this.handleStarExport.bind(this);
   }
 
   handleStar(item, category) {
-    let { metadata, starred_list } = this.state;
+    let { metadata } = this.state;
+    let starred_list = JSON.parse(localStorage.getItem("starred_list") || "[]");
 
     try {
       let index = starred_list.findIndex((i) => i.id == item.id);
@@ -56,7 +58,7 @@ export default class Carousel extends Component {
       });
     }
 
-    this.setState({ metadata: metadata, starred_list: starred_list });
+    this.setState({ metadata: metadata });
   }
 
   handleStarRest() {
@@ -82,6 +84,35 @@ export default class Carousel extends Component {
     });
   }
 
+  handleStarImport(evt) {
+    if (evt.target.files.length) {
+      let { metadata } = this.state;
+      var file = evt.target.files[0];
+      var reader = new FileReader();
+      reader.onload = (evt) => {
+        localStorage.setItem("starred_list", evt.target.result);
+        if (metadata.length && metadata[0].type == "Starred") {
+          metadata[0].children = JSON.parse(evt.target.result);
+          console.log(metadata[0]);
+          this.setState({
+            metadata: metadata,
+          });
+        }
+      };
+      reader.readAsText(file);
+    }
+  }
+
+  handleStarExport() {
+    let starred_list = localStorage.getItem("starred_list") || "[]";
+
+    const file = new Blob([starred_list], { type: "application/json" });
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(file);
+    link.download = `libdrive-starred-${+new Date()}.json`;
+    link.click();
+  }
+
   render() {
     let { hide, metadata, server } = this.state;
 
@@ -93,22 +124,60 @@ export default class Carousel extends Component {
               (category.type != "Starred" || category.children.length) ? (
                 <div className="carousel__category" key={guid()}>
                   {category.type == "Starred" ? (
-                    <div style={{ display: "flex" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
                       <Link
                         to={"#"}
                         className="carousel__category__title no_decoration_link"
                       >
                         {category.categoryInfo.name}
                       </Link>
-                      <Button
-                        variant="outlined"
-                        color="primary"
-                        size="small"
-                        style={{ marginLeft: "10px" }}
-                        onClick={this.handleStarRest}
-                      >
-                        Reset
-                      </Button>
+                      <div style={{ width: "100%" }}>
+                        <div style={{ float: "left" }}>
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            size="small"
+                            onClick={this.handleStarRest}
+                            style={{ marginLeft: "10px" }}
+                          >
+                            Reset
+                          </Button>
+                        </div>
+                        <div style={{ float: "right" }}>
+                          <input
+                            id="file-input"
+                            hidden
+                            onChange={this.handleStarImport}
+                            type="file"
+                          />
+                          <label htmlFor="file-input">
+                            <Button
+                              variant="outlined"
+                              color="primary"
+                              component="span"
+                              size="small"
+                              style={{ marginRight: "10px" }}
+                            >
+                              Import
+                            </Button>
+                          </label>
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            onClick={this.handleStarExport}
+                            size="small"
+                            style={{ marginRight: "10px" }}
+                          >
+                            Export
+                          </Button>
+                        </div>
+                      </div>
                     </div>
                   ) : (
                     <Link
