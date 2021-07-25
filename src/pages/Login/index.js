@@ -158,7 +158,7 @@ class Login extends Component {
         } catch {
           Swal.fire({
             title: "Error!",
-            text: `Something went wrong while communicating with the server ${server}`,
+            text: `The username and or password was incorrect!`,
             icon: "error",
             confirmButtonText: "OK",
             confirmButtonColor: theme.palette.success.main,
