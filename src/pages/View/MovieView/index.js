@@ -161,17 +161,17 @@ export default class MovieView extends Component {
               />
             </div>
             <div className="info__release">
-              <Typography style={{ marginTop: "15px" }} variant="body2">
+              <IconButton onClick={this.handleStar}>
+                {starred ? <StarIcon /> : <StarBorderIcon />}
+              </IconButton>
+              <Typography
+                style={{ display: "flex", alignItems: "center" }}
+                variant="body2"
+              >
                 {metadata.language
                   ? `${this.prettyDate()} (${metadata.language.toUpperCase()})`
                   : this.prettyDate()}
               </Typography>
-              <IconButton
-                style={{ marginLeft: "5px" }}
-                onClick={this.handleStar}
-              >
-                {starred ? <StarIcon /> : <StarBorderIcon />}
-              </IconButton>
             </div>
             <div className="info__buttons">
               <PlayerMenu state={this.state} />
