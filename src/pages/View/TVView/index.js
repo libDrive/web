@@ -224,7 +224,7 @@ export class TVSView extends Component {
             options={{
               video: {
                 quality: sources,
-                defaultQuality: defaultQuality,
+                defaultQuality: default_quality,
                 pic: `${server}/api/v1/image/thumbnail?id=${metadata.children[q].id}`,
               },
               subtitle: subtitle,
