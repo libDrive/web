@@ -40,7 +40,6 @@ export default class View extends Component {
         localStorage.getItem("server") ||
         window.location.origin,
       sources: [],
-      starred_list: JSON.parse(localStorage.getItem("starred_list") || "[]"),
       starred:
         JSON.parse(localStorage.getItem("starred_list") || "[]").some(
           (i) => i.id == this.props.match.params.id

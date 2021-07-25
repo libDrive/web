@@ -71,7 +71,8 @@ export default class MovieView extends Component {
   }
 
   handleStar() {
-    let { metadata, id, starred, starred_list } = this.state;
+    let { metadata, id, starred } = this.state;
+    let starred_list = JSON.parse(localStorage.getItem("starred_list") || "[]");
 
     if (!starred) {
       starred_list.unshift(metadata);
@@ -82,7 +83,7 @@ export default class MovieView extends Component {
       localStorage.setItem("starred_list", JSON.stringify(starred_list));
     }
 
-    this.setState({ starred: !starred, starred_list: starred_list });
+    this.setState({ starred: !starred });
   }
 
   render() {
