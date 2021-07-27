@@ -78,37 +78,8 @@ export default class View extends Component {
       theme.palette.text.primary
     );
 
-    const request1 = axios.get(`${server}/api/v1/metadata?a=${auth}&id=${id}`);
-    const request2 = axios.get(
-      `${server}/api/v1/streammap?a=${auth}&id=${id}&name=test&server=${server}`
-    );
-    axios
-      .all([request1, request2])
-      .then(
-        axios.spread((...responses) => {
-          const response1 = responses[0];
-          const response2 = responses[1];
-          let name;
-          if (
-            response1.data.content.mimeType ==
-            "application/vnd.google-apps.folder"
-          ) {
-            id = response1.data.content.children[q].id;
-            name = response1.data.content.children[q].name;
-          } else {
-            name = response1.data.content.name;
-          }
-
-          this.setState({
-            default_quality: response2.data.content.default_quality,
-            isLoaded: true,
-            metadata: response1.data.content,
-            name: name,
-            sources: response2.data.content.sources,
-            subtitle: response2.data.content.subtitle,
-          });
-        })
-      )
+    var response1 = await axios
+      .get(`${server}/api/v1/metadata?a=${auth}&id=${id}`)
       .catch((error) => {
         console.error(error);
         if (error.response) {
@@ -168,6 +139,100 @@ export default class View extends Component {
           }
         }
       });
+
+    let name;
+    let new_id;
+    let metadata = response1.data.content;
+    if (metadata.type == "directory") {
+      if (metadata.children[q].type == "file") {
+        new_id = metadata.children[q].id;
+        name = metadata.children[q].name;
+      } else {
+        name = metadata.name;
+      }
+    } else {
+      name = metadata.name;
+      new_id = id;
+    }
+
+    var response2;
+    if (new_id) {
+      response2 = await axios
+        .get(
+          `${server}/api/v1/streammap?a=${auth}&id=${new_id}&name=${name}&server=${server}`
+        )
+        .catch((error) => {
+          console.error(error);
+          if (error.response) {
+            let data = error.response.data;
+            if (data.code === 401) {
+              Swal.fire({
+                title: "Error!",
+                text: data.message,
+                icon: "error",
+                confirmButtonText: "Login",
+                confirmButtonColor: theme.palette.success.main,
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.props.history.push("/logout");
+                }
+              });
+            } else if (!server) {
+              this.props.history.push("/logout");
+            } else {
+              Swal.fire({
+                title: "Error!",
+                text: `Something went wrong while communicating with the server! Is '${server}' the correct address?`,
+                icon: "error",
+                confirmButtonText: "Logout",
+                confirmButtonColor: theme.palette.success.main,
+                cancelButtonText: "Retry",
+                cancelButtonColor: theme.palette.error.main,
+                showCancelButton: true,
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.props.history.push("/logout");
+                } else if (result.isDismissed) {
+                  location.reload();
+                }
+              });
+            }
+          } else if (error.request) {
+            if (!server) {
+              this.props.history.push("/logout");
+            } else {
+              Swal.fire({
+                title: "Error!",
+                text: `libDrive could not communicate with the server! Is '${server}' the correct address?`,
+                icon: "error",
+                confirmButtonText: "Logout",
+                confirmButtonColor: theme.palette.success.main,
+                cancelButtonText: "Retry",
+                cancelButtonColor: theme.palette.error.main,
+                showCancelButton: true,
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.props.history.push("/logout");
+                } else if (result.isDismissed) {
+                  location.reload();
+                }
+              });
+            }
+          }
+        });
+    } else {
+      response2 = {
+        data: { content: { default_quality: 0, sources: [], subtitles: [] } },
+      };
+    }
+    this.setState({
+      default_quality: response2.data.content.default_quality,
+      isLoaded: true,
+      metadata: response1.data.content,
+      name: name,
+      sources: response2.data.content.sources,
+      subtitle: response2.data.content.subtitle,
+    });
   }
 
   componentWillUnmount() {
