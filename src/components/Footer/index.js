@@ -20,6 +20,7 @@ class Footer extends Component {
     const { classes } = this.props;
 
     return (
+      <div style={{ paddingTop: "75px" }}>
       <footer className={classes.footer__container} id="footer__container">
         <a href="https://github.com/libDrive/libDrive/" target="_blank">
           <img
@@ -37,6 +38,7 @@ class Footer extends Component {
           {`© 2021 Copyright: Elias Benbourenane - v${version}`}
         </a>
       </footer>
+      </div>
     );
   }
 }

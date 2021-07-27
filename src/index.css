@@ -6,6 +6,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  position: relative;
+  min-height: 100vh;
+}
+
 * {
   margin: 0;
   scrollbar-color: #202324 #454a4d;
@@ -52,6 +57,12 @@ body {
     width: 0;
     height: 0;
   }
+}
+
+#footer__container {
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }
 
 .footer__text {
