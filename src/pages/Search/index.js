@@ -42,9 +42,11 @@ export default class Search extends Component {
       description: `Find ${query} on ${ui_config.title || "libDrive"}!`,
     });
 
-    let url = `${server}/api/v1/metadata?a=${auth}&q=${query}`;
+    let req_path = `${server}/api/v1/metadata`;
+    let req_args = `?a=${auth}&q=${encodeURIComponent(query)}`;
+
     axios
-      .get(url)
+      .get(req_path + req_args)
       .then((response) =>
         this.setState({
           isLoaded: true,

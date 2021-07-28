@@ -37,11 +37,11 @@ export default class Browse extends Component {
       this.props.history.push("/logout");
     }
 
-    let url = `${server}/api/v1/metadata?a=${auth}&r=0:${
-      ui_config.range || "16"
-    }&s=popularity-des`;
+    let req_path = `${server}/api/v1/metadata`;
+    let req_args = `?a=${auth}&r=0:${ui_config.range || "16"}&s=popularity-des`;
+
     axios
-      .get(url)
+      .get(req_path + req_args)
       .then((response) => {
         let metadata = response.data.content;
         metadata.unshift({

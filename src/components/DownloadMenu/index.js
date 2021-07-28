@@ -33,9 +33,12 @@ export default class DownloadMenu extends Component {
     evt.preventDefault();
     let { auth, metadata, server } = this.state;
     for (let n = 0; n < metadata.children.length; n++) {
-      window.open(
-        `${server}/api/v1/redirectdownload/${metadata.children[n].name}?a=${auth}&id=${metadata.children[n].id}`
-      );
+      let req_path = `${server}/api/v1/redirectdownload/${encodeURIComponent(
+        metadata.children[n].name
+      )}`;
+      let req_args = `?a=${auth}&id=${metadata.children[n].id}`;
+
+      window.open(req_path + req_args);
     }
     this.setState({
       menuAnchor: evt.currentTarget,
@@ -69,7 +72,7 @@ export default class DownloadMenu extends Component {
           {sources.length
             ? sources.map((source) => (
                 <a
-                  href={source.url}
+                  href={encodeURI(source.url)}
                   className="no_decoration_link"
                   key={guid()}
                   target="_blank"

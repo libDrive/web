@@ -67,8 +67,11 @@ class SettingsLoginForm extends Component {
     evt.preventDefault();
     let { secret, server } = this.state;
 
+    let req_path = `${server}/api/v1/config`;
+    let req_args = `?secret=${encodeURIComponent(secret)}`;
+
     axios
-      .get(`${server}/api/v1/config?secret=${secret}`)
+      .get(req_path + req_args)
       .then((response) => {
         sessionStorage.setItem("secret", secret);
         this.props.history.push("/settings");

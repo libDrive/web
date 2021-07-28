@@ -62,7 +62,11 @@ class Login extends Component {
 
   componentDidMount() {
     let { server } = this.state;
-    axios.get(`${server}/api/v1/auth?rules=signup`).then((response) => {
+
+    let req_path = `${server}/api/v1/auth`;
+    let req_args = `?rules=signup`;
+
+    axios.get(req_path + req_args).then((response) => {
       let data = response.data;
       if (data.code === 200) {
         localStorage.setItem("auth", "0");
@@ -85,14 +89,19 @@ class Login extends Component {
   handleServerSubmit(evt) {
     evt.preventDefault();
     let { server } = this.state;
+
     if (!server) {
       return this.setState({ error: "Server is required" });
     }
     if (!server.startsWith("http")) {
       server = `https://${server}`;
     }
+
+    let req_path = `${server}/api/v1/auth`;
+    let req_args = `?rules=signup`;
+
     axios
-      .get(`${server}/api/v1/auth?rules=signup`)
+      .get(req_path + req_args)
       .then((response) => {
         let data = response.data;
         if (data.code === 200) {
@@ -134,8 +143,13 @@ class Login extends Component {
     evt.preventDefault();
     let { password, server, username } = this.state;
 
+    let req_path = `${server}/api/v1/auth`;
+    let req_args = `?u=${encodeURIComponent(username)}&p=${encodeURIComponent(
+      password
+    )}`;
+
     axios
-      .get(`${server}/api/v1/auth?u=${username}&p=${password}`)
+      .get(req_path + req_args)
       .then((response) => {
         let data = response.data;
         localStorage.setItem("server", server);
@@ -169,7 +183,9 @@ class Login extends Component {
   }
 
   handleSignup() {
+    preventDefault();
     let { password, server, username } = this.state;
+
     if (!username) {
       return this.setState({ error: "Username is required" });
     }
@@ -177,8 +193,13 @@ class Login extends Component {
       return this.setState({ error: "Password is required" });
     }
 
+    let req_path = `${server}/api/v1/signup`;
+    let req_args = `?u=${encodeURIComponent(username)}&p=${encodeURIComponent(
+      password
+    )}`;
+
     axios
-      .get(`${server}/api/v1/signup?u=${username}&p=${password}`)
+      .get(req_path + req_args)
       .then((response) => {
         let data = response.data;
         localStorage.setItem("server", server);

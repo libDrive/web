@@ -24,7 +24,10 @@ export default class Nav extends Component {
   componentDidMount() {
     let { auth, server } = this.state;
 
-    axios.get(`${server}/api/v1/environment?a=${auth}`).then((response) => {
+    let req_path = `${server}/api/v1/environment`;
+    let req_args = `?a=${auth}`;
+
+    axios.get(req_path + req_args).then((response) => {
       let data = response.data;
       this.setState({
         accounts: data.content.account_list,

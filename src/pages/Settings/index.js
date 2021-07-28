@@ -61,8 +61,11 @@ export class Settings extends Component {
     if (sessionStorage.getItem("secret") == null) {
       this.props.history.push("/settings/login");
     } else {
+      let req_path = `${server}/api/v1/config`;
+      let req_args = `?secret=${encodeURIComponent(secret)}`;
+
       axios
-        .get(`${server}/api/v1/config?secret=${secret}`)
+        .get(req_path + req_args)
         .then((response) =>
           this.setState({
             config: JSON.stringify(response.data.content, null, 4),
@@ -141,8 +144,11 @@ export class Settings extends Component {
     evt.preventDefault();
     let { secret, server } = this.state;
 
+    let req_path = `${server}/api/v1/restart`;
+    let req_args = `?secret=${encodeURIComponent(secret)}`;
+
     axios
-      .get(`${server}/api/v1/restart?secret=${secret}`)
+      .get(req_path + req_args)
       .then((response) => {
         Swal.fire({
           title: "Success!",
@@ -168,11 +174,11 @@ export class Settings extends Component {
     evt.preventDefault();
     let { secret, server } = this.state;
 
+    let req_path = `${server}/api/v1/config`;
+    let req_args = `?secret=${encodeURIComponent(secret)}`;
+
     axios
-      .post(
-        `${server}/api/v1/config?secret=${secret}`,
-        JSON.parse(this.state.config)
-      )
+      .post(req_path + req_args, JSON.parse(this.state.config))
       .then((response) => {
         Swal.fire({
           title: "Success!",
@@ -245,18 +251,21 @@ export class Settings extends Component {
   }
 
   handleKillSwitch(evt) {
-    let { config } = this.state;
+    let config = JSON.parse(this.state.config);
+
     config.kill_switch = evt.target.checked;
-    this.setState({ config: config });
+    this.setState({ config: JSON.stringify(config, null, 4) });
     this.handleSubmit(evt);
   }
 
   handleRebuild(evt) {
     let { secret, server } = this.state;
 
-    let url = `${server}/api/v1/rebuild?secret=${secret}`;
+    let req_path = `${server}/api/v1/rebuild`;
+    let req_args = `?secret=${encodeURIComponent(secret)}`;
+
     axios
-      .get(url)
+      .get(req_path + req_args)
       .then((response) =>
         Swal.fire({
           title: "Success!",

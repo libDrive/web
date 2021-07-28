@@ -78,12 +78,14 @@ export default class CategoryBrowse extends Component {
     if (!auth || !server) {
       this.props.history.push("/logout");
     }
+    
+    let req_path = `${server}/api/v1/metadata`;
+    let req_args = `?a=${auth}&c=${encodeURIComponent(
+      category
+    )}&g=${encodeURIComponent(genre)}&r=${range}&s=${sort}`;
 
-    let url = `${server}/api/v1/metadata?a=${auth}&c=${category}&g=${encodeURIComponent(
-      genre
-    )}&r=${range}&s=${sort}`;
     axios
-      .get(url)
+      .get(req_path + req_args)
       .then((response) => {
         this.setState({
           isLoaded: true,

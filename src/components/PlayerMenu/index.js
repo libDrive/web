@@ -31,7 +31,7 @@ export default class PlayerMenu extends Component {
 
     let mobileUrl;
     const streamURL = new URL(
-      `${server}/api/v1/redirectdownload/${encodeURI(
+      `${server}/api/v1/redirectdownload/${encodeURIComponent(
         metadata.name
       )}?a=${auth}&id=${id}`
     );
@@ -39,14 +39,14 @@ export default class PlayerMenu extends Component {
       const scheme = streamURL.protocol.slice(0, -1);
       streamURL.hash = `Intent;action=android.intent.action.VIEW;scheme=${scheme};type=${
         metadata.mimeType
-      };S.title=${encodeURI(metadata.name)};end`;
+      };S.title=${encodeURIComponent(metadata.name)};end`;
       streamURL.protocol = "intent";
       mobileUrl = streamURL.toString();
     } else if (isIOS) {
       streamURL.host = "x-callback-url";
       streamURL.port = "";
       streamURL.pathname = "stream";
-      streamURL.search = `url=${server}/api/v1/redirectdownload/${encodeURI(
+      streamURL.search = `url=${server}/api/v1/redirectdownload/${encodeURIComponent(
         metadata.name
       )}?a=${auth}&id=${id}`;
       streamURL.protocol = "vlc-x-callback";
@@ -85,7 +85,7 @@ export default class PlayerMenu extends Component {
             </div>
           ) : null}
           <a
-            href={`vlc://${server}/api/v1/redirectdownload/${encodeURI(
+            href={`vlc://${server}/api/v1/redirectdownload/${encodeURIComponent(
               metadata.name
             )}?a=${auth}&id=${id}`}
             className="no_decoration_link"
@@ -93,38 +93,18 @@ export default class PlayerMenu extends Component {
             <MenuItem onClick={this.handleClose}>VLC</MenuItem>
           </a>
           <a
-            href={`potplayer://${server}/api/v1/redirectdownload/${encodeURI(
+            href={`potplayer://${server}/api/v1/redirectdownload/${encodeURIComponent(
               metadata.name
             )}?a=${auth}&id=${id}`}
             className="no_decoration_link"
           >
             <MenuItem onClick={this.handleClose}>PotPlayer</MenuItem>
           </a>
-          <a
-            href={`intent:${server}/api/v1/redirectdownload/${encodeURI(
-              metadata.name
-            )}?a=${auth}&id=${id}#Intent;package=com.mxtech.videoplayer.ad;S.title=${
-              metadata.name
-            };end`}
-            className="no_decoration_link"
-          >
-            <MenuItem onClick={this.handleClose}>Mx Player (Free)</MenuItem>
-          </a>
-          <a
-            href={`intent:${server}/api/v1/redirectdownload/${encodeURI(
-              metadata.name
-            )}?a=${auth}&id=${id}#Intent;package=com.mxtech.videoplayer.pro;S.title=${
-              metadata.name
-            };end`}
-            className="no_decoration_link"
-          >
-            <MenuItem onClick={this.handleClose}>Mx Player (Pro)</MenuItem>
-          </a>
           <Divider />
           <MenuItem
             onClick={() => {
               navigator.clipboard.writeText(
-                `${server}/api/v1/redirectdownload/${encodeURI(
+                `${server}/api/v1/redirectdownload/${encodeURIComponent(
                   metadata.name
                 )}?a=${auth}&id=${id}`
               );
