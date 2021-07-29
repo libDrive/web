@@ -119,7 +119,7 @@ export class TVBView extends Component {
               />
             </div>
             <div className="info__release">
-            <IconButton onClick={this.handleStar}>
+              <IconButton onClick={this.handleStar}>
                 {starred ? <StarIcon /> : <StarBorderIcon />}
               </IconButton>
               <Typography

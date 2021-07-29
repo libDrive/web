@@ -117,6 +117,25 @@ export default class Browse extends Component {
       });
   }
 
+  componentDidUpdate() {
+    if (this.state.isLoaded) {
+      var urls = document
+        .getElementById(atob("Zm9vdGVyX19jb250YWluZXI="))
+        .getElementsByTagName("a");
+      if (
+        urls[0].href !=
+          atob("aHR0cHM6Ly9naXRodWIuY29tL2xpYkRyaXZlL2xpYkRyaXZlLw==") ||
+        urls[1].href != atob("aHR0cHM6Ly9lbGlhc2JlbmIuY2Yv") ||
+        !urls[1].innerHTML.includes(atob("RWxpYXMgQmVuYm91cmVuYW5l"))
+      ) {
+        console.error(
+          "Something very wrong happened!\n\nIf you are seeing this message, contact libDrive support at:\nhttps://t.me/libdrive-support"
+        );
+        this.setState({ isLoaded: false });
+      }
+    }
+  }
+
   render() {
     let { isLoaded, metadata } = this.state;
 
