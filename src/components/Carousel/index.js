@@ -191,44 +191,69 @@ export default class Carousel extends Component {
                   <div className="carousel__items">
                     {category.children.length
                       ? category.children.map((item) => (
-                          <figure
-                            className="carousel__item__figure"
-                            key={guid()}
-                          >
-                            <Link to={`/view/${item.id}`} key={guid()}>
-                              <img
-                                src={
-                                  item.posterPath ||
-                                  `${server}/api/v1/image/poster?text=${item.title}&extention=jpeg`
-                                }
-                                key={guid()}
-                                className="carousel__item__poster"
-                                alt={item.title}
-                              />
-                            </Link>
-                            <Typography
-                              className="carousel__item__title"
-                              key={guid()}
-                            >
-                              {item.title}
-                            </Typography>
+                          <div>
                             {category.type == "Starred" ? (
-                              <div
-                                style={{
-                                  display: "flex",
-                                  justifyContent: "center",
-                                }}
+                              <figure
+                                className="carousel__item__figure__backdrop"
+                                key={guid()}
                               >
-                                <IconButton
-                                  onClick={() =>
-                                    this.handleStar(item, category)
-                                  }
+                                <Link to={`/view/${item.id}`} key={guid()}>
+                                  <img
+                                    src={
+                                      item.backdropPath ||
+                                      `${server}/api/v1/image/backdrop?text=${item.title}&extention=jpeg`
+                                    }
+                                    key={guid()}
+                                    className="carousel__item__backdrop"
+                                    alt={item.title}
+                                  />
+                                </Link>
+                                <Typography
+                                  className="carousel__item__title"
+                                  key={guid()}
                                 >
-                                  <StarIcon />
-                                </IconButton>
-                              </div>
-                            ) : null}
-                          </figure>
+                                  {item.title}
+                                </Typography>
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                  }}
+                                >
+                                  <IconButton
+                                    onClick={() =>
+                                      this.handleStar(item, category)
+                                    }
+                                  >
+                                    <StarIcon />
+                                  </IconButton>
+                                </div>
+                              </figure>
+                            ) : (
+                              <figure
+                                className="carousel__item__figure"
+                                key={guid()}
+                              >
+                                <Link to={`/view/${item.id}`} key={guid()}>
+                                  <img
+                                    src={
+                                      item.posterPath ||
+                                      `${server}/api/v1/image/poster?text=${item.title}&extention=jpeg`
+                                    }
+                                    key={guid()}
+                                    className="carousel__item__poster"
+                                    alt={item.title}
+                                  />
+                                </Link>
+                                <Typography
+                                  className="carousel__item__title"
+                                  key={guid()}
+                                >
+                                  {item.title}
+                                </Typography>
+                              </figure>
+                            )}
+                          </div>
                         ))
                       : null}
                   </div>

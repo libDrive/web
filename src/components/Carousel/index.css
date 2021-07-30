@@ -45,6 +45,28 @@ figure {
   transform: scale(1.05);
 }
 
+.carousel__items::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel__item__backdrop {
+  border-radius: 7px;
+  width: 256px;
+  height: 144px;
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+}
+
+.carousel__item__figure__backdrop {
+  margin-right: 0.75em;
+  width: 256px;
+  transition: all 0.25s ease-in-out;
+  margin-bottom: 0.5em;
+}
+
+.carousel__item__figure__backdrop:hover {
+  transform: scale(1.05);
+}
+
 @media screen and (max-width: 500px) {
   .carousel__item__poster {
     width: 140px;
@@ -53,11 +75,21 @@ figure {
   .carousel__item__figure {
     width: 140px;
   }
+  .carousel__item__backdrop {
+    width: 204.8px;
+    height: 115.2px;
+  }
+  .carousel__item__figure__backdrop {
+    width: 204.8px;
+  }
 }
 
 @media screen and (max-width: 280px) {
   .carousel__item__figure {
     max-width: 80%;
+  }
+  .carousel__item__figure__backdrop {
+    max-width: 60%;
   }
 }
 

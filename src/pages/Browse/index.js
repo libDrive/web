@@ -44,13 +44,19 @@ export default class Browse extends Component {
       .get(req_path + req_args)
       .then((response) => {
         let metadata = response.data.content;
-        metadata.unshift({
-          categoryInfo: { id: "starred", name: "Starred", type: "Starred" },
-          children: starred_list,
-          length: starred_list.length,
-          name: "Starred",
-          type: "Starred",
-        });
+        for (let n = 0; n < starred_list.length; n++) {
+          metadata.unshift({
+            categoryInfo: {
+              id: "starred",
+              name: starred_list[n].name,
+              type: "Starred",
+            },
+            children: starred_list[n].children,
+            length: starred_list[n].children.length,
+            name: starred_list[n].name,
+            type: "Starred",
+          });
+        }
         this.setState({
           isLoaded: true,
           metadata: metadata,

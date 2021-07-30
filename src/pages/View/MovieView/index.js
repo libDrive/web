@@ -22,6 +22,7 @@ import {
   guid,
   PlayerMenu,
   seo,
+  StarDialog,
   theme,
 } from "../../../components";
 
@@ -32,6 +33,7 @@ export default class MovieView extends Component {
     this.onFileChange = this.onFileChange.bind(this);
     this.prettyDate = this.prettyDate.bind(this);
     this.handleStar = this.handleStar.bind(this);
+    this.handleStarClose = this.handleStarClose.bind(this);
   }
 
   componentDidMount() {
@@ -71,19 +73,23 @@ export default class MovieView extends Component {
   }
 
   handleStar() {
-    let { metadata, id, starred } = this.state;
-    let starred_list = JSON.parse(localStorage.getItem("starred_list") || "[]");
+    this.setState({ openStarDialog: true });
+  }
 
-    if (!starred) {
-      starred_list.unshift(metadata);
-      localStorage.setItem("starred_list", JSON.stringify(starred_list));
+  handleStarClose(evt) {
+    if (evt == "starred") {
+      this.setState({ openStarDialog: false, starred: true });
+    } else if (evt == "unstarred") {
+      this.setState({
+        openStarDialog: false,
+        starred:
+          JSON.parse(localStorage.getItem("starred_list") || "[]").some((i) =>
+            i.children.some((x) => x.id == this.state.metadata.id)
+          ) || false,
+      });
     } else {
-      let index = starred_list.findIndex((i) => i.id == id);
-      starred_list.splice(index, 1);
-      localStorage.setItem("starred_list", JSON.stringify(starred_list));
+      this.setState({ openStarDialog: false });
     }
-
-    this.setState({ starred: !starred });
   }
 
   render() {
@@ -219,6 +225,11 @@ export default class MovieView extends Component {
             </div>
           </div>
         </div>
+        <StarDialog
+          isOpen={this.state.openStarDialog}
+          handleClose={this.handleStarClose}
+          metadata={metadata}
+        />
       </div>
     );
   }

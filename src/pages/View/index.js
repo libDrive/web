@@ -29,6 +29,7 @@ export default class View extends Component {
         ) && !window.MSStream,
       isLoaded: false,
       metadata: {},
+      openStarDialog: false,
       q:
         parseInt(queryString.parse(this.props.location.search).q) ||
         JSON.parse(localStorage.getItem("watching") || "{}")[
@@ -41,8 +42,8 @@ export default class View extends Component {
         window.location.origin,
       sources: [],
       starred:
-        JSON.parse(localStorage.getItem("starred_list") || "[]").some(
-          (i) => i.id == this.props.match.params.id
+        JSON.parse(localStorage.getItem("starred_list") || "[]").some((i) =>
+          i.children.some((x) => x.id == this.props.match.params.id)
         ) || false,
       subtitle: { url: "" },
       ui_config: JSON.parse(
