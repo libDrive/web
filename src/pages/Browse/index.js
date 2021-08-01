@@ -21,7 +21,6 @@ export default class Browse extends Component {
         sessionStorage.getItem("server") ||
         localStorage.getItem("server") ||
         window.location.origin,
-      starred_list: JSON.parse(localStorage.getItem("starred_list") || "[]"),
       ui_config: JSON.parse(
         window.localStorage.getItem("ui_config") ||
           window.sessionStorage.getItem("ui_config") ||
@@ -31,7 +30,7 @@ export default class Browse extends Component {
   }
 
   componentDidMount() {
-    let { auth, server, starred_list, ui_config } = this.state;
+    let { auth, server, ui_config } = this.state;
 
     if (!auth || !server) {
       this.props.history.push("/logout");
@@ -44,19 +43,6 @@ export default class Browse extends Component {
       .get(req_path + req_args)
       .then((response) => {
         let metadata = response.data.content;
-        for (let n = 0; n < starred_list.length; n++) {
-          metadata.unshift({
-            categoryInfo: {
-              id: "starred",
-              name: starred_list[n].name,
-              type: "Starred",
-            },
-            children: starred_list[n].children,
-            length: starred_list[n].children.length,
-            name: starred_list[n].name,
-            type: "Starred",
-          });
-        }
         this.setState({
           isLoaded: true,
           metadata: metadata,

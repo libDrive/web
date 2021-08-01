@@ -37,14 +37,25 @@ export default class StarDialog extends Component {
 
   handleCreateSubmit() {
     let { createValue } = this.state;
-    let starred_list = JSON.parse(localStorage.getItem("starred_list") || "[]");
-    let n = starred_list.findIndex((i) => i.name == createValue);
+    let starred_lists = JSON.parse(
+      localStorage.getItem("starred_lists") || "[]"
+    );
+    let n = starred_lists.findIndex((i) => i.name == createValue);
 
     if (n == -1) {
-      let metadata = { name: createValue, children: [] };
-      starred_list.push(metadata);
-      localStorage.setItem("starred_list", JSON.stringify(starred_list));
-      this.setState({ isCreateOpen: false, starred_list: starred_list });
+      let metadata = {
+        categoryInfo: {
+          id: "starred",
+          name: createValue,
+          type: "Starred",
+        },
+        name: createValue,
+        children: [],
+        type: "Starred",
+      };
+      starred_lists.push(metadata);
+      localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
+      this.setState({ isCreateOpen: false, starred_lists: starred_lists });
     } else {
       this.setState({ isCreateOpen: false });
     }
@@ -55,18 +66,18 @@ export default class StarDialog extends Component {
       this.setState({ isCreateOpen: true });
     } else {
       let { metadata } = this.props;
-      let starred_list = JSON.parse(
-        localStorage.getItem("starred_list") || "[]"
+      let starred_lists = JSON.parse(
+        localStorage.getItem("starred_lists") || "[]"
       );
-      let i = starred_list[n].children.findIndex((i) => i.id == metadata.id);
+      let i = starred_lists[n].children.findIndex((i) => i.id == metadata.id);
       if (i == -1) {
-        starred_list[n].children.unshift(metadata);
-        localStorage.setItem("starred_list", JSON.stringify(starred_list));
+        starred_lists[n].children.unshift(metadata);
+        localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
         this.props.handleClose("unstarred");
-        this.setState({ starred_list: starred_list });
+        this.setState({ starred_lists: starred_lists });
       } else {
-        starred_list[n].children.splice(i, 1);
-        localStorage.setItem("starred_list", JSON.stringify(starred_list));
+        starred_lists[n].children.splice(i, 1);
+        localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
         this.props.handleClose();
       }
     }
@@ -75,8 +86,9 @@ export default class StarDialog extends Component {
   render() {
     let { isOpen, metadata } = this.props;
     let { isCreateOpen } = this.state;
-    console.log(metadata.id);
-    let starred_list = JSON.parse(localStorage.getItem("starred_list") || "[]");
+    let starred_lists = JSON.parse(
+      localStorage.getItem("starred_lists") || "[]"
+    );
 
     return (
       <div>
@@ -89,8 +101,8 @@ export default class StarDialog extends Component {
             Select starred list
           </DialogTitle>
           <List>
-            {starred_list && starred_list.length
-              ? starred_list.map((s, n) => (
+            {starred_lists && starred_lists.length
+              ? starred_lists.map((s, n) => (
                   <ListItem
                     button
                     onClick={() => this.handleListItemClick(s, n)}

@@ -42,7 +42,7 @@ export default class View extends Component {
         window.location.origin,
       sources: [],
       starred:
-        JSON.parse(localStorage.getItem("starred_list") || "[]").some((i) =>
+        JSON.parse(localStorage.getItem("starred_lists") || "[]").some((i) =>
           i.children.some((x) => x.id == this.props.match.params.id)
         ) || false,
       subtitle: { url: "" },

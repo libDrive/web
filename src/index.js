@@ -16,6 +16,7 @@ import {
   Search,
   Settings,
   SettingsLoginForm,
+  StarredLists,
   theme,
   guid,
   View,
@@ -41,6 +42,11 @@ ReactDOM.render(
           exact
           path={"/browse/:category"}
           render={(props) => <CategoryBrowse key={guid()} {...props} />}
+        />
+        <Route
+          exact
+          path={"/starred"}
+          render={(props) => <StarredLists key={guid()} {...props} />}
         />
         <Route
           exact

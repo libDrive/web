@@ -66,6 +66,10 @@ export default class BrowseMenu extends Component {
                 </Link>
               ))
             : null}
+          <Divider />
+          <Link to={"/starred"} className="no_decoration_link">
+            <MenuItem onClick={this.handleClose}>Starred Lists</MenuItem>
+          </Link>
         </Menu>
       </div>
     );
