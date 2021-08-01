@@ -145,7 +145,7 @@ export default class View extends Component {
     let name;
     let new_id;
     let metadata = response1.data.content;
-    if (metadata.type == "directory") {
+    if (metadata.type == "directory" && metadata.children.length) {
       if (metadata.children[q].type == "file") {
         new_id = metadata.children[q].id;
         name = metadata.children[q].name;
