@@ -6,7 +6,9 @@ import {
   Avatar,
   Button,
   Chip,
+  ClickAwayListener,
   IconButton,
+  Tooltip,
   Typography,
 } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
@@ -31,7 +33,7 @@ import {
 export class TVBView extends Component {
   constructor(props) {
     super(props);
-    this.state = props.state;
+    this.state = { ...props.state, tooltipOpen: false };
     this.prettyDate = this.prettyDate.bind(this);
     this.handleStar = this.handleStar.bind(this);
     this.handleStarClose = this.handleStarClose.bind(this);
@@ -80,7 +82,7 @@ export class TVBView extends Component {
   }
 
   render() {
-    let { metadata, server, starred } = this.state;
+    let { metadata, server, starred, tooltipOpen } = this.state;
 
     return (
       <div className="TVBView">
@@ -102,13 +104,34 @@ export class TVBView extends Component {
             />
           </div>
           <div className="info__right">
-            <Typography
-              variant="h3"
-              style={{ fontWeight: "bold" }}
-              className="info__title"
+            <ClickAwayListener
+              onClickAway={() => this.setState({ tooltipOpen: false })}
             >
-              {metadata.title}
-            </Typography>
+              <Tooltip
+                title={
+                  <Typography variant="subtitle2">{metadata.name}</Typography>
+                }
+                arrow
+                placement="bottom-start"
+                open={tooltipOpen}
+                disableFocusListener
+                disableHoverListener
+                disableTouchListener
+                onClose={() => this.setState({ tooltipOpen: false })}
+                PopperProps={{
+                  disablePortal: true,
+                }}
+              >
+                <Typography
+                  onClick={() => this.setState({ tooltipOpen: true })}
+                  variant="h3"
+                  style={{ fontWeight: "bold" }}
+                  className="info__title"
+                >
+                  {metadata.title}
+                </Typography>
+              </Tooltip>
+            </ClickAwayListener>
             <Typography
               variant="body1"
               className="info__overview"
@@ -202,18 +225,29 @@ export class TVSView extends Component {
       if (evt.target.files[0].name.endsWith(".srt")) {
         const vtt = new VTTConverter(evt.target.files[0]);
         let res = await vtt.getURL();
-        this.setState({ file: res });
+        this.setState({ file: res, playerKey: guid() });
       } else {
-        this.setState({ file: URL.createObjectURL(evt.target.files[0]) });
+        this.setState({
+          file: URL.createObjectURL(evt.target.files[0]),
+          playerKey: guid(),
+        });
       }
     } else {
-      this.setState({ file: null });
+      this.setState({ file: null, playerKey: guid() });
     }
   }
 
   render() {
-    let { default_quality, file, metadata, q, server, sources, subtitle } =
-      this.state;
+    let {
+      default_quality,
+      file,
+      metadata,
+      playerKey,
+      q,
+      server,
+      sources,
+      subtitle,
+    } = this.state;
 
     if (file) {
       subtitle = { url: file };
@@ -231,7 +265,7 @@ export class TVSView extends Component {
       <div className="TVSView">
         <div className="plyr__component">
           <DPlayer
-            key={guid()}
+            key={playerKey}
             options={{
               video: {
                 quality: sources,

@@ -6,6 +6,7 @@ import {
   Avatar,
   Button,
   Chip,
+  ClickAwayListener,
   IconButton,
   Tooltip,
   Typography,
@@ -30,7 +31,7 @@ import {
 export default class MovieView extends Component {
   constructor(props) {
     super(props);
-    this.state = props.state;
+    this.state = { ...props.state, tooltipOpen: false };
     this.onFileChange = this.onFileChange.bind(this);
     this.prettyDate = this.prettyDate.bind(this);
     this.handleStar = this.handleStar.bind(this);
@@ -57,12 +58,15 @@ export default class MovieView extends Component {
       if (evt.target.files[0].name.endsWith(".srt")) {
         const vtt = new VTTConverter(evt.target.files[0]);
         let res = await vtt.getURL();
-        this.setState({ file: res });
+        this.setState({ file: res, playerKey: guid() });
       } else {
-        this.setState({ file: URL.createObjectURL(evt.target.files[0]) });
+        this.setState({
+          file: URL.createObjectURL(evt.target.files[0]),
+          playerKey: guid(),
+        });
       }
     } else {
-      this.setState({ file: null });
+      this.setState({ file: null, playerKey: guid() });
     }
   }
 
@@ -98,10 +102,12 @@ export default class MovieView extends Component {
       default_quality,
       file,
       metadata,
+      playerKey,
       server,
       sources,
       starred,
       subtitle,
+      tooltipOpen,
     } = this.state;
 
     if (file) {
@@ -112,7 +118,7 @@ export default class MovieView extends Component {
       <div className="MovieView">
         <div className="plyr__component">
           <DPlayer
-            key={guid()}
+            key={playerKey}
             options={{
               video: {
                 quality: sources,
@@ -147,20 +153,34 @@ export default class MovieView extends Component {
             />
           </div>
           <div className="info__right">
-            <Tooltip
-              title={
-                <Typography variant="subtitle2">{metadata.name}</Typography>
-              }
-              arrow
+            <ClickAwayListener
+              onClickAway={() => this.setState({ tooltipOpen: false })}
             >
-              <Typography
-                variant="h3"
-                style={{ fontWeight: "bold" }}
-                className="info__title"
+              <Tooltip
+                title={
+                  <Typography variant="subtitle2">{metadata.name}</Typography>
+                }
+                arrow
+                placement="bottom-start"
+                open={tooltipOpen}
+                disableFocusListener
+                disableHoverListener
+                disableTouchListener
+                onClose={() => this.setState({ tooltipOpen: false })}
+                PopperProps={{
+                  disablePortal: true,
+                }}
               >
-                {metadata.title}
-              </Typography>
-            </Tooltip>
+                <Typography
+                  onClick={() => this.setState({ tooltipOpen: true })}
+                  variant="h3"
+                  style={{ fontWeight: "bold" }}
+                  className="info__title"
+                >
+                  {metadata.title}
+                </Typography>
+              </Tooltip>
+            </ClickAwayListener>
             <Typography
               variant="body1"
               className="info__overview"

@@ -8,7 +8,7 @@ import "@sweetalert2/theme-dark/dark.css";
 import axios from "axios";
 import queryString from "query-string";
 
-import { Footer, Nav, seo, theme } from "../../components";
+import { Footer, guid, Nav, seo, theme } from "../../components";
 import MovieView from "./MovieView";
 import { TVBView, TVSView } from "./TVView";
 import "./index.css";
@@ -30,6 +30,7 @@ export default class View extends Component {
       isLoaded: false,
       metadata: {},
       openStarDialog: false,
+      playerKey: guid(),
       q:
         parseInt(queryString.parse(this.props.location.search).q) ||
         JSON.parse(localStorage.getItem("watching") || "{}")[
