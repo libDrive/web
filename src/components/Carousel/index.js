@@ -82,8 +82,6 @@ export default class Carousel extends Component {
         let starred_lists = JSON.parse(
           localStorage.getItem("starred_lists") || "[]"
         );
-        console.log(starred_lists);
-        console.log(metadata);
         if (starred_lists.length == 1) {
           starred_lists.shift();
           metadata.shift();
