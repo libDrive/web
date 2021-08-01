@@ -7,6 +7,7 @@ import {
   Button,
   Chip,
   IconButton,
+  Tooltip,
   Typography,
 } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
@@ -139,18 +140,27 @@ export default class MovieView extends Component {
               className="info__poster"
               src={
                 metadata.posterPath ||
-                `${server}/api/v1/image/poster?text=${metadata.title}&extention=jpeg`
+                `${server}/api/v1/image/poster?text=${encodeURIComponent(
+                  metadata.title
+                )}&extention=jpeg`
               }
             />
           </div>
           <div className="info__right">
-            <Typography
-              variant="h3"
-              style={{ fontWeight: "bold" }}
-              className="info__title"
+            <Tooltip
+              title={
+                <Typography variant="subtitle2">{metadata.name}</Typography>
+              }
+              arrow
             >
-              {metadata.title}
-            </Typography>
+              <Typography
+                variant="h3"
+                style={{ fontWeight: "bold" }}
+                className="info__title"
+              >
+                {metadata.title}
+              </Typography>
+            </Tooltip>
             <Typography
               variant="body1"
               className="info__overview"
