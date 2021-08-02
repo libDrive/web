@@ -138,11 +138,15 @@ export default class Carousel extends Component {
     let { hide, metadata, server, star } = this.state;
 
     return star ? (
-      <div className="Carousel">
+      <div className="Carousel" style={{ paddingTop: "3%" }}>
         {metadata.length
           ? metadata.map((category, p) =>
               category.children.length || !hide ? (
-                <div className="carousel__category" key={guid()}>
+                <div
+                  className="carousel__category"
+                  style={{ margin: "0 auto 0 auto" }}
+                  key={guid()}
+                >
                   <div
                     style={{
                       display: "flex",
