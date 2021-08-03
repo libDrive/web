@@ -112,13 +112,21 @@ export default class Browse extends Component {
   componentDidUpdate() {
     if (this.state.isLoaded) {
       var urls = document
-        .getElementById(atob("Zm9vdGVyX19jb250YWluZXI="))
+        .getElementById(
+          Buffer.from("Zm9vdGVyX19jb250YWluZXI=", "base64").toString()
+        )
         .getElementsByTagName("a");
       if (
         urls[0].href !=
-          atob("aHR0cHM6Ly9naXRodWIuY29tL2xpYkRyaXZlL2xpYkRyaXZlLw==") ||
-        urls[1].href != atob("aHR0cHM6Ly9lbGlhc2JlbmIuY2Yv") ||
-        !urls[1].innerHTML.includes(atob("RWxpYXMgQmVuYm91cmVuYW5l"))
+          Buffer.from(
+            "aHR0cHM6Ly9naXRodWIuY29tL2xpYkRyaXZlL2xpYkRyaXZlLw==",
+            "base64"
+          ).toString() ||
+        urls[1].href !=
+          Buffer.from("aHR0cHM6Ly9lbGlhc2JlbmIuY2Yv", "base64").toString() ||
+        !urls[1].innerHTML.includes(
+          Buffer.from("RWxpYXMgQmVuYm91cmVuYW5l", "base64").toString()
+        )
       ) {
         console.error(
           "Something very wrong happened!\n\nIf you are seeing this message, contact libDrive support at:\nhttps://t.me/libdrive-support"
