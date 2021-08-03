@@ -32,7 +32,7 @@ export default class View extends Component {
       openStarDialog: false,
       playerKey: guid(),
       q:
-        parseInt(queryString.parse(this.props.location.search).q) ||
+        queryString.parse(this.props.location.search).q ||
         JSON.parse(localStorage.getItem("watching") || "{}")[
           this.props.match.params.id
         ] ||
@@ -58,6 +58,7 @@ export default class View extends Component {
 
   async componentDidMount() {
     let { auth, id, q, server } = this.state;
+    q = parseInt(q)
 
     if (!auth || !server) {
       this.props.history.push("/logout");
@@ -234,6 +235,7 @@ export default class View extends Component {
       isLoaded: true,
       metadata: response1.data.content,
       name: name,
+      q: q,
       sources: response2.data.content.sources,
       subtitle: response2.data.content.subtitle,
     });
