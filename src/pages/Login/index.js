@@ -183,7 +183,6 @@ class Login extends Component {
   }
 
   handleSignup() {
-    preventDefault();
     let { password, server, username } = this.state;
 
     if (!username) {
