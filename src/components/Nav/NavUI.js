@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import {
   AppBar,
+  Avatar,
   IconButton,
   InputBase,
   Toolbar,
@@ -120,9 +121,15 @@ class NavUI extends Component {
         <AppBar position="static" className={classes.root}>
           <Toolbar>
             <Link to="/" className="no_decoration_link">
-              <Typography className={classes.title} variant="h6" noWrap>
-                {ui_config.title || "libDrive"}
-              </Typography>
+              {ui_config.icon_on_nav ? (
+                <Avatar alt="logo" src={ui_config.icon}>
+                  L
+                </Avatar>
+              ) : (
+                <Typography className={classes.title} variant="h6" noWrap>
+                  {ui_config.title || "libDrive"}
+                </Typography>
+              )}
             </Link>
             <form className={classes.search} onSubmit={this.searchSubmit}>
               <IconButton
