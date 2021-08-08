@@ -17,7 +17,7 @@ import "@sweetalert2/theme-dark/dark.css";
 
 import axios from "axios";
 
-import { Nav, theme } from "../../components";
+import { Footer, Nav, theme } from "../../components";
 
 const styles = (theme) => ({
   paper: {

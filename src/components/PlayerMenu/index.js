@@ -83,23 +83,18 @@ export default class PlayerMenu extends Component {
               </a>
               <Divider />
             </div>
-          ) : null}
-          <a
-            href={`vlc://${server}/api/v1/redirectdownload/${encodeURIComponent(
-              metadata.name
-            )}?a=${auth}&id=${id}`}
-            className="no_decoration_link"
-          >
-            <MenuItem onClick={this.handleClose}>VLC</MenuItem>
-          </a>
-          <a
-            href={`potplayer://${server}/api/v1/redirectdownload/${encodeURIComponent(
-              metadata.name
-            )}?a=${auth}&id=${id}`}
-            className="no_decoration_link"
-          >
-            <MenuItem onClick={this.handleClose}>PotPlayer</MenuItem>
-          </a>
+          ) : (
+            <div>
+              <a
+                href={`potplayer://${server}/api/v1/redirectdownload/${encodeURIComponent(
+                  metadata.name
+                )}?a=${auth}&id=${id}`}
+                className="no_decoration_link"
+              >
+                <MenuItem onClick={this.handleClose}>PotPlayer</MenuItem>
+              </a>
+            </div>
+          )}
           <Divider />
           <MenuItem
             onClick={() => {
