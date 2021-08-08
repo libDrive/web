@@ -79,6 +79,8 @@ export default class CategoryBrowse extends Component {
       this.props.history.push("/logout");
     }
 
+    window.scrollTo(0, 0)
+
     let req_path = `${server}/api/v1/metadata`;
     let req_args = `?a=${auth}&c=${encodeURIComponent(
       category
