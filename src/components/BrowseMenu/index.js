@@ -30,6 +30,9 @@ export default class BrowseMenu extends Component {
 
   render() {
     let { categories } = this.props;
+    let starred_lists = JSON.parse(
+      localStorage.getItem("starred_lists") || "[]"
+    );
 
     return (
       <div className="Browse" style={{ marginRight: "15px" }}>
@@ -66,10 +69,14 @@ export default class BrowseMenu extends Component {
                 </Link>
               ))
             : null}
-          <Divider />
-          <Link to={"/starred"} className="no_decoration_link">
-            <MenuItem onClick={this.handleClose}>Starred Lists</MenuItem>
-          </Link>
+          {starred_lists.length ? (
+            <div>
+              <Divider />
+              <Link to={"/starred"} className="no_decoration_link">
+                <MenuItem onClick={this.handleClose}>Starred Lists</MenuItem>
+              </Link>
+            </div>
+          ) : null}
         </Menu>
       </div>
     );

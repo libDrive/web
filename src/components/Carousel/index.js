@@ -234,6 +234,7 @@ export default class Carousel extends Component {
                                 }}
                               >
                                 <IconButton
+                                  style={{ padding: "2px" }}
                                   onClick={() =>
                                     this.handleStar(item, category)
                                   }
