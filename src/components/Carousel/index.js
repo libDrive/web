@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import { Button, IconButton, Typography } from "@material-ui/core";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import StarIcon from "@material-ui/icons/Star";
 
 import Swal from "sweetalert2/src/sweetalert2.js";
@@ -27,6 +28,8 @@ export default class Carousel extends Component {
     this.handleStarReset = this.handleStarReset.bind(this);
     this.handleStarImport = this.handleStarImport.bind(this);
     this.handleStarExport = this.handleStarExport.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
+    this.scrollRef = React.createRef();
   }
 
   handleStar(item, category) {
@@ -134,6 +137,14 @@ export default class Carousel extends Component {
     link.click();
   }
 
+  handleScroll(evt) {
+    if (evt == "right") {
+      this.scrollRef ? (this.scrollRef.current.scrollLeft += 500) : null;
+    } else if (evt == "left") {
+      this.scrollRef ? (this.scrollRef.current.scrollLeft -= 500) : null;
+    }
+  }
+
   render() {
     let { hide, metadata, server, star } = this.state;
 
@@ -202,7 +213,14 @@ export default class Carousel extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="carousel__items">
+                  <div
+                    className="carousel__items"
+                    style={{
+                      scrollBehavior: "smooth",
+                      position: "relative",
+                    }}
+                    ref={this.scrollRef}
+                  >
                     {category.children.length
                       ? category.children.map((item) => (
                           <div>
@@ -246,6 +264,26 @@ export default class Carousel extends Component {
                           </div>
                         ))
                       : null}
+                    <div
+                      style={{
+                        position: "fixed",
+                        right: "3.75vw",
+                        alignSelf: "center",
+                      }}
+                    >
+                      <IconButton
+                        color="primary"
+                        onClick={() => this.handleScroll("right")}
+                        style={{
+                          backgroundColor: theme.palette.background.paper,
+                          borderColor: theme.palette.primary.secondary,
+                          borderStyle: "solid",
+                          borderWidth: "3px",
+                        }}
+                      >
+                        <ArrowForwardIosIcon style={{ fontSize: "16px" }} />
+                      </IconButton>
+                    </div>
                   </div>
                 </div>
               ) : null
@@ -265,7 +303,11 @@ export default class Carousel extends Component {
                   >
                     {category.categoryInfo.name}
                   </Link>
-                  <div className="carousel__items">
+                  <div
+                    className="carousel__items"
+                    style={{ scrollBehavior: "smooth", position: "relative" }}
+                    ref={this.scrollRef}
+                  >
                     {category.children.length
                       ? category.children.map((item) => (
                           <figure
@@ -292,6 +334,26 @@ export default class Carousel extends Component {
                           </figure>
                         ))
                       : null}
+                    <div
+                      style={{
+                        position: "fixed",
+                        right: "3.75vw",
+                        alignSelf: "center",
+                      }}
+                    >
+                      <IconButton
+                        color="primary"
+                        onClick={() => this.handleScroll("right")}
+                        style={{
+                          backgroundColor: theme.palette.background.paper,
+                          borderColor: theme.palette.primary.secondary,
+                          borderStyle: "solid",
+                          borderWidth: "3px",
+                        }}
+                      >
+                        <ArrowForwardIosIcon style={{ fontSize: "16px" }} />
+                      </IconButton>
+                    </div>
                   </div>
                 </div>
               ) : null
