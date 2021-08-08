@@ -171,6 +171,7 @@ class SettingsLoginForm extends Component {
             </form>
           </div>
         </Container>
+        <Footer />
       </div>
     ) : (
       <div className="Loading">

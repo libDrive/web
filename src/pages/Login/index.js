@@ -17,6 +17,7 @@ import "@sweetalert2/theme-dark/dark.css";
 import axios from "axios";
 
 import { theme } from "../../components";
+import Footer from "../../components/Footer";
 
 const styles = (theme) => ({
   paper: {
@@ -254,143 +255,150 @@ class Login extends Component {
     const { classes } = this.props;
 
     return !page ? (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography variant="h5">Sign in</Typography>
-          <form
-            className={classes.form}
-            onSubmit={this.handleServerSubmit}
-            noValidate
-          >
-            {error && (
-              <div style={{}}>
-                <h3 data-test="error" onClick={this.dismissError}>
-                  <button onClick={this.dismissError}>✖</button>
-                  {error}
-                </h3>
-              </div>
-            )}
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="server"
-              label="Server"
-              name="server"
-              autoComplete="server"
-              onChange={this.handleTempServerChange}
-              value={server}
-              autoFocus
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
+      <div className="Login">
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography variant="h5">Sign in</Typography>
+            <form
+              className={classes.form}
+              onSubmit={this.handleServerSubmit}
+              noValidate
             >
-              Next
-            </Button>
-          </form>
-        </div>
-      </Container>
+              {error && (
+                <div style={{}}>
+                  <h3 data-test="error" onClick={this.dismissError}>
+                    <button onClick={this.dismissError}>✖</button>
+                    {error}
+                  </h3>
+                </div>
+              )}
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="server"
+                label="Server"
+                name="server"
+                autoComplete="server"
+                onChange={this.handleTempServerChange}
+                value={server}
+                autoFocus
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Next
+              </Button>
+            </form>
+          </div>
+        </Container>
+        <Footer />
+      </div>
     ) : (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography variant="h5">Sign in</Typography>
-          <form
-            className={classes.form}
-            onSubmit={this.handleSubmit}
-            noValidate
-          >
-            {error && (
-              <div style={{}}>
-                <h3 data-test="error" onClick={this.dismissError}>
-                  <button onClick={this.dismissError}>✖</button>
-                  {error}
-                </h3>
-              </div>
-            )}
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="server"
-              label="Server"
-              name="server"
-              autoComplete="server"
-              onChange={this.handleTempServerChange}
-              value={server}
-              autoFocus
-              disabled
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
-              onChange={this.handleUserChange}
-              value={username}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={this.handlePassChange}
-              value={password}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
+      <div className="Login">
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography variant="h5">Sign in</Typography>
+            <form
+              className={classes.form}
+              onSubmit={this.handleSubmit}
+              noValidate
             >
-              Sign In
-            </Button>
-            {this.state.signup ? (
-              <div className="Signup" style={{ textAlign: "center" }}>
-                <Button
-                  type="button"
-                  onClick={this.handleSignup}
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                >
-                  Sign Up
-                </Button>
-                <Typography variant="body1">
-                  Be aware that the owner of this server can view your
-                  credentials!
-                </Typography>
-              </div>
-            ) : (
-              <div className="Signup"></div>
-            )}
-          </form>
-        </div>
-      </Container>
+              {error && (
+                <div style={{}}>
+                  <h3 data-test="error" onClick={this.dismissError}>
+                    <button onClick={this.dismissError}>✖</button>
+                    {error}
+                  </h3>
+                </div>
+              )}
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="server"
+                label="Server"
+                name="server"
+                autoComplete="server"
+                onChange={this.handleTempServerChange}
+                value={server}
+                autoFocus
+                disabled
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                onChange={this.handleUserChange}
+                value={username}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={this.handlePassChange}
+                value={password}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Sign In
+              </Button>
+              {this.state.signup ? (
+                <div className="Signup" style={{ textAlign: "center" }}>
+                  <Button
+                    type="button"
+                    onClick={this.handleSignup}
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    style={{ marginTop: 0 }}
+                    className={classes.submit}
+                  >
+                    Sign Up
+                  </Button>
+                  <Typography variant="body1">
+                    Be aware that the owner of this server can view your
+                    credentials!
+                  </Typography>
+                </div>
+              ) : (
+                <div className="Signup"></div>
+              )}
+            </form>
+          </div>
+        </Container>
+        <Footer />
+      </div>
     );
   }
 }
