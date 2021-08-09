@@ -16,7 +16,7 @@
     "react-dplayer": "^0.4.2",
     "react-router-dom": "^5.2.0",
     "srt-webvtt": "^1.3.2",
-    "sweetalert2": "^11.1.0"
+    "sweetalert2": "^11.1.2"
   },
   "devDependencies": {
     "react": "^17.0.2",
