@@ -266,6 +266,12 @@ export class TVSView extends Component {
         <div className="plyr__component">
           <DPlayer
             key={playerKey}
+            style={{
+              borderRadius: "12px 12px 0 0",
+              borderWidth: "5px 5px 0 5px",
+              borderColor: "black",
+              borderStyle: "solid",
+            }}
             options={{
               video: {
                 quality: sources,

@@ -119,6 +119,12 @@ export default class MovieView extends Component {
         <div className="plyr__component">
           <DPlayer
             key={playerKey}
+            style={{
+              borderRadius: "12px",
+              borderWidth: "5px",
+              borderColor: "black",
+              borderStyle: "solid",
+            }}
             options={{
               video: {
                 quality: sources,
