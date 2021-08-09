@@ -15,9 +15,15 @@ import { Rating } from "@material-ui/lab";
 import StarIcon from "@material-ui/icons/Star";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import SubtitlesOutlinedIcon from "@material-ui/icons/SubtitlesOutlined";
+import YouTubeIcon from "@material-ui/icons/YouTube";
 
 import DPlayer from "react-dplayer";
 import VTTConverter from "srt-webvtt";
+
+import Swal from "sweetalert2/src/sweetalert2.js";
+import "@sweetalert2/theme-dark/dark.css";
+
+import axios from "axios";
 
 import {
   ChildrenMenu,
@@ -28,15 +34,18 @@ import {
   seo,
   StarDialog,
   theme,
+  TrailerDialog,
 } from "../../../components";
 
 export class TVBView extends Component {
   constructor(props) {
     super(props);
-    this.state = { ...props.state, tooltipOpen: false };
+    this.state = { ...props.state, tooltipOpen: false, trailer: {} };
     this.prettyDate = this.prettyDate.bind(this);
     this.handleStar = this.handleStar.bind(this);
     this.handleStarClose = this.handleStarClose.bind(this);
+    this.handleTrailer = this.handleTrailer.bind(this);
+    this.handleTrailerClose = this.handleTrailerClose.bind(this);
   }
 
   componentDidMount() {
@@ -81,8 +90,91 @@ export class TVBView extends Component {
     }
   }
 
+  handleTrailer() {
+    let {auth, metadata, server} = this.state;
+
+    let req_path = `${server}/api/v1/trailer/${metadata.apiId}`;
+    var t = "movie"
+    if (metadata.type == "directory") {
+      t = "tv";
+    let req_args = `?a=${auth}&t=${t}&api=${metadata.api}`;
+
+    axios
+      .get(req_path + req_args)
+      .then((response) =>
+        this.setState({
+          openTrailerDialog: true,
+          trailer: response.data.content,
+        })
+      )
+      .catch((error) => {
+        console.error(error);
+        if (error.response) {
+          let data = error.response.data;
+          if (data.code === 401) {
+            Swal.fire({
+              title: "Error!",
+              text: data.message,
+              icon: "error",
+              confirmButtonText: "Login",
+              confirmButtonColor: theme.palette.success.main,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.props.history.push("/logout");
+              }
+            });
+          } else if (!server) {
+            this.props.history.push("/logout");
+          } else {
+            Swal.fire({
+              title: "Error!",
+              text: `Something went wrong while communicating with the server! Is '${server}' the correct address?`,
+              icon: "error",
+              confirmButtonText: "Logout",
+              confirmButtonColor: theme.palette.success.main,
+              cancelButtonText: "Retry",
+              cancelButtonColor: theme.palette.error.main,
+              showCancelButton: true,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.props.history.push("/logout");
+              } else if (result.isDismissed) {
+                location.reload();
+              }
+            });
+          }
+        } else if (error.request) {
+          if (!server) {
+            this.props.history.push("/logout");
+          } else {
+            Swal.fire({
+              title: "Error!",
+              text: `libDrive could not communicate with the server! Is '${server}' the correct address?`,
+              icon: "error",
+              confirmButtonText: "Logout",
+              confirmButtonColor: theme.palette.success.main,
+              cancelButtonText: "Retry",
+              cancelButtonColor: theme.palette.error.main,
+              showCancelButton: true,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.props.history.push("/logout");
+              } else if (result.isDismissed) {
+                location.reload();
+              }
+            });
+          }
+        }
+      });
+    }
+  }
+
+  handleTrailerClose() {
+    this.setState({ openTrailerDialog: false });
+  }
+
   render() {
-    let { metadata, server, starred, tooltipOpen } = this.state;
+    let { metadata, server, starred, tooltipOpen, trailer } = this.state;
 
     return (
       <div className="TVBView">
@@ -162,6 +254,16 @@ export class TVBView extends Component {
             </div>
             <div className="info__buttons">
               <ChildrenMenu state={this.state} />
+              <div className="info__button">
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={this.handleTrailer}
+                  startIcon={<YouTubeIcon />}
+                >
+                  Trailer
+                </Button>
+              </div>
             </div>
             <div className="info__genres">
               {metadata.genres && metadata.genres.length
@@ -187,6 +289,12 @@ export class TVBView extends Component {
           isOpen={this.state.openStarDialog}
           handleClose={this.handleStarClose}
           metadata={metadata}
+        />
+        <TrailerDialog
+          isOpen={this.state.openTrailerDialog}
+          handleClose={this.handleTrailerClose}
+          metadata={metadata}
+          trailer={trailer}
         />
       </div>
     );
@@ -341,7 +449,12 @@ export class TVSView extends Component {
                 type="file"
               />
               <label htmlFor="file-input">
-                <Button color="primary" variant="outlined" component="span" startIcon={<SubtitlesOutlinedIcon />}>
+                <Button
+                  color="primary"
+                  variant="outlined"
+                  component="span"
+                  startIcon={<SubtitlesOutlinedIcon />}
+                >
                   Subtitle
                 </Button>
               </label>
