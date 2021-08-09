@@ -248,12 +248,13 @@ export class TVBView extends Component {
                   : this.prettyDate()}
               </Typography>
             </div>
-            <div className="info__buttons">
+            <div className="info__buttons2">
               <ChildrenMenu state={this.state} />
-              <div className="info__button">
+              <div className="info__button2">
                 <Button
                   variant="outlined"
                   color="primary"
+                  style={{ width: "140px" }}
                   onClick={this.handleTrailer}
                   startIcon={<YouTubeIcon />}
                 >
@@ -448,6 +449,7 @@ export class TVSView extends Component {
                 <Button
                   color="primary"
                   variant="outlined"
+                  style={{ width: "140px" }}
                   component="span"
                   startIcon={<SubtitlesOutlinedIcon />}
                 >

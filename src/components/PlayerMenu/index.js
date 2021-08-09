@@ -58,6 +58,7 @@ export default class PlayerMenu extends Component {
         <Button
           variant="outlined"
           color="primary"
+          style={{ width: "140px" }}
           aria-controls="player-menu"
           aria-haspopup="true"
           onClick={this.handleClick}

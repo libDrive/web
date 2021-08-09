@@ -33,10 +33,11 @@ export default class ChildrenMenu extends Component {
   render() {
     let { metadata, menuAnchor } = this.state;
     return (
-      <div className="info__button">
+      <div className="info__button2">
         <Button
           variant="outlined"
           color="primary"
+          style={{ width: "140px" }}
           aria-controls="children-menu"
           aria-haspopup="true"
           onClick={this.handleClick}

@@ -311,6 +311,7 @@ export default class MovieView extends Component {
                 <Button
                   variant="outlined"
                   color="primary"
+                  style={{ width: "140px" }}
                   onClick={this.handleTrailer}
                   startIcon={<YouTubeIcon />}
                 >
@@ -325,8 +326,14 @@ export default class MovieView extends Component {
                   type="file"
                 />
                 <label htmlFor="file-input">
-                  <Button color="primary" variant="outlined" component="span">
-                    <SubtitlesOutlinedIcon />
+                  <Button
+                    color="primary"
+                    variant="outlined"
+                    style={{ width: "140px" }}
+                    component="span"
+                    startIcon={<SubtitlesOutlinedIcon />}
+                  >
+                    Subtitle
                   </Button>
                 </label>
               </div>
