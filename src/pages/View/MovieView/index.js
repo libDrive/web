@@ -315,6 +315,7 @@ export default class MovieView extends Component {
                   hidden
                   onChange={this.onFileChange}
                   type="file"
+                  accept=".vtt,.srt"
                 />
                 <label htmlFor="file-input">
                   <Button
