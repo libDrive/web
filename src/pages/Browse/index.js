@@ -37,7 +37,9 @@ export default class Browse extends Component {
     }
 
     let req_path = `${server}/api/v1/metadata`;
-    let req_args = `?a=${auth}&r=0:${ui_config.range || "16"}&s=popularity-des`;
+    let req_args = `?a=${auth}&r=0:${
+      ui_config.range || "16"
+    }&s=popularity-des&rmdup=true`;
 
     axios
       .get(req_path + req_args)
