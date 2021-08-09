@@ -13,7 +13,7 @@ figure {
 }
 
 .tile__items {
-  grid-gap: 3em 3em;
+  grid-gap: 20px 20px;
   margin: 30px auto;
   display: flex;
   flex-wrap: wrap;
