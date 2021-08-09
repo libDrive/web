@@ -58,7 +58,7 @@ export default class View extends Component {
 
   async componentDidMount() {
     let { auth, id, q, server } = this.state;
-    q = parseInt(q)
+    q = parseInt(q);
 
     if (!auth || !server) {
       this.props.history.push("/logout");

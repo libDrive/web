@@ -22,9 +22,9 @@ export default class StarDialog extends Component {
           <DialogTitle id="simple-dialog-title">
             {metadata.title} - Trailer
           </DialogTitle>
-          <div style={{ textAlign: "center" }}>
+          <div style={{ padding: "0 30px 30px 30px", height: "70vh" }}>
             <iframe
-              style={{ width: "90%", height: "50vw", marginBottom: "15px" }}
+              style={{ width: "100%", height: "100%", borderRadius: "12px" }}
               src={`https://www.youtube.com/embed/${trailer.key}`}
               title={`${metadata.title} - Trailer`}
               frameborder="0"

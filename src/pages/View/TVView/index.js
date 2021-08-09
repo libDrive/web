@@ -91,13 +91,10 @@ export class TVBView extends Component {
   }
 
   handleTrailer() {
-    let {auth, metadata, server} = this.state;
+    let { auth, metadata, server } = this.state;
 
     let req_path = `${server}/api/v1/trailer/${metadata.apiId}`;
-    var t = "movie"
-    if (metadata.type == "directory") {
-      t = "tv";
-    let req_args = `?a=${auth}&t=${t}&api=${metadata.api}`;
+    let req_args = `?a=${auth}&t=tv&api=${metadata.api}`;
 
     axios
       .get(req_path + req_args)
@@ -166,7 +163,6 @@ export class TVBView extends Component {
           }
         }
       });
-    }
   }
 
   handleTrailerClose() {
