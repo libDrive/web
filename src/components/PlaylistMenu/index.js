@@ -43,7 +43,7 @@ export default class PlaylistMenu extends Component {
           onClick={this.handleClick}
           startIcon={<PlaylistPlayRoundedIcon />}
         >
-          m3u8 Playlist
+          Playlist
         </Button>
       </div>
     );

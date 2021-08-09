@@ -34,7 +34,7 @@
 .plyr-playlist-wrapper {
   background: rgba(0, 0, 0, 0.8);
   border-radius: 0 0 12px 12px;
-  border-width: 0 5px 5px 5px;
+  border-width: 0 4px 4px 4px;
   border-color: black;
   border-style: solid;
   position: relative;
@@ -211,6 +211,19 @@
   -webkit-line-clamp: 8;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.file__info {
+  width: 1200px;
+  max-width: 92vw;
+  display: table;
+  margin: 30px auto;
+  text-align: center;
+  margin-bottom: 50px;
+  border-radius: 12px;
+  border-width: 4px;
+  border-color: black;
+  border-style: solid;
 }
 
 @media screen and (max-width: 290px) {

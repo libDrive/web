@@ -63,7 +63,7 @@ export default class PlayerMenu extends Component {
           onClick={this.handleClick}
           startIcon={<PlayCircleOutlineIcon />}
         >
-          External Player
+          Player
         </Button>
         <Menu
           id="player-menu"

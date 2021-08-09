@@ -268,7 +268,7 @@ export class TVSView extends Component {
             key={playerKey}
             style={{
               borderRadius: "12px 12px 0 0",
-              borderWidth: "5px 5px 0 5px",
+              borderWidth: "4px 4px 0 4px",
               borderColor: "black",
               borderStyle: "solid",
             }}
@@ -311,39 +311,17 @@ export class TVSView extends Component {
             </ul>
           </div>
         </div>
-        <div style={{ textAlign: "center", marginBottom: "50px" }}>
-          <Typography
-            variant="h3"
-            style={{
-              textAlign: "center",
-              marginTop: "25px",
-              fontStyle: "bold",
-              height: "1.2em",
-              lineHeight: "1.2em",
-              overflow: "hidden",
-            }}
-          >
-            {metadata.name}
-          </Typography>
-          <Typography
-            variant="h6"
-            style={{
-              textAlign: "center",
-              marginTop: "15px",
-              height: "1.2em",
-              lineHeight: "1.2em",
-              overflow: "hidden",
-            }}
-          >
-            {metadata.children[q].name}
-          </Typography>
+        <div
+          className="file__info"
+          style={{ background: theme.palette.background.paper }}
+        >
           <div
             style={{
               display: "flex",
               alignContent: "center",
               justifyContent: "center",
               flexWrap: "wrap",
-              marginTop: "30px",
+              margin: "30px",
             }}
           >
             <PlayerMenu
@@ -363,8 +341,8 @@ export class TVSView extends Component {
                 type="file"
               />
               <label htmlFor="file-input">
-                <Button color="primary" variant="outlined" component="span">
-                  <SubtitlesOutlinedIcon />
+                <Button color="primary" variant="outlined" component="span" startIcon={<SubtitlesOutlinedIcon />}>
+                  Subtitle
                 </Button>
               </label>
             </div>
