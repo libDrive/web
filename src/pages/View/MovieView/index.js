@@ -141,19 +141,10 @@ export default class MovieView extends Component {
           } else {
             Swal.fire({
               title: "Error!",
-              text: `Something went wrong while communicating with the server! Is '${server}' the correct address?`,
+              text: "No trailer could be found.",
               icon: "error",
-              confirmButtonText: "Logout",
+              confirmButtonText: "Ok",
               confirmButtonColor: theme.palette.success.main,
-              cancelButtonText: "Retry",
-              cancelButtonColor: theme.palette.error.main,
-              showCancelButton: true,
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.props.history.push("/logout");
-              } else if (result.isDismissed) {
-                location.reload();
-              }
             });
           }
         } else if (error.request) {
