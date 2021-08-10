@@ -57,6 +57,7 @@ class SortMenu extends Component {
       "Crime",
       "Documentary",
       "Drama",
+      "Ecchi",
       "Family",
       "Fantasy",
       "History",
