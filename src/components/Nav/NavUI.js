@@ -155,7 +155,7 @@ class NavUI extends Component {
             <BrowseMenu categories={categories} />
             <ThemeMenu ui_config={ui_config} />
             <NewsMenu />
-            <AccountMenu accounts={accounts} />
+            <AccountMenu accounts={accounts} ui_config={ui_config} />
           </Toolbar>
         </AppBar>
       </div>

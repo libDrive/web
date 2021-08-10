@@ -2,12 +2,12 @@ import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
 
-import { IconButton, Menu, MenuItem } from "@material-ui/core";
+import { Divider, IconButton, Menu, MenuItem } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 
 import "@sweetalert2/theme-dark/dark.css";
 
-export default class BrowseMenu extends Component {
+export default class AccountMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,7 +30,7 @@ export default class BrowseMenu extends Component {
   }
 
   render() {
-    let { accounts } = this.props;
+    let { accounts, ui_config } = this.props;
 
     let pic = <AccountCircle />;
     if (
@@ -66,6 +66,20 @@ export default class BrowseMenu extends Component {
           <Link to={"/logout"} className="no_decoration_link">
             <MenuItem onClick={this.handleClose}>Logout</MenuItem>
           </Link>
+          {(ui_config.custom_button || {}).text ? (
+            <div>
+              <Divider />
+              <a
+                href={ui_config.custom_button.url}
+                target="__blank"
+                className="no_decoration_link"
+              >
+                <MenuItem onClick={this.handleClose}>
+                  {ui_config.custom_button.text}
+                </MenuItem>
+              </a>
+            </div>
+          ) : null}
         </Menu>
       </div>
     );
