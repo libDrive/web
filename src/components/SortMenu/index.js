@@ -60,6 +60,7 @@ class SortMenu extends Component {
       "Ecchi",
       "Family",
       "Fantasy",
+      "Hentai",
       "History",
       "Horror",
       "Kids",

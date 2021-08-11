@@ -82,7 +82,6 @@ export default class DownloadMenu extends Component {
                 </a>
               ))
             : null}
-
           {this.props.tv ? (
             <div>
               <Divider />
