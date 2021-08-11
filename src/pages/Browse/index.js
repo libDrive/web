@@ -21,6 +21,7 @@ export default class Browse extends Component {
         sessionStorage.getItem("server") ||
         localStorage.getItem("server") ||
         window.location.origin,
+      starred_lists: JSON.parse(localStorage.getItem("starred_lists") || "[]"),
       ui_config: JSON.parse(
         window.localStorage.getItem("ui_config") ||
           window.sessionStorage.getItem("ui_config") ||
@@ -30,7 +31,7 @@ export default class Browse extends Component {
   }
 
   componentDidMount() {
-    let { auth, server, ui_config } = this.state;
+    let { auth, server, starred_lists, ui_config } = this.state;
 
     if (!auth || !server) {
       this.props.history.push("/logout");
@@ -45,6 +46,11 @@ export default class Browse extends Component {
       .get(req_path + req_args)
       .then((response) => {
         let metadata = response.data.content;
+        for (let i = starred_lists.length - 1; i >= 0; i--) {
+          if (starred_lists[i].categoryInfo.pinned) {
+            metadata.unshift(starred_lists[i]);
+          }
+        }
         this.setState({
           isLoaded: true,
           metadata: metadata,

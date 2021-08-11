@@ -27,6 +27,7 @@ export default class Carousel extends Component {
     this.handleStarReset = this.handleStarReset.bind(this);
     this.handleStarImport = this.handleStarImport.bind(this);
     this.handleStarExport = this.handleStarExport.bind(this);
+    this.handlePin = this.handlePin.bind(this);
   }
 
   handleStar(item, category) {
@@ -134,6 +135,21 @@ export default class Carousel extends Component {
     link.click();
   }
 
+  handlePin(evt, pin) {
+    let starred_lists = JSON.parse(
+      localStorage.getItem("starred_lists") || "[]"
+    );
+    if (!pin) {
+      starred_lists[evt].categoryInfo.pinned = false;
+      localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
+      this.setState({ metadata: starred_lists });
+    } else {
+      starred_lists[evt].categoryInfo.pinned = true;
+      localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
+      this.setState({ metadata: starred_lists });
+    }
+  }
+
   render() {
     let { hide, metadata, server, star } = this.state;
 
@@ -154,14 +170,21 @@ export default class Carousel extends Component {
                       justifyContent: "center",
                     }}
                   >
-                    <Link
-                      to={"#"}
-                      className="carousel__category__title no_decoration_link"
-                    >
-                      {category.categoryInfo.name}
-                    </Link>
                     <div style={{ width: "100%" }}>
-                      <div style={{ float: "left" }}>
+                      <div
+                        style={{
+                          float: "left",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Link
+                          to={"#"}
+                          className="carousel__category__title no_decoration_link"
+                        >
+                          {category.categoryInfo.name}
+                        </Link>
                         <Button
                           variant="outlined"
                           color="primary"
@@ -172,7 +195,14 @@ export default class Carousel extends Component {
                           Delete
                         </Button>
                       </div>
-                      <div style={{ float: "right" }}>
+                      <div
+                        style={{
+                          float: "right",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
                         <input
                           id={`file-input-${p}`}
                           hidden
@@ -199,6 +229,27 @@ export default class Carousel extends Component {
                         >
                           Export
                         </Button>
+                        {category.categoryInfo.pinned ? (
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            onClick={() => this.handlePin(p, false)}
+                            size="small"
+                            style={{ marginRight: "10px" }}
+                          >
+                            Unpin
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            onClick={() => this.handlePin(p, true)}
+                            size="small"
+                            style={{ marginRight: "10px" }}
+                          >
+                            Pin
+                          </Button>
+                        )}
                       </div>
                     </div>
                   </div>
