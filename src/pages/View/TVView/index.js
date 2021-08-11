@@ -8,6 +8,8 @@ import {
   Chip,
   ClickAwayListener,
   IconButton,
+  Menu,
+  MenuItem,
   Tooltip,
   Typography,
 } from "@material-ui/core";
@@ -287,8 +289,10 @@ export class TVBView extends Component {
 export class TVSView extends Component {
   constructor(props) {
     super(props);
-    this.state = props.state;
+    this.state = { ...props.state, subtitleMenuAnchor: false };
     this.onFileChange = this.onFileChange.bind(this);
+    this.handleSubtitleMenuOpen = this.handleSubtitleMenuOpen.bind(this);
+    this.handleSubtitleMenuClose = this.handleSubtitleMenuClose.bind(this);
   }
 
   componentDidMount() {
@@ -328,6 +332,25 @@ export class TVSView extends Component {
     }
   }
 
+  handleSubtitleMenuOpen(evt) {
+    let { subtitle } = this.state;
+
+    if (subtitle && subtitle.url != "") {
+      this.setState({
+        subtitleMenuAnchor: evt.currentTarget,
+      });
+    } else {
+      const subtitleButton = document.getElementById("file-input-button");
+      subtitleButton.click();
+    }
+  }
+
+  handleSubtitleMenuClose() {
+    this.setState({
+      subtitleMenuAnchor: false,
+    });
+  }
+
   render() {
     let {
       default_quality,
@@ -338,6 +361,7 @@ export class TVSView extends Component {
       server,
       sources,
       subtitle,
+      subtitleMenuAnchor,
     } = this.state;
 
     if (file) {
@@ -433,17 +457,41 @@ export class TVSView extends Component {
                 type="file"
                 accept=".vtt,.srt"
               />
-              <label htmlFor="file-input">
-                <Button
-                  color="primary"
-                  variant="outlined"
-                  style={{ width: "140px" }}
-                  component="span"
-                  startIcon={<SubtitlesOutlinedIcon />}
+              <Button
+                color="primary"
+                variant="outlined"
+                style={{ width: "140px" }}
+                component="span"
+                aria-controls="subtitles-menu"
+                startIcon={<SubtitlesOutlinedIcon />}
+                onClick={this.handleSubtitleMenuOpen}
+              >
+                Subtitle
+              </Button>
+              <Menu
+                id="subtitles-menu"
+                anchorEl={subtitleMenuAnchor}
+                keepMounted
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                transformOrigin={{ vertical: "top", horizontal: "center" }}
+                open={Boolean(subtitleMenuAnchor)}
+                onClose={this.handleSubtitleMenuClose}
+              >
+                <a className="no_decoration_link" href={subtitle.url}>
+                  <MenuItem onClick={this.handleSubtitleMenuClose}>
+                    Download
+                  </MenuItem>
+                </a>
+                <MenuItem
+                  onClick={() => {
+                    document.getElementById("file-input-button").click();
+                    this.setState({ subtitleMenuAnchor: false });
+                  }}
                 >
-                  Subtitle
-                </Button>
-              </label>
+                  Upload
+                </MenuItem>
+              </Menu>
+              <label htmlFor="file-input" id="file-input-button" />
             </div>
           </div>
         </div>

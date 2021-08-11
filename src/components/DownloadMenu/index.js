@@ -23,7 +23,7 @@ export default class DownloadMenu extends Component {
     });
   }
 
-  handleClose(evt) {
+  handleClose() {
     this.setState({
       menuAnchor: false,
     });
