@@ -15,12 +15,6 @@ import { guid } from "../../components";
 
 import "./index.css";
 
-const styles = (theme) => ({
-  selectEmpty: {
-    marginTop: "20px",
-  },
-});
-
 class SortMenu extends Component {
   constructor(props) {
     super(props);
@@ -47,7 +41,6 @@ class SortMenu extends Component {
 
   render() {
     let { genre, sort } = this.state;
-    const { classes } = this.props;
     const genres = [
       "Action",
       "Action & Adventure",
