@@ -129,9 +129,9 @@ const ui_config = JSON.parse(
     window.sessionStorage.getItem("ui_config") ||
     "{}"
 );
-let customTheme;
-if (ui_config.theme) {
-  customTheme = createTheme(ui_config.theme);
+var customTheme;
+if (ui_config.custom_theme) {
+  customTheme = createTheme(ui_config.custom_theme);
 }
 
 var theme;

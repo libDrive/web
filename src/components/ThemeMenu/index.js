@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { IconButton, Menu, MenuItem } from "@material-ui/core";
+import { Divider, IconButton, Menu, MenuItem } from "@material-ui/core";
 import Brightness6Icon from "@material-ui/icons/Brightness6";
 
 export default class ThemeMenu extends Component {
@@ -64,10 +64,13 @@ export default class ThemeMenu extends Component {
             Dracula
           </MenuItem>
           <MenuItem onClick={() => this.handleTheme("nord")}>Nord</MenuItem>
-          {ui_config.theme ? (
-            <MenuItem onClick={() => this.handleTheme("custom")}>
-              Custom
-            </MenuItem>
+          {ui_config.custom_theme ? (
+            <div>
+              <Divider />
+              <MenuItem onClick={() => this.handleTheme("custom")}>
+                Custom
+              </MenuItem>
+            </div>
           ) : null}
         </Menu>
       </div>
