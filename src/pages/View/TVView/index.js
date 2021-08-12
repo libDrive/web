@@ -242,7 +242,7 @@ export class TVBView extends Component {
                 <Button
                   variant="outlined"
                   color="primary"
-                  style={{ width: "140px" }}
+                  style={{ width: "135px" }}
                   onClick={this.handleTrailer}
                   startIcon={<YouTubeIcon />}
                 >
@@ -437,7 +437,7 @@ export class TVSView extends Component {
               alignContent: "center",
               justifyContent: "center",
               flexWrap: "wrap",
-              margin: "30px",
+              margin: "30px 15px 30px 15px",
             }}
           >
             <PlayerMenu
@@ -460,7 +460,7 @@ export class TVSView extends Component {
               <Button
                 color="primary"
                 variant="outlined"
-                style={{ width: "140px" }}
+                style={{ width: "135px" }}
                 component="span"
                 aria-controls="subtitles-menu"
                 startIcon={<SubtitlesOutlinedIcon />}

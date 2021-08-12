@@ -53,7 +53,7 @@ export default class DownloadMenu extends Component {
         <Button
           variant="outlined"
           color="primary"
-          style={{ width: "140px" }}
+          style={{ width: "135px" }}
           aria-controls="download-menu"
           aria-haspopup="true"
           onClick={this.handleClick}

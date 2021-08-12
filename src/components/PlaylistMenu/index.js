@@ -40,7 +40,7 @@ export default class PlaylistMenu extends Component {
         <Button
           variant="outlined"
           color="primary"
-          style={{ width: "140px" }}
+          style={{ width: "135px" }}
           onClick={this.handleClick}
           startIcon={<PlaylistPlayRoundedIcon />}
         >

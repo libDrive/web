@@ -37,7 +37,7 @@ export default class ChildrenMenu extends Component {
         <Button
           variant="outlined"
           color="primary"
-          style={{ width: "140px" }}
+          style={{ width: "135px" }}
           aria-controls="children-menu"
           aria-haspopup="true"
           onClick={this.handleClick}
