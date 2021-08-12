@@ -37,7 +37,7 @@ export default class ThemeMenu extends Component {
   }
 
   render() {
-    let { ui_config } = this.state;
+    let { menuAnchor, ui_config } = this.state;
 
     return (
       <div className="ThemeMenu">
@@ -51,11 +51,11 @@ export default class ThemeMenu extends Component {
         </IconButton>
         <Menu
           id="theme-menu"
-          anchorEl={this.state.menuAnchor}
+          anchorEl={menuAnchor}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
           transformOrigin={{ vertical: "top", horizontal: "center" }}
           keepMounted
-          open={Boolean(this.state.menuAnchor)}
+          open={Boolean(menuAnchor)}
           onClose={this.handleClose}
         >
           <MenuItem onClick={() => this.handleTheme("light")}>Light</MenuItem>

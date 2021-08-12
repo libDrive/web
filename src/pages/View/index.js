@@ -18,7 +18,9 @@ export default class View extends Component {
     super(props);
     this.state = {
       auth:
-        window.sessionStorage.getItem("auth") || window.localStorage.getItem("auth") || "0",
+        window.sessionStorage.getItem("auth") ||
+        window.localStorage.getItem("auth") ||
+        "0",
       id: this.props.match.params.id,
       isAndroid: /(android)/i.test(
         navigator.userAgent || navigator.vendor || window.opera
@@ -43,8 +45,8 @@ export default class View extends Component {
         window.location.origin,
       sources: [],
       starred:
-        JSON.parse(window.localStorage.getItem("starred_lists") || "[]").some((i) =>
-          i.children.some((x) => x.id == this.props.match.params.id)
+        JSON.parse(window.localStorage.getItem("starred_lists") || "[]").some(
+          (i) => i.children.some((x) => x.id == this.props.match.params.id)
         ) || false,
       subtitle: { url: "" },
       ui_config: JSON.parse(

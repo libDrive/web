@@ -23,7 +23,9 @@ export default class CategoryBrowse extends Component {
     super(props);
     this.state = {
       auth:
-        window.sessionStorage.getItem("auth") || window.localStorage.getItem("auth") || "0",
+        window.sessionStorage.getItem("auth") ||
+        window.localStorage.getItem("auth") ||
+        "0",
       category: this.props.match.params.category,
       genre: queryString.parse(this.props.location.search).genre || "",
       isLoaded: false,
@@ -79,7 +81,7 @@ export default class CategoryBrowse extends Component {
       this.props.history.push("/logout");
     }
 
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
 
     let req_path = `${server}/api/v1/metadata`;
     let req_args = `?a=${auth}&c=${encodeURIComponent(

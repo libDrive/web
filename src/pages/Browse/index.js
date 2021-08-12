@@ -14,14 +14,18 @@ export default class Browse extends Component {
     super(props);
     this.state = {
       auth:
-        window.sessionStorage.getItem("auth") || window.localStorage.getItem("auth") || "0",
+        window.sessionStorage.getItem("auth") ||
+        window.localStorage.getItem("auth") ||
+        "0",
       isLoaded: false,
       metadata: {},
       server:
         window.sessionStorage.getItem("server") ||
         window.localStorage.getItem("server") ||
         window.location.origin,
-      starred_lists: JSON.parse(window.localStorage.getItem("starred_lists") || "[]"),
+      starred_lists: JSON.parse(
+        window.localStorage.getItem("starred_lists") || "[]"
+      ),
       ui_config: JSON.parse(
         window.localStorage.getItem("ui_config") ||
           window.sessionStorage.getItem("ui_config") ||

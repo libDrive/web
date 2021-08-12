@@ -87,7 +87,7 @@ export default class NewsMenu extends Component {
   }
 
   render() {
-    let { dismissed, isNew, isLoaded, news } = this.state;
+    let { dismissed, isNew, isLoaded, menuAnchor, news } = this.state;
 
     return isLoaded ? (
       <div className="NewsMenu">
@@ -107,23 +107,23 @@ export default class NewsMenu extends Component {
         </IconButton>
         <Menu
           id="news-menu"
-          anchorEl={this.state.menuAnchor}
+          anchorEl={menuAnchor}
           keepMounted
-          open={Boolean(this.state.menuAnchor)}
+          open={Boolean(menuAnchor)}
           onClose={this.handleClose}
         >
           <List style={{ maxWidth: "500px" }}>
             {news.length
               ? news.slice(0, 3).map((item) => (
-                  <ListItem key={guid()} alignItems="flex-start">
+                  <ListItem pri="true" key={guid()} alignItems="flex-start">
                     <ListItemText
                       primary={
                         <strong>libDrive {item.tag_name} released!</strong>
                       }
                       secondary={
                         <React.Fragment>
-                          <Typography variant="body2" color="textPrimary">
-                            libDrive {item.tag_name} was released on
+                          <span>
+                            libDrive {item.tag_name} was released on{" "}
                             {new Date(item.published_at).toDateString()}, click{" "}
                             <a
                               href={item.html_url}
@@ -133,7 +133,7 @@ export default class NewsMenu extends Component {
                               <u>here</u>
                             </a>{" "}
                             to find out more
-                          </Typography>
+                          </span>
                         </React.Fragment>
                       }
                     />

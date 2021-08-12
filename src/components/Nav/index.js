@@ -10,7 +10,9 @@ export default class Nav extends Component {
     this.state = {
       accounts: {},
       auth:
-        window.sessionStorage.getItem("auth") || window.localStorage.getItem("auth") || "0",
+        window.sessionStorage.getItem("auth") ||
+        window.localStorage.getItem("auth") ||
+        "0",
       categories: [],
       isLoaded: false,
       server:

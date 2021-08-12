@@ -45,7 +45,10 @@ export default class Carousel extends Component {
       let index4 = metadata[index3].children.findIndex((i) => i.id == item.id);
       starred_lists[index1].children.splice(index2, 1);
       metadata[index3].children.splice(index4, 1);
-      window.localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
+      window.localStorage.setItem(
+        "starred_lists",
+        JSON.stringify(starred_lists)
+      );
       this.setState({ metadata: metadata });
     } catch {
       Swal.fire({
@@ -90,7 +93,10 @@ export default class Carousel extends Component {
           starred_lists.splice(evt, 1);
           metadata.splice(evt, 1);
         }
-        window.localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
+        window.localStorage.setItem(
+          "starred_lists",
+          JSON.stringify(starred_lists)
+        );
         this.setState({ metadata: metadata });
       }
     });
@@ -107,7 +113,10 @@ export default class Carousel extends Component {
         let starred_list = JSON.parse(evtR.target.result);
         let i = parseInt(evt.target.id.replace("file-input-", ""));
         starred_lists[i].children = starred_list.children;
-        window.localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
+        window.localStorage.setItem(
+          "starred_lists",
+          JSON.stringify(starred_lists)
+        );
         let { metadata } = this.state;
         if (metadata.length && metadata[i].type == "Starred") {
           metadata[i].children = starred_list.children;
@@ -141,11 +150,17 @@ export default class Carousel extends Component {
     );
     if (!pin) {
       starred_lists[evt].categoryInfo.pinned = false;
-      window.localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
+      window.localStorage.setItem(
+        "starred_lists",
+        JSON.stringify(starred_lists)
+      );
       this.setState({ metadata: starred_lists });
     } else {
       starred_lists[evt].categoryInfo.pinned = true;
-      window.localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
+      window.localStorage.setItem(
+        "starred_lists",
+        JSON.stringify(starred_lists)
+      );
       this.setState({ metadata: starred_lists });
     }
   }

@@ -14,7 +14,9 @@ export default class Search extends Component {
     super(props);
     this.state = {
       auth:
-        window.sessionStorage.getItem("auth") || window.localStorage.getItem("auth") || "0",
+        window.sessionStorage.getItem("auth") ||
+        window.localStorage.getItem("auth") ||
+        "0",
       isLoaded: false,
       metadata: [],
       query: this.props.match.params.q,

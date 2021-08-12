@@ -23,7 +23,9 @@ export default class CategoryBrowse extends Component {
     super(props);
     this.state = {
       auth:
-        window.sessionStorage.getItem("auth") || window.localStorage.getItem("auth") || "0",
+        window.sessionStorage.getItem("auth") ||
+        window.localStorage.getItem("auth") ||
+        "0",
       genre: queryString.parse(this.props.location.search).genre || "",
       isLoaded: false,
       metadata: {},

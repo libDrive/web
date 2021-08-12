@@ -8,9 +8,12 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      auth: window.sessionStorage.getItem("auth") || window.localStorage.getItem("auth"),
+      auth:
+        window.sessionStorage.getItem("auth") ||
+        window.localStorage.getItem("auth"),
       server:
-        window.sessionStorage.getItem("server") || window.localStorage.getItem("server"),
+        window.sessionStorage.getItem("server") ||
+        window.localStorage.getItem("server"),
     };
   }
 

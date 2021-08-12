@@ -17,7 +17,7 @@ export default class StarDialog extends Component {
           aria-labelledby="simple-dialog-title"
           fullWidth={true}
           maxWidth={"lg"}
-          open={isOpen}
+          open={isOpen || false}
         >
           <DialogTitle id="simple-dialog-title">
             {metadata.title} - Trailer
@@ -29,7 +29,7 @@ export default class StarDialog extends Component {
               title={`${metadata.title} - Trailer`}
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
-              allowfullScreen
+              allowFullScreen
             ></iframe>
           </div>
         </Dialog>
