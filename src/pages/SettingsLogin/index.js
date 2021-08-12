@@ -44,7 +44,9 @@ class SettingsLoginForm extends Component {
     super(props);
     this.state = {
       auth:
-        window.sessionStorage.getItem("auth") || window.localStorage.getItem("auth") || "0",
+        window.sessionStorage.getItem("auth") ||
+        window.localStorage.getItem("auth") ||
+        "0",
       isLoaded: false,
       secret: "",
       server:

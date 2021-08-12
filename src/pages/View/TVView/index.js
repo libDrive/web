@@ -83,8 +83,8 @@ export class TVBView extends Component {
       this.setState({
         openStarDialog: false,
         starred:
-          JSON.parse(window.localStorage.getItem("starred_lists") || "[]").some((i) =>
-            i.children.some((x) => x.id == this.state.metadata.id)
+          JSON.parse(window.localStorage.getItem("starred_lists") || "[]").some(
+            (i) => i.children.some((x) => x.id == this.state.metadata.id)
           ) || false,
       });
     } else {

@@ -33,7 +33,9 @@ export class Settings extends Component {
     super(props);
     this.state = {
       auth:
-        window.sessionStorage.getItem("auth") || window.localStorage.getItem("auth") || "0",
+        window.sessionStorage.getItem("auth") ||
+        window.localStorage.getItem("auth") ||
+        "0",
       error: "",
       isLoaded: false,
       secret: window.sessionStorage.getItem("secret"),

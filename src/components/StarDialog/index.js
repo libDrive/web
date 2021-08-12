@@ -54,7 +54,10 @@ export default class StarDialog extends Component {
         type: "Starred",
       };
       starred_lists.push(metadata);
-      window.localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
+      window.localStorage.setItem(
+        "starred_lists",
+        JSON.stringify(starred_lists)
+      );
       this.setState({ isCreateOpen: false, starred_lists: starred_lists });
     } else {
       this.setState({ isCreateOpen: false });
@@ -72,12 +75,18 @@ export default class StarDialog extends Component {
       let i = starred_lists[n].children.findIndex((i) => i.id == metadata.id);
       if (i == -1) {
         starred_lists[n].children.unshift(metadata);
-        window.localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
+        window.localStorage.setItem(
+          "starred_lists",
+          JSON.stringify(starred_lists)
+        );
         this.props.handleClose("unstarred");
         this.setState({ starred_lists: starred_lists });
       } else {
         starred_lists[n].children.splice(i, 1);
-        window.localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
+        window.localStorage.setItem(
+          "starred_lists",
+          JSON.stringify(starred_lists)
+        );
         this.props.handleClose();
       }
     }
