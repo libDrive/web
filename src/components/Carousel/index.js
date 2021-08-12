@@ -2,11 +2,30 @@ import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
 
-import { IconButton, Tooltip, Typography } from "@material-ui/core";
+import {
+  Button,
+  Dialog,
+  DialogTitle,
+  Divider,
+  IconButton,
+  Tooltip,
+  Typography,
+} from "@material-ui/core";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import SaveAltIcon from "@material-ui/icons/SaveAlt";
 import StarIcon from "@material-ui/icons/Star";
+
+import { Container, Draggable } from "react-smooth-dnd";
+import { arrayMoveImmutable } from "array-move";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import DragHandleIcon from "@material-ui/icons/DragHandle";
 
 import Swal from "sweetalert2/src/sweetalert2.js";
 import "@sweetalert2/theme-dark/dark.css";
@@ -18,7 +37,9 @@ export default class Carousel extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentEditing: null,
       hide: props.hide || false,
+      isEditOpen: false,
       metadata: this.props.metadata,
       server:
         window.sessionStorage.getItem("server") ||
@@ -31,6 +52,10 @@ export default class Carousel extends Component {
     this.handleStarImport = this.handleStarImport.bind(this);
     this.handleStarExport = this.handleStarExport.bind(this);
     this.handlePin = this.handlePin.bind(this);
+    this.handleEditOpen = this.handleEditOpen.bind(this);
+    this.handleEditClose = this.handleEditClose.bind(this);
+    this.handleEditDrop = this.handleEditDrop.bind(this);
+    this.handleEditSave = this.handleEditSave.bind(this);
   }
 
   handleStar(item, category) {
@@ -168,8 +193,41 @@ export default class Carousel extends Component {
     }
   }
 
+  handleEditOpen(evt) {
+    this.setState({ currentEditing: evt, isEditOpen: true });
+  }
+
+  handleEditClose() {
+    let starred_lists = JSON.parse(
+      window.localStorage.getItem("starred_lists") || "[]"
+    );
+    this.setState({
+      currentEditing: null,
+      isEditOpen: false,
+      metadata: starred_lists,
+    });
+  }
+
+  handleEditDrop({ removedIndex, addedIndex }) {
+    let { metadata, currentEditing } = this.state;
+    let items = metadata[currentEditing].children;
+    metadata[currentEditing].children = arrayMoveImmutable(
+      items,
+      removedIndex,
+      addedIndex
+    );
+    this.setState({ metadata: metadata });
+  }
+
+  handleEditSave() {
+    let { metadata } = this.state;
+    window.localStorage.setItem("starred_lists", JSON.stringify(metadata));
+    this.setState({ currentEditing: null, isEditOpen: false });
+  }
+
   render() {
-    let { hide, metadata, server, star } = this.state;
+    let { currentEditing, hide, isEditOpen, metadata, server, star } =
+      this.state;
 
     return star ? (
       <div className="Carousel" style={{ paddingTop: "3%" }}>
@@ -203,11 +261,19 @@ export default class Carousel extends Component {
                         >
                           {category.categoryInfo.name}
                         </Link>
+                        <Tooltip title="Edit" placement="top">
+                          <IconButton
+                            color="primary"
+                            onClick={() => this.handleEditOpen(p)}
+                            style={{ marginLeft: "20px" }}
+                          >
+                            <EditIcon />
+                          </IconButton>
+                        </Tooltip>
                         <Tooltip title="Delete" placement="top">
                           <IconButton
                             color="primary"
                             onClick={() => this.handleStarReset(p)}
-                            style={{ marginLeft: "10px" }}
                           >
                             <DeleteIcon />
                           </IconButton>
@@ -341,6 +407,48 @@ export default class Carousel extends Component {
               ) : null
             )
           : null}
+        {isEditOpen ? (
+          <Dialog
+            onClose={this.handleEditClose}
+            aria-labelledby="simple-dialog-title"
+            fullWidth={true}
+            maxWidth={"md"}
+            open={isEditOpen || false}
+          >
+            <DialogTitle id="simple-dialog-title">
+              {metadata[currentEditing].categoryInfo.name}
+            </DialogTitle>
+            <List>
+              <Container
+                dragHandleSelector=".drag-handle"
+                lockAxis="y"
+                onDrop={this.handleEditDrop}
+              >
+                {metadata[currentEditing].children.map(({ id, title }) => (
+                  <Draggable key={id}>
+                    <ListItem divider={true}>
+                      <ListItemText primary={title} />
+                      <ListItemSecondaryAction>
+                        <ListItemIcon className="drag-handle">
+                          <DragHandleIcon />
+                        </ListItemIcon>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                  </Draggable>
+                ))}
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ width: "135px", margin: "30px 0 15px 15px" }}
+                  onClick={this.handleEditSave}
+                  startIcon={<SaveAltIcon />}
+                >
+                  Save
+                </Button>
+              </Container>
+            </List>
+          </Dialog>
+        ) : null}
       </div>
     ) : (
       <div className="Carousel">

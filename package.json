@@ -12,9 +12,11 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@sweetalert2/theme-dark": "^5.0.2",
+    "array-move": "^4.0.0",
     "axios": "^0.21.1",
     "react-dplayer": "^0.4.2",
     "react-router-dom": "^5.2.0",
+    "react-smooth-dnd": "^0.11.1",
     "srt-webvtt": "^1.3.2",
     "sweetalert2": "^11.1.2"
   },
