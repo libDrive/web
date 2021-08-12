@@ -42,7 +42,7 @@ export default class AccountMenu extends Component {
     }
 
     return (
-      <div>
+      <div className="AccountMenu">
         <IconButton
           aria-label="more"
           aria-controls="account-menu"
