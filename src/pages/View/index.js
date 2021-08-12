@@ -18,7 +18,7 @@ export default class View extends Component {
     super(props);
     this.state = {
       auth:
-        sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
+        window.sessionStorage.getItem("auth") || window.localStorage.getItem("auth") || "0",
       id: this.props.match.params.id,
       isAndroid: /(android)/i.test(
         navigator.userAgent || navigator.vendor || window.opera
@@ -33,17 +33,17 @@ export default class View extends Component {
       playerKey: guid(),
       q:
         queryString.parse(this.props.location.search).q ||
-        JSON.parse(localStorage.getItem("watching") || "{}")[
+        JSON.parse(window.localStorage.getItem("watching") || "{}")[
           this.props.match.params.id
         ] ||
         0,
       server:
-        sessionStorage.getItem("server") ||
-        localStorage.getItem("server") ||
+        window.sessionStorage.getItem("server") ||
+        window.localStorage.getItem("server") ||
         window.location.origin,
       sources: [],
       starred:
-        JSON.parse(localStorage.getItem("starred_lists") || "[]").some((i) =>
+        JSON.parse(window.localStorage.getItem("starred_lists") || "[]").some((i) =>
           i.children.some((x) => x.id == this.props.match.params.id)
         ) || false,
       subtitle: { url: "" },
@@ -52,7 +52,7 @@ export default class View extends Component {
           window.sessionStorage.getItem("ui_config") ||
           "{}"
       ),
-      watching: JSON.parse(localStorage.getItem("watching") || "{}"),
+      watching: JSON.parse(window.localStorage.getItem("watching") || "{}"),
     };
   }
 

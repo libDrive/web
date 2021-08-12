@@ -31,8 +31,8 @@ export default class ThemeMenu extends Component {
     this.setState({
       menuAnchor: false,
     });
-    localStorage.setItem("theme", name);
-    sessionStorage.setItem("theme", name);
+    window.localStorage.setItem("theme", name);
+    window.sessionStorage.setItem("theme", name);
     window.location.reload();
   }
 

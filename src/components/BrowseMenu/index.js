@@ -31,7 +31,7 @@ export default class BrowseMenu extends Component {
   render() {
     let { categories } = this.props;
     let starred_lists = JSON.parse(
-      localStorage.getItem("starred_lists") || "[]"
+      window.localStorage.getItem("starred_lists") || "[]"
     );
 
     return (

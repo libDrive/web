@@ -137,34 +137,34 @@ if (ui_config.custom_theme) {
 var theme;
 
 if (
-  localStorage.getItem("theme") === "light" ||
-  sessionStorage.getItem("theme") === "light"
+  window.localStorage.getItem("theme") === "light" ||
+  window.sessionStorage.getItem("theme") === "light"
 ) {
   theme = lightTheme;
 } else if (
-  localStorage.getItem("theme") === "dark" ||
-  sessionStorage.getItem("theme") === "dark"
+  window.localStorage.getItem("theme") === "dark" ||
+  window.sessionStorage.getItem("theme") === "dark"
 ) {
   theme = darkTheme;
 } else if (
-  localStorage.getItem("theme") === "dracula" ||
-  sessionStorage.getItem("theme") === "dracula"
+  window.localStorage.getItem("theme") === "dracula" ||
+  window.sessionStorage.getItem("theme") === "dracula"
 ) {
   theme = draculaTheme;
 } else if (
-  localStorage.getItem("theme") === "nord" ||
-  sessionStorage.getItem("theme") === "nord"
+  window.localStorage.getItem("theme") === "nord" ||
+  window.sessionStorage.getItem("theme") === "nord"
 ) {
   theme = nordTheme;
 } else if (
-  localStorage.getItem("theme") === "custom" ||
-  sessionStorage.getItem("theme") === "custom"
+  window.localStorage.getItem("theme") === "custom" ||
+  window.sessionStorage.getItem("theme") === "custom"
 ) {
   theme = customTheme;
 } else {
   theme = darkTheme;
-  localStorage.setItem("theme", "dark");
-  sessionStorage.setItem("theme", "dark");
+  window.localStorage.setItem("theme", "dark");
+  window.sessionStorage.setItem("theme", "dark");
 }
 
 export default theme;

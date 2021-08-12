@@ -33,13 +33,13 @@ export class Settings extends Component {
     super(props);
     this.state = {
       auth:
-        sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
+        window.sessionStorage.getItem("auth") || window.localStorage.getItem("auth") || "0",
       error: "",
       isLoaded: false,
-      secret: sessionStorage.getItem("secret"),
+      secret: window.sessionStorage.getItem("secret"),
       server:
-        sessionStorage.getItem("server") ||
-        localStorage.getItem("server") ||
+        window.sessionStorage.getItem("server") ||
+        window.localStorage.getItem("server") ||
         window.location.origin,
     };
 
@@ -58,7 +58,7 @@ export class Settings extends Component {
     let navProps = { ...this.props };
     navProps.classes = {};
 
-    if (sessionStorage.getItem("secret") == null) {
+    if (window.sessionStorage.getItem("secret") == null) {
       this.props.history.push("/settings/login");
     } else {
       let req_path = `${server}/api/v1/config`;
@@ -201,7 +201,7 @@ export class Settings extends Component {
               confirmButtonColor: theme.palette.success.main,
             }).then((result) => {
               if (result.isConfirmed) {
-                sessionStorage.removeItem("secret");
+                window.sessionStorage.removeItem("secret");
                 this.props.history.push("/settings/login");
               }
             });

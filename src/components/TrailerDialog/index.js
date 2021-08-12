@@ -27,9 +27,9 @@ export default class StarDialog extends Component {
               style={{ width: "100%", height: "100%", borderRadius: "12px" }}
               src={`https://www.youtube.com/embed/${trailer.key}`}
               title={`${metadata.title} - Trailer`}
-              frameborder="0"
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen;"
-              allowfullscreen
+              allowfullScreen
             ></iframe>
           </div>
         </Dialog>

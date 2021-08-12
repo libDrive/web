@@ -97,7 +97,7 @@ export default class MovieView extends Component {
       this.setState({
         openStarDialog: false,
         starred:
-          JSON.parse(localStorage.getItem("starred_lists") || "[]").some((i) =>
+          JSON.parse(window.localStorage.getItem("starred_lists") || "[]").some((i) =>
             i.children.some((x) => x.id == this.state.metadata.id)
           ) || false,
       });

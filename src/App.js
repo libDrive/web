@@ -8,19 +8,19 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      auth: sessionStorage.getItem("auth") || localStorage.getItem("auth"),
+      auth: window.sessionStorage.getItem("auth") || window.localStorage.getItem("auth"),
       server:
-        sessionStorage.getItem("server") || localStorage.getItem("server"),
+        window.sessionStorage.getItem("server") || window.localStorage.getItem("server"),
     };
   }
 
   componentDidMount() {
-    if (!localStorage.getItem("_VERSION")) {
-      localStorage.setItem("_VERSION", version);
+    if (!window.localStorage.getItem("_VERSION")) {
+      window.localStorage.setItem("_VERSION", version);
     }
-    if (localStorage.getItem("_VERSION") !== version) {
+    if (window.localStorage.getItem("_VERSION") !== version) {
       clear();
-      localStorage.setItem("_VERSION", version);
+      window.localStorage.setItem("_VERSION", version);
     }
   }
 

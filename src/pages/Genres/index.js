@@ -23,7 +23,7 @@ export default class CategoryBrowse extends Component {
     super(props);
     this.state = {
       auth:
-        sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
+        window.sessionStorage.getItem("auth") || window.localStorage.getItem("auth") || "0",
       genre: queryString.parse(this.props.location.search).genre || "",
       isLoaded: false,
       metadata: {},
@@ -40,8 +40,8 @@ export default class CategoryBrowse extends Component {
             }`
       }`,
       server:
-        sessionStorage.getItem("server") ||
-        localStorage.getItem("server") ||
+        window.sessionStorage.getItem("server") ||
+        window.localStorage.getItem("server") ||
         window.location.origin,
       sort: queryString.parse(this.props.location.search).sort || "",
       ui_config: JSON.parse(

@@ -70,10 +70,10 @@ class Login extends Component {
     axios.get(req_path + req_args).then((response) => {
       let data = response.data;
       if (data.code === 200) {
-        localStorage.setItem("auth", "0");
-        localStorage.setItem("server", server);
-        sessionStorage.setItem("auth", "0");
-        sessionStorage.setItem("server", server);
+        window.localStorage.setItem("auth", "0");
+        window.localStorage.setItem("server", server);
+        window.sessionStorage.setItem("auth", "0");
+        window.sessionStorage.setItem("server", server);
         this.props.history.push(data.content);
       } else if (data.content === true) {
         this.setState({ signup: true, page: true });
@@ -106,10 +106,10 @@ class Login extends Component {
       .then((response) => {
         let data = response.data;
         if (data.code === 200) {
-          localStorage.setItem("auth", "0");
-          localStorage.setItem("server", server);
-          sessionStorage.setItem("auth", "0");
-          sessionStorage.setItem("server", server);
+          window.localStorage.setItem("auth", "0");
+          window.localStorage.setItem("server", server);
+          window.sessionStorage.setItem("auth", "0");
+          window.sessionStorage.setItem("server", server);
           this.props.history.push(data.content);
         } else if (data.content === true) {
           this.setState({ server: server, signup: true, page: true });
@@ -153,10 +153,10 @@ class Login extends Component {
       .get(req_path + req_args)
       .then((response) => {
         let data = response.data;
-        localStorage.setItem("server", server);
-        sessionStorage.setItem("server", server);
-        localStorage.setItem("auth", data.content.auth);
-        sessionStorage.setItem("auth", data.content.auth);
+        window.localStorage.setItem("server", server);
+        window.sessionStorage.setItem("server", server);
+        window.localStorage.setItem("auth", data.content.auth);
+        window.sessionStorage.setItem("auth", data.content.auth);
         this.props.history.push("/");
       })
       .catch((error) => {
@@ -202,10 +202,10 @@ class Login extends Component {
       .get(req_path + req_args)
       .then((response) => {
         let data = response.data;
-        localStorage.setItem("server", server);
-        sessionStorage.setItem("server", server);
-        localStorage.setItem("auth", data.content.auth);
-        sessionStorage.setItem("auth", data.content.auth);
+        window.localStorage.setItem("server", server);
+        window.sessionStorage.setItem("server", server);
+        window.localStorage.setItem("auth", data.content.auth);
+        window.sessionStorage.setItem("auth", data.content.auth);
         this.props.history.push("/");
       })
       .catch((error) => {

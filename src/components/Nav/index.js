@@ -10,12 +10,12 @@ export default class Nav extends Component {
     this.state = {
       accounts: {},
       auth:
-        sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
+        window.sessionStorage.getItem("auth") || window.localStorage.getItem("auth") || "0",
       categories: [],
       isLoaded: false,
       server:
-        sessionStorage.getItem("server") ||
-        localStorage.getItem("server") ||
+        window.sessionStorage.getItem("server") ||
+        window.localStorage.getItem("server") ||
         window.location.origin,
       ui_config: {},
     };

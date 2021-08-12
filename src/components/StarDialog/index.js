@@ -38,7 +38,7 @@ export default class StarDialog extends Component {
   handleCreateSubmit() {
     let { createValue } = this.state;
     let starred_lists = JSON.parse(
-      localStorage.getItem("starred_lists") || "[]"
+      window.localStorage.getItem("starred_lists") || "[]"
     );
     let n = starred_lists.findIndex((i) => i.name == createValue);
 
@@ -54,7 +54,7 @@ export default class StarDialog extends Component {
         type: "Starred",
       };
       starred_lists.push(metadata);
-      localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
+      window.localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
       this.setState({ isCreateOpen: false, starred_lists: starred_lists });
     } else {
       this.setState({ isCreateOpen: false });
@@ -67,17 +67,17 @@ export default class StarDialog extends Component {
     } else {
       let { metadata } = this.props;
       let starred_lists = JSON.parse(
-        localStorage.getItem("starred_lists") || "[]"
+        window.localStorage.getItem("starred_lists") || "[]"
       );
       let i = starred_lists[n].children.findIndex((i) => i.id == metadata.id);
       if (i == -1) {
         starred_lists[n].children.unshift(metadata);
-        localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
+        window.localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
         this.props.handleClose("unstarred");
         this.setState({ starred_lists: starred_lists });
       } else {
         starred_lists[n].children.splice(i, 1);
-        localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
+        window.localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
         this.props.handleClose();
       }
     }
@@ -87,7 +87,7 @@ export default class StarDialog extends Component {
     let { isOpen, metadata } = this.props;
     let { isCreateOpen } = this.state;
     let starred_lists = JSON.parse(
-      localStorage.getItem("starred_lists") || "[]"
+      window.localStorage.getItem("starred_lists") || "[]"
     );
 
     return (

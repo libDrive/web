@@ -6,7 +6,7 @@ export default class StarredLists extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      starred_lists: JSON.parse(localStorage.getItem("starred_lists") || "[]"),
+      starred_lists: JSON.parse(window.localStorage.getItem("starred_lists") || "[]"),
     };
   }
 

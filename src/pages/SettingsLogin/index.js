@@ -44,12 +44,12 @@ class SettingsLoginForm extends Component {
     super(props);
     this.state = {
       auth:
-        sessionStorage.getItem("auth") || localStorage.getItem("auth") || "0",
+        window.sessionStorage.getItem("auth") || window.localStorage.getItem("auth") || "0",
       isLoaded: false,
       secret: "",
       server:
-        sessionStorage.getItem("server") ||
-        localStorage.getItem("server") ||
+        window.sessionStorage.getItem("server") ||
+        window.localStorage.getItem("server") ||
         window.location.origin,
     };
 
@@ -73,7 +73,7 @@ class SettingsLoginForm extends Component {
     axios
       .get(req_path + req_args)
       .then((response) => {
-        sessionStorage.setItem("secret", secret);
+        window.sessionStorage.setItem("secret", secret);
         this.props.history.push("/settings");
       })
       .catch((error) => {

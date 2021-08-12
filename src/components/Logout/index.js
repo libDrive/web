@@ -13,8 +13,8 @@ export default class Logout extends Component {
   }
 
   componentDidMount() {
-    localStorage.clear();
-    sessionStorage.clear();
+    window.localStorage.clear();
+    window.sessionStorage.clear();
     setTimeout(() => this.setState({ isLoaded: true }), 500);
   }
 

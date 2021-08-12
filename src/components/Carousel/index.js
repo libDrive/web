@@ -18,8 +18,8 @@ export default class Carousel extends Component {
       hide: props.hide || false,
       metadata: this.props.metadata,
       server:
-        sessionStorage.getItem("server") ||
-        localStorage.getItem("server") ||
+        window.sessionStorage.getItem("server") ||
+        window.localStorage.getItem("server") ||
         window.location.origin,
       star: props.star,
     };
@@ -33,7 +33,7 @@ export default class Carousel extends Component {
   handleStar(item, category) {
     let { metadata } = this.state;
     let starred_lists = JSON.parse(
-      localStorage.getItem("starred_lists") || "[]"
+      window.localStorage.getItem("starred_lists") || "[]"
     );
 
     try {
@@ -45,7 +45,7 @@ export default class Carousel extends Component {
       let index4 = metadata[index3].children.findIndex((i) => i.id == item.id);
       starred_lists[index1].children.splice(index2, 1);
       metadata[index3].children.splice(index4, 1);
-      localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
+      window.localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
       this.setState({ metadata: metadata });
     } catch {
       Swal.fire({
@@ -59,7 +59,7 @@ export default class Carousel extends Component {
         showCancelButton: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          localStorage.setItem("starred_lists", "[]");
+          window.localStorage.setItem("starred_lists", "[]");
           location.reload();
         }
       });
@@ -81,7 +81,7 @@ export default class Carousel extends Component {
     }).then((result) => {
       if (result.isConfirmed) {
         let starred_lists = JSON.parse(
-          localStorage.getItem("starred_lists") || "[]"
+          window.localStorage.getItem("starred_lists") || "[]"
         );
         if (starred_lists.length == 1) {
           starred_lists.shift();
@@ -90,7 +90,7 @@ export default class Carousel extends Component {
           starred_lists.splice(evt, 1);
           metadata.splice(evt, 1);
         }
-        localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
+        window.localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
         this.setState({ metadata: metadata });
       }
     });
@@ -102,12 +102,12 @@ export default class Carousel extends Component {
       var reader = new FileReader();
       reader.onload = (evtR) => {
         let starred_lists = JSON.parse(
-          localStorage.getItem("starred_lists") || "[]"
+          window.localStorage.getItem("starred_lists") || "[]"
         );
         let starred_list = JSON.parse(evtR.target.result);
         let i = parseInt(evt.target.id.replace("file-input-", ""));
         starred_lists[i].children = starred_list.children;
-        localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
+        window.localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
         let { metadata } = this.state;
         if (metadata.length && metadata[i].type == "Starred") {
           metadata[i].children = starred_list.children;
@@ -122,7 +122,7 @@ export default class Carousel extends Component {
 
   handleStarExport(evt) {
     let starred_lists = JSON.parse(
-      localStorage.getItem("starred_lists") || "[]"
+      window.localStorage.getItem("starred_lists") || "[]"
     );
     let starred_list = starred_lists[evt];
 
@@ -137,15 +137,15 @@ export default class Carousel extends Component {
 
   handlePin(evt, pin) {
     let starred_lists = JSON.parse(
-      localStorage.getItem("starred_lists") || "[]"
+      window.localStorage.getItem("starred_lists") || "[]"
     );
     if (!pin) {
       starred_lists[evt].categoryInfo.pinned = false;
-      localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
+      window.localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
       this.setState({ metadata: starred_lists });
     } else {
       starred_lists[evt].categoryInfo.pinned = true;
-      localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
+      window.localStorage.setItem("starred_lists", JSON.stringify(starred_lists));
       this.setState({ metadata: starred_lists });
     }
   }

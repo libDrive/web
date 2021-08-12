@@ -222,4 +222,4 @@ class SortMenu extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(SortMenu);
+export default withStyles({ withTheme: true })(SortMenu);
