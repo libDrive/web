@@ -2,7 +2,12 @@ import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
 
-import { Button, IconButton, Typography } from "@material-ui/core";
+import { IconButton, Tooltip, Typography } from "@material-ui/core";
+import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import DeleteIcon from "@material-ui/icons/Delete";
+import RoomIcon from "@material-ui/icons/Room";
+import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
 import StarIcon from "@material-ui/icons/Star";
 
 import Swal from "sweetalert2/src/sweetalert2.js";
@@ -200,15 +205,15 @@ export default class Carousel extends Component {
                         >
                           {category.categoryInfo.name}
                         </Link>
-                        <Button
-                          variant="outlined"
-                          color="primary"
-                          size="small"
-                          onClick={() => this.handleStarReset(p)}
-                          style={{ marginLeft: "10px" }}
-                        >
-                          Delete
-                        </Button>
+                        <Tooltip title="Delete" placement="top">
+                          <IconButton
+                            color="primary"
+                            onClick={() => this.handleStarReset(p)}
+                            style={{ marginLeft: "10px" }}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Tooltip>
                       </div>
                       <div
                         style={{
@@ -225,45 +230,38 @@ export default class Carousel extends Component {
                           type="file"
                         />
                         <label htmlFor={`file-input-${p}`}>
-                          <Button
-                            variant="outlined"
-                            color="primary"
-                            component="span"
-                            size="small"
-                            style={{ marginRight: "10px" }}
-                          >
-                            Import
-                          </Button>
+                          <Tooltip title="Upload" placement="top">
+                            <IconButton color="primary">
+                              <CloudUploadIcon />
+                            </IconButton>
+                          </Tooltip>
                         </label>
-                        <Button
-                          variant="outlined"
-                          color="primary"
-                          onClick={() => this.handleStarExport(p)}
-                          size="small"
-                          style={{ marginRight: "10px" }}
-                        >
-                          Export
-                        </Button>
+                        <Tooltip title="Export" placement="top">
+                          <IconButton
+                            color="primary"
+                            onClick={() => this.handleStarExport(p)}
+                          >
+                            <CloudDownloadIcon />
+                          </IconButton>
+                        </Tooltip>
                         {category.categoryInfo.pinned ? (
-                          <Button
-                            variant="outlined"
-                            color="primary"
-                            onClick={() => this.handlePin(p, false)}
-                            size="small"
-                            style={{ marginRight: "10px" }}
-                          >
-                            Unpin
-                          </Button>
+                          <Tooltip title="Unpin" placement="top">
+                            <IconButton
+                              color="primary"
+                              onClick={() => this.handlePin(p, false)}
+                            >
+                              <RoomIcon />
+                            </IconButton>
+                          </Tooltip>
                         ) : (
-                          <Button
-                            variant="outlined"
-                            color="primary"
-                            onClick={() => this.handlePin(p, true)}
-                            size="small"
-                            style={{ marginRight: "10px" }}
-                          >
-                            Pin
-                          </Button>
+                          <Tooltip title="Pin" placement="top">
+                            <IconButton
+                              color="primary"
+                              onClick={() => this.handlePin(p, true)}
+                            >
+                              <RoomOutlinedIcon />
+                            </IconButton>
+                          </Tooltip>
                         )}
                       </div>
                     </div>
@@ -325,7 +323,11 @@ export default class Carousel extends Component {
               category.children.length || !hide ? (
                 <div className="carousel__category" key={guid()}>
                   <Link
-                    to={`/browse/${category.categoryInfo.name}`}
+                    to={
+                      category.categoryInfo.type == "Starred"
+                        ? "#"
+                        : `/browse/${category.categoryInfo.name}`
+                    }
                     key={guid()}
                     className="carousel__category__title no_decoration_link"
                   >
