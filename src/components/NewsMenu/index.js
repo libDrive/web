@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import {
+  Badge,
   IconButton,
   List,
   ListItem,
@@ -12,41 +13,83 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 
 import axios from "axios";
 
-import { guid } from "../../components";
+import { guid, version } from "../../components";
 
 export default class NewsMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      dismissed:
+        (window.localStorage.getItem("dismissed") || "false") == "true",
+      isLoaded: false,
+      isNew: false,
+      lastChecked: new Date(
+        window.localStorage.getItem("last_news_check") || "0"
+      ).getTime(),
       menuAnchor: false,
-      news: [],
+      news: JSON.parse(window.localStorage.getItem("news") || "[]"),
+      now: new Date().getTime(),
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
-  handleClick(evt) {
+  componentDidMount() {
+    let { isNew, lastChecked, news, now } = this.state;
+    let targetTime = lastChecked + 3 * 60 * 60 * 1000;
+
+    if (news.length && news[0].tag_name) {
+      if (version != news[0].tag_name.replace("v", "")) {
+        isNew = true;
+      }
+    }
+
+    if (now >= targetTime) {
+      axios
+        .get("https://api.github.com/repos/libDrive/libDrive/releases")
+        .then((response) => {
+          let data = response.data;
+          window.localStorage.setItem("news", JSON.stringify(data));
+          window.localStorage.setItem("last_news_check", now);
+          this.setState({
+            isLoaded: true,
+            isNew: isNew,
+            news: data,
+          });
+        });
+    } else {
+      this.setState({ isLoaded: true, isNew: isNew });
+    }
+  }
+
+  handleClick() {
+    let { now } = this.state;
+
     axios
       .get("https://api.github.com/repos/libDrive/libDrive/releases")
       .then((response) => {
         let data = response.data;
+        window.localStorage.setItem("news", JSON.stringify(data));
+        window.localStorage.setItem("last_news_check", now);
+        window.localStorage.setItem("dismissed", "true");
         this.setState({
+          dismissed: true,
           news: data,
           menuAnchor: true,
         });
       });
   }
 
-  handleClose(evt) {
+  handleClose() {
     this.setState({
       menuAnchor: false,
     });
   }
 
   render() {
-    let { news } = this.state;
+    let { dismissed, isNew, isLoaded, news } = this.state;
 
-    return (
+    return isLoaded ? (
       <div className="NewsMenu">
         <IconButton
           aria-label="more"
@@ -54,7 +97,13 @@ export default class NewsMenu extends Component {
           aria-haspopup="true"
           onClick={this.handleClick}
         >
-          <NotificationsIcon />
+          {!dismissed && isNew ? (
+            <Badge badgeContent={"N"} color="primary">
+              <NotificationsIcon />
+            </Badge>
+          ) : (
+            <NotificationsIcon />
+          )}
         </IconButton>
         <Menu
           id="news-menu"
@@ -94,6 +143,6 @@ export default class NewsMenu extends Component {
           </List>
         </Menu>
       </div>
-    );
+    ) : null;
   }
 }
