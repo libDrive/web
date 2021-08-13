@@ -7,6 +7,7 @@ import {
   Button,
   Chip,
   ClickAwayListener,
+  Divider,
   IconButton,
   Menu,
   MenuItem,
@@ -320,7 +321,11 @@ export class TVSView extends Component {
       if (evt.target.files[0].name.endsWith(".srt")) {
         const vtt = new VTTConverter(evt.target.files[0]);
         let res = await vtt.getURL();
-        this.setState({ file: res, playerKey: guid() });
+        this.setState({
+          file: res,
+          fileName: evt.target.files[0].name,
+          playerKey: guid(),
+        });
       } else {
         this.setState({
           file: URL.createObjectURL(evt.target.files[0]),
@@ -333,9 +338,9 @@ export class TVSView extends Component {
   }
 
   handleSubtitleMenuOpen(evt) {
-    let { subtitle } = this.state;
+    let { default_track, tracks } = this.state;
 
-    if (subtitle && subtitle.url != "") {
+    if (tracks && tracks[default_track].url) {
       this.setState({
         subtitleMenuAnchor: evt.currentTarget,
       });
@@ -353,19 +358,21 @@ export class TVSView extends Component {
 
   render() {
     let {
-      default_quality,
+      default_track,
+      default_video,
       file,
+      fileName,
       metadata,
       playerKey,
       q,
       server,
-      sources,
-      subtitle,
+      videos,
+      tracks,
       subtitleMenuAnchor,
     } = this.state;
 
     if (file) {
-      subtitle = { url: file };
+      tracks = [{ name: fileName, url: file }];
     }
 
     function isHash(n, hash) {
@@ -389,11 +396,11 @@ export class TVSView extends Component {
             }}
             options={{
               video: {
-                quality: sources,
-                defaultQuality: default_quality,
+                quality: videos,
+                defaultQuality: default_video,
                 pic: `${server}/api/v1/image/thumbnail?id=${metadata.children[q].id}`,
               },
-              subtitle: subtitle,
+              subtitle: tracks[default_track],
               preload: "auto",
               theme: theme.palette.primary.main,
               contextmenu: [
@@ -477,11 +484,18 @@ export class TVSView extends Component {
                 open={Boolean(subtitleMenuAnchor)}
                 onClose={this.handleSubtitleMenuClose}
               >
-                <a className="no_decoration_link" href={subtitle.url}>
-                  <MenuItem onClick={this.handleSubtitleMenuClose}>
-                    Download
-                  </MenuItem>
-                </a>
+                {tracks.length ? (
+                  <div>
+                    {tracks.map((track) => (
+                      <a className="no_decoration_link" href={track.url}>
+                        <MenuItem onClick={this.handleSubtitleMenuClose}>
+                          {track.name}
+                        </MenuItem>
+                      </a>
+                    ))}
+                    <Divider />
+                  </div>
+                ) : null}
                 <MenuItem
                   onClick={() => {
                     document.getElementById("file-input-button").click();

@@ -46,7 +46,7 @@ export default class DownloadMenu extends Component {
   }
 
   render() {
-    let { menuAnchor, sources } = this.state;
+    let { menuAnchor, videos } = this.state;
 
     return (
       <div className="info__button">
@@ -70,8 +70,8 @@ export default class DownloadMenu extends Component {
           open={Boolean(menuAnchor)}
           onClose={this.handleClose}
         >
-          {sources.length
-            ? sources.map((source) => (
+          {videos.length
+            ? videos.map((source) => (
                 <a
                   href={encodeURI(source.url)}
                   className="no_decoration_link"

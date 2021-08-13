@@ -7,7 +7,10 @@ import {
   Button,
   Chip,
   ClickAwayListener,
+  Divider,
   IconButton,
+  Menu,
+  MenuItem,
   Tooltip,
   Typography,
 } from "@material-ui/core";
@@ -38,13 +41,20 @@ import {
 export default class MovieView extends Component {
   constructor(props) {
     super(props);
-    this.state = { ...props.state, tooltipOpen: false, trailer: {} };
+    this.state = {
+      ...props.state,
+      subtitleMenuAnchor: false,
+      tooltipOpen: false,
+      trailer: {},
+    };
     this.onFileChange = this.onFileChange.bind(this);
     this.prettyDate = this.prettyDate.bind(this);
     this.handleStar = this.handleStar.bind(this);
     this.handleStarClose = this.handleStarClose.bind(this);
     this.handleTrailer = this.handleTrailer.bind(this);
     this.handleTrailerClose = this.handleTrailerClose.bind(this);
+    this.handleSubtitleMenuOpen = this.handleSubtitleMenuOpen.bind(this);
+    this.handleSubtitleMenuClose = this.handleSubtitleMenuClose.bind(this);
   }
 
   componentDidMount() {
@@ -67,7 +77,11 @@ export default class MovieView extends Component {
       if (evt.target.files[0].name.endsWith(".srt")) {
         const vtt = new VTTConverter(evt.target.files[0]);
         let res = await vtt.getURL();
-        this.setState({ file: res, playerKey: guid() });
+        this.setState({
+          file: res,
+          fileName: evt.target.files[0].name,
+          playerKey: guid(),
+        });
       } else {
         this.setState({
           file: URL.createObjectURL(evt.target.files[0]),
@@ -176,22 +190,44 @@ export default class MovieView extends Component {
     this.setState({ openTrailerDialog: false });
   }
 
+  handleSubtitleMenuOpen(evt) {
+    let { tracks } = this.state;
+
+    if (tracks.length) {
+      this.setState({
+        subtitleMenuAnchor: evt.currentTarget,
+      });
+    } else {
+      const subtitleButton = document.getElementById("file-input-button");
+      subtitleButton.click();
+    }
+  }
+
+  handleSubtitleMenuClose() {
+    this.setState({
+      subtitleMenuAnchor: false,
+    });
+  }
+
   render() {
     let {
-      default_quality,
+      default_track,
+      default_video,
       file,
+      fileName,
       metadata,
       playerKey,
       server,
-      sources,
+      videos,
       starred,
-      subtitle,
+      subtitleMenuAnchor,
+      tracks,
       tooltipOpen,
       trailer,
     } = this.state;
 
     if (file) {
-      subtitle = { url: file };
+      tracks = [{ name: fileName, url: file }];
     }
 
     return (
@@ -207,13 +243,13 @@ export default class MovieView extends Component {
             }}
             options={{
               video: {
-                quality: sources,
-                defaultQuality: default_quality,
+                quality: videos,
+                defaultQuality: default_video,
                 pic:
                   metadata.backdropPath ||
                   `${server}/api/v1/image/thumbnail?id=${metadata.id}`,
               },
-              subtitle: subtitle,
+              subtitle: tracks[default_track],
               preload: "auto",
               theme: theme.palette.primary.main,
               contextmenu: [
@@ -318,17 +354,48 @@ export default class MovieView extends Component {
                   type="file"
                   accept=".vtt,.srt"
                 />
-                <label htmlFor="file-input">
-                  <Button
-                    color="primary"
-                    variant="outlined"
-                    style={{ width: "135px" }}
-                    component="span"
-                    startIcon={<SubtitlesOutlinedIcon />}
+                <Button
+                  color="primary"
+                  variant="outlined"
+                  style={{ width: "135px" }}
+                  component="span"
+                  aria-controls="subtitles-menu"
+                  startIcon={<SubtitlesOutlinedIcon />}
+                  onClick={this.handleSubtitleMenuOpen}
+                >
+                  Subtitle
+                </Button>
+                <Menu
+                  id="subtitles-menu"
+                  anchorEl={subtitleMenuAnchor}
+                  keepMounted
+                  anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                  transformOrigin={{ vertical: "top", horizontal: "center" }}
+                  open={Boolean(subtitleMenuAnchor)}
+                  onClose={this.handleSubtitleMenuClose}
+                >
+                  {tracks.length ? (
+                    <div>
+                      {tracks.map((track) => (
+                        <a className="no_decoration_link" href={track.url}>
+                          <MenuItem onClick={this.handleSubtitleMenuClose}>
+                            {track.name}
+                          </MenuItem>
+                        </a>
+                      ))}
+                      <Divider />
+                    </div>
+                  ) : null}
+                  <MenuItem
+                    onClick={() => {
+                      document.getElementById("file-input-button").click();
+                      this.setState({ subtitleMenuAnchor: false });
+                    }}
                   >
-                    Subtitle
-                  </Button>
-                </label>
+                    Upload
+                  </MenuItem>
+                </Menu>
+                <label htmlFor="file-input" id="file-input-button" />
               </div>
             </div>
             <div className="info__genres">

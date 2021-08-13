@@ -43,12 +43,12 @@ export default class View extends Component {
         window.sessionStorage.getItem("server") ||
         window.localStorage.getItem("server") ||
         window.location.origin,
-      sources: [],
+      videos: [],
       starred:
         JSON.parse(window.localStorage.getItem("starred_lists") || "[]").some(
           (i) => i.children.some((x) => x.id == this.props.match.params.id)
         ) || false,
-      subtitle: { url: "" },
+      tracks: [{ name: null, url: null }],
       ui_config: JSON.parse(
         window.localStorage.getItem("ui_config") ||
           window.sessionStorage.getItem("ui_config") ||
@@ -148,8 +148,10 @@ export default class View extends Component {
 
     let name;
     let new_id;
+    let parent;
     let metadata = response1.data.content;
     if (metadata.type == "directory" && metadata.children.length) {
+      parent = id;
       if (metadata.children[q].type == "file") {
         new_id = metadata.children[q].id;
         name = metadata.children[q].name;
@@ -159,6 +161,7 @@ export default class View extends Component {
     } else {
       name = metadata.name;
       new_id = id;
+      parent = metadata.parents[0];
     }
 
     var response2;
@@ -166,7 +169,9 @@ export default class View extends Component {
       let req_path = `${server}/api/v1/streammap`;
       let req_args = `?a=${auth}&id=${encodeURIComponent(
         new_id
-      )}&name=${encodeURIComponent(name)}&server=${encodeURIComponent(server)}`;
+      )}&parent=${parent}&name=${encodeURIComponent(name)}&t=${
+        metadata.type
+      }&server=${encodeURIComponent(server)}`;
 
       response2 = await axios.get(req_path + req_args).catch((error) => {
         console.error(error);
@@ -229,17 +234,18 @@ export default class View extends Component {
       });
     } else {
       response2 = {
-        data: { content: { default_quality: 0, sources: [], subtitles: [] } },
+        data: { content: { default_video: 0, videos: [], subtitles: [] } },
       };
     }
     this.setState({
-      default_quality: response2.data.content.default_quality,
+      default_track: response2.data.content.default_track,
+      default_video: response2.data.content.default_video,
       isLoaded: true,
       metadata: response1.data.content,
       name: name,
       q: q,
-      sources: response2.data.content.sources,
-      subtitle: response2.data.content.subtitle,
+      videos: response2.data.content.videos,
+      tracks: response2.data.content.tracks,
     });
   }
 
