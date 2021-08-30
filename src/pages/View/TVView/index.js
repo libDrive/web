@@ -338,9 +338,9 @@ export class TVSView extends Component {
   }
 
   handleSubtitleMenuOpen(evt) {
-    let { default_track, tracks } = this.state;
+    let { tracks } = this.state;
 
-    if (tracks && tracks[default_track].url) {
+    if (tracks.length) {
       this.setState({
         subtitleMenuAnchor: evt.currentTarget,
       });
