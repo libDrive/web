@@ -20,7 +20,7 @@ import StarBorderIcon from "@material-ui/icons/StarBorder";
 import SubtitlesOutlinedIcon from "@material-ui/icons/SubtitlesOutlined";
 import YouTubeIcon from "@material-ui/icons/YouTube";
 
-import DPlayer from "react-dplayer";
+import DPlayer from "libdrive-player";
 import VTTConverter from "srt-webvtt";
 
 import Swal from "sweetalert2/src/sweetalert2.js";
@@ -258,6 +258,7 @@ export default class MovieView extends Component {
                   link: "https://github.com/libDrive/libDrive",
                 },
               ],
+              screenshot: true,
               volume: 1,
               lang: "en",
             }}

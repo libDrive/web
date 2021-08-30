@@ -14,7 +14,7 @@
     "@sweetalert2/theme-dark": "^5.0.2",
     "array-move": "^4.0.0",
     "axios": "^0.21.1",
-    "react-dplayer": "^0.4.2",
+    "libdrive-player": "git+https://github.com/libDrive/player.git",
     "react-router-dom": "^5.2.0",
     "react-smooth-dnd": "^0.11.1",
     "srt-webvtt": "^1.3.2",

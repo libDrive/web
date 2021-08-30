@@ -7034,6 +7034,15 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+"libdrive-player@git+https://github.com/libDrive/player.git":
+  version "0.4.2"
+  resolved "git+https://github.com/libDrive/player.git#107b57754bc97c144d908fb9e74e62806a51af29"
+  dependencies:
+    "@types/dplayer" "^1.25.0"
+    clsx "^1.1.0"
+    dplayer "^1.26.0"
+    omit.js "^2.0.2"
+
 lines-and-columns@^1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.1.6.tgz#1c00c743b433cd0a4e80758f7b64a57440d9ff00"
@@ -9213,16 +9222,6 @@ react-dom@^17.0.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     scheduler "^0.20.2"
-
-react-dplayer@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/react-dplayer/-/react-dplayer-0.4.2.tgz#f612f8a1a894a856d213b6921f58988dd1310819"
-  integrity sha512-UnI6KaAsnGtP6MSz79lGCAEZko+j0DcKgwfNATtQJL/T/zRs1t3ZJDT/ymbCquuU1e3fADn0Cww1gpNJ3K2TiQ==
-  dependencies:
-    "@types/dplayer" "^1.25.0"
-    clsx "^1.1.0"
-    dplayer "^1.26.0"
-    omit.js "^2.0.2"
 
 react-error-overlay@^6.0.9:
   version "6.0.9"
