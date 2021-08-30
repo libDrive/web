@@ -72,9 +72,17 @@ class Login extends Component {
       if (data.code === 200) {
         window.localStorage.setItem("auth", "0");
         window.localStorage.setItem("server", server);
+        window.localStorage.setItem(
+          "ui_config",
+          JSON.stringify(data.content.ui_config)
+        );
         window.sessionStorage.setItem("auth", "0");
         window.sessionStorage.setItem("server", server);
-        this.props.history.push(data.content);
+        window.sessionStorage.setItem(
+          "ui_config",
+          JSON.stringify(data.content.ui_config)
+        );
+        this.props.history.push("/browse");
       } else if (data.content === true) {
         this.setState({ signup: true, page: true });
       } else if (data.content === false) {
@@ -108,9 +116,17 @@ class Login extends Component {
         if (data.code === 200) {
           window.localStorage.setItem("auth", "0");
           window.localStorage.setItem("server", server);
+          window.localStorage.setItem(
+            "ui_config",
+            JSON.stringify(data.content.ui_config)
+          );
           window.sessionStorage.setItem("auth", "0");
           window.sessionStorage.setItem("server", server);
-          this.props.history.push(data.content);
+          window.sessionStorage.setItem(
+            "ui_config",
+            JSON.stringify(data.content.ui_config)
+          );
+          this.props.history.push("/browse");
         } else if (data.content === true) {
           this.setState({ server: server, signup: true, page: true });
         } else if (data.content === false) {
@@ -155,8 +171,16 @@ class Login extends Component {
         let data = response.data;
         window.localStorage.setItem("server", server);
         window.sessionStorage.setItem("server", server);
+        window.localStorage.setItem(
+          "ui_config",
+          JSON.stringify(data.content.ui_config)
+        );
         window.localStorage.setItem("auth", data.content.auth);
         window.sessionStorage.setItem("auth", data.content.auth);
+        window.sessionStorage.setItem(
+          "ui_config",
+          JSON.stringify(data.content.ui_config)
+        );
         this.props.history.push("/");
       })
       .catch((error) => {
