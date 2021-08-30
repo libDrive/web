@@ -154,7 +154,7 @@ class NavUI extends Component {
             <div className={classes.grow} />
             <BrowseMenu categories={categories} />
             <ThemeMenu ui_config={ui_config} />
-            <NewsMenu />
+            {!ui_config.hide_news ? <NewsMenu /> : null}
             <AccountMenu accounts={accounts} ui_config={ui_config} />
           </Toolbar>
         </AppBar>
