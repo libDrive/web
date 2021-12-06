@@ -71,15 +71,20 @@ export default class DownloadMenu extends Component {
           onClose={this.handleClose}
         >
           {videos.length
-            ? videos.map((source) => (
-                <a
-                  href={encodeURI(source.url)}
-                  className="no_decoration_link"
-                  key={guid()}
-                  target="_blank"
-                >
-                  <MenuItem onClick={this.handleClose}>{source.name}</MenuItem>
-                </a>
+            ? videos.map((source, n) => (
+                <div>
+                  <a
+                    href={encodeURI(source.url)}
+                    className="no_decoration_link"
+                    key={guid()}
+                    target="_blank"
+                  >
+                    <MenuItem onClick={this.handleClose}>
+                      {source.name}
+                    </MenuItem>
+                  </a>
+                  <div>{n == 0 && videos.length > 1 ? <Divider /> : null}</div>
+                </div>
               ))
             : null}
           {this.props.tv ? (

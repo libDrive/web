@@ -256,7 +256,8 @@ export default class Carousel extends Component {
                         }}
                       >
                         <Link
-                          to={"#"}
+                          id={`${category.categoryInfo.name}`}
+                          to={`#${category.categoryInfo.name}`}
                           className="carousel__category__title no_decoration_link"
                         >
                           {category.categoryInfo.name}
@@ -457,9 +458,10 @@ export default class Carousel extends Component {
               category.children.length || !hide ? (
                 <div className="carousel__category" key={guid()}>
                   <Link
+                    id={`${category.categoryInfo.name}`}
                     to={
                       category.categoryInfo.type == "Starred"
-                        ? "#"
+                        ? `/starred#${category.categoryInfo.name}`
                         : `/browse/${category.categoryInfo.name}`
                     }
                     key={guid()}
