@@ -7096,22 +7096,22 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-"libdrive-dplayer@git+https://github.com/libDrive/dplayer.git#1.27.0":
+"libdrive-dplayer@git+https://github.com/libDrive/dplayer.git#v1.27.0":
   version "1.27.0"
-  resolved "git+https://github.com/libDrive/dplayer.git#22a3e6894f3d4df2f6aa8dba6d7bce375dd518b1"
+  resolved "git+https://github.com/libDrive/dplayer.git#a48fad5a876183dd95595f92be3f912c700a567a"
   dependencies:
     aribb24.js "1.7.13"
     axios "^0.21.4"
     balloon-css "^1.0.3"
     promise-polyfill "8.2.0"
 
-"libdrive-player@git+https://github.com/libDrive/player.git#0.4.3":
+"libdrive-player@git+https://github.com/libDrive/player.git#v0.4.3":
   version "0.4.3"
-  resolved "git+https://github.com/libDrive/player.git#eba44664101ce244f262775b9d8a5db7bbe3489e"
+  resolved "git+https://github.com/libDrive/player.git#1f788705e4cfcef1f9cf9d979b54e729efc55a33"
   dependencies:
     "@types/dplayer" "^1.25.0"
     clsx "^1.1.0"
-    libdrive-dplayer "git+https://github.com/libDrive/dplayer.git#1.27.0"
+    libdrive-dplayer "git+https://github.com/libDrive/dplayer.git#v1.27.0"
     omit.js "^2.0.2"
 
 lines-and-columns@^1.1.6:
