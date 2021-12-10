@@ -21,7 +21,7 @@ import SubtitlesOutlinedIcon from "@material-ui/icons/SubtitlesOutlined";
 import YouTubeIcon from "@material-ui/icons/YouTube";
 
 import DPlayer from "libdrive-player";
-import VTTConverter from "srt-webvtt";
+import { default as toWebVTT } from "srt-webvtt";
 
 import Swal from "sweetalert2/src/sweetalert2.js";
 import "@sweetalert2/theme-dark/dark.css";
@@ -319,10 +319,9 @@ export class TVSView extends Component {
   async onFileChange(evt) {
     if (evt.target.files.length) {
       if (evt.target.files[0].name.endsWith(".srt")) {
-        const vtt = new VTTConverter(evt.target.files[0]);
-        let res = await vtt.getURL();
+        const vtt = await toWebVTT(evt.target.files[0]);
         this.setState({
-          file: res,
+          file: vtt,
           fileName: evt.target.files[0].name,
           playerKey: guid(),
         });

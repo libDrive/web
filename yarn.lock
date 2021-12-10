@@ -1769,7 +1769,7 @@
     "@svgr/plugin-svgo" "^5.5.0"
     loader-utils "^2.0.0"
 
-"@sweetalert2/theme-dark@^5.0.2":
+"@sweetalert2/theme-dark@^5.0.8":
   version "5.0.8"
   resolved "https://registry.yarnpkg.com/@sweetalert2/theme-dark/-/theme-dark-5.0.8.tgz#2334942535b96d7323eadc150aab5eb83d0fdfb3"
   integrity sha512-erhXs3GMwlCXnONZ/sRbh/krlsFkR9hmcUJ1Zr/6dz+9OpMBU0AL2gx+V7A056wBGLX0deziLGsDecoSIkKOWg==
@@ -2646,12 +2646,19 @@ axe-core@^4.3.5:
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.3.5.tgz#78d6911ba317a8262bfee292aeafcc1e04b49cc5"
   integrity sha512-WKTW1+xAzhMS5dJsxWkliixlO/PqC4VhmO9T4juNYcaTg9jzWiJsou6m5pxWYGfigWbwzJWeFY6z47a+4neRXA==
 
-axios@^0.21.1, axios@^0.21.4:
+axios@^0.21.4:
   version "0.21.4"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
   integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
   dependencies:
     follow-redirects "^1.14.0"
+
+axios@^0.24.0:
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.24.0.tgz#804e6fa1e4b9c5288501dd9dff56a7a0940d20d6"
+  integrity sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA==
+  dependencies:
+    follow-redirects "^1.14.4"
 
 axobject-query@^2.2.0:
   version "2.2.0"
@@ -5166,6 +5173,11 @@ follow-redirects@^1.0.0, follow-redirects@^1.14.0:
   version "1.14.5"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.5.tgz#f09a5848981d3c772b5392309778523f8d85c381"
   integrity sha512-wtphSXy7d4/OR+MvIFbCVBDzZ5520qV8XfPklSN5QtxuMUJZ+b0Wnst1e1lCDocfzuCkHqj8k0FpZqO+UIaKNA==
+
+follow-redirects@^1.14.4:
+  version "1.14.6"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.6.tgz#8cfb281bbc035b3c067d6cd975b0f6ade6e855cd"
+  integrity sha512-fhUl5EwSJbbl8AR+uYL2KQDxLkdSjZGR36xy46AO7cOMTrCMON6Sa28FmAnC2tRTDbd/Uuzz3aJBv7EBN7JH8A==
 
 for-in@^1.0.2:
   version "1.0.2"
@@ -10317,10 +10329,10 @@ sprintf-js@~1.0.2:
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
-srt-webvtt@^1.3.2:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/srt-webvtt/-/srt-webvtt-1.3.2.tgz#3bd8667c83acacc973c707923f73a375288a5e67"
-  integrity sha512-Kh/vCrgVtoyaXovJ3bMJ92yzx87SQ0yJpL/Ivz2/jDWuaM/kHCKiQlIff/h6IKcupZkHwd3LS+tRmgClFdchCA==
+srt-webvtt@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/srt-webvtt/-/srt-webvtt-2.0.0.tgz#debd2f56dd2b6600894caa11bb78893e5fc6509b"
+  integrity sha512-G2Z7/Jf2NRKrmLYNSIhSYZZYE6OFlKXFp9Au2/zJBKgrioUzmrAys1x7GT01dwl6d2sEnqr5uahEIOd0JW/Rbw==
 
 ssri@^6.0.1:
   version "6.0.2"
@@ -10625,7 +10637,7 @@ svgo@^1.0.0, svgo@^1.2.2:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-sweetalert2@^11.1.2:
+sweetalert2@^11.3.0:
   version "11.3.0"
   resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.3.0.tgz#39be4b23a02be479f36441f3a5f16a5d6364aba3"
   integrity sha512-C0TFp0VLxgx+PmhJ0mL8qzx+iYjnCLdDbvQHKY6KAGI+xwawMvLkStPgw2LmJl6itaDhR/qLQStPFIbr1VK9Ow==
