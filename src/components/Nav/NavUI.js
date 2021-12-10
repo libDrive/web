@@ -77,7 +77,6 @@ class NavUI extends Component {
     super(props);
     this.state = {
       ...props.state,
-      search: "",
       ui_config: JSON.parse(
         window.localStorage.getItem("ui_config") ||
           window.sessionStorage.getItem("ui_config") ||
