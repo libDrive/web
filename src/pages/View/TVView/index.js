@@ -7,6 +7,8 @@ import {
   Button,
   Chip,
   ClickAwayListener,
+  Dialog,
+  DialogTitle,
   Divider,
   IconButton,
   Menu,
@@ -294,6 +296,8 @@ export class TVSView extends Component {
     this.onFileChange = this.onFileChange.bind(this);
     this.handleSubtitleMenuOpen = this.handleSubtitleMenuOpen.bind(this);
     this.handleSubtitleMenuClose = this.handleSubtitleMenuClose.bind(this);
+    this.handleClickImage = this.handleClickImage.bind(this);
+    this.handleCloseDialog = this.handleCloseDialog.bind(this);
   }
 
   componentDidMount() {
@@ -355,12 +359,21 @@ export class TVSView extends Component {
     });
   }
 
+  handleClickImage(url) {
+    this.setState({ image_url: url });
+  }
+
+  handleCloseDialog() {
+    this.setState({ image_url: null });
+  }
+
   render() {
     let {
       default_track,
       default_video,
       file,
       fileName,
+      image_url,
       metadata,
       playerKey,
       q,
@@ -384,6 +397,14 @@ export class TVSView extends Component {
 
     return (
       <div className="TVSView">
+        <Dialog
+          onClose={this.handleCloseDialog}
+          aria-labelledby="img-dialog"
+          open={image_url ? true : false}
+        >
+          <DialogTitle id="img-dialog">Thumbnail</DialogTitle>
+          <img src={image_url} style={{ padding: "25px" }} />
+        </Dialog>
         <div className="plyr__component">
           <DPlayer
             key={playerKey}
@@ -418,16 +439,28 @@ export class TVSView extends Component {
               {metadata.children.length
                 ? metadata.children.map((child, n) => (
                     <li className={isHash(n, q)} key={n}>
-                      <Link
-                        to={{
-                          pathname: window.location.pathname,
-                          search: `?q=${n}`,
-                        }}
-                        key={guid()}
-                      >
-                        <img className="plyr-miniposter" />
-                        {child.name}
-                      </Link>
+                      <div>
+                        <img
+                          onClick={() =>
+                            this.handleClickImage(
+                              `${server}/api/v1/image/thumbnail?id=${child.id}`
+                            )
+                          }
+                          onError={(e) => (e.target.style = "display: none;")}
+                          src={`${server}/api/v1/image/thumbnail?id=${child.id}`}
+                          className="plyr-miniposter"
+                        />
+                        <Link
+                          to={{
+                            pathname: window.location.pathname,
+                            search: `?q=${n}`,
+                          }}
+                          className="plyr-miniposter-link"
+                          key={guid()}
+                        >
+                          <div>{child.name}</div>
+                        </Link>
+                      </div>
                     </li>
                   ))
                 : null}
