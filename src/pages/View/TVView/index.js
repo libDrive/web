@@ -45,7 +45,12 @@ import {
 export class TVBView extends Component {
   constructor(props) {
     super(props);
-    this.state = { ...props.state, tooltipOpen: false, trailer: {} };
+    this.state = {
+      ...props.state,
+      tooltipOpen: false,
+      tooltipOpen2: false,
+      trailer: {},
+    };
     this.prettyDate = this.prettyDate.bind(this);
     this.handleStar = this.handleStar.bind(this);
     this.handleStarClose = this.handleStarClose.bind(this);
@@ -161,7 +166,8 @@ export class TVBView extends Component {
   }
 
   render() {
-    let { metadata, server, starred, tooltipOpen, trailer } = this.state;
+    let { metadata, server, starred, tooltipOpen, tooltipOpen2, trailer } =
+      this.state;
 
     return (
       <div className="TVBView">
@@ -191,7 +197,7 @@ export class TVBView extends Component {
                   <Typography variant="subtitle2">{metadata.name}</Typography>
                 }
                 arrow
-                placement="bottom-start"
+                placement="top-start"
                 open={tooltipOpen}
                 disableFocusListener
                 disableHoverListener
@@ -219,12 +225,36 @@ export class TVBView extends Component {
               {metadata.overview}
             </Typography>
             <div className="vote__container">
-              <Rating
-                name="Rating"
-                value={metadata.voteAverage}
-                max={10}
-                readOnly
-              />
+              <ClickAwayListener
+                onClickAway={() => this.setState({ tooltipOpen2: false })}
+              >
+                <Tooltip
+                  title={
+                    <Typography variant="subtitle2">
+                      {metadata.voteAverage}/10
+                    </Typography>
+                  }
+                  arrow
+                  placement="right"
+                  open={tooltipOpen2}
+                  disableFocusListener
+                  disableHoverListener
+                  disableTouchListener
+                  onClose={() => this.setState({ tooltipOpen2: false })}
+                  PopperProps={{
+                    disablePortal: true,
+                  }}
+                >
+                  <div onClick={() => this.setState({ tooltipOpen2: true })}>
+                    <Rating
+                      name="Rating"
+                      value={metadata.voteAverage}
+                      max={10}
+                      readOnly
+                    />
+                  </div>
+                </Tooltip>
+              </ClickAwayListener>
             </div>
             <div className="info__release">
               <IconButton onClick={this.handleStar}>

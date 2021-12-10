@@ -45,6 +45,7 @@ export default class MovieView extends Component {
       ...props.state,
       subtitleMenuAnchor: false,
       tooltipOpen: false,
+      tooltipOpen2: false,
       trailer: {},
     };
     this.onFileChange = this.onFileChange.bind(this);
@@ -222,6 +223,7 @@ export default class MovieView extends Component {
       subtitleMenuAnchor,
       tracks,
       tooltipOpen,
+      tooltipOpen2,
       trailer,
     } = this.state;
 
@@ -284,7 +286,7 @@ export default class MovieView extends Component {
                   <Typography variant="subtitle2">{metadata.name}</Typography>
                 }
                 arrow
-                placement="bottom-start"
+                placement="top-start"
                 open={tooltipOpen}
                 disableFocusListener
                 disableHoverListener
@@ -312,12 +314,36 @@ export default class MovieView extends Component {
               {metadata.overview}
             </Typography>
             <div className="vote__container">
-              <Rating
-                name="Rating"
-                value={metadata.voteAverage}
-                max={10}
-                readOnly
-              />
+              <ClickAwayListener
+                onClickAway={() => this.setState({ tooltipOpen2: false })}
+              >
+                <Tooltip
+                  title={
+                    <Typography variant="subtitle2">
+                      {metadata.voteAverage}/10
+                    </Typography>
+                  }
+                  arrow
+                  placement="right"
+                  open={tooltipOpen2}
+                  disableFocusListener
+                  disableHoverListener
+                  disableTouchListener
+                  onClose={() => this.setState({ tooltipOpen2: false })}
+                  PopperProps={{
+                    disablePortal: true,
+                  }}
+                >
+                  <div onClick={() => this.setState({ tooltipOpen2: true })}>
+                    <Rating
+                      name="Rating"
+                      value={metadata.voteAverage}
+                      max={10}
+                      readOnly
+                    />
+                  </div>
+                </Tooltip>
+              </ClickAwayListener>
             </div>
             <div className="info__release">
               <IconButton onClick={this.handleStar}>
