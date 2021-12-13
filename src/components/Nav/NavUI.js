@@ -24,7 +24,7 @@ import {
 
 const styles = (theme) => ({
   root: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
     color: theme.palette.text.primary,
   },
   grow: {

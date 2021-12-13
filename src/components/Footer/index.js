@@ -6,7 +6,6 @@ import { version } from "../../components";
 
 const styles = (theme) => ({
   footer__container: {
-    backgroundColor: theme.palette.background.paper,
     width: "100%",
     height: "75px",
     display: "flex",
