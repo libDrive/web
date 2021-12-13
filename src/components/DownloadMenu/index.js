@@ -72,11 +72,10 @@ export default class DownloadMenu extends Component {
         >
           {videos.length
             ? videos.map((source, n) => (
-                <div>
+                <div key={guid()}>
                   <a
                     href={encodeURI(source.url)}
                     className="no_decoration_link"
-                    key={guid()}
                     target="_blank"
                   >
                     <MenuItem onClick={this.handleClose}>
