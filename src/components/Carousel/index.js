@@ -6,7 +6,6 @@ import {
   Button,
   Dialog,
   DialogTitle,
-  Divider,
   IconButton,
   Tooltip,
   Typography,
@@ -15,6 +14,8 @@ import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import SaveAltIcon from "@material-ui/icons/SaveAlt";
 import StarIcon from "@material-ui/icons/Star";
 
@@ -56,6 +57,7 @@ export default class Carousel extends Component {
     this.handleEditClose = this.handleEditClose.bind(this);
     this.handleEditDrop = this.handleEditDrop.bind(this);
     this.handleEditSave = this.handleEditSave.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   }
 
   handleStar(item, category) {
@@ -223,6 +225,10 @@ export default class Carousel extends Component {
     let { metadata } = this.state;
     window.localStorage.setItem("starred_lists", JSON.stringify(metadata));
     this.setState({ currentEditing: null, isEditOpen: false });
+  }
+
+  handleScroll(n, offset) {
+    document.getElementsByClassName("carousel__items")[n].scrollLeft += offset;
   }
 
   render() {
@@ -454,21 +460,65 @@ export default class Carousel extends Component {
     ) : (
       <div className="Carousel">
         {metadata.length
-          ? metadata.map((category) =>
+          ? metadata.map((category, n) =>
               category.children.length || !hide ? (
                 <div className="carousel__category" key={guid()}>
-                  <Link
-                    id={`${category.categoryInfo.name}`}
-                    to={
-                      category.categoryInfo.type == "Starred"
-                        ? `/starred#${category.categoryInfo.name}`
-                        : `/browse/${category.categoryInfo.name}`
-                    }
-                    key={guid()}
-                    className="carousel__category__title no_decoration_link"
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                   >
-                    {category.categoryInfo.name}
-                  </Link>
+                    <div style={{ width: "100%" }}>
+                      <div
+                        style={{
+                          float: "left",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Link
+                          id={`${category.categoryInfo.name}`}
+                          to={
+                            category.categoryInfo.type == "Starred"
+                              ? `/starred#${category.categoryInfo.name}`
+                              : `/browse/${category.categoryInfo.name}`
+                          }
+                          key={guid()}
+                          className="carousel__category__title no_decoration_link"
+                        >
+                          {category.categoryInfo.name}
+                        </Link>
+                        <IconButton onClick={() => this.handleScroll(n, -500)}>
+                          <KeyboardArrowLeftIcon
+                            style={{
+                              fontSize: "36px",
+                              fill: theme.palette.primary.main,
+                            }}
+                          />
+                        </IconButton>
+                      </div>
+                      <div
+                        style={{
+                          float: "right",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <IconButton onClick={() => this.handleScroll(n, 500)}>
+                          <KeyboardArrowRightIcon
+                            style={{
+                              fontSize: "36px",
+                              fill: theme.palette.primary.main,
+                            }}
+                          />
+                        </IconButton>
+                      </div>
+                    </div>
+                  </div>
                   <div className="carousel__items">
                     {category.children.length
                       ? category.children.map((item) => (

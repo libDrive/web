@@ -13,6 +13,7 @@ html {
 
 * {
   margin: 0;
+  scroll-behavior: smooth;
   scrollbar-color: #202324 #454a4d;
 }
 
