@@ -293,3 +293,7 @@
     max-height: 25vh;
   }
 }
+
+.dplayer-controller .dplayer-bar-wrap .dplayer-bar .dplayer-loaded {
+  background: #888 !important;
+}
