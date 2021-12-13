@@ -84,6 +84,11 @@ ReactDOM.render(
           render={(props) => <View key={guid()} {...props} />}
         />
         <Route
+          exact
+          path={"/view/:parent/:id"}
+          render={(props) => <View key={guid()} {...props} />}
+        />
+        <Route
           path={""}
           render={(props) => <NotFound key={guid()} {...props} />}
         />

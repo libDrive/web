@@ -59,7 +59,7 @@ export default class ChildrenMenu extends Component {
                 if (child.type == "directory") {
                   return (
                     <Link
-                      to={`/view/${child.id}`}
+                      to={`/view/${metadata.id}/${child.id}`}
                       className="no_decoration_link"
                       key={guid()}
                     >
