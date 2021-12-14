@@ -49,6 +49,7 @@ export default class View extends Component {
           (i) => i.children.some((x) => x.id == this.props.match.params.id)
         ) || false,
       tracks: [{ name: null, url: null }],
+      type: this.props.type,
       ui_config: JSON.parse(
         window.localStorage.getItem("ui_config") ||
           window.sessionStorage.getItem("ui_config") ||
@@ -59,7 +60,7 @@ export default class View extends Component {
   }
 
   async componentDidMount() {
-    let { auth, id, q, server } = this.state;
+    let { auth, id, q, server, type } = this.state;
     q = parseInt(q);
 
     if (!auth || !server) {
@@ -146,30 +147,14 @@ export default class View extends Component {
       }
     });
 
-    let name;
-    let new_id;
-    let parent;
-    let metadata = response1.data.content;
-    if (metadata.type == "directory" && metadata.children.length) {
-      parent = id;
-      if (metadata.children[q].type == "file") {
-        new_id = metadata.children[q].id;
-        name = metadata.children[q].name;
-      } else {
-        name = metadata.name;
-      }
-    } else {
-      name = metadata.name;
-      new_id = id;
-      parent = metadata.parents[0];
-    }
-
+    var metadata = response1.data.content;
     var response2;
-    if (new_id) {
+
+    if (type == "m") {
       let req_path = `${server}/api/v1/streammap`;
-      let req_args = `?a=${auth}&id=${encodeURIComponent(
-        new_id
-      )}&parent=${parent}&name=${encodeURIComponent(name)}&t=${
+      let req_args = `?a=${auth}&id=${encodeURIComponent(id)}&parent=${
+        metadata.parents[0]
+      }&name=${encodeURIComponent(metadata.name)}&t=${
         metadata.type
       }&server=${encodeURIComponent(server)}`;
 
@@ -232,21 +217,99 @@ export default class View extends Component {
           }
         }
       });
-    } else {
-      response2 = {
-        data: { content: { default_video: 0, videos: [], subtitles: [] } },
-      };
+    } else if (type == "ts") {
+      if (metadata.children.length && metadata.children[q]) {
+        let req_path = `${server}/api/v1/streammap`;
+        let req_args = `?a=${auth}&id=${encodeURIComponent(
+          metadata.children[q].id
+        )}&parent=${id}&name=${encodeURIComponent(
+          metadata.children[q].name
+        )}&t=${metadata.children[q].type}&server=${encodeURIComponent(server)}`;
+
+        response2 = await axios.get(req_path + req_args).catch((error) => {
+          console.error(error);
+          if (error.response) {
+            let data = error.response.data;
+            if (data.code === 401) {
+              Swal.fire({
+                title: "Error!",
+                text: data.message,
+                icon: "error",
+                confirmButtonText: "Login",
+                confirmButtonColor: theme.palette.success.main,
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.props.history.push("/logout");
+                }
+              });
+            } else if (!server) {
+              this.props.history.push("/logout");
+            } else {
+              Swal.fire({
+                title: "Error!",
+                text: `Something went wrong while communicating with the server! Is '${server}' the correct address?`,
+                icon: "error",
+                confirmButtonText: "Logout",
+                confirmButtonColor: theme.palette.success.main,
+                cancelButtonText: "Retry",
+                cancelButtonColor: theme.palette.error.main,
+                showCancelButton: true,
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.props.history.push("/logout");
+                } else if (result.isDismissed) {
+                  location.reload();
+                }
+              });
+            }
+          } else if (error.request) {
+            if (!server) {
+              this.props.history.push("/logout");
+            } else {
+              Swal.fire({
+                title: "Error!",
+                text: `libDrive could not communicate with the server! Is '${server}' the correct address?`,
+                icon: "error",
+                confirmButtonText: "Logout",
+                confirmButtonColor: theme.palette.success.main,
+                cancelButtonText: "Retry",
+                cancelButtonColor: theme.palette.error.main,
+                showCancelButton: true,
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.props.history.push("/logout");
+                } else if (result.isDismissed) {
+                  location.reload();
+                }
+              });
+            }
+          }
+        });
+      } else {
+        response2 = {
+          data: { content: { default_video: 0, videos: [], subtitles: [] } },
+        };
+      }
     }
-    this.setState({
-      default_track: response2.data.content.default_track,
-      default_video: response2.data.content.default_video,
-      isLoaded: true,
-      metadata: response1.data.content,
-      name: name,
-      q: q,
-      videos: response2.data.content.videos,
-      tracks: response2.data.content.tracks,
-    });
+
+    if (type == "m" || type == "ts") {
+      this.setState({
+        default_track: response2.data.content.default_track,
+        default_video: response2.data.content.default_video,
+        isLoaded: true,
+        metadata: response1.data.content,
+        q: q,
+        type: type,
+        videos: response2.data.content.videos,
+        tracks: response2.data.content.tracks,
+      });
+    } else {
+      this.setState({
+        isLoaded: true,
+        metadata: response1.data.content,
+        type: type,
+      });
+    }
   }
 
   componentWillUnmount() {

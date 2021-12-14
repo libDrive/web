@@ -526,7 +526,12 @@ export default class Carousel extends Component {
                             className="carousel__item__figure"
                             key={guid()}
                           >
-                            <Link to={`/view/${item.id}`} key={guid()}>
+                            <Link
+                              to={`/view/${item.type == "file" ? "m" : "tb"}/${
+                                item.id
+                              }`}
+                              key={guid()}
+                            >
                               <img
                                 src={
                                   item.posterPath ||

@@ -80,8 +80,18 @@ ReactDOM.render(
         />
         <Route
           exact
-          path={"/view/:id"}
-          render={(props) => <View key={guid()} {...props} />}
+          path={"/view/m/:id"}
+          render={(props) => <View key={guid()} type={"m"} {...props} />}
+        />
+        <Route
+          exact
+          path={"/view/tb/:id"}
+          render={(props) => <View key={guid()} type={"tb"} {...props} />}
+        />
+        <Route
+          exact
+          path={"/view/ts/:id"}
+          render={(props) => <View key={guid()} type={"ts"} {...props} />}
         />
         <Route
           path={""}

@@ -24,7 +24,7 @@ export default class ChildrenMenu extends Component {
     });
   }
 
-  handleClose(evt) {
+  handleClose() {
     this.setState({
       menuAnchor: false,
     });
@@ -59,7 +59,7 @@ export default class ChildrenMenu extends Component {
                 if (child.type == "directory") {
                   return (
                     <Link
-                      to={`/view/${child.id}`}
+                      to={`/view/ts/${child.id}`}
                       className="no_decoration_link"
                       key={guid()}
                     >

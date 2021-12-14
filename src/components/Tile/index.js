@@ -38,7 +38,12 @@ export default class Tile extends Component {
                   {category.children.length
                     ? category.children.map((item) => (
                         <figure className="tile__item__figure" key={guid()}>
-                          <Link to={`/view/${item.id}`} key={guid()}>
+                          <Link
+                            to={`/view/${item.type == "file" ? "m" : "tb"}/${
+                              item.id
+                            }`}
+                            key={guid()}
+                          >
                             <img
                               src={
                                 item.posterPath ||
