@@ -32,7 +32,6 @@ export default class View extends Component {
       isLoaded: false,
       metadata: {},
       openStarDialog: false,
-      parent: this.props.match.params.parent,
       playerKey: guid(),
       q:
         queryString.parse(this.props.location.search).q ||
@@ -255,7 +254,7 @@ export default class View extends Component {
   }
 
   render() {
-    let { isLoaded, metadata, parent, ui_config } = this.state;
+    let { isLoaded, metadata, ui_config } = this.state;
 
     if (isLoaded) {
       seo({
@@ -269,22 +268,22 @@ export default class View extends Component {
       });
     }
 
-    return isLoaded && metadata.type == "file" && !parent ? (
+    return isLoaded && metadata.type == "file" ? (
       <div className="View">
         <Nav {...this.props} />
         <MovieView state={this.state} />
         <Footer />
       </div>
-    ) : isLoaded && metadata.type == "directory" && parent ? (
+    ) : isLoaded && metadata.type == "directory" && metadata.title ? (
       <div className="View">
         <Nav {...this.props} />
-        <TVSView state={this.state} />
+        <TVBView state={this.state} />
         <Footer />
       </div>
     ) : isLoaded && metadata.type == "directory" ? (
       <div className="View">
         <Nav {...this.props} />
-        <TVBView state={this.state} />
+        <TVSView state={this.state} />
         <Footer />
       </div>
     ) : (
