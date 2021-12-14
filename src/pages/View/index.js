@@ -292,12 +292,22 @@ export default class View extends Component {
       }
     }
 
+    var parent_index;
+    if (metadata.parent_children) {
+      for (let i = 0; i < metadata.parent_children.length; i++) {
+        if (metadata.parent_children[i].id == id) {
+          parent_index = i;
+        }
+      }
+    }
+
     if (type == "m" || type == "ts") {
       this.setState({
         default_track: response2.data.content.default_track,
         default_video: response2.data.content.default_video,
         isLoaded: true,
         metadata: response1.data.content,
+        parent_index: parent_index,
         q: q,
         type: type,
         videos: response2.data.content.videos,
@@ -346,7 +356,7 @@ export default class View extends Component {
     ) : isLoaded && metadata.type == "directory" ? (
       <div className="View">
         <Nav {...this.props} />
-        <TVSView state={this.state} />
+        <TVSView state={this.state} history={this.props.history} />
         <Footer />
       </div>
     ) : (

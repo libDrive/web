@@ -17,6 +17,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import StarIcon from "@material-ui/icons/Star";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import SubtitlesOutlinedIcon from "@material-ui/icons/SubtitlesOutlined";
@@ -328,6 +330,7 @@ export class TVSView extends Component {
     this.handleSubtitleMenuClose = this.handleSubtitleMenuClose.bind(this);
     this.handleClickImage = this.handleClickImage.bind(this);
     this.handleCloseDialog = this.handleCloseDialog.bind(this);
+    this.handleParentSeason = this.handleParentSeason.bind(this);
   }
 
   componentDidMount() {
@@ -397,6 +400,24 @@ export class TVSView extends Component {
     this.setState({ image_url: null });
   }
 
+  handleParentSeason(next) {
+    let { metadata, parent_index } = this.state;
+
+    if (next) {
+      if (metadata.parent_children[parent_index + 1]) {
+        this.props.history.push(
+          `/view/ts/${metadata.parent_children[parent_index + 1].id}`
+        );
+      }
+    } else {
+      if (metadata.parent_children[parent_index - 1]) {
+        this.props.history.push(
+          `/view/ts/${metadata.parent_children[parent_index - 1].id}`
+        );
+      }
+    }
+  }
+
   render() {
     let {
       default_track,
@@ -405,6 +426,7 @@ export class TVSView extends Component {
       fileName,
       image_url,
       metadata,
+      parent_index,
       playerKey,
       q,
       server,
@@ -504,72 +526,128 @@ export class TVSView extends Component {
           <div
             style={{
               display: "flex",
-              alignContent: "center",
-              justifyContent: "center",
-              flexWrap: "wrap",
-              margin: "30px 15px 30px 15px",
+              width: "100%",
+              justifyContent: "space-between",
             }}
           >
-            <PlayerMenu
-              state={{
-                ...this.state,
-                id: metadata.children[q].id,
-                metadata: metadata.children[q],
-              }}
-            />
-            <DownloadMenu state={this.state} tv={true} />
-            <PlaylistMenu state={this.state} />
-            <div className="info__button">
-              <input
-                id="file-input"
-                hidden
-                onChange={this.onFileChange}
-                type="file"
-                accept=".vtt,.srt"
-              />
-              <Button
-                color="primary"
-                variant="outlined"
-                style={{ width: "135px" }}
-                component="span"
-                aria-controls="subtitles-menu"
-                startIcon={<SubtitlesOutlinedIcon />}
-                onClick={this.handleSubtitleMenuOpen}
+            {metadata.parent_children[parent_index - 1] ? (
+              <Tooltip
+                title={
+                  metadata.parent_children[parent_index - 1]
+                    ? metadata.parent_children[parent_index - 1].name
+                    : null
+                }
+                placement="left"
               >
-                Subtitle
-              </Button>
-              <Menu
-                id="subtitles-menu"
-                anchorEl={subtitleMenuAnchor}
-                keepMounted
-                anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                transformOrigin={{ vertical: "top", horizontal: "center" }}
-                open={Boolean(subtitleMenuAnchor)}
-                onClose={this.handleSubtitleMenuClose}
-              >
-                {tracks.length ? (
-                  <div>
-                    {tracks.map((track) => (
-                      <a className="no_decoration_link" href={track.url}>
-                        <MenuItem onClick={this.handleSubtitleMenuClose}>
-                          {track.name}
-                        </MenuItem>
-                      </a>
-                    ))}
-                    <Divider />
-                  </div>
-                ) : null}
-                <MenuItem
-                  onClick={() => {
-                    document.getElementById("file-input-button").click();
-                    this.setState({ subtitleMenuAnchor: false });
-                  }}
+                <IconButton
+                  onClick={() => this.handleParentSeason(false)}
+                  style={{ justifySelf: "flex-start", marginLeft: "5px" }}
                 >
-                  Upload
-                </MenuItem>
-              </Menu>
-              <label htmlFor="file-input" id="file-input-button" />
+                  <ArrowBackIcon />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <div
+                className="MuiIconButton-root MuiButtonBase-root"
+                style={{ justifySelf: "flex-end", marginLeft: "5px" }}
+              >
+                <ArrowBackIcon color="disabled" />
+              </div>
+            )}
+            <div
+              style={{
+                display: "flex",
+                alignContent: "center",
+                justifyContent: "center",
+                flexWrap: "wrap",
+                margin: "20px 5px 20px 5px",
+              }}
+            >
+              <PlayerMenu
+                state={{
+                  ...this.state,
+                  id: metadata.children[q].id,
+                  metadata: metadata.children[q],
+                }}
+              />
+              <DownloadMenu state={this.state} tv={true} />
+              <PlaylistMenu state={this.state} />
+              <div className="info__button">
+                <input
+                  id="file-input"
+                  hidden
+                  onChange={this.onFileChange}
+                  type="file"
+                  accept=".vtt,.srt"
+                />
+                <Button
+                  color="primary"
+                  variant="outlined"
+                  style={{ width: "135px" }}
+                  component="span"
+                  aria-controls="subtitles-menu"
+                  startIcon={<SubtitlesOutlinedIcon />}
+                  onClick={this.handleSubtitleMenuOpen}
+                >
+                  Subtitle
+                </Button>
+                <Menu
+                  id="subtitles-menu"
+                  anchorEl={subtitleMenuAnchor}
+                  keepMounted
+                  anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                  transformOrigin={{ vertical: "top", horizontal: "center" }}
+                  open={Boolean(subtitleMenuAnchor)}
+                  onClose={this.handleSubtitleMenuClose}
+                >
+                  {tracks.length ? (
+                    <div>
+                      {tracks.map((track) => (
+                        <a className="no_decoration_link" href={track.url}>
+                          <MenuItem onClick={this.handleSubtitleMenuClose}>
+                            {track.name}
+                          </MenuItem>
+                        </a>
+                      ))}
+                      <Divider />
+                    </div>
+                  ) : null}
+                  <MenuItem
+                    onClick={() => {
+                      document.getElementById("file-input-button").click();
+                      this.setState({ subtitleMenuAnchor: false });
+                    }}
+                  >
+                    Upload
+                  </MenuItem>
+                </Menu>
+                <label htmlFor="file-input" id="file-input-button" />
+              </div>
             </div>
+            {metadata.parent_children[parent_index + 1] ? (
+              <Tooltip
+                title={
+                  metadata.parent_children[parent_index + 1]
+                    ? metadata.parent_children[parent_index + 1].name
+                    : null
+                }
+                placement="right"
+              >
+                <IconButton
+                  onClick={() => this.handleParentSeason(true)}
+                  style={{ justifySelf: "flex-end", marginRight: "5px" }}
+                >
+                  <ArrowForwardIcon />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <div
+                className="MuiIconButton-root MuiButtonBase-root"
+                style={{ justifySelf: "flex-end", marginRight: "5px" }}
+              >
+                <ArrowForwardIcon color="disabled" />
+              </div>
+            )}
           </div>
         </div>
       </div>
