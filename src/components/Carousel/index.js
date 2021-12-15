@@ -40,6 +40,13 @@ export default class Carousel extends Component {
     this.state = {
       currentEditing: null,
       hide: props.hide || false,
+      isAndroid: /(android)/i.test(
+        navigator.userAgent || navigator.vendor || window.opera
+      ),
+      isIOS:
+        /iPad|iPhone|iPod/.test(
+          navigator.userAgent || navigator.vendor || window.opera
+        ) && !window.MSStream,
       isEditOpen: false,
       metadata: this.props.metadata,
       server:
@@ -232,8 +239,16 @@ export default class Carousel extends Component {
   }
 
   render() {
-    let { currentEditing, hide, isEditOpen, metadata, server, star } =
-      this.state;
+    let {
+      currentEditing,
+      hide,
+      isAndroid,
+      isIOS,
+      isEditOpen,
+      metadata,
+      server,
+      star,
+    } = this.state;
 
     return star ? (
       <div className="Carousel" style={{ paddingTop: "3%" }}>
@@ -470,27 +485,33 @@ export default class Carousel extends Component {
                       justifyContent: "center",
                     }}
                   >
-                    <div style={{ width: "100%" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexShrink: "0",
+                      }}
+                    >
+                      <Link
+                        id={`${category.categoryInfo.name}`}
+                        to={
+                          category.categoryInfo.type == "Starred"
+                            ? `/starred#${category.categoryInfo.name}`
+                            : `/browse/${category.categoryInfo.name}`
+                        }
+                        key={guid()}
+                        className="carousel__category__title no_decoration_link"
+                      >
+                        {category.categoryInfo.name}
+                      </Link>
+                    </div>
+                    {isAndroid || isIOS ? null : (
                       <div
                         style={{
-                          float: "left",
+                          width: "100%",
                           display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
+                          justifyContent: "space-between",
                         }}
                       >
-                        <Link
-                          id={`${category.categoryInfo.name}`}
-                          to={
-                            category.categoryInfo.type == "Starred"
-                              ? `/starred#${category.categoryInfo.name}`
-                              : `/browse/${category.categoryInfo.name}`
-                          }
-                          key={guid()}
-                          className="carousel__category__title no_decoration_link"
-                        >
-                          {category.categoryInfo.name}
-                        </Link>
                         <IconButton onClick={() => this.handleScroll(n, -500)}>
                           <KeyboardArrowLeftIcon
                             style={{
@@ -499,15 +520,6 @@ export default class Carousel extends Component {
                             }}
                           />
                         </IconButton>
-                      </div>
-                      <div
-                        style={{
-                          float: "right",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
                         <IconButton onClick={() => this.handleScroll(n, 500)}>
                           <KeyboardArrowRightIcon
                             style={{
@@ -517,7 +529,7 @@ export default class Carousel extends Component {
                           />
                         </IconButton>
                       </div>
-                    </div>
+                    )}
                   </div>
                   <div className="carousel__items">
                     {category.children.length
